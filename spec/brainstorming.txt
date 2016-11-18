@@ -1,0 +1,39 @@
+** Brainstorming about the ToDos ***
+(will be refined later on)
+
+- Deciding on the logo
+- Decide on who is in the static-team and who is in the docu-team
+- Investigate FindBugs, PMD, Checkstyle, etc.
+- Java with JavaFX
+- What editor-library to use
+- GUI-Prototype
+- Define exact javadoc-like comment format (properties of a module)
+- Define documentation export formats (e.g. PDF, HTML, XLS, CSV)
+- Think about docu export intermediate format, e. g. as XML
+- Docu consistency check (do the defined properties fit to the used properties)
+- Sophisticated properties (calculated or combined values of properties)
+- Only english gui, but all language string externalized
+- Quality assurance: Review between the two subteams at the end of each sprint
+- Unittesting: automated JUnit-Tests
+- Define a Dictionary of Term (e.g. "checker")
+- Every issue should have a single test case
+- Configuration of Code Analysis Categories
+- Define file format for configuration
+- Syntax for supressing warnings (like @supressWarning in Java)
+- Systemtest-Plan
+- Custom Rules (Format/How do other tools do this?)
+- Manual only as GitHub-Wiki
+- Investigate what Parser to use
+- Search for OpenSCAD-Language definitions
+- Technical Design: Separate GUI-parts totally from command-line-version
+- Investigate for a Text-Editor-Library (Code editiing with OpenSCAD-Syntax)
+- Usability-Check
+- Investigate Javadoc and try to find out which part could be implemented in a similar way
+- Offer jar-File with OS-specific scripts
+- Think about the target group (who will use the tool?)
+- Create a test corpus from existing SCAD-files
+- Description manual for issues
+- Icons of Buttons etc.
+- Buttons: Open Project, Close Project, Refresh Analyze,
+- After opening a project, the analyzie is automatically started
+- Deciding Licencing Options
