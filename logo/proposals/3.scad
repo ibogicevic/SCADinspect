@@ -1,26 +1,33 @@
-color([0.2,0.9,0.2,1])
-cube([10,20,30]);
-translate([50,0,0])
-color([1,0,0,1])
-cube([10,20,30]);
-translate([0,0,30])
-color([0,0,1,1])
-cube([60,20,10]);
-translate([0,0,-15])
-color([1,0.71,0.76])
-cube([60,20,15]);
-translate([10,0,2])
-color([1,1,1,1])
-rotate([90,0,0])
-text("YOLO", font="tohoma:style=bold");
-color([0,0,0,1])
-translate([0,20,-10])
-cube([60,5,50]);
-translate([30,0,20])
-color([0.7,0.5,1,1])
-sphere(5);
+echo(version=version());
 
-translate([0.5,0,-12])
-color([1,1,1,1])
-rotate([90,0,0])
-text("BITCHEZ", font="tohoma:style=bold");
+r=65; //Radius of circle
+
+translate([-16.5,-7,0]){
+    text("inspect",8);
+}
+translate([-16,2.5,0]){
+    text("SCAD",5);
+}
+
+translate([20,-20,0]){
+    rotate([90,0,45]) cylinder (h=50,r=2,$fn=100);
+}
+
+translate([0,0,0]){
+
+    difference() {
+        cylinder (h = 5, r=30, center = true, $fn=100);
+        union(){
+            cylinder(h = 6, r=25, center = true, $fn=100);
+            for(i=[0:10:360]) rotate([0,0,i]) cube([0.5,100,10],center=true);
+        }
+    }
+
+    difference(){
+        cylinder (h=1, r=23, center=true, $fn=100);
+        union(){
+            cylinder (h=2, r=20, center=true, $fn=100);
+            for(i=[0:15:360]) rotate([0,0,i-8]) square([0.5,60], center=true);
+        }
+    }
+}
