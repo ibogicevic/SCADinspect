@@ -1,25 +1,9 @@
 ** Brainstorming about the ToDos ***
 (unrevised, unreviewed, unsorted -> will be refined later on)
 
-- Deciding on the logo
-- Investigate FindBugs, PMD, Checkstyle, etc.
-- Java with JavaFX
-- Define exact javadoc-like comment format (properties of a module)
-- Think about docu export intermediate format, e. g. as XML
-- Docu consistency check (do the defined properties fit to the used properties)
-- Sophisticated properties (calculated or combined values of properties)
 - Only english gui, but all language string externalized
 - Quality assurance: Review between the two subteams at the end of each sprint
-- Unittesting: automated JUnit-Tests
+- Unittesting: automated JUnit-Tests with code coverage measurement
 - Every issue should have a single test case
-- Configuration of Code Analysis Categories
 - Define file format for configuration
-- Syntax for supressing warnings (like @supressWarning in Java)
 - Custom Rules (Format/How do other tools do this?)
-- Technical Design: Separate GUI-parts totally from command-line-version
-- Usability-Check
-- Investigate Javadoc and try to find out which part could be implemented in a similar way
-- Offer jar-File with OS-specific scripts
-- Think about the target group (who will use the tool?)
-- Buttons: Open Project, Close Project, Refresh Analyze,
-- After opening a project, the analyze is automatically started
