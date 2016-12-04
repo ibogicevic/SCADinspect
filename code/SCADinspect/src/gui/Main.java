@@ -15,7 +15,11 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
+	/** Name of the application **/
 	public final static String APPNAME = "SCADinspect";
+	
+	/** Ratio between window height and screen height **/
+	private final static double WINDOW_HEIGHT = 0.25;
 	
 	// singleton
 	private static Main instance;
@@ -72,9 +76,10 @@ public class Main extends Application {
 
 		// show main pane
 		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-		Scene scene = new Scene(mainPane, screenBounds.getWidth(), screenBounds.getHeight(), true);
+		Scene scene = new Scene(mainPane, screenBounds.getWidth(), WINDOW_HEIGHT*screenBounds.getHeight(), true);
 		primaryStage.setTitle(APPNAME);
 		primaryStage.setScene(scene);
+		primaryStage.setY((1-WINDOW_HEIGHT)*screenBounds.getHeight());
 		primaryStage.show();
 		
 		// load default workspace
