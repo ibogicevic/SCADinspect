@@ -13,19 +13,26 @@ public class ProjectHandling {
 		// load tree in explorer
 		//Main.getInstance().explorerArea.loadNewTree(rootPath);
 		// remember open project
-		Main.getInstance().rootPath = rootPath;
+		Main.getInstance().currentProject = rootPath;
 
 	}
 
 	static public void openProject() {
 		final DirectoryChooser directoryChooser = new DirectoryChooser();
 		File projectDirectory;
-		projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
-		if (projectDirectory != null) {
-			projectDirectory.getAbsolutePath();
-		}
+		//projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
+		//if (projectDirectory != null) {
+			//projectDirectory.getAbsolutePath();
+		//}
 		// TODO: check if dialog has been cancelled
-		openProject(projectDirectory.getAbsolutePath());
+		//openProject(projectDirectory.getAbsolutePath());
+		Main.getInstance().toolbarArea.disableButtons(false);
+	}
+
+	static public void closeProject() {
+		// TODO: close windows of project
+		Main.getInstance().currentProject = null;
+		Main.getInstance().toolbarArea.disableButtons (true);
 	}
 
 }

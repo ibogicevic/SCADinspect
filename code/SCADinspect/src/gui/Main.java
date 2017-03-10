@@ -21,7 +21,7 @@ public class Main extends Application {
 	/** Ratio between window height and screen height **/
 	private final static double WINDOW_HEIGHT = 0.25;
 	
-	// singleton
+	// singleton pattern
 	private static Main instance;
 	public static Main getInstance() {
 		return instance;
@@ -35,8 +35,8 @@ public class Main extends Application {
 	public MessagesArea messagesArea = new MessagesArea();
 	public StatusArea statusArea = new StatusArea();
 
-	// root path to current open project
-	public String rootPath;
+	/** root path to current open project, null if no project open*/
+	public String currentProject = null;
 	
 	// remember stage for subwindows
 	private Stage primaryStage;
@@ -45,6 +45,9 @@ public class Main extends Application {
 	}
 	
 	@Override
+	/**
+	 * Application startup function
+	 */
 	public void start(Stage primaryStage) {
 		// remember singleton instance (instantiated by javafx)
 		Main.instance = this;
@@ -79,13 +82,25 @@ public class Main extends Application {
 		Scene scene = new Scene(mainPane, screenBounds.getWidth(), WINDOW_HEIGHT*screenBounds.getHeight(), true);
 		primaryStage.setTitle(APPNAME);
 		primaryStage.setScene(scene);
-		primaryStage.setY((1-WINDOW_HEIGHT)*screenBounds.getHeight());
+		primaryStage.setY((0.5-WINDOW_HEIGHT)*screenBounds.getHeight());
 		primaryStage.show();
 		
 		// load default workspace
 		//ProjectHandling.openProject("");
 	}
 
+	/**
+	 * Check whether a project file or project folder is open
+	 * @return true if a project is open, else false
+	 */
+	public boolean isProjectOpen() {
+		return (currentProject != null);
+	}
+	
+	/**
+	 * Main control loop, gives control to JavaFX
+	 * @param args unused
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
