@@ -397,6 +397,20 @@ paket-files/
 __pycache__/
 *.pyc
 
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Exclude maven wrapper
+!/.mvn/wrapper/maven-wrapper.jar
+
 # Cake - Uncomment if you are using it
 # tools/**
 # !tools/packages.config
