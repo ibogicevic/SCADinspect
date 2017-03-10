@@ -21,7 +21,7 @@ public class Main extends Application {
 	public final static String APPNAME = "SCADinspect";
         
         /** Location of the resource files **/
-	public final static String RESOURCES_DIR = "resources/";
+	public final static String RESOURCES_DIR = "main/java/resources/";
         
 	/** Ratio between window height and screen height **/
 	private final static double WINDOW_HEIGHT = 0.25;
@@ -107,11 +107,6 @@ public class Main extends Application {
 	 * @param args unused
 	 */
 	public static void main(String[] args) {
-            URL url = Main.class.getResource("text-file.png");
-            System.out.println(url);
-            url = Main.class.getResource(RESOURCES_DIR + "text-file.png_invalid");
-            System.out.println(url);
-            
-		//launch(args);
+            launch(args);
 	}
 }
