@@ -1,6 +1,7 @@
 package scadinspect.gui;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import javafx.application.Application;
 import javafx.geometry.Orientation;
@@ -21,7 +22,7 @@ public class Main extends Application {
 	public final static String APPNAME = "SCADinspect";
         
         /** Location of the resource files **/
-	public final static String RESOURCES_DIR = "main/java/resources/";
+	public final static String RESOURCES_DIR = "/resources/";
         
 	/** Ratio between window height and screen height **/
 	private final static double WINDOW_HEIGHT = 0.25;

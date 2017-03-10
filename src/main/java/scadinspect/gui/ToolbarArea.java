@@ -42,7 +42,8 @@ public class ToolbarArea extends ToolBar {
 	 * @return the icon as ImageView
 	 */
 	private ImageView loadIcon(String fileName) {
-		InputStream inputStream = getClass().getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
+            System.out.println(fileName);
+		InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
 		Image image = new Image(inputStream);
 		ImageView imageView = new ImageView(image);
 		return imageView;
