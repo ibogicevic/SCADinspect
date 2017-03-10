@@ -1,4 +1,4 @@
-package gui;
+package scadinspect.gui;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;

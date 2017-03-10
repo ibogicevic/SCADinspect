@@ -1,5 +1,7 @@
-package gui;
+package scadinspect.gui;
 
+import java.io.File;
+import java.net.URL;
 import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.geometry.Rectangle2D;
@@ -17,7 +19,10 @@ public class Main extends Application {
 
 	/** Name of the application **/
 	public final static String APPNAME = "SCADinspect";
-	
+        
+        /** Location of the resource files **/
+	public final static String RESOURCES_DIR = "resources/";
+        
 	/** Ratio between window height and screen height **/
 	private final static double WINDOW_HEIGHT = 0.25;
 	
@@ -102,6 +107,11 @@ public class Main extends Application {
 	 * @param args unused
 	 */
 	public static void main(String[] args) {
-		launch(args);
+            URL url = Main.class.getResource("text-file.png");
+            System.out.println(url);
+            url = Main.class.getResource(RESOURCES_DIR + "text-file.png_invalid");
+            System.out.println(url);
+            
+		//launch(args);
 	}
 }

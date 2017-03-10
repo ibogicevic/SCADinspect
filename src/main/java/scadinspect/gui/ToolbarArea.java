@@ -1,8 +1,8 @@
-package gui;
+package scadinspect.gui;
 
 import java.io.InputStream;
 
-import control.ProjectHandling;
+import scadinspect.control.ProjectHandling;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
@@ -42,7 +42,7 @@ public class ToolbarArea extends ToolBar {
 	 * @return the icon as ImageView
 	 */
 	private ImageView loadIcon(String fileName) {
-		InputStream inputStream = getClass().getResourceAsStream("../res/" + fileName + ".png");
+		InputStream inputStream = getClass().getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
 		Image image = new Image(inputStream);
 		ImageView imageView = new ImageView(image);
 		return imageView;

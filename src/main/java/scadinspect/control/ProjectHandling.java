@@ -1,8 +1,8 @@
-package control;
+package scadinspect.control;
 
 import java.io.File;
 
-import gui.Main;
+import scadinspect.gui.Main;
 import javafx.stage.DirectoryChooser;
 
 public class ProjectHandling {
