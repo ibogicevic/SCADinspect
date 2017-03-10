@@ -16,5 +16,5 @@ The naming conventions for the new branches are as follows:
 
 Reason | Naming
 ------ | ------
-Feature | `feature/<featureName`
+Feature | `feature/<featureName>`
 Bugfix | `bugfix/<issueNumber>`
