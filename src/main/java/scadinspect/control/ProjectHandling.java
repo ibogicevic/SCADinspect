@@ -20,12 +20,12 @@ public class ProjectHandling {
 	static public void openProject() {
 		final DirectoryChooser directoryChooser = new DirectoryChooser();
 		File projectDirectory;
-		//projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
-		//if (projectDirectory != null) {
-			//projectDirectory.getAbsolutePath();
-		//}
+		projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
+		if (projectDirectory != null) {
+			projectDirectory.getAbsolutePath();
+		}
 		// TODO: check if dialog has been cancelled
-		//openProject(projectDirectory.getAbsolutePath());
+		openProject(projectDirectory.getAbsolutePath());
 		Main.getInstance().toolbarArea.disableButtons(false);
 	}
 
