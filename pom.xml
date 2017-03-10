@@ -12,9 +12,10 @@
     </properties>
     <build>
         <resources>
-        <resource>
-          <directory>src/main/resources</directory>
-        </resource>
+            <resource>
+                <targetPath>resources</targetPath>
+                <directory>src/main/resources</directory>
+            </resource>
         </resources>
     </build>
 </project>

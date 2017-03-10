@@ -1,4 +1,4 @@
-package data.analysis;
+package scadinspect.data.analysis;
 
 public class Issue {
 
