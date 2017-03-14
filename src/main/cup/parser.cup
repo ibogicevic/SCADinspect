@@ -1,0 +1,20 @@
+package scadinspect.parser;
+
+action code {:  :};
+
+parser code {:  :};
+
+init with {:  :};
+
+scan with {:  :};
+
+terminal ABSTRACT, BOOLEAN, BREAK;
+
+non terminal prog;
+
+start with prog;
+
+prog ::= ABSTRACT prog {: System.out.println("ABSTRACT"); :}
+         | BOOLEAN prog {: System.out.println("BOOLEAN"); :}
+         | BREAK prog {: System.out.println("BREAK"); :}
+         ;
