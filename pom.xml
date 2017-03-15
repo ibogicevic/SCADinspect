@@ -51,6 +51,7 @@
                 <configuration>
                     <className>OpenScadParser</className>
                     <symbolsName>OpenScadSymbols</symbolsName>
+                    <expectedConflicts>2</expectedConflicts>
                 </configuration>
             </plugin>
             <plugin>

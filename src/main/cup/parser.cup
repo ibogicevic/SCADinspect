@@ -1,20 +1,176 @@
 package scadinspect.parser;
 
-action code {:  :};
-
-parser code {:  :};
-
-init with {:  :};
-
-scan with {:  :};
-
+/* test */
 terminal ABSTRACT, BOOLEAN, BREAK;
 
-non terminal prog;
+terminal TOK_ERROR;
 
-start with prog;
+terminal TOK_MODULE;
+terminal TOK_FUNCTION;
+terminal TOK_IF;
+terminal TOK_ELSE;
+terminal TOK_FOR;
+terminal TOK_LET;
+terminal TOK_ASSERT;
+terminal TOK_ECHO;
+terminal TOK_EACH;
 
-prog ::= ABSTRACT prog {: System.out.println("ABSTRACT"); :}
-         | BOOLEAN prog {: System.out.println("BOOLEAN"); :}
-         | BREAK prog {: System.out.println("BREAK"); :}
-         ;
+terminal TOK_ID;
+terminal TOK_STRING;
+terminal TOK_USE;
+terminal TOK_NUMBER;
+
+terminal TOK_TRUE;
+terminal TOK_FALSE;
+terminal TOK_UNDEF;
+
+terminal LE, GE, EQ, NE, AND, OR;
+
+terminal SEMICOLON, DOT, COLON, COMMA;
+terminal BRACKET_CURLY_OPEN, BRACKET_CURLY_CLOSE;
+terminal BRACKET_ROUND_OPEN, BRACKET_ROUND_CLOSE;
+terminal BRACKET_SQUARE_OPEN, BRACKET_SQUARE_CLOSE;
+terminal BRACKET_ANGLE_OPEN, BRACKET_ANGLE_CLOSE;
+terminal EQUAL;
+terminal EXCLAMATION_MARK, HASH, PERCENT, ASTERISK, SLASH, PLUS, MINUS;
+
+
+non terminal input;
+non terminal statement;
+non terminal inner_input;
+non terminal assignment;
+non terminal module_instantiation;
+non terminal ifelse_statement;
+non terminal if_statement;
+non terminal child_statements;
+non terminal child_statement;
+non terminal module_id;
+non terminal single_module_instantiation;
+non terminal expr;
+non terminal expr_or_empty;
+non terminal list_comprehension_elements;
+non terminal list_comprehension_elements_p;
+non terminal list_comprehension_elements_or_expr;
+non terminal optional_commas;
+non terminal vector_expr;
+non terminal arguments_decl;
+non terminal argument_decl;
+non terminal arguments_call;
+non terminal argument_call;
+
+/* TODO prencedences */
+
+
+start with input;
+
+input ::=
+          /* empty */
+        {: /* TODO build parse tree here */ :}
+        | TOK_USE input
+        {:  :}
+        | statement input
+        {:  :}
+        ;
+
+statement ::=
+          SEMICOLON
+        {:  :}
+        | BRACKET_CURLY_OPEN inner_input BRACKET_CURLY_CLOSE
+        {:  :}
+        | module_instantiation
+        {:  :}
+        | assignment
+        {:  :}
+        | TOK_MODULE TOK_ID
+          BRACKET_ROUND_OPEN arguments_decl optional_commas BRACKET_ROUND_CLOSE
+          statement
+        {:  :}
+        | TOK_FUNCTION TOK_ID
+          BRACKET_ROUND_OPEN arguments_decl optional_commas  BRACKET_ROUND_CLOSE
+          EQUAL expr SEMICOLON
+        {:  :}
+        ;
+
+inner_input ::=
+          /* empty */
+        {:  :}
+        | statement inner_input
+        {:  :}
+        ;
+
+assignment ::=
+          TOK_ID EQUAL expr SEMICOLON
+        {: :}
+        ;
+
+
+module_instantiation ::=
+          EXCLAMATION_MARK module_instantiation
+        {:  :}
+        | HASH module_instantiation
+        {:  :}
+        | PERCENT module_instantiation
+        {:  :}
+        | ASTERISK module_instantiation
+        {:  :}
+        | single_module_instantiation
+          child_statement
+        {:  :}
+        | ifelse_statement
+        {:  :}
+        ;
+
+ifelse_statement ::=
+          if_statement
+        {:  :}
+        | if_statement TOK_ELSE
+          child_statement
+        {: :}
+        ;
+
+if_statement ::=
+          TOK_IF BRACKET_ROUND_OPEN expr BRACKET_ROUND_CLOSE
+          child_statement
+        {:  :}
+        ;
+
+child_statements ::=
+          /* empty */
+        {:  :}
+        | child_statements child_statement
+        {:  :}
+        | child_statements assignment
+        {:  :}
+        ;
+
+child_statement ::=
+          SEMICOLON
+        {: :}
+        | BRACKET_CURLY_OPEN child_statements BRACKET_CURLY_CLOSE
+        {: :}
+        | module_instantiation
+        {: :}
+        ;
+
+// "for", "let" and "each" are valid module identifiers
+module_id ::=
+          TOK_ID
+        {:  :}
+        | TOK_FOR
+        {:  :}
+        | TOK_LET
+        {:  :}
+        | TOK_ASSERT
+        {:  :}
+        | TOK_ECHO
+        {:  :}
+        | TOK_EACH
+        {:  :}
+        ;
+
+single_module_instantiation ::=
+          module_id BRACKET_ROUND_OPEN arguments_call BRACKET_ROUND_CLOSE
+        {:  :}
+        ;
+
+/* TODO continue with expr */

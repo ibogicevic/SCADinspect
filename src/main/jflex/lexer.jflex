@@ -47,7 +47,8 @@ H = [0-9a-fA-F]
 %%
 
 /* keywords */
-<YYINITIAL> "abstract"           { return symbol(OpenScadSymbols.ABSTRACT); }
+/* test */
+<YYINITIAL> "abstract"            { return symbol(OpenScadSymbols.ABSTRACT); }
 <YYINITIAL> "boolean"            { return symbol(OpenScadSymbols.BOOLEAN); }
 <YYINITIAL> "break"              { return symbol(OpenScadSymbols.BREAK); }
 
