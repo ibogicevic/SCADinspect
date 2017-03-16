@@ -46,11 +46,45 @@ H = [0-9a-fA-F]
 
 %%
 
+
+
 /* keywords */
 /* test */
 <YYINITIAL> "abstract"            { return symbol(OpenScadSymbols.ABSTRACT); }
 <YYINITIAL> "boolean"            { return symbol(OpenScadSymbols.BOOLEAN); }
 <YYINITIAL> "break"              { return symbol(OpenScadSymbols.BREAK); }
+
+/* TODO insert others in rigth order here */
+
+"<=" { return symbol(OpenScadSymbols.LE); }
+">=" { return symbol(OpenScadSymbols.GE); }
+"==" { return symbol(OpenScadSymbols.EQ); }
+"!=" { return symbol(OpenScadSymbols.NE); }
+"&&" { return symbol(OpenScadSymbols.AND); }
+"||" { return symbol(OpenScadSymbols.OR); }
+
+/* selfdefined, not in origional grammar, cant pass char directly */
+";" { return symbol(OpenScadSymbols.SEMICOLON); }
+"." { return symbol(OpenScadSymbols.DOT); }
+":" { return symbol(OpenScadSymbols.COLON); }
+"," { return symbol(OpenScadSymbols.COMMA); }
+"{" { return symbol(OpenScadSymbols.BRACKET_CURLY_OPEN); }
+"}" { return symbol(OpenScadSymbols.BRACKET_CURLY_CLOSE); }
+"(" { return symbol(OpenScadSymbols.BRACKET_ROUND_OPEN); }
+")" { return symbol(OpenScadSymbols.BRACKET_ROUND_CLOSE); }
+"[" { return symbol(OpenScadSymbols.BRACKET_SQUARE_OPEN); }
+"]" { return symbol(OpenScadSymbols.BRACKET_SQUARE_CLOSE); }
+"<" { return symbol(OpenScadSymbols.BRACKET_ANGLE_OPEN); }
+">" { return symbol(OpenScadSymbols.BRACKET_ANGLE_CLOSE); }
+"=" { return symbol(OpenScadSymbols.EQUAL); }
+"!" { return symbol(OpenScadSymbols.EXCLAMATION_MARK); }
+"#" { return symbol(OpenScadSymbols.HASH); }
+"%" { return symbol(OpenScadSymbols.PERCENT); }
+"*" { return symbol(OpenScadSymbols.ASTERISK); }
+"/" { return symbol(OpenScadSymbols.SLASH); }
+"+" { return symbol(OpenScadSymbols.PLUS); }
+"-" { return symbol(OpenScadSymbols.MINUS); }
+
 
 /* error fallback */
 [^]                              { throw new Error("Illegal character <"+
