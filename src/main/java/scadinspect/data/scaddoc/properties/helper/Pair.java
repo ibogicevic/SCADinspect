@@ -19,4 +19,9 @@ public class Pair {
   public String getMetric() {
     return metric;
   }
+
+  @Override
+  public String toString() {
+    return "{value: "+value+", metric: "+metric+"}";
+  }
 }
