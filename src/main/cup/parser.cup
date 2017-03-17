@@ -32,7 +32,9 @@ terminal BRACKET_ROUND_OPEN, BRACKET_ROUND_CLOSE;
 terminal BRACKET_SQUARE_OPEN, BRACKET_SQUARE_CLOSE;
 terminal BRACKET_ANGLE_OPEN, BRACKET_ANGLE_CLOSE;
 terminal EQUAL;
-terminal EXCLAMATION_MARK, HASH, PERCENT, ASTERISK, SLASH, PLUS, MINUS;
+terminal EXCLAMATION_MARK, QUESTION_MARK, HASH, PERCENT, ASTERISK, SLASH, PLUS, MINUS;
+
+terminal LET, LOW_PRIO_LEFT, LOW_PRIO_RIGHT, HIGH_PRIO_LEFT, HIGH_PRIO_RIGHT;
 
 
 non terminal input;
@@ -58,7 +60,25 @@ non terminal argument_decl;
 non terminal arguments_call;
 non terminal argument_call;
 
-/* TODO prencedences */
+precedence right LET;
+precedence right LOW_PRIO_RIGHT;
+precedence left LOW_PRIO_LEFT;
+
+precedence right QUESTION_MARK, COLON;
+
+precedence left OR;
+precedence left AND;
+
+precedence left BRACKET_ANGLE_OPEN, LE, GE, BRACKET_ANGLE_CLOSE;
+precedence left EQ, NE;
+
+precedence left EXCLAMATION_MARK, PLUS, MINUS;
+precedence left ASTERISK, SLASH, PERCENT;
+precedence left BRACKET_SQUARE_OPEN, BRACKET_SQUARE_CLOSE;
+precedence left DOT;
+
+precedence right HIGH_PRIO_RIGHT;
+precedence left HIGH_PRIO_LEFT;
 
 
 start with input;

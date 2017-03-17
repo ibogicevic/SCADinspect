@@ -149,6 +149,7 @@ H = [0-9a-fA-F]
 <YYINITIAL> ">" { return symbol(OpenScadSymbols.BRACKET_ANGLE_CLOSE); }
 <YYINITIAL> "=" { return symbol(OpenScadSymbols.EQUAL); }
 <YYINITIAL> "!" { return symbol(OpenScadSymbols.EXCLAMATION_MARK); }
+<YYINITIAL> "?" { return symbol(OpenScadSymbols.QUESTION_MARK); }
 <YYINITIAL> "#" { return symbol(OpenScadSymbols.HASH); }
 <YYINITIAL> "%" { return symbol(OpenScadSymbols.PERCENT); }
 <YYINITIAL> "*" { return symbol(OpenScadSymbols.ASTERISK); }
