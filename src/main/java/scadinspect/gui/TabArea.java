@@ -11,6 +11,9 @@ import javafx.scene.web.HTMLEditor;
 public class TabArea extends TabPane {
 
 	public TabArea() {
+        // Tabs can't be closed
+		this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+
 		Tab issues = new Tab();
 		issues.setText("Issues");
 		//issues.setContent(); SET CONTENT FOR issueArea HERE
