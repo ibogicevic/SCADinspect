@@ -1,0 +1,32 @@
+[
+    {
+        "part": "Wheel",
+        "price": {
+            "amount": 100,
+            "currency": "EUR"
+        },
+        "amount": 4,
+        "weight": {
+            "amount": 12,
+            "unit": "kg"
+        },
+        "materials": ["Rubber", "Aluminuim"],
+        "url": "https://example.com",
+        "<key>": "<value>"
+    },
+    {
+        "part": "Motor",
+        "price": {
+            "amount": 1000,
+            "currency": "USD"
+        },
+        "amount": 1,
+        "weight": {
+            "amount": 200,
+            "unit": "kg"
+        },
+        "materials": ["Steel"],
+        "url": "https://example.com",
+        "<key>": "<value>"
+    }
+]
