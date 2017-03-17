@@ -31,13 +31,11 @@ import scadinspect.parser.OpenScadSymbols;
 %}
 
 /* macros */
-
 D = [0-9]
 E = [Ee][+-]?{D}+
 H = [0-9a-fA-F]
 
 /* states */
-
 %state cond_comment
 %state cond_lcomment
 %state cond_string
@@ -46,46 +44,118 @@ H = [0-9a-fA-F]
 
 %%
 
+/* include */
+/* TODO includes */
+<YYINITIAL> include[ \t\r\n]*"<"  { yybegin(cond_include); }
+<cond_include> {
+[^\t\r\n>]*"/"	        {}
+[^\t\r\n>/]+	          {}
+">"		                  { yybegin(YYINITIAL);}
+} /* close cond_include */
 
+/* use */
+<YYINITIAL> use[ \t\r\n]*"<"	{ yybegin(cond_use); }
+<cond_use> {
+[^\t\r\n>]+	            {}
+ ">"		                { yybegin(YYINITIAL);
+                          return symbol(OpenScadSymbols.TOK_USE);
+                        }
+} /* close cond_use */
 
 /* keywords */
-/* test */
-<YYINITIAL> "abstract"            { return symbol(OpenScadSymbols.ABSTRACT); }
-<YYINITIAL> "boolean"            { return symbol(OpenScadSymbols.BOOLEAN); }
-<YYINITIAL> "break"              { return symbol(OpenScadSymbols.BREAK); }
+<YYINITIAL> "module"	  { return symbol(OpenScadSymbols.TOK_MODULE); }
+<YYINITIAL> "function"	{ return symbol(OpenScadSymbols.TOK_FUNCTION); }
+<YYINITIAL> "if"		    { return symbol(OpenScadSymbols.TOK_IF); }
+<YYINITIAL> "else"		  { return symbol(OpenScadSymbols.TOK_ELSE); }
+<YYINITIAL> "let"		    { return symbol(OpenScadSymbols.TOK_LET); }
+<YYINITIAL> "assert"	  { return symbol(OpenScadSymbols.TOK_ASSERT); }
+<YYINITIAL> "echo"	    { return symbol(OpenScadSymbols.TOK_ECHO); }
+<YYINITIAL> "for"		    { return symbol(OpenScadSymbols.TOK_FOR); }
+<YYINITIAL> "each"		  { return symbol(OpenScadSymbols.TOK_EACH); }
+<YYINITIAL> "true"		  { return symbol(OpenScadSymbols.TOK_TRUE); }
+<YYINITIAL> "false"		  { return symbol(OpenScadSymbols.TOK_FALSE); }
+<YYINITIAL> "undef"		  { return symbol(OpenScadSymbols.TOK_UNDEF); }
 
-/* TODO insert others in rigth order here */
+/* unicode */
 
-"<=" { return symbol(OpenScadSymbols.LE); }
-">=" { return symbol(OpenScadSymbols.GE); }
-"==" { return symbol(OpenScadSymbols.EQ); }
-"!=" { return symbol(OpenScadSymbols.NE); }
-"&&" { return symbol(OpenScadSymbols.AND); }
-"||" { return symbol(OpenScadSymbols.OR); }
+/* TODO what to do with unicode, CUP can handle it, openscad cant? */
 
-/* selfdefined, not in origional grammar, cant pass char directly */
-";" { return symbol(OpenScadSymbols.SEMICOLON); }
-"." { return symbol(OpenScadSymbols.DOT); }
-":" { return symbol(OpenScadSymbols.COLON); }
-"," { return symbol(OpenScadSymbols.COMMA); }
-"{" { return symbol(OpenScadSymbols.BRACKET_CURLY_OPEN); }
-"}" { return symbol(OpenScadSymbols.BRACKET_CURLY_CLOSE); }
-"(" { return symbol(OpenScadSymbols.BRACKET_ROUND_OPEN); }
-")" { return symbol(OpenScadSymbols.BRACKET_ROUND_CLOSE); }
-"[" { return symbol(OpenScadSymbols.BRACKET_SQUARE_OPEN); }
-"]" { return symbol(OpenScadSymbols.BRACKET_SQUARE_CLOSE); }
-"<" { return symbol(OpenScadSymbols.BRACKET_ANGLE_OPEN); }
-">" { return symbol(OpenScadSymbols.BRACKET_ANGLE_CLOSE); }
-"=" { return symbol(OpenScadSymbols.EQUAL); }
-"!" { return symbol(OpenScadSymbols.EXCLAMATION_MARK); }
-"#" { return symbol(OpenScadSymbols.HASH); }
-"%" { return symbol(OpenScadSymbols.PERCENT); }
-"*" { return symbol(OpenScadSymbols.ASTERISK); }
-"/" { return symbol(OpenScadSymbols.SLASH); }
-"+" { return symbol(OpenScadSymbols.PLUS); }
-"-" { return symbol(OpenScadSymbols.MINUS); }
+/* numbers */
+<YYINITIAL> {D}+{E}? |
+{D}*\.{D}+{E}? |
+{D}+\.{D}*{E}?      { return symbol(OpenScadSymbols.TOK_NUMBER); }
 
+/* identifiers */
+<YYINITIAL> "$"?[a-zA-Z0-9_]+   { return symbol(OpenScadSymbols.TOK_ID); }
+
+/* strings */
+/* TODO unicode handeling */
+<YYINITIAL> \"			    { yybegin(cond_string);}
+<cond_string> {
+\\n			                { }
+\\t			                { }
+\\r			                { }
+\\\\		                { }
+\\\"		                { }
+\\x[0-7]{H}             { }
+\\u{H}{4}|\\U{H}{6}     { }
+[^\\\n\"]		            { }
+[\n\r]		              { }
+\"			                { yybegin(YYINITIAL);
+			                    return symbol(OpenScadSymbols.TOK_STRING);
+			                  }
+} /* close cond_string */
+
+/* whitespaces */
+<YYINITIAL> [\t ]       { /* ignore */ }
+<YYINITIAL> [\n\r]      { /* ignore */ }
+
+/* line comments */
+/* unicode allowed and handeled by [^\n] */
+<YYINITIAL> "//"        { yybegin(cond_lcomment); }
+<cond_lcomment> {
+\n                      { yybegin(YYINITIAL); }
+[^\n]                   { }
+} /* close cond_lcomment */
+
+/* comments */
+/* unicode allowed and handeled in [^] */
+<YYINITIAL> "/*"        { yybegin(cond_comment); }
+<cond_comment> {
+"*/"                    { yybegin(YYINITIAL); }
+[^]                     { /* also matches unicode */ }
+} /* close cond_comment */
+
+/* comparisons */
+<YYINITIAL> "<=" { return symbol(OpenScadSymbols.LE); }
+<YYINITIAL> ">=" { return symbol(OpenScadSymbols.GE); }
+<YYINITIAL> "==" { return symbol(OpenScadSymbols.EQ); }
+<YYINITIAL> "!=" { return symbol(OpenScadSymbols.NE); }
+<YYINITIAL> "&&" { return symbol(OpenScadSymbols.AND); }
+<YYINITIAL> "||" { return symbol(OpenScadSymbols.OR); }
+
+/* selfdefined, not in origional grammar, can't pass char directly */
+<YYINITIAL> ";" { return symbol(OpenScadSymbols.SEMICOLON); }
+<YYINITIAL> "." { return symbol(OpenScadSymbols.DOT); }
+<YYINITIAL> ":" { return symbol(OpenScadSymbols.COLON); }
+<YYINITIAL> "," { return symbol(OpenScadSymbols.COMMA); }
+<YYINITIAL> "{" { return symbol(OpenScadSymbols.BRACKET_CURLY_OPEN); }
+<YYINITIAL> "}" { return symbol(OpenScadSymbols.BRACKET_CURLY_CLOSE); }
+<YYINITIAL> "(" { return symbol(OpenScadSymbols.BRACKET_ROUND_OPEN); }
+<YYINITIAL> ")" { return symbol(OpenScadSymbols.BRACKET_ROUND_CLOSE); }
+<YYINITIAL> "[" { return symbol(OpenScadSymbols.BRACKET_SQUARE_OPEN); }
+<YYINITIAL> "]" { return symbol(OpenScadSymbols.BRACKET_SQUARE_CLOSE); }
+<YYINITIAL> "<" { return symbol(OpenScadSymbols.BRACKET_ANGLE_OPEN); }
+<YYINITIAL> ">" { return symbol(OpenScadSymbols.BRACKET_ANGLE_CLOSE); }
+<YYINITIAL> "=" { return symbol(OpenScadSymbols.EQUAL); }
+<YYINITIAL> "!" { return symbol(OpenScadSymbols.EXCLAMATION_MARK); }
+<YYINITIAL> "#" { return symbol(OpenScadSymbols.HASH); }
+<YYINITIAL> "%" { return symbol(OpenScadSymbols.PERCENT); }
+<YYINITIAL> "*" { return symbol(OpenScadSymbols.ASTERISK); }
+<YYINITIAL> "/" { return symbol(OpenScadSymbols.SLASH); }
+<YYINITIAL> "+" { return symbol(OpenScadSymbols.PLUS); }
+<YYINITIAL> "-" { return symbol(OpenScadSymbols.MINUS); }
 
 /* error fallback */
-[^]                              { throw new Error("Illegal character <"+
-                                                    yytext()+">"); }
+/* TODO replace with custom Error */
+[^]                              { throw new Error("Illegal character <"+ yytext() +">"); }
