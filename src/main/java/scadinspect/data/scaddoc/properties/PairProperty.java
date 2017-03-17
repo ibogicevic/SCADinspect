@@ -1,11 +1,11 @@
-package scadinspect.data.scaddoc.Properties;
+package scadinspect.data.scaddoc.properties;
 
-import scadinspect.data.scaddoc.Properties.Helper.Pair;
+import scadinspect.data.scaddoc.properties.helper.Pair;
 
 /**
  * Created by richteto on 17.03.2017.
  */
-public class PairProperty implements Property{
+public class PairProperty implements Property {
 
   private String key;
   private Pair value;
@@ -17,11 +17,11 @@ public class PairProperty implements Property{
 
   @Override
   public String getKey() {
-    return null;
+    return key;
   }
 
   @Override
   public Pair getValue() {
-    return null;
+    return value;
   }
 }

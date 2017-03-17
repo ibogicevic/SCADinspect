@@ -1,4 +1,4 @@
-package scadinspect.data.scaddoc.Properties.Helper;
+package scadinspect.data.scaddoc.properties.helper;
 
 /**
  * Created by richteto on 17.03.2017.

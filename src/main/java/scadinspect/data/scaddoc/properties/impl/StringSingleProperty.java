@@ -1,9 +1,12 @@
-package scadinspect.data.scaddoc.Properties;
+package scadinspect.data.scaddoc.properties.impl;
+
+import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
  * Created by richteto on 17.03.2017.
  */
-public class StringSingleProperty implements Property {
+public class StringSingleProperty extends SingleProperty {
+
   private String key;
   private String value;
 

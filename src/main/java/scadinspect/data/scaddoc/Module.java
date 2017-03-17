@@ -2,12 +2,13 @@ package scadinspect.data.scaddoc;
 
 import java.util.LinkedList;
 import java.util.List;
-import scadinspect.data.scaddoc.Properties.Property;
+import scadinspect.data.scaddoc.properties.Property;
 
 /**
  * Created by richteto on 17.03.2017.
  */
 public class Module {
+
   private List<Property> properties;
 
   public Module(List<Property> properties) {
@@ -15,8 +16,7 @@ public class Module {
   }
 
   public Module() {
-    properties=new LinkedList<>();
-
+    properties = new LinkedList<>();
   }
 
   public void addProperty(Property property) {

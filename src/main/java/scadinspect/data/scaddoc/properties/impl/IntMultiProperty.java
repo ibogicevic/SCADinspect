@@ -1,11 +1,13 @@
-package scadinspect.data.scaddoc.Properties;
+package scadinspect.data.scaddoc.properties.impl;
 
 import java.util.List;
+import scadinspect.data.scaddoc.properties.MultiProperty;
 
 /**
  * Created by richteto on 17.03.2017.
  */
-public class IntMultiProperty implements Property {
+public class IntMultiProperty extends MultiProperty {
+
   private String key;
   private List<Long> values;
 
@@ -23,4 +25,6 @@ public class IntMultiProperty implements Property {
   public List<Long> getValue() {
     return values;
   }
+
+
 }
