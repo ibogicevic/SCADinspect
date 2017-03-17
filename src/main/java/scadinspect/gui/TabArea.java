@@ -1,7 +1,12 @@
 package scadinspect.gui;
 
+import gui.DocumentationList;
+import gui.IssueList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.web.HTMLEditor;
 
 /**
@@ -9,16 +14,35 @@ import javafx.scene.web.HTMLEditor;
  * @author Tim Walter
  */
 public class TabArea extends TabPane {
+	IssueList issueList = new IssueList();
+	DocumentationList documentationList = new DocumentationList();
 
 	public TabArea() {
+		TableView issue = generateIssueTable(issueList);
+		TableView documentations = generateDocTable(documentationList);
+
+
+		//issue tab
 		Tab issues = new Tab();
 		issues.setText("Issues");
-		//issues.setContent(); SET CONTENT FOR issueArea HERE
+		issues.setContent(issue); //SET CONTENT FOR issueArea HERE
+
+		//documentation tab
 		Tab documentation = new Tab();
 		documentation.setText("Documentation");
-		//issues.setContent(); SET CONTENT FOR documentationArea HERE
+		documentation.setContent(documentations); //SET CONTENT FOR documentationArea HERE
 
 		this.getTabs().add(issues);
 		this.getTabs().add(documentation);
+	}
+
+	private TableView generateIssueTable (IssueList issueList) {
+		TableView table = issueList.showList();
+		return table;
+	}
+
+	private TableView generateDocTable (DocumentationList documentationList){
+		TableView table = documentationList.showList();
+		return table;
 	}
 }
