@@ -91,8 +91,6 @@ public class Main extends Application {
 		primaryStage.setY((0.5-WINDOW_HEIGHT)*screenBounds.getHeight());
 		primaryStage.show();
 		
-		// load default workspace
-		//ProjectHandling.openProject("");
 	}
 
 	/**
@@ -101,6 +99,10 @@ public class Main extends Application {
 	 */
 	public boolean isProjectOpen() {
 		return (currentProject != null);
+	}
+	
+	public void setCurrentProject(String currentProject){
+		this.currentProject=currentProject;
 	}
 	
 	/**
