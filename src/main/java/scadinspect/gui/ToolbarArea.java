@@ -68,6 +68,7 @@ public class ToolbarArea extends ToolBar {
 		openProjectButton.setOnAction(e -> ProjectHandling.openProject());
 		closeProjectButton.setOnAction(e -> ProjectHandling.closeProject());
 		exitButton.setOnAction(e -> {Platform.exit();});
+                settingsButton.setOnAction(e -> SettingsDialog.openDialog());
 		// add all buttons
 		this.getItems().add(openProjectButton);
 		this.getItems().add(closeProjectButton);
