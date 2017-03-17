@@ -74,7 +74,8 @@ public class Main extends Application {
 		Scene scene = new Scene(mainPane, screenBounds.getWidth(), WINDOW_HEIGHT*screenBounds.getHeight(), true);
 		primaryStage.setTitle(APPNAME);
 		primaryStage.setScene(scene);
-		primaryStage.setY((0.5-WINDOW_HEIGHT)*screenBounds.getHeight());
+		primaryStage.setY(0.7* screenBounds.getHeight());
+		primaryStage.setX(0);
 		primaryStage.show();
 
 		// load default workspace
