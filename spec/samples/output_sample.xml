@@ -1,0 +1,25 @@
+<parts>
+    <part>
+        <name>Wheel</name>
+        <pice currency="EUR">100</price>
+        <amount>4</amount>
+        <weight>12</weight>
+        <materials>
+            <material>Rubber</material>
+            <material>Aluminium</material>
+        </materials>
+        <url>https://example.com</url>
+        <key>value</key>
+    </part>
+    <part>
+        <name>Motor</name>
+        <price currency="USD">1000</price>
+        <amount>1</amount>
+        <weight>200</weight>
+        <materials>
+            <material>Steel<material>
+        </materials>
+        <url>https://example.com</url>
+        <key>value</key>
+    </part>
+</parts>
