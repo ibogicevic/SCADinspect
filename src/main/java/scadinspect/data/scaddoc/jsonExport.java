@@ -16,33 +16,31 @@ public class jsonExport {
     jsonExport export = new jsonExport();
     System.out.println("test");
     Module test = new Module();
-    test.addProperty(new IntSingleProperty("amount", 20));
-    test.addProperty(new RealSingleProperty("weight", 123.33));
-    test.addProperty(new IntMultiProperty("longmult", 1l, 2l, 3l));
-    test.addProperty(new RealMultiProperty("realmult", 1.0, 2.6));
-    test.addProperty(new PairProperty("pair", new Pair(100, "EUR")));
-    test.addProperty(new StringSingleProperty("asdfs", "asdfsdfasdf"));
-    test.addProperty(new StringMultiProperty("asdf", "sasdf", "aasdfasdfsdfasdfasdf"));
+    test.addProperty(new IntSingleProperty("Singlel Int", 20));
+    test.addProperty(new RealSingleProperty("Single Flaot", 123.33));
+    test.addProperty(new IntMultiProperty("Multiple Int", 1l, 2l, 3l));
+    test.addProperty(new RealMultiProperty("Multiple Float", 1.0, 2.6));
+    test.addProperty(new PairProperty("Pair", new Pair(100, "EUR")));
+    test.addProperty(new StringSingleProperty("Single String", "test"));
+    test.addProperty(new StringMultiProperty("Multiple Strings", "abc", "def"));
     System.out.println(export.oneLine(test));
   }
 
   public String oneLine(Module part) {
     JSONArray module = new JSONArray();
+    JSONObject element = new JSONObject();
     for (Property property : part.getProperties()) {
-
-      System.out.println(property.getKey() + "\t\t" + property.getValue());
-      System.out.println(property);
-      System.out.println();
-
-      JSONObject element = new JSONObject();
       if (Pair.class.isInstance(property.getValue())) {
-        System.out.println(property.getValue());
+        JSONObject pair = new JSONObject();
+        Pair tmp = (Pair) property.getValue();
+        pair.accumulate("value", tmp.getValue());
+        pair.accumulate("metric", tmp.getMetric());
+        element.accumulate(property.getKey(), pair);
+      } else {
+        element.accumulate(property.getKey(), property.getValue());
       }
-      else{
-        element.append(property.getKey(), property.getValue());
-      }
-      module.put(element);
     }
+    module.put(element);
     return module.toString();
   }
 }
