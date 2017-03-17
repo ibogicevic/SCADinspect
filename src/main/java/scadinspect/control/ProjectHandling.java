@@ -7,7 +7,7 @@ import javafx.stage.DirectoryChooser;
 
 public class ProjectHandling {
 
-	private final static DirectoryChooser directoryChooser = new DirectoryChooser();
+	private static final DirectoryChooser directoryChooser = new DirectoryChooser();
 	
 	static public void setCurrentProject(String rootPath) {
 		// update window title
