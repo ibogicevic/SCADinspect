@@ -24,4 +24,9 @@ public class PairProperty implements Property {
   public Pair getValue() {
     return value;
   }
+
+  @Override
+  public String toString() {
+    return getKey() + ": " + getValue();
+  }
 }
