@@ -1,5 +1,7 @@
 package scadinspect.data.scaddoc.properties.impl;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 
@@ -14,6 +16,11 @@ public class IntMultiProperty extends MultiProperty {
   public IntMultiProperty(String key, List<Long> values) {
     this.key = key;
     this.values = values;
+  }
+
+  public IntMultiProperty(String key, Long... values) {
+    this.key = key;
+    this.values = new LinkedList<>(Arrays.asList(values));
   }
 
   @Override
