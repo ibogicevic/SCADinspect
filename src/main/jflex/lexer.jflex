@@ -78,7 +78,7 @@ H = [0-9a-fA-F]
 
 /* unicode */
 
-/* TODO what to do with unicode, CUP can handle it, openscad cant? */
+/* TODO what to do with unicode, CUP can handle it, openscad cant, except for in comments and strings? */
 
 /* numbers */
 <YYINITIAL> {D}+{E}? |
@@ -90,6 +90,7 @@ H = [0-9a-fA-F]
 
 /* strings */
 /* TODO unicode handeling */
+/* TODO build string */
 <YYINITIAL> \"			    { yybegin(cond_string);}
 <cond_string> {
 \\n			                { }
@@ -102,8 +103,8 @@ H = [0-9a-fA-F]
 [^\\\n\"]		            { }
 [\n\r]		              { }
 \"			                { yybegin(YYINITIAL);
-			                    return symbol(OpenScadSymbols.TOK_STRING);
-			                  }
+                          return symbol(OpenScadSymbols.TOK_STRING);
+                        }
 } /* close cond_string */
 
 /* whitespaces */
