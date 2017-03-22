@@ -11,7 +11,7 @@ import scadinspect.data.scaddoc.properties.helper.Pair;
 /**
  * Created by desyon on 3/17/17.
  */
-class jsonExportTest {
+class JsonExportTest {
 
   @Test
   void oneLine() {

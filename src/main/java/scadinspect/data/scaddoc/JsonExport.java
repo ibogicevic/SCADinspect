@@ -12,25 +12,7 @@ import scadinspect.data.scaddoc.properties.impl.*;
 /**
  * Created by simon on 3/17/17.
  */
-public class jsonExport {
-
-  public static void main(String[] args) {
-    jsonExport export = new jsonExport();
-    System.out.println("test");
-    Module test = new Module();
-    test.addProperty(new IntSingleProperty("Single Int", 20));
-    test.addProperty(new RealSingleProperty("Single Flaot", 123.33));
-    test.addProperty(new IntMultiProperty("Multiple Int", 1l, 2l, 3l));
-    test.addProperty(new RealMultiProperty("Multiple Float", 1.0, 2.6));
-    test.addProperty(new PairProperty("Pair", new Pair(100, "EUR")));
-    test.addProperty(new StringSingleProperty("Single String", "test"));
-    test.addProperty(new StringMultiProperty("Multiple Strings", "abc", "def"));
-
-    List<Module> multuTest=new ArrayList<>();
-    multuTest.add(test);
-    multuTest.add(test);
-    System.out.println(export.multiLine(multuTest));
-  }
+public class JsonExport {
 
   public JSONObject oneLine(Module part) {
 
