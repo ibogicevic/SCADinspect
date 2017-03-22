@@ -16,7 +16,7 @@ public class Module {
   }
 
   public Module() {
-    properties = new LinkedList<>();
+    this(new LinkedList<>());
   }
 
   public void addProperty(Property property) {
