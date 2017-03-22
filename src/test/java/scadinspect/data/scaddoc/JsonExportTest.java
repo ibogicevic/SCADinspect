@@ -5,10 +5,6 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import scadinspect.data.scaddoc.properties.MultiProperty;
-import scadinspect.data.scaddoc.properties.PairProperty;
-import scadinspect.data.scaddoc.properties.SingleProperty;
-import scadinspect.data.scaddoc.properties.helper.Pair;
 
 /**
  * Created by desyon on 3/17/17.
@@ -19,14 +15,14 @@ class JsonExportTest {
   List<Module> modules;
 
   @BeforeEach
-  public void instanciate() {
+  public void instantiate() {
     exporter = new JsonExport();
     modules = new LinkedList<>();
   }
 
   @AfterEach
   public void output() {
-    System.out.println(exporter.multiLine(modules));
+    System.out.println(exporter.getJson(modules));
   }
 
   @Test

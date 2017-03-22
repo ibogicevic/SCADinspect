@@ -1,7 +1,7 @@
 package scadinspect.data.scaddoc.properties;
 
 /**
- * Created by til on 3/17/17.
+ * Created by desyon on 3/17/17.
  */
 public class SingleProperty<T> implements Property {
 
