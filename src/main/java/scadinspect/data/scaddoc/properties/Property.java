@@ -8,7 +8,7 @@ package scadinspect.data.scaddoc.properties;
  */
 public interface Property<T> {
 
-  public String getKey();
+  String getKey();
 
-  public T getValue();
+  T getValue();
 }
