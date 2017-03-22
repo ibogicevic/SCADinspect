@@ -56,12 +56,6 @@ class JsonExportTest {
   }
 
   @Test
-  void singlePropertyToString() {
-    assertEquals("key: value", new SingleProperty<>("key", "value").toString());
-
-  }
-
-  @Test
   void multiPropertyInt() {
     Module multiProperty = new Module();
     multiProperty.addProperty(new MultiProperty<>("key", 1, 2, 3));
@@ -98,12 +92,6 @@ class JsonExportTest {
   }
 
   @Test
-  void multiPropertyToString() {
-    assertEquals("key: [a, b]", new MultiProperty<>("key", "a", "b").toString());
-
-  }
-
-  @Test
   void pairPropertyInt() {
     Module pairProperty = new Module();
     pairProperty.addProperty(new PairProperty("key", 12, "Eur"));
@@ -124,11 +112,4 @@ class JsonExportTest {
     modules.add(pairProperty);
     assertEquals("[{\"key\":{\"metric\":\"Eur\",\"value\":\"val\"}}]", exporter.getJson(modules));
   }
-
-  @Test
-  void pairPropertyToString() {
-    assertEquals("key: {value: 1, metric: m}", new PairProperty("key", 1, "m").toString());
-
-  }
-
 }
