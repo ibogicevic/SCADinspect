@@ -104,16 +104,30 @@ class JsonExportTest {
   }
 
   @Test
-  void pairProperty() {
+  void pairPropertyInt() {
     Module pairProperty = new Module();
     pairProperty.addProperty(new PairProperty("key", 12, "Eur"));
     modules.add(pairProperty);
     assertEquals("[{\"key\":{\"metric\":\"Eur\",\"value\":12}}]", exporter.getJson(modules));
   }
+  @Test
+  void pairPropertyFloat() {
+    Module pairProperty = new Module();
+    pairProperty.addProperty(new PairProperty("key", 12.3, "Eur"));
+    modules.add(pairProperty);
+    assertEquals("[{\"key\":{\"metric\":\"Eur\",\"value\":12.3}}]", exporter.getJson(modules));
+  }
+  @Test
+  void pairPropertyString() {
+    Module pairProperty = new Module();
+    pairProperty.addProperty(new PairProperty("key", "val", "Eur"));
+    modules.add(pairProperty);
+    assertEquals("[{\"key\":{\"metric\":\"Eur\",\"value\":\"val\"}}]", exporter.getJson(modules));
+  }
 
   @Test
   void pairPropertyToString() {
-    assertEquals("key: {value: 1.0, metric: m}", new PairProperty("key", 1, "m").toString());
+    assertEquals("key: {value: 1, metric: m}", new PairProperty("key", 1, "m").toString());
 
   }
 
