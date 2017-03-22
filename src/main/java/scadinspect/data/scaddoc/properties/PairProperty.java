@@ -5,7 +5,7 @@ import scadinspect.data.scaddoc.properties.helper.Pair;
 /**
  * Created by richteto on 17.03.2017.
  */
-public class PairProperty implements Property {
+public class PairProperty<T> implements Property {
 
   private String key;
   private Pair value;
@@ -15,7 +15,7 @@ public class PairProperty implements Property {
     this.value = value;
   }
 
-  public PairProperty(String key, double value, String metric) {
+  public PairProperty(String key, T value, String metric) {
     this(key,new Pair(value,metric));
   }
 
