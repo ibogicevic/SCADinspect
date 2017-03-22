@@ -16,7 +16,7 @@ public class PairProperty<T> implements Property {
   }
 
   public PairProperty(String key, T value, String metric) {
-    this(key,new Pair(value,metric));
+    this(key, new Pair<>(value, metric));
   }
 
   @Override

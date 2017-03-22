@@ -4,8 +4,9 @@ package scadinspect.data.scaddoc.properties.helper;
  * Created by richteto on 17.03.2017.
  */
 public class Pair<T> {
+
   private T value;
-  private  String metric;
+  private String metric;
 
   public Pair(T value, String metric) {
     this.value = value;
@@ -22,6 +23,6 @@ public class Pair<T> {
 
   @Override
   public String toString() {
-    return "{value: "+value+", metric: "+metric+"}";
+    return "{value: " + value + ", metric: " + metric + "}";
   }
 }
