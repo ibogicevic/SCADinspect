@@ -1,13 +1,12 @@
 package scadinspect.data.scaddoc;
 
 
-import java.util.ArrayList;
+
 import java.util.List;
 import org.json.*;
-import scadinspect.data.scaddoc.properties.*;
 import scadinspect.data.scaddoc.properties.Property;
 import scadinspect.data.scaddoc.properties.helper.Pair;
-import scadinspect.data.scaddoc.properties.impl.*;
+
 
 /**
  * Created by simon on 3/17/17.
