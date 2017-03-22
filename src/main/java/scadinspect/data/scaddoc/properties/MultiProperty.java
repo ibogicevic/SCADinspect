@@ -2,7 +2,6 @@ package scadinspect.data.scaddoc.properties;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Multiple value property definition like [1, 2, 3, 4]

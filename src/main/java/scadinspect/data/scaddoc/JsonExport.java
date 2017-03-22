@@ -11,13 +11,13 @@ import scadinspect.data.scaddoc.properties.helper.Pair;
  */
 
 public class JsonExport {
-  //takes a module and retruns it as a json object
+  //takes a module and reruns it as a json object
   private JSONObject singleModule(Module module) {
 
     //object to be returned
     JSONObject element = new JSONObject();
 
-    //a module consits of multible proberties
+    //a module consist of multiple properties
     for (Property property : module.getProperties()) {
       //if the property is a pair property it needs special treatment
       if (Pair.class.isInstance(property.getValue())) {

@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import scadinspect.data.scaddoc.properties.MultiProperty;
@@ -98,6 +97,7 @@ class JsonExportTest {
     modules.add(pairProperty);
     assertEquals("[{\"key\":{\"metric\":\"Eur\",\"value\":12}}]", exporter.getJson(modules));
   }
+
   @Test
   void pairPropertyFloat() {
     Module pairProperty = new Module();
@@ -105,6 +105,7 @@ class JsonExportTest {
     modules.add(pairProperty);
     assertEquals("[{\"key\":{\"metric\":\"Eur\",\"value\":12.3}}]", exporter.getJson(modules));
   }
+
   @Test
   void pairPropertyString() {
     Module pairProperty = new Module();
