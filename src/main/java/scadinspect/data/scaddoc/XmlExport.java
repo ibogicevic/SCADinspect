@@ -43,12 +43,11 @@ public class XmlExport {
 
     // root elements
     Document doc = docBuilder.newDocument();
-    Element rootElement = doc.createElement("module");
+    Element moduleNode = doc.createElement("module");
 
     List<Property> properties = module.getProperties();
 
-    for (Property property : properties
-        ) {
+    for (Property property : properties) {
 
       Element key = doc.createElement(property.getKey());
 
@@ -56,6 +55,8 @@ public class XmlExport {
       if (property instanceof PairProperty) {
         PairProperty pairProperty;
         pairProperty = (PairProperty) property;
+
+        key.setAttribute("metric", pairProperty.getValue().getMetric());
 
         Attr attr = doc.createAttribute("metric");
         attr.setValue(pairProperty.getValue().getMetric());
@@ -68,9 +69,8 @@ public class XmlExport {
         key.appendChild(doc.createTextNode(property.getValue().toString()));
       }
 
-      rootElement.appendChild(key);
+      moduleNode.appendChild(key);
     }
-    return rootElement;
-
+    return moduleNode;
   }
 }
