@@ -8,10 +8,6 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import scadinspect.data.scaddoc.properties.MultiProperty;
-import scadinspect.data.scaddoc.properties.PairProperty;
-import scadinspect.data.scaddoc.properties.SingleProperty;
-import scadinspect.data.scaddoc.properties.helper.Pair;
 
 /**
  * Created by desyon on 3/17/17.

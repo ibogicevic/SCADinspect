@@ -17,8 +17,7 @@ public class MultiProperty<T> implements Property {
   }
 
   public MultiProperty(String key, T... values) {
-    this.key = key;
-    this.values = Arrays.asList(values);
+    this(key, Arrays.asList(values));
   }
 
   @Override

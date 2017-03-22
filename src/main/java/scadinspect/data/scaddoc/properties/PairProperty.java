@@ -15,6 +15,10 @@ public class PairProperty implements Property {
     this.value = value;
   }
 
+  public PairProperty(String key, double value, String metric) {
+    this(key,new Pair(value,metric));
+  }
+
   @Override
   public String getKey() {
     return key;

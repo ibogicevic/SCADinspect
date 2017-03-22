@@ -1,9 +1,9 @@
 package scadinspect.data.scaddoc;
 
 
-
 import java.util.List;
-import org.json.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import scadinspect.data.scaddoc.properties.Property;
 import scadinspect.data.scaddoc.properties.helper.Pair;
 
@@ -13,10 +13,10 @@ import scadinspect.data.scaddoc.properties.helper.Pair;
  */
 public class JsonExport {
 
-  public JSONObject oneLine(Module part) {
+  private JSONObject singleModule(Module module) {
 
     JSONObject element = new JSONObject();
-    for (Property property : part.getProperties()) {
+    for (Property property : module.getProperties()) {
       if (Pair.class.isInstance(property.getValue())) {
         JSONObject pair = new JSONObject();
         Pair tmp = (Pair) property.getValue();
@@ -31,10 +31,10 @@ public class JsonExport {
     return element;
   }
 
-  public String multiLine(List<Module> parts) {
-    JSONArray list=new JSONArray();
-    for (Module part:parts){
-      list.put(oneLine(part));
+  public String getJson(List<Module> modules) {
+    JSONArray list = new JSONArray();
+    for (Module module : modules) {
+      list.put(singleModule(module));
     }
     return list.toString();
   }
