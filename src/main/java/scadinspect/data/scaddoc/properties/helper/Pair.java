@@ -3,16 +3,16 @@ package scadinspect.data.scaddoc.properties.helper;
 /**
  * Created by richteto on 17.03.2017.
  */
-public class Pair {
-  private double value;
+public class Pair<T> {
+  private T value;
   private  String metric;
 
-  public Pair(double value, String metric) {
+  public Pair(T value, String metric) {
     this.value = value;
     this.metric = metric;
   }
 
-  public double getValue() {
+  public T getValue() {
     return value;
   }
 
