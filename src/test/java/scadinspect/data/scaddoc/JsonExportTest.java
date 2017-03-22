@@ -21,7 +21,7 @@ class JsonExportTest {
   private List<Module> modules;
 
   @BeforeEach
-  void instanciate() {
+  void instantiate() {
     exporter = new JsonExport();
     modules = new LinkedList<>();
   }
