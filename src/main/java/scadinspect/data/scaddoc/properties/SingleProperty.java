@@ -6,7 +6,7 @@ package scadinspect.data.scaddoc.properties;
  *
  * @author Created by desyon on 3/17/17.
  */
-public class SingleProperty<T> implements Property {
+public class SingleProperty<T> implements Property<T> {
 
   private String key;
   private T value;
@@ -28,7 +28,7 @@ public class SingleProperty<T> implements Property {
   }
 
   @Override
-  public Object getValue() {
+  public T getValue() {
     return value;
   }
 
