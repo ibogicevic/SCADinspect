@@ -12,7 +12,7 @@ import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
- * Created by desyon on 3/17/17.
+ * @author simon, desyon on 3/17/17.
  */
 class JsonExportTest {
 
@@ -25,11 +25,18 @@ class JsonExportTest {
     modules = new LinkedList<>();
   }
 
+  /**
+   * Tests the export of an empty list.
+   * @result Ensure the export is failsafe.
+   */
   @Test
   void emptyList() {
     assertEquals("[]", exporter.getJson(modules));
   }
 
+  /**
+   * Test against a single property containing an integer value.
+   */
   @Test
   void singlePropertyInt() {
     Module singleProperty = new Module();
@@ -38,6 +45,9 @@ class JsonExportTest {
     assertEquals("[{\"key\":1}]", exporter.getJson(modules));
   }
 
+  /**
+   * Test against a single property containing a float value.
+   */
   @Test
   void singlePropertyFloat() {
     Module singleProperty = new Module();
@@ -46,6 +56,9 @@ class JsonExportTest {
     assertEquals("[{\"key\":0.1}]", exporter.getJson(modules));
   }
 
+  /**
+   * Test against a single property containing a string value.
+   */
   @Test
   void singlePropertyString() {
     Module singleProperty = new Module();
@@ -54,6 +67,9 @@ class JsonExportTest {
     assertEquals("[{\"key\":\"value\"}]", exporter.getJson(modules));
   }
 
+  /**
+   * Test against multiple properties containing integer values.
+   */
   @Test
   void multiPropertyInt() {
     Module multiProperty = new Module();
@@ -62,6 +78,9 @@ class JsonExportTest {
     assertEquals("[{\"key\":[1,2,3]}]", exporter.getJson(modules));
   }
 
+  /**
+   * Test against multiple properties containing float values.
+   */
   @Test
   void multiPropertyFloat() {
     Module multiProperty = new Module();
@@ -70,6 +89,9 @@ class JsonExportTest {
     assertEquals("[{\"key\":[0.1,1.1,2,4]}]", exporter.getJson(modules));
   }
 
+  /**
+   * Test against multiple properties containing string values.
+   */
   @Test
   void multiPropertyString() {
     Module multiProperty = new Module();
@@ -78,39 +100,36 @@ class JsonExportTest {
     assertEquals("[{\"key\":[\"a\",\"b\",\"c\"]}]", exporter.getJson(modules));
   }
 
-  @Test
-  void multiPropertyList() {
-    Module multiProperty = new Module();
-    List property = new LinkedList<String>();
-    property.add("a");
-    property.add("b");
-    property.add("c");
-    multiProperty.addProperty(new MultiProperty("key", property));
-    modules.add(multiProperty);
-    assertEquals("[{\"key\":[\"a\",\"b\",\"c\"]}]", exporter.getJson(modules));
-  }
-
+  /**
+   * Test against a pair property containing an integer value.
+   */
   @Test
   void pairPropertyInt() {
     Module pairProperty = new Module();
-    pairProperty.addProperty(new PairProperty("key", 12, "Eur"));
+    pairProperty.addProperty(new PairProperty<>("price", 12, "EUR"));
     modules.add(pairProperty);
-    assertEquals("[{\"key\":{\"metric\":\"Eur\",\"value\":12}}]", exporter.getJson(modules));
+    assertEquals("[{\"price\":{\"metric\":\"EUR\",\"value\":12}}]", exporter.getJson(modules));
   }
 
+  /**
+   * Test against a pair property containing a float value.
+   */
   @Test
   void pairPropertyFloat() {
     Module pairProperty = new Module();
-    pairProperty.addProperty(new PairProperty("key", 12.3, "Eur"));
+    pairProperty.addProperty(new PairProperty<>("price", 12.3, "EUR"));
     modules.add(pairProperty);
-    assertEquals("[{\"key\":{\"metric\":\"Eur\",\"value\":12.3}}]", exporter.getJson(modules));
+    assertEquals("[{\"price\":{\"metric\":\"EUR\",\"value\":12.3}}]", exporter.getJson(modules));
   }
 
+  /**
+   * Test against a pair property containing a String value.
+   */
   @Test
   void pairPropertyString() {
     Module pairProperty = new Module();
-    pairProperty.addProperty(new PairProperty("key", "val", "Eur"));
+    pairProperty.addProperty(new PairProperty<>("weight", "1200", "kg"));
     modules.add(pairProperty);
-    assertEquals("[{\"key\":{\"metric\":\"Eur\",\"value\":\"val\"}}]", exporter.getJson(modules));
+    assertEquals("[{\"weight\":{\"metric\":\"kg\",\"value\":\"1200\"}}]", exporter.getJson(modules));
   }
 }

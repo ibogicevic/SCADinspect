@@ -7,7 +7,7 @@ import java.util.Collection;
  * Multiple value property definition like [1, 2, 3, 4]
  * as property with a named key and a list as value
  *
- * @author Created by desyon on 3/17/17.
+ * @author desyon on 3/17/17.
  */
 public class MultiProperty<T> implements Property<Collection<T>> {
 

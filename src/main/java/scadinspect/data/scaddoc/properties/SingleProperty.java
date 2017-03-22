@@ -4,7 +4,7 @@ package scadinspect.data.scaddoc.properties;
  * Single value property definition
  * as property with a named key and a single value
  *
- * @author Created by desyon on 3/17/17.
+ * @author desyon on 3/17/17.
  */
 public class SingleProperty<T> implements Property<T> {
 

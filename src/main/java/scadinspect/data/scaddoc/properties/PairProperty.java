@@ -6,7 +6,7 @@ import scadinspect.data.scaddoc.properties.helper.Pair;
  * Pair property definition for pair values like '10 EUR' or 'hundred USD'
  * as property with a named key
  *
- * @author Created by richteto on 17.03.2017
+ * @author richteto on 17.03.2017
  */
 public class PairProperty<T> implements Property {
 

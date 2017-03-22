@@ -5,7 +5,7 @@ import java.util.List;
 import scadinspect.data.scaddoc.properties.Property;
 
 /**
- * Created by richteto on 17.03.2017.
+ * @author richteto on 17.03.2017.
  */
 public class Module {
 

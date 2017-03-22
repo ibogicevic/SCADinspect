@@ -7,11 +7,16 @@ import scadinspect.data.scaddoc.properties.Property;
 import scadinspect.data.scaddoc.properties.helper.Pair;
 
 /**
- * Created by simon on 3/17/17.
+ * @author simon on 3/17/17.
  */
 
 public class JsonExport {
-  //takes a module and reruns it as a json object
+  /**
+   * Creates a JSON Node from a given module with all properties as sub-nodes
+   *
+   * @param module The module that a JSON node shall be created for
+   * @return returns a JSONObject that contains the module with all its properties
+   */
   private JSONObject singleModule(Module module) {
 
     //object to be returned
@@ -41,7 +46,12 @@ public class JsonExport {
     return element;
   }
 
-  //takes a List of modules and returns a json formatted String
+  /**
+   * @param modules a List of all modules that are supposed to be exported. This list will be
+   *        converted into a JSON document as specified.
+   * @return returns the JSON document as String that can be written to a file or used further
+   *         internally
+   */
   public String getJson(List<Module> modules) {
     JSONArray list = new JSONArray();
     for (Module module : modules) {
