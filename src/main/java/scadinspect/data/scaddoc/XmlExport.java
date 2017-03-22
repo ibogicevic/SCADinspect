@@ -11,6 +11,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.Property;
 
@@ -27,8 +28,7 @@ public class XmlExport {
     doc.appendChild(rootElement);
 
     // every single module into one element
-    for (Module module : modules
-        ) {
+    for (Module module : modules) {
       rootElement.appendChild(singleModule(module));
     }
 
@@ -51,23 +51,35 @@ public class XmlExport {
 
       Element key = doc.createElement(property.getKey());
 
-      // if it is PairProperty, create attribute with associated value
-      if (property instanceof PairProperty) {
-        PairProperty pairProperty;
-        pairProperty = (PairProperty) property;
+      // if it is MultiProperty, create node for every value
+      if (property instanceof MultiProperty) {
+        MultiProperty multiProperty = (MultiProperty) property;
+        List values = multiProperty.getValue();
+        for (Object value : values) {
+          Element subValue = doc.createElement(multiProperty.getKey() + "Value");
+          subValue.appendChild(doc.createTextNode(value.toString()));
+          key.appendChild(subValue);
+        }
 
-        key.setAttribute("metric", pairProperty.getValue().getMetric());
+      } else
 
-        Attr attr = doc.createAttribute("metric");
-        attr.setValue(pairProperty.getValue().getMetric());
+        // if it is PairProperty, create attribute with associated value
+        if (property instanceof PairProperty) {
+          PairProperty pairProperty;
+          pairProperty = (PairProperty) property;
 
-        key.setAttributeNode(attr);
-        key.appendChild(doc.createTextNode(pairProperty.getValue().getValue().toString()));
+          key.setAttribute("metric", pairProperty.getValue().getMetric());
 
-      } else {
-        // create text node with value inside and append
-        key.appendChild(doc.createTextNode(property.getValue().toString()));
-      }
+          Attr attr = doc.createAttribute("metric");
+          attr.setValue(pairProperty.getValue().getMetric());
+
+          key.setAttributeNode(attr);
+          key.appendChild(doc.createTextNode(pairProperty.getValue().getValue().toString()));
+
+        } else {
+          // create text node with value inside and append
+          key.appendChild(doc.createTextNode(property.getValue().toString()));
+        }
 
       moduleNode.appendChild(key);
     }

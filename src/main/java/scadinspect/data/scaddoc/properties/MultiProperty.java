@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Created by desyon on 3/17/17.
  */
-public class MultiProperty<T> implements Property {
+public class MultiProperty<T> implements Property<List<T>> {
 
   private String key;
   private List<T> values;
