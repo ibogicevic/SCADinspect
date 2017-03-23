@@ -7,6 +7,7 @@ import java_cup.runtime.ComplexSymbolFactory;
 import java_cup.runtime.ScannerBuffer;
 import java_cup.runtime.Symbol;
 import scadinspect.data.analysis.Issue;
+import scadinspect.parser.ast.ASTNode;
 import scadinspect.parser.error.*;
 import scadinspect.parser.generated.*;
 
@@ -26,6 +27,7 @@ public class Parser {
     OpenScadParser parser = new OpenScadParser(lexer, csf);
     try {
       parseSymbol = parser.debug_parse(); //TODO change to non debug
+      parseTree = new ParseTree(parseSymbol, (ASTNode) parseSymbol.value);
       success = true;
     } catch (ParserException pe) {
       issues.add(pe.toIssue());
