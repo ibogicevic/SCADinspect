@@ -23,7 +23,7 @@ import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.Property;
 
 public class XmlExport {
-
+/*
   public String getXml(List<Module> modules) throws ParserConfigurationException {
 
     DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -103,5 +103,5 @@ public class XmlExport {
     } catch (Exception ex) {
       throw new RuntimeException("Error converting to String", ex);
     }
-  }
+  }*/
 }
