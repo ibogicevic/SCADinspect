@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Startup JavaFX frame
  *
@@ -45,6 +48,7 @@ public class Main extends Application {
     public static Main getInstance() {
         return instance;
     }
+
 
     // gui areas
     public ToolbarArea toolbarArea = new ToolbarArea();
@@ -103,6 +107,7 @@ public class Main extends Application {
         primaryStage.setY(0.7 * screenBounds.getHeight());
         primaryStage.setX(0);
         primaryStage.show();
+
 
         // load default workspace
         //ProjectHandling.openProject("");
