@@ -27,6 +27,7 @@ class JsonExportTest {
 
   /**
    * Tests the export of an empty list.
+   *
    * @result Ensure the export is failsafe.
    */
   @Test
@@ -130,6 +131,7 @@ class JsonExportTest {
     Module pairProperty = new Module();
     pairProperty.addProperty(new PairProperty<>("weight", "1200", "kg"));
     modules.add(pairProperty);
-    assertEquals("[{\"weight\":{\"metric\":\"kg\",\"value\":\"1200\"}}]", exporter.getJson(modules));
+    assertEquals("[{\"weight\":{\"metric\":\"kg\",\"value\":\"1200\"}}]",
+        exporter.getJson(modules));
   }
 }
