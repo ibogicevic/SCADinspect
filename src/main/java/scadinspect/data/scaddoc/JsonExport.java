@@ -58,7 +58,7 @@ public class JsonExport {
       //converts each module to json object and adds it to the json array
       list.put(singleModule(module));
     }
-    return list.toString();
+    return list.toString(2);
   }
 
 }

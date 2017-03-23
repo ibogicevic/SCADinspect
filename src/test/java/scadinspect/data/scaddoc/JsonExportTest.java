@@ -43,7 +43,7 @@ class JsonExportTest {
     Module singleProperty = new Module();
     singleProperty.addProperty(new SingleProperty<>("key", 1));
     modules.add(singleProperty);
-    assertEquals("[{\"key\":1}]", exporter.getJson(modules));
+    assertEquals("[{\"key\": 1}]", exporter.getJson(modules));
   }
 
   /**
@@ -54,7 +54,7 @@ class JsonExportTest {
     Module singleProperty = new Module();
     singleProperty.addProperty(new SingleProperty<>("key", 0.1));
     modules.add(singleProperty);
-    assertEquals("[{\"key\":0.1}]", exporter.getJson(modules));
+    assertEquals("[{\"key\": 0.1}]", exporter.getJson(modules));
   }
 
   /**
@@ -65,7 +65,7 @@ class JsonExportTest {
     Module singleProperty = new Module();
     singleProperty.addProperty(new SingleProperty<>("key", "value"));
     modules.add(singleProperty);
-    assertEquals("[{\"key\":\"value\"}]", exporter.getJson(modules));
+    assertEquals("[{\"key\": \"value\"}]", exporter.getJson(modules));
   }
 
   /**
@@ -76,7 +76,11 @@ class JsonExportTest {
     Module multiProperty = new Module();
     multiProperty.addProperty(new MultiProperty<>("key", 1, 2, 3));
     modules.add(multiProperty);
-    assertEquals("[{\"key\":[1,2,3]}]", exporter.getJson(modules));
+    assertEquals("[{\"key\": [\n"
+        + "  1,\n"
+        + "  2,\n"
+        + "  3\n"
+        + "]}]", exporter.getJson(modules));
   }
 
   /**
@@ -87,7 +91,12 @@ class JsonExportTest {
     Module multiProperty = new Module();
     multiProperty.addProperty(new MultiProperty<>("key", 0.1, 1.1, 2, 4));
     modules.add(multiProperty);
-    assertEquals("[{\"key\":[0.1,1.1,2,4]}]", exporter.getJson(modules));
+    assertEquals("[{\"key\": [\n"
+        + "  0.1,\n"
+        + "  1.1,\n"
+        + "  2,\n"
+        + "  4\n"
+        + "]}]", exporter.getJson(modules));
   }
 
   /**
@@ -98,7 +107,11 @@ class JsonExportTest {
     Module multiProperty = new Module();
     multiProperty.addProperty(new MultiProperty<>("key", "a", "b", "c"));
     modules.add(multiProperty);
-    assertEquals("[{\"key\":[\"a\",\"b\",\"c\"]}]", exporter.getJson(modules));
+    assertEquals("[{\"key\": [\n"
+        + "  \"a\",\n"
+        + "  \"b\",\n"
+        + "  \"c\"\n"
+        + "]}]", exporter.getJson(modules));
   }
 
   /**
@@ -109,7 +122,10 @@ class JsonExportTest {
     Module pairProperty = new Module();
     pairProperty.addProperty(new PairProperty<>("price", 12, "EUR"));
     modules.add(pairProperty);
-    assertEquals("[{\"price\":{\"metric\":\"EUR\",\"value\":12}}]", exporter.getJson(modules));
+    assertEquals("[{\"price\": {\n"
+        + "  \"metric\": \"EUR\",\n"
+        + "  \"value\": 12\n"
+        + "}}]", exporter.getJson(modules));
   }
 
   /**
@@ -120,7 +136,10 @@ class JsonExportTest {
     Module pairProperty = new Module();
     pairProperty.addProperty(new PairProperty<>("price", 12.3, "EUR"));
     modules.add(pairProperty);
-    assertEquals("[{\"price\":{\"metric\":\"EUR\",\"value\":12.3}}]", exporter.getJson(modules));
+    assertEquals("[{\"price\": {\n"
+        + "  \"metric\": \"EUR\",\n"
+        + "  \"value\": 12.3\n"
+        + "}}]", exporter.getJson(modules));
   }
 
   /**
@@ -131,7 +150,10 @@ class JsonExportTest {
     Module pairProperty = new Module();
     pairProperty.addProperty(new PairProperty<>("weight", "1200", "kg"));
     modules.add(pairProperty);
-    assertEquals("[{\"weight\":{\"metric\":\"kg\",\"value\":\"1200\"}}]",
+    assertEquals("[{\"weight\": {\n"
+            + "  \"metric\": \"kg\",\n"
+            + "  \"value\": \"1200\"\n"
+            + "}}]",
         exporter.getJson(modules));
   }
 }
