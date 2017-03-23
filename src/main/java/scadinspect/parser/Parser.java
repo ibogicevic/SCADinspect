@@ -12,7 +12,7 @@ import scadinspect.parser.error.ParserException;
  */
 public class Parser {
 
-    public static ParserResult parse(BufferedReader in) throws Exception {
+    public static ParserResult parse(BufferedReader in) {
         ParseTree parseTree = null;
         Collection<Issue> issues = new ArrayList<>();
         boolean success = false;
@@ -20,10 +20,13 @@ public class Parser {
         /* deprecated, but the new one with ComplexSymbolFactory fails */
         OpenScadParser parser = new OpenScadParser(lexer);
         try {
-            parser.parse();
+            parser.debug_parse();
             success = true;
         } catch (ParserException pe) {
             issues.add(pe.toIssue());
+            success = false;
+        } catch (Exception e) {
+            System.out.println(e);
             success = false;
         }
         return new ParserResult(success, parseTree, issues);

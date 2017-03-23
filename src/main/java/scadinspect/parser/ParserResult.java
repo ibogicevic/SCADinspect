@@ -30,4 +30,13 @@ public class ParserResult {
     public Collection<Issue> getIssues() {
         return issues;
     }
+
+    @Override
+    public String toString() {
+        return "ParserResult{" +
+            "success=" + success +
+            ", parseTree=" + parseTree +
+            ", issues=" + issues +
+            '}';
+    }
 }
