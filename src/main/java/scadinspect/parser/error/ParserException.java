@@ -3,9 +3,13 @@ package scadinspect.parser.error;
 import scadinspect.data.analysis.Issue;
 
 /**
- * Created by felix on 23.03.17.
+ * Created by Felix Stegmaier on 23.03.17.
  */
 public class ParserException extends Exception {
+
+    private final String priority = "high";
+
+    private final String issueId = "E-000";
 
     private final String file;
     private final int line;
@@ -29,6 +33,14 @@ public class ParserException extends Exception {
         this.info = info;
     }
 
+    public String getPriority() {
+        return priority;
+    }
+
+    public String getIssueId() {
+        return issueId;
+    }
+
     public String getFile() {
         return file;
     }
@@ -45,8 +57,10 @@ public class ParserException extends Exception {
         return info;
     }
 
+
     public Issue toIssue() {
-        return new Issue();  //TODO insert Issue data here
+        //TODO code snippet
+        return new Issue(this.getLine(), this.getPriority(), this.getIssueId(), this.getInfo(), null);
     }
 
 }

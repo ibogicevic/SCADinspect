@@ -2,7 +2,8 @@
 package scadinspect.parser;
 
 import java_cup.runtime.*;
-import scadinspect.parser.OpenScadSymbols;
+import scadinspect.parser.*;
+import scadinspect.parser.error.*;
 
 /**
  * This class is a simple example lexer.
@@ -14,6 +15,8 @@ import scadinspect.parser.OpenScadSymbols;
 %cup
 %line
 %column
+
+%yylexthrow scadinspect.parser.error.IllegalCharacterException
 
 %eofval{
   return new java_cup.runtime.Symbol(OpenScadSymbols.EOF);
@@ -159,5 +162,4 @@ H = [0-9a-fA-F]
 <YYINITIAL> "-" { return symbol(OpenScadSymbols.MINUS); }
 
 /* error fallback */
-/* TODO replace with custom Error */
-[^]                              { throw new Error("Illegal character <"+ yytext() +">"); }
+[^]             { throw new IllegalCharacterException( yytext() , null , yyline, yycolumn); }
