@@ -11,7 +11,8 @@ import javafx.stage.FileChooser;
 public class ProjectHandling {
 	
 	/**
-	 * TODO: 
+	 * TODO: Closing of the Project when clicked on "Open folder" and a new directory is choosen
+	 * 		 else the current path remains and list is still loaded
 	 */
 	
 	// Definiton of the chooser
@@ -20,19 +21,6 @@ public class ProjectHandling {
 	
 	// Filter for the chooser
 	private final FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("SCAD files", "*.scad");
-	private final FileFilter fileFilter= new FileFilter() {
-		@Override
-		/**
-		 * Accepts only files which end with .scad
-		 */
-		public boolean accept(File file) {
-			if(file.getName().toLowerCase().endsWith(".scad")){
-				return true;
-			}else{
-				return false;
-			}
-		}
-	};
 	
 	// Definition of the variables
 	private File projectFile;
@@ -40,48 +28,55 @@ public class ProjectHandling {
 	private ArrayList<File> fileList = new ArrayList();
 	
 	/**
-	 * Constructor
-	 */
-	public ProjectHandling(){
-		fileChooser.getExtensionFilters().add(extensionFilter);
-	}
-	
-	/**
 	 * Opens the dialog to choose a file
 	 */
 	public void openProjectFile() {
-		closeProject();
 		projectFile = fileChooser.showOpenDialog(Main.getInstance().getPrimaryStage());
-		setProjectPath(projectFile);
-		if(projectFile!=null)
+		
+		/**
+		 * Checks if a file is selected or the cancel button is clicked
+		 * If cancel is clicked a null is set into projectDirectory, else the Path
+		 */
+		
+		if(projectFile!=null){
+			setProjectPath(projectFile);
 			fileList.add(projectFile);
+		}
 	}
 	
 	/**
 	 * Opens the dialog to choose a directory
 	 */
 	public void openProjectFolder(){
-		closeProject();
 		projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
-		setProjectPath(projectDirectory);
-		if(projectDirectory!=null)
-			addFilesToList(projectDirectory);
+		
+		/**
+		 * Checks if a directory is selected or the cancel button is clicked
+		 * If cancel is clicked a null is set into projectDirectory,
+		 * else it sets the Path and add the files recursively with the contents of the subfolder
+		 * to the fileList
+		 */
+		if(projectDirectory!=null){
+			setProjectPath(projectDirectory);
+			addFilesToList(projectDirectory.getAbsolutePath());
+		}
 	}
 	
 	/**
-	 * Checks if a path for the project is set, if so it sets the pathname in the title and opens the project
+	 * Checks if a path for the project is set, if so it closes the last open project and then
+	 * sets the pathname in the title and enables the buttons
 	 * @param projectPath
 	 */
 	private void setProjectPath(File projectPath){
+		closeProject();
 		if (projectPath != null) {
-			projectPath.getAbsolutePath();
 			setCurrentProject(projectPath.getAbsolutePath().toString());
 			Main.getInstance().toolbarArea.disableButtons(false);
 		}
 	}
 	
 	/**
-	 * Sets the current project path in the Title and the main class
+	 * Sets the current project path in the Title and the App name
 	 * @param rootPath
 	 */
 	private void setCurrentProject(String rootPath) {
@@ -92,17 +87,35 @@ public class ProjectHandling {
 	}
 
 	/**
-	 * Gets the files in the current directory and adds only .scad files to the list
+	 * Gets the files in the current directory and it subfolders.
+	 * Also it adds only .scad files to the list
 	 * @param projectDirectory
 	 */
-	private void addFilesToList(File projectDirectory) {
-		for(File file:projectDirectory.listFiles(fileFilter)){
-			fileList.add(file);
+	private void addFilesToList(String projectDirectory) {
+		// Set the current folder
+		File folder = new File(projectDirectory);
+		
+		// Loop to add files from folder and subfolders in list
+		for(File file:folder.listFiles()){
+			
+			// If the current file is a scad file add it to the list
+			if(file.isFile()&&file.toString().endsWith(".scad")){
+				fileList.add(file);
+			}else{
+				/**
+				 * If the current selected file is a folder, go recursively call the function
+				 * with the current subfolder
+				 */
+				if(file.isDirectory()){
+					addFilesToList(file.getAbsolutePath());
+				}
+			}
 		}
 	}
 	
 	/**
-	 * Closes the current project and removes the path from the title
+	 * Closes the current project and removes the path from the title.
+	 * Also it deletes the content of the fileList.
 	 */
 	public void closeProject() {
 		Main.getInstance().toolbarArea.disableButtons (true);
@@ -114,11 +127,21 @@ public class ProjectHandling {
 	}
 	
 	/**
-	 * Returns the currently opened Files
+	 * Returns the currently opened Files as an ArraList of type File
 	 * @return fileList
 	 */
 	public ArrayList<File> getFileList(){
 		return fileList;
+	}
+	
+	/**
+	 * For debugging purposes
+	 * @param fileList
+	 */
+	private void showFilesInList(ArrayList<File> fileList){
+		for(File file:fileList){
+			System.out.println(file.getName());
+		}
 	}
 
 }
