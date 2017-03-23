@@ -27,11 +27,13 @@ public class ProjectHandling {
         // TODO: check if dialog has been cancelled
         //openProject(projectDirectory.getAbsolutePath());
         Main.getInstance().toolbarArea.disableButtons(false);
+        Main.getInstance().bottomArea.disableButtons(false);
     }
 
     public static void closeProject() {
         // TODO: close windows of project
         Main.getInstance().currentProject = null;
         Main.getInstance().toolbarArea.disableButtons(true);
+        Main.getInstance().bottomArea.disableButtons(true);
     }
 }
