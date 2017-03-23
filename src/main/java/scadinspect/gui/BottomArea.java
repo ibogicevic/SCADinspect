@@ -18,6 +18,7 @@ public class BottomArea {
     //initialize buttons
     private Button closeProjectButton = new Button("Close");
     private Button exportProjectButton = new Button("Export");
+    private Button refreshButton = new Button("Refresh");
 
     private ImageView loadIcon(String fileName) {
         InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
@@ -30,5 +31,6 @@ public class BottomArea {
         //set button icons
         closeProjectButton.setGraphic(loadIcon("cross-mark-on-a-black-circle"));
         exportProjectButton.setGraphic(loadIcon("text-file"));
+        refreshButton.setGraphic(loadIcon("refresh-page-option"));
     }
 }
