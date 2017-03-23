@@ -43,6 +43,7 @@ public class Main extends Application {
     // public InspectorArea inspectorArea = new InspectorArea();
     // public MessagesArea messagesArea = new MessagesArea();
     public StatusArea statusArea = new StatusArea();
+    public BottomArea bottomArea = new BottomArea();
 
     /**
      * root path to current open project, null if no project open
@@ -71,11 +72,16 @@ public class Main extends Application {
         BorderPane tabPane = new BorderPane();
         tabPane.setCenter(tabArea);
 
+        // Status and BottomArea
+        BorderPane bottomPane = new BorderPane();
+        bottomPane.setCenter(bottomArea);
+        bottomPane.setBottom(statusArea);
+
         // add all areas
         BorderPane mainPane = new BorderPane();
         mainPane.setTop(toolbarArea);
         mainPane.setCenter(tabPane);
-        mainPane.setBottom(statusArea);
+        mainPane.setBottom(bottomPane);
 
         // show main pane
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();

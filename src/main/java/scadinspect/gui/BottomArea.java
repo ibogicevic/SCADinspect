@@ -1,8 +1,11 @@
 package scadinspect.gui;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Separator;
+import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import scadinspect.control.ProjectHandling;
 
 import java.io.InputStream;
 
@@ -13,11 +16,11 @@ import java.io.InputStream;
  * @author jonasber
  * @author bigpen1s
  */
-public class BottomArea {
+public class BottomArea extends ToolBar{
 
     //initialize buttons
     private Button closeProjectButton = new Button("Close");
-    private Button exportProjectButton = new Button("Export");
+    private Button exportButton = new Button("Export");
     private Button refreshButton = new Button("Refresh");
 
     private ImageView loadIcon(String fileName) {
@@ -26,11 +29,38 @@ public class BottomArea {
         ImageView imageView = new ImageView(image);
         return imageView;
     }
+    /**
+     * Disable buttons when no project is open
+     *
+     * @param value true if buttons shall be disabled (no open project)
+     */
+    public void disableButtons(boolean value) {
+        closeProjectButton.setDisable(value);
+        refreshButton.setDisable(value);
+        exportButton.setDisable(value);
 
+    }
+
+    /**
+     * Constructor of BottomArea
+     */
     public BottomArea() {
         //set button icons
-        closeProjectButton.setGraphic(loadIcon("cross-mark-on-a-black-circle"));
-        exportProjectButton.setGraphic(loadIcon("text-file"));
+        closeProjectButton.setGraphic(loadIcon("cross-mark-on-a-black-circle-background"));
+        exportButton.setGraphic(loadIcon("text-file"));
         refreshButton.setGraphic(loadIcon("refresh-page-option"));
+        //status of buttons
+        disableButtons(true);
+        // action listeners
+        closeProjectButton.setOnAction(e -> ProjectHandling.closeProject());
+        refreshButton.setOnAction(e -> Main.getInstance().statusArea.simulateProgress());
+        // TODO: export Button action
+
+        //adding all buttons
+        this.getItems().add(refreshButton);
+        this.getItems().add(new Separator());
+        this.getItems().add(exportButton);
+        this.getItems().add(closeProjectButton);
+
     }
 }
