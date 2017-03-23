@@ -6,6 +6,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 
 public class SettingsDialog {
     
@@ -28,7 +29,9 @@ public class SettingsDialog {
             grid.add(autorefresh, 0, 0);
                      
             dialog.getDialogPane().setContent(grid);
-                    
+            
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            
             Optional<Boolean> result = dialog.showAndWait();
     }
     
