@@ -50,6 +50,7 @@ public class ProjectHandling {
 	 * Opens the dialog to choose a file
 	 */
 	public void openProjectFile() {
+		closeProject();
 		projectFile = fileChooser.showOpenDialog(Main.getInstance().getPrimaryStage());
 		setProjectPath(projectFile);
 		if(projectFile!=null)
@@ -60,6 +61,7 @@ public class ProjectHandling {
 	 * Opens the dialog to choose a directory
 	 */
 	public void openProjectFolder(){
+		closeProject();
 		projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
 		setProjectPath(projectDirectory);
 		if(projectDirectory!=null)
