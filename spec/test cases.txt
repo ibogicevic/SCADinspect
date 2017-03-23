@@ -1,0 +1,21 @@
+JUnit is supposed to be used, in order to test all Java Code. 
+A detailed description can be found at junit.org
+
+The functionalities that need to be tested are:
+
+- Opening a SCAD-file 
+- Closing a SCAD-file
+- Exporting the result of the analysis
+- Detection of warning and errors
+	- All implemented warnings and errors should be covered
+- Computing of "Parts Documentation" values
+- Changing settings
+- Autorefreshment of analysis result once code changed
+
+Furthermore some functionality needs to be tested manually:
+
+- Switching tabs (Code Analysis - Parts Documentation)
+- Pressing the buttons
+- Loading bar during analysis
+- Starting/Closing the programm
+- Full Screen mode
