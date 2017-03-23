@@ -6,6 +6,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import scadinspect.control.MyLogger;
+
+import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Startup JavaFX frame
@@ -28,6 +32,8 @@ public class Main extends Application {
      * Ratio between window height and screen height *
      */
     private static final double WINDOW_HEIGHT = 0.25;
+
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     // singleton pattern
     private static Main instance;
@@ -61,6 +67,13 @@ public class Main extends Application {
      * Application startup function
      */
     public void start(Stage primaryStage) {
+        try {
+            MyLogger.setup();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Problems with creating the log files");
+        }
+
         // remember singleton instance (instantiated by javafx)
         Main.instance = this;
 
@@ -88,6 +101,8 @@ public class Main extends Application {
 
         // load default workspace
         //ProjectHandling.openProject("");
+
+        logger.info("test");
     }
 
     /**
