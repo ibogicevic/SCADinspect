@@ -75,6 +75,8 @@ public class ToolbarArea extends ToolBar {
             Platform.exit();
         });
         settingsButton.setOnAction(e -> SettingsDialog.openDialog());
+        exportButton.setOnAction(e -> ExportDialog.openDialog());
+
         // add all buttons
         this.getItems().add(openProjectButton);
         this.getItems().add(closeProjectButton);
