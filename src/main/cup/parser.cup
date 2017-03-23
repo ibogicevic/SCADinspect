@@ -1,6 +1,6 @@
 /* original grammar file: https://github.com/openscad/openscad/blob/master/src/parser.y */
 
-package scadinspect.parser;
+package scadinspect.parser.generated;
 
 /* Expect 2 shift/reduce conflict for ifelse_statement - "dangling else problem", handled in CUP config */
 
