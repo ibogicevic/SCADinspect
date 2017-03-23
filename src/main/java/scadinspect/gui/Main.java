@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import scadinspect.control.MyLogger;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -33,7 +34,7 @@ public class Main extends Application {
      */
     private static final double WINDOW_HEIGHT = 0.25;
 
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    public static Logger logger = null;
 
     // singleton pattern
     private static Main instance;
@@ -68,10 +69,9 @@ public class Main extends Application {
      */
     public void start(Stage primaryStage) {
         try {
-            MyLogger.setup();
+            logger = new MyLogger().logger;
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Problems with creating the log files");
         }
 
         // remember singleton instance (instantiated by javafx)
@@ -102,7 +102,7 @@ public class Main extends Application {
         // load default workspace
         //ProjectHandling.openProject("");
 
-        logger.info("test");
+        logger.log(Level.INFO, "successfully started");
     }
 
     /**

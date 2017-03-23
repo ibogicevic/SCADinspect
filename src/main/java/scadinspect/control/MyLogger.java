@@ -7,9 +7,11 @@ import java.util.logging.*;
  * Created by nik on 23.03.17.
  */
 public class MyLogger {
-    public static void setup() throws IOException {
+    public Logger logger;
+
+    public MyLogger() throws IOException {
         // get and configure global logger
-        Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+        this.logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
         logger.setLevel(Level.INFO);
 
         // suppress console output
@@ -19,7 +21,8 @@ public class MyLogger {
             rootLogger.removeHandler(handlers[0]);
         }
 
-        Handler logAll = new FileHandler("logAll.txt");
+        // setup file output
+        Handler logAll = new FileHandler("logAll.txt", true);
         logger.addHandler(logAll);
     }
 }
