@@ -34,6 +34,9 @@ public class Main extends Application {
      */
     private static final double WINDOW_HEIGHT = 0.25;
 
+    /**
+     * Pre-configured logger that outputs to  *
+     */
     public static Logger logger = null;
 
     // singleton pattern
@@ -104,7 +107,7 @@ public class Main extends Application {
         // load default workspace
         //ProjectHandling.openProject("");
 
-        logger.log(Level.INFO, "successfully started");
+        logger.log(Level.INFO, "(" + this.getClass().getName() + ") " + "successfully started");
     }
 
     /**
