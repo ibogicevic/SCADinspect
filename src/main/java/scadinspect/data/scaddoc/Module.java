@@ -1,7 +1,8 @@
 package scadinspect.data.scaddoc;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import scadinspect.data.scaddoc.properties.Property;
 
 /**
@@ -9,21 +10,21 @@ import scadinspect.data.scaddoc.properties.Property;
  */
 public class Module {
 
-  private List<Property> properties;
+  private Collection<Property> properties;
 
-  public Module(List<Property> properties) {
+  public Module(Collection<Property> properties) {
     this.properties = properties;
   }
 
   public Module() {
-    this(new LinkedList<>());
+    this(new HashSet<>());
   }
 
   public void addProperty(Property property) {
     properties.add(property);
   }
 
-  public List<Property> getProperties() {
+  public Collection<Property> getProperties() {
     return properties;
   }
 
