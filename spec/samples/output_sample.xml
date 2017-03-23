@@ -1,25 +1,30 @@
-<parts>
-    <part>
-        <name>Wheel</name>
-        <pice currency="EUR">100</price>
-        <amount>4</amount>
-        <weight>12</weight>
-        <materials>
-            <material>Rubber</material>
-            <material>Aluminium</material>
-        </materials>
-        <url>https://example.com</url>
-        <key>value</key>
-    </part>
-    <part>
-        <name>Motor</name>
-        <price currency="USD">1000</price>
-        <amount>1</amount>
-        <weight>200</weight>
-        <materials>
-            <material>Steel<material>
-        </materials>
-        <url>https://example.com</url>
-        <key>value</key>
-    </part>
-</parts>
+<modules>
+  <module>
+    <amount>4</amount>
+    <materials>Rubber, Aluminium</materials>
+    <price>
+      <metric>EUR</metric>
+      <value>100</value>
+    </price>
+    <part>Wheel</part>
+    <weight>
+      <metric>kg</metric>
+      <value>12</value>
+    </weight>
+    <url>https://example.com</url>
+  </module>
+  <module>
+    <amount>1</amount>
+    <materials>Steel</materials>
+    <price>
+      <metric>USD</metric>
+      <value>1000</value>
+    </price>
+    <part>Motor</part>
+    <weight>
+      <metric>kg</metric>
+      <value>200</value>
+    </weight>
+    <url>https://example.com</url>
+  </module>
+</modules>

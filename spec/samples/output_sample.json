@@ -18,7 +18,7 @@
   },
   {
     "amount": 1,
-    "materials": ["Steel"],
+    "materials": "Steel",
     "price": {
       "metric": "USD",
       "value": 1000
