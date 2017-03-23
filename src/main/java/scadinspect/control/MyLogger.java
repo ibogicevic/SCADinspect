@@ -23,6 +23,7 @@ public class MyLogger {
 
         // setup file output
         Handler logAll = new FileHandler("logAll.txt", true);
+        logAll.setFormatter(new SimpleFormatter());
         logger.addHandler(logAll);
     }
 }

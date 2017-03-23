@@ -68,6 +68,8 @@ public class Main extends Application {
      * Application startup function
      */
     public void start(Stage primaryStage) {
+        System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc] %4$s: %5$s%n");
+
         try {
             logger = new MyLogger().logger;
         } catch (IOException e) {
