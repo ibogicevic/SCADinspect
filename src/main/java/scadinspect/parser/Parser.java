@@ -1,7 +1,7 @@
 package scadinspect.parser;
 
 import java.io.BufferedReader;
-import java_cup.runtime.ComplexSymbolFactory;
+import java.io.FileReader;
 import java_cup.runtime.ScannerBuffer;
 import java_cup.runtime.Symbol;
 
@@ -11,9 +11,15 @@ import java_cup.runtime.Symbol;
 public class Parser {
 
     public void parse(java.io.Reader in) throws Exception {
-        ComplexSymbolFactory csf = new ComplexSymbolFactory();
         ScannerBuffer lexer = new ScannerBuffer(new OpenScadLexer(new BufferedReader(in)));
-        OpenScadParser parser = new OpenScadParser(lexer, csf);
-        Symbol symbol = parser.parse();
+        OpenScadParser parser = new OpenScadParser(lexer);
+        Symbol symbol = parser.debug_parse();
+        System.out.println("done");
+    }
+
+    public static void main() throws Exception {
+        FileReader in = new FileReader("/home/felix/Documents/DHBW/4th_Semester/SE/SCADinspect/logo/proposals/2.scad");
+        Parser parser = new Parser();
+        parser.parse(in);
     }
 }
