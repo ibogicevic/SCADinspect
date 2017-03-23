@@ -1,32 +1,33 @@
 [
-    {
-        "part": "Wheel",
-        "price": {
-            "amount": 100,
-            "currency": "EUR"
-        },
-        "amount": 4,
-        "weight": {
-            "amount": 12,
-            "unit": "kg"
-        },
-        "materials": ["Rubber", "Aluminuim"],
-        "url": "https://example.com",
-        "<key>": "<value>"
+  {
+    "amount": 4,
+    "materials": [
+      "Rubber",
+      "Aluminium"
+    ],
+    "price": {
+      "metric": "EUR",
+      "value": 100
     },
-    {
-        "part": "Motor",
-        "price": {
-            "amount": 1000,
-            "currency": "USD"
-        },
-        "amount": 1,
-        "weight": {
-            "amount": 200,
-            "unit": "kg"
-        },
-        "materials": ["Steel"],
-        "url": "https://example.com",
-        "<key>": "<value>"
-    }
+    "part": "Wheel",
+    "weight": {
+      "metric": "kg",
+      "value": 12
+    },
+    "url": "https://example.com"
+  },
+  {
+    "amount": 1,
+    "materials": ["Steel"],
+    "price": {
+      "metric": "USD",
+      "value": 1000
+    },
+    "part": "Motor",
+    "weight": {
+      "metric": "kg",
+      "value": 200
+    },
+    "url": "https://example.com"
+  }
 ]

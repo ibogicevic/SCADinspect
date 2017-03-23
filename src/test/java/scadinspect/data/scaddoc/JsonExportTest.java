@@ -156,4 +156,61 @@ class JsonExportTest {
             + "}}]",
         exporter.getJson(modules));
   }
+
+  @Test
+  void sampleJSON(){
+    Module wheel=new Module();
+    wheel.addProperty(new SingleProperty<>("part","Wheel"));
+    wheel.addProperty(new PairProperty<>("price",100,"EUR"));
+    wheel.addProperty(new SingleProperty<>("amount",4));
+    wheel.addProperty(new PairProperty<>("weight",12,"kg"));
+    wheel.addProperty(new MultiProperty<>("materials","Rubber","Aluminium"));
+    wheel.addProperty(new SingleProperty<>("url","https://example.com"));
+
+    Module motor=new Module();
+    motor.addProperty(new SingleProperty<>("part","Motor"));
+    motor.addProperty(new PairProperty<>("price",1000,"USD"));
+    motor.addProperty(new SingleProperty<>("amount",1));
+    motor.addProperty(new PairProperty<>("weight",200,"kg"));
+    motor.addProperty(new MultiProperty<>("materials","Steel"));
+    motor.addProperty(new SingleProperty<>("url","https://example.com"));
+
+    modules.add(wheel);
+    modules.add(motor);
+
+    assertEquals("[\n"
+            + "  {\n"
+            + "    \"amount\": 4,\n"
+            + "    \"materials\": [\n"
+            + "      \"Rubber\",\n"
+            + "      \"Aluminium\"\n"
+            + "    ],\n"
+            + "    \"price\": {\n"
+            + "      \"metric\": \"EUR\",\n"
+            + "      \"value\": 100\n"
+            + "    },\n"
+            + "    \"part\": \"Wheel\",\n"
+            + "    \"weight\": {\n"
+            + "      \"metric\": \"kg\",\n"
+            + "      \"value\": 12\n"
+            + "    },\n"
+            + "    \"url\": \"https://example.com\"\n"
+            + "  },\n"
+            + "  {\n"
+            + "    \"amount\": 1,\n"
+            + "    \"materials\": [\"Steel\"],\n"
+            + "    \"price\": {\n"
+            + "      \"metric\": \"USD\",\n"
+            + "      \"value\": 1000\n"
+            + "    },\n"
+            + "    \"part\": \"Motor\",\n"
+            + "    \"weight\": {\n"
+            + "      \"metric\": \"kg\",\n"
+            + "      \"value\": 200\n"
+            + "    },\n"
+            + "    \"url\": \"https://example.com\"\n"
+            + "  }\n"
+            + "]",
+        exporter.getJson(modules));
+  }
 }
