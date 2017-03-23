@@ -7,8 +7,6 @@ import scadinspect.data.analysis.Issue;
  */
 public class ParserException extends Exception {
 
-    private final String priority = "high";
-
     private final String issueId = "E-000";
 
     private final String file;
@@ -33,10 +31,6 @@ public class ParserException extends Exception {
         this.info = info;
     }
 
-    public String getPriority() {
-        return priority;
-    }
-
     public String getIssueId() {
         return issueId;
     }
@@ -59,8 +53,8 @@ public class ParserException extends Exception {
 
 
     public Issue toIssue() {
-        //TODO code snippet
-        return new Issue(this.getLine(), this.getPriority(), this.getIssueId(), this.getInfo(), null);
+        //TODO code snippet, File
+        return new Issue(true, this.getFile(), this.getLine(), this.getIssueId(), this.getInfo(), null);
     }
 
 }
