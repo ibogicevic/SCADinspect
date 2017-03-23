@@ -10,8 +10,9 @@ import java.util.logging.*;
 public class MyLogger {
     public Logger logger;
 
-    public static final long FILE_SIZE = 500;
-    private int countLogFiles=0;
+    public static final long FILE_SIZE = 100;
+    private int logFileCount = 0;
+    private String logFile;
 
 
     public MyLogger() throws IOException {
@@ -19,10 +20,6 @@ public class MyLogger {
         this.logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
         logger.setLevel(Level.INFO);
 
-        //get Number of newest logfile
-        countLogFiles=getNumberOfLogFiles(new File("."));
-
-        String logFile="logAll_"+countLogFiles+".txt";
         // suppress console output
         Logger rootLogger = Logger.getLogger("");
         Handler[] handlers = rootLogger.getHandlers();
@@ -30,18 +27,22 @@ public class MyLogger {
             rootLogger.removeHandler(handlers[0]);
         }
 
-        // setup file output
-        Handler logAll = new FileHandler(logFile, true);
-        logAll.setFormatter(new SimpleFormatter());
-        logger.addHandler(logAll);
-        long size=new File(logFile).length();
+        // get Number of newest logfile
+        logFileCount = getNumberOfLogFiles(new File("."));
+        logFile = "logAll_" + logFileCount + ".txt";
 
-        //check if file is already too large, then create new one and increase counter
-        if(size>=FILE_SIZE){
-            countLogFiles=countLogFiles+1;
-            String fileName="logAll_"+countLogFiles+".txt";
-            logAll=new FileHandler(fileName,true);
+        // check if file is already too large, then create new one and increase counter
+        long size = new File(logFile).length();
+
+        if (size >= FILE_SIZE) {
+            logFileCount++;
+            logFile = "logAll_" + logFileCount + ".txt";
         }
+
+        // setup file output
+        Handler logAllHandler = new FileHandler(logFile, true);
+        logAllHandler.setFormatter(new SimpleFormatter());
+        logger.addHandler(logAllHandler);
     }
 
     private int getNumberOfLogFiles(File folder){
