@@ -41,6 +41,8 @@ public class MyLogger {
             logAll=new FileHandler(fileName,true);
         }
 
+        Handler logAll = new FileHandler("logAll.txt", true);
+        logAll.setFormatter(new SimpleFormatter());
         logger.addHandler(logAll);
     }
 
