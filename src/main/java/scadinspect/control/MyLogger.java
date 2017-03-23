@@ -10,7 +10,7 @@ import java.util.logging.*;
 public class MyLogger {
     public Logger logger;
 
-    public static final long FILE_SIZE = 1000;
+    public static final long FILE_SIZE = 500;
     private int countLogFiles=0;
 
 
@@ -32,6 +32,8 @@ public class MyLogger {
 
         // setup file output
         Handler logAll = new FileHandler(logFile, true);
+        logAll.setFormatter(new SimpleFormatter());
+        logger.addHandler(logAll);
         long size=new File(logFile).length();
 
         //check if file is already too large, then create new one and increase counter
@@ -40,10 +42,6 @@ public class MyLogger {
             String fileName="logAll_"+countLogFiles+".txt";
             logAll=new FileHandler(fileName,true);
         }
-
-        Handler logAll = new FileHandler("logAll.txt", true);
-        logAll.setFormatter(new SimpleFormatter());
-        logger.addHandler(logAll);
     }
 
     private int getNumberOfLogFiles(File folder){
