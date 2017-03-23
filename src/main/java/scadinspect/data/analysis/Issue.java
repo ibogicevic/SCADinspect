@@ -5,37 +5,44 @@ package scadinspect.data.analysis;
  * @author Tim Walter
  */
 public class Issue {
+    private boolean isError;
+    private String sourceFile;
     private int lineNumber;
-    private String priority;
-    private String issueIdentifier; // Or Integer (1: High, 2: Middle, 3: Low) ?
+    private String issueIdentifier;
     private String description;
     private String codeSnippet;
 
     /**
-     * Constructor for an found issues
+     * Constructor for found issues
+     * @param isError Bool value if it is a error, if not -> warning
+     * @param sourceFile Path to Source File
      * @param lineNumber Number of Line of Issue in SCAD File
-     * @param priority Priority of issue
      * @param issueIdentifier Name or Identifier for issue
      * @param description Short Description for issue
      * @param codeSnippet Snippet of Code in Line
      */
-    public Issue (int lineNumber, String priority, String issueIdentifier,String description, String codeSnippet) {
+    public Issue (boolean isError, String sourceFile, int lineNumber, String issueIdentifier,String description, String codeSnippet) {
+        this.isError = isError;
+        this.sourceFile = sourceFile;
         this.lineNumber = lineNumber;
-        this.priority = priority;
         this.issueIdentifier = issueIdentifier;
         this.description = description;
         this.codeSnippet = codeSnippet;
     }
 
     /*
-     * Getters for an instance
+     * Getters for the instance
      */
-    public int getLineNumber() {
-        return lineNumber;
+    public boolean getIsError () {
+        return isError;
     }
 
-    public String getPriority() {
-        return priority;
+    public String getSourceFile() {
+        return sourceFile;
+    }
+
+    public int getLineNumber() {
+        return lineNumber;
     }
 
     public String getIssueIdentifier() {
