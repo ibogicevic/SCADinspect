@@ -22,47 +22,51 @@ import scadinspect.data.scaddoc.properties.Property;
 
 public class XmlExport {
 
+  /**
+   * @param modules Collection of Module objects, which will be recreated as XML
+   * @return String object, which represents the created XML
+   * @throws ParserConfigurationException Indicates a serious configuration error.
+   * @throws TransformerException Specifies an exceptional condition that occurred during the
+   * transformation process.
+   */
   public String getXml(Collection<Module> modules)
       throws ParserConfigurationException, TransformerException {
 
-    try {
+    DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
-      DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-      DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+    // root elements
+    Document doc = docBuilder.newDocument();
+    Element rootElement = doc.createElement("modules");
+    doc.appendChild(rootElement);
 
-      // root elements
-      Document doc = docBuilder.newDocument();
-      Element rootElement = doc.createElement("modules");
-      doc.appendChild(rootElement);
-
-      for (Module module : modules) {
-        rootElement.appendChild(createModuleNode(module, doc));
-      }
-
-      // write the content into xml file
-      TransformerFactory transformerFactory = TransformerFactory.newInstance();
-      Transformer transformer = transformerFactory.newTransformer();
-      transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-      transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-      transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-      DOMSource source = new DOMSource(doc);
-      StringWriter sw = new StringWriter();
-      StreamResult result = new StreamResult(sw);
-
-      // Output to console for testing
-      // StreamResult result = new StreamResult(System.out);
-
-      transformer.transform(source, result);
-
-      //return XML String + do some **magic**
-      return sw.getBuffer().toString().replaceAll("((?<=>)\\[)|(](?=<))","");
-
-    } catch (Exception e) {
-      // TODO log parse failure
-      throw e;
+    for (Module module : modules) {
+      // Create module node for each module present and append it
+      rootElement.appendChild(createModuleNode(module, doc));
     }
+
+    // write the content into xml format
+    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    Transformer transformer = transformerFactory.newTransformer();
+    transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+    DOMSource source = new DOMSource(doc);
+    StringWriter sw = new StringWriter();
+    StreamResult result = new StreamResult(sw);
+    transformer.transform(source, result);
+
+    //return XML String + do some **magic**
+    return sw.getBuffer().toString().replaceAll("((?<=>)\\[)|(](?=<))", "");
+
+
   }
 
+  /**
+   * @param module Module object, which needs to be recreated as a DOM node
+   * @param document Document object, which creates the necessary nodes
+   * @return Element object, which will be created from the module parameter
+   */
   private Element createModuleNode(Module module, Document document) {
     Element node;
     node = document.createElement("module");
@@ -73,12 +77,25 @@ public class XmlExport {
       Element key = document.createElement(property.getKey());
       String value;
       if (property instanceof PairProperty) {
+        // Create metric and value keys for PairProperty
         PairProperty temp = (PairProperty) property;
-        value = temp.getValue().getValue() + temp.getValue().getMetric();
+
+        Element nodeMetric;
+        Element nodeValue;
+
+        nodeMetric = document.createElement("metric");
+        nodeValue = document.createElement("value");
+
+        nodeMetric.appendChild(document.createTextNode(temp.getValue().getMetric()));
+        nodeValue.appendChild(document.createTextNode(temp.getValue().getValue().toString()));
+
+        key.appendChild(nodeMetric);
+        key.appendChild(nodeValue);
       } else {
         value = property.getValue().toString();
+        key.appendChild(document.createTextNode(value));
       }
-      key.appendChild(document.createTextNode(value));
+      // Append key node to module node, to return whole module
       node.appendChild(key);
     }
     return node;
