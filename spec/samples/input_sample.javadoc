@@ -1,7 +1,7 @@
 /**
  * @title Module_1
- * @~price 100 EUR
+ * @price 100~EUR
  * @author John Doe
- * @material wood, metal
+ * @material wood; metal
  * @comment So könnte das Ganze funktionieren...
  */

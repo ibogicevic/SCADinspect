@@ -53,20 +53,29 @@ public class JsonExport {
    * @return returns the JSON document as String that can be written to a file or used further
    * internally
    */
-  public String getJson(List<Module> modules) {
+  public String getJson(Collection<Module> modules) {
     return getJsonArray(modules).toString(2);
   }
 
   /**
-   * @param modules a List of all modules that are supposed to be exported. This list will be
+   * @param modules a Collection of all modules that are supposed to be exported. This list will be
    * converted into a JSON document as specified.
    * @return returns the JSON document as a Json Array Object
    */
-  public JSONArray getJsonArray(List<Module> modules) {
+  public JSONArray getJsonArray(Collection<Module> modules) {
     JSONArray list = new JSONArray();
     for (Module module : modules) {
       //converts each module to json object and adds it to the json array
       list.put(singleModule(module));
+    }
+    return list;
+  }
+
+  public Collection<JSONObject> getJsonList(Collection<Module> modules) {
+    Collection<JSONObject> list = new HashSet<>();
+    for (Module module : modules) {
+      //converts each module to json object and adds it to the json array
+      list.add(singleModule(module));
     }
     return list;
   }
