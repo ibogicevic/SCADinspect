@@ -2,28 +2,44 @@ package scadinspect.data.scaddoc;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedList;
 import scadinspect.data.scaddoc.properties.Property;
 
 /**
+ * The object of a full comment inside the scadfile containing all properties as collection
+ *
  * @author richteto on 17.03.2017.
  */
 public class Module {
 
   private Collection<Property> properties;
 
+  /**
+   * Creating a new Module knowing some properties already
+   * @param properties The properties to use within the module
+   */
   public Module(Collection<Property> properties) {
     this.properties = properties;
   }
 
+  /**
+   * Creating a new module with an empty collection of properties
+   */
   public Module() {
     this(new HashSet<>());
   }
 
+  /**
+   * Adding a new property to the module
+   * @param property The property to be added
+   */
   public void addProperty(Property property) {
     properties.add(property);
   }
 
+  /**
+   * Getting all properties of the module
+   * @return The collection of properties
+   */
   public Collection<Property> getProperties() {
     return properties;
   }
