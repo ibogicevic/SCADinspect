@@ -21,7 +21,7 @@ terminal TOK_EACH;
 terminal TOK_ID;
 terminal TOK_STRING;
 terminal TOK_USE;
-terminal TOK_NUMBER;
+terminal Double TOK_NUMBER;
 
 terminal TOK_TRUE;
 terminal TOK_FALSE;
@@ -209,8 +209,9 @@ expr ::=
         {:  :}
         | TOK_STRING
         {:  :}
-        | TOK_NUMBER
-        {:  :}
+        | TOK_NUMBER:n
+        {:  /*test TODO use this */
+            System.out.println("Number value: " + (Double) n); :}
         | BRACKET_SQUARE_OPEN expr COLON expr BRACKET_SQUARE_CLOSE
         {:  :}
         | BRACKET_SQUARE_OPEN expr COLON expr COLON expr BRACKET_SQUARE_CLOSE

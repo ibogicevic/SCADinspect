@@ -103,7 +103,7 @@ H = [0-9a-fA-F]
 /* numbers */
 <YYINITIAL> {D}+{E}? |
 {D}*\.{D}+{E}? |
-{D}+\.{D}*{E}?      { return symbol("number", OpenScadSymbols.TOK_NUMBER); }
+{D}+\.{D}*{E}?      { return symbol("number", OpenScadSymbols.TOK_NUMBER, (Double) Double.parseDouble(yytext())); }
 
 /* identifiers */
 <YYINITIAL> "$"?[a-zA-Z0-9_]+   { return symbol("id", OpenScadSymbols.TOK_ID); }
