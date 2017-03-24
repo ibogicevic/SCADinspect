@@ -23,35 +23,43 @@ public class FileExport {
    * @param modules List of modules that are saved to a file
    * @param path Path to the location where the XML file should be saved
    */
-  public File saveAsJson(List<Module> modules, String path) throws IOException {
+  public File saveAsJson(List<Module> modules, String path) throws Exception {
     JsonExport jsonEx = new JsonExport();
 
-    File file = new File(path);
-    fileWriter = new FileWriter(file);
-    fileWriter.write(jsonEx.getJson(modules));
-    fileWriter.close();
+    try {
+      File file = new File(path);
+      fileWriter = new FileWriter(file);
 
-    return file;
+      fileWriter.write(jsonEx.getJson(modules));
+      fileWriter.close();
+
+      return file;
+    } catch (Exception e){
+      //TODO: log exception
+      System.out.println(e);
+      throw e;
+    }
   }
 
   /**
    * @param modules List of modules that are saved to a file
    * @param path Path to the location where the XML file should be saved
    */
-  public File saveAsXml(List<Module> modules, String path) throws IOException {
+  public File saveAsXml(List<Module> modules, String path) throws Exception {
     XmlExport xmlEx = new XmlExport();
 
-    File file = new File(path);
-    fileWriter = new FileWriter(file);
     try {
+      File file = new File(path);
+      fileWriter = new FileWriter(file);
+
       fileWriter.write(xmlEx.getXml(modules));
+      fileWriter.close();
+
+      return file;
     } catch (Exception e) {
       //TODO: log exception
       System.out.println(e);
+      throw e;
     }
-
-    fileWriter.close();
-
-    return file;
   }
 }

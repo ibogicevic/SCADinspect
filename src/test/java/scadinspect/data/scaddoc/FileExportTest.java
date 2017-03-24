@@ -1,13 +1,11 @@
 package scadinspect.data.scaddoc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.sun.xml.internal.bind.v2.util.StackRecorder;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
@@ -58,7 +56,7 @@ class FileExportTest {
   }
 
   @Test
-  void saveAsJson() throws IOException {
+  void saveAsJson() throws Exception {
 
     File sampleFile = new File("./spec/samples/output_sample.json");
     File exportedFile = fExport.saveAsJson(modules, "./export.json");
@@ -68,6 +66,28 @@ class FileExportTest {
 
     exportedFile.delete();
 
-    assertEquals(new String(sample).replaceAll("\\r\\n?","\n"), new String(exported).replaceAll("\\r\\n?","\n"));
+    assertEquals(new String(sample).replaceAll("\\r\\n?", "\n"),
+        new String(exported).replaceAll("\\r\\n?", "\n"));
+  }
+
+  @Test
+  void saveAsXml() throws Exception {
+
+    File sampleFile = new File("./spec/samples/output_sample.xml");
+    File exportedFile = fExport.saveAsXml(modules, "./export.xml");
+
+    byte[] sample = Files.readAllBytes(sampleFile.toPath());
+    byte[] exported = Files.readAllBytes(exportedFile.toPath());
+
+    exportedFile.delete();
+
+    assertEquals(new String(sample).replaceAll("\\r\\n?", "\n"),
+        new String(exported).replaceAll("\\r\\n?", "\n"));
+  }
+
+  @Test
+  void testThrow() throws IOException {
+    assertThrows(Exception.class, () ->
+        fExport.saveAsXml(null, null));
   }
 }
