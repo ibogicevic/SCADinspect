@@ -56,4 +56,16 @@ public class Issue {
     public String getCodeSnippet() {
         return codeSnippet;
     }
+
+    @Override
+    public String toString() {
+        return "Issue{" +
+            "isError=" + isError +
+            ", sourceFile='" + sourceFile + '\'' +
+            ", lineNumber=" + lineNumber +
+            ", issueIdentifier='" + issueIdentifier + '\'' +
+            ", description='" + description + '\'' +
+            ", codeSnippet='" + codeSnippet + '\'' +
+            '}';
+    }
 }
