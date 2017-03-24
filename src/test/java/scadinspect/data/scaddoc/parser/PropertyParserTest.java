@@ -34,7 +34,7 @@ class PropertyParserTest {
 
     Module parsed = propertyParser.parseModules().iterator().next();
 
-    assertEquals(output,parsed);
+    assertEquals(output, parsed);
 
 
   }

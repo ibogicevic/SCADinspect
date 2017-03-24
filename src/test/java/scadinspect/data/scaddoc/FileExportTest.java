@@ -67,19 +67,4 @@ class FileExportTest {
 
     assertEquals(new String(sample).replaceAll("\\r\\n?","\n"), new String(exported).replaceAll("\\r\\n?","\n"));
   }
-
-  //@Test
-  //void saveAsXML() throws IOException {
-  //  File sampleFile = new File("./spec/samples/output_sample.xml");
-  //  File exportedFile = fExport.saveAsXml(modules, "./export.xml");
-  //
-  //  byte[] sample = Files.readAllBytes(sampleFile.toPath());
-  //  byte[] exported = Files.readAllBytes(exportedFile.toPath());
-  //
-  //  boolean isEqual = Arrays.equals(sample, exported);
-  //
-  //  exportedFile.delete();
-  //
-  //  assertEquals(isEqual, true);
-  //}
 }
