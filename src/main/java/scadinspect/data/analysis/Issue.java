@@ -63,4 +63,8 @@ public class Issue {
     public String getCodeSnippet() {
         return codeSnippet;
     }
+
+    public void setDescription(String description) {
+      this.description = description;
+    }
 }
