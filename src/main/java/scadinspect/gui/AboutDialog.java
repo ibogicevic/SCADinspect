@@ -1,4 +1,5 @@
-/*
+/**
+ * Opens the about dialog if the About-Button is clicked
  * 
  * @author: schmjuli
  */
@@ -16,9 +17,8 @@ import javafx.scene.layout.StackPane;
 
 public class AboutDialog {
 	
-	/*
-	 * 
-	 * Opens a new dialog and displays 'about information'
+	/**
+	 * Application startup function
 	 */
 	public static void openDialog(){
 		Dialog<Boolean> dialog = new Dialog<>();
@@ -60,18 +60,22 @@ public class AboutDialog {
         
 	}
 	
-	// Content
+	// Text content
 	final static String Text1 = 
     		"Static code analysis and javadoc-like parts documentation for your OpenSCAD-Files \n"+
+    		"\n"+
+    		"© 2017 Licensed under GNU General Public License v2.0\n"+
     		"Visit https://github.com/ibogicevic/SCADinspect for more information\n"+
     		"\n"+
     		"Contributors:\n"+
     		"-Ivan Bogicevic";
 	
 	final static String Text2 =
-			"Buttons used from http://www.flaticon.com/authors/dave-gandy\n"+
-			"\n"+
-			"© 2017 Licensed under GNU General Public License v2.0";
+			"Third Party Artefacts\n"+
+			"SCADinspect uses Icons from the \"Font Awesome\"-Package by Dave Gandy released under the CC BY 3.0 Licence\n"+
+			"http://www.flaticon.com/authors/dave-gandy\n"+
+			"http://creativecommons.org/licenses/by/3.0/\n";
 	
+	// Set logo
 	private static final Image logo = new Image("http://www.ghanaedudirectory.com/Images/nologo.jpg");
 }
