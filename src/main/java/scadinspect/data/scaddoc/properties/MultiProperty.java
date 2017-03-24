@@ -2,6 +2,7 @@ package scadinspect.data.scaddoc.properties;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Multiple value property definition like [1, 2, 3, 4]
@@ -32,7 +33,7 @@ public class MultiProperty<T> implements Property<Collection<T>> {
    * @param values The parameters of the collection of values to be stored
    */
   public MultiProperty(String key, T... values) {
-    this(key, Arrays.asList(values));
+    this(key, new HashSet<>(Arrays.asList(values)));
   }
 
   @Override

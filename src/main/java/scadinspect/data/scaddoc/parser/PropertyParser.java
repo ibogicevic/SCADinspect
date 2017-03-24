@@ -36,10 +36,12 @@ public class PropertyParser {
   /**
    * Constructing a new property parser without file to be parsed
    */
-  public PropertyParser() {}
+  public PropertyParser() {
+  }
 
   /**
    * Setting the scad file to a new input string
+   *
    * @param scadFile The file content to be parsed
    */
   public void setScadFile(String scadFile) {
@@ -52,6 +54,7 @@ public class PropertyParser {
 
   /**
    * Parsing the scad file content to a collection of internal modules
+   *
    * @return Collection of internal modules
    */
   public Collection<Module> parseModules() {
