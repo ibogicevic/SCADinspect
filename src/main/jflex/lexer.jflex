@@ -106,7 +106,7 @@ H = [0-9a-fA-F]
 {D}+\.{D}*{E}?      { return symbol("number", OpenScadSymbols.TOK_NUMBER, (Double) Double.parseDouble(yytext())); }
 
 /* identifiers */
-<YYINITIAL> "$"?[a-zA-Z0-9_]+   { return symbol("id", OpenScadSymbols.TOK_ID); }
+<YYINITIAL> "$"?[a-zA-Z0-9_]+   { return symbol("id", OpenScadSymbols.TOK_ID, (String) yytext() ); }
 
 /* strings */
 /* TODO unicode handeling */

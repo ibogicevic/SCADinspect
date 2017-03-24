@@ -177,8 +177,8 @@ child_statement ::=
 
 // "for", "let" and "each" are valid module identifiers
 module_id ::=
-          TOK_ID
-        {:  :}
+          TOK_ID:i
+        {: System.out.println("Module ID: " +  i); :}
         | TOK_FOR
         {:  :}
         | TOK_LET
