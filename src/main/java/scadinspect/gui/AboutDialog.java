@@ -68,7 +68,7 @@ public class AboutDialog {
     		"Visit https://github.com/ibogicevic/SCADinspect for more information\n"+
     		"\n"+
     		"Contributors:\n"+
-    		"-Ivan Bogicevic";
+    		"-Ivan Bogicevic\n";
 	
 	final static String Text2 =
 			"Third Party Artefacts\n"+
