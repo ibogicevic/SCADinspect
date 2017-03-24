@@ -41,4 +41,9 @@ public class ProjectHandling {
         Main.getInstance().modalToFront(true);
     }
 
+    public static void hideModel() {
+        Main.getInstance().modalToFront(false);
+
+    }
+
 }

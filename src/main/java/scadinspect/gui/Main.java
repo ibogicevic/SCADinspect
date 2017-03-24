@@ -118,7 +118,11 @@ public class Main extends Application {
     }
 
     public void modalToFront(Boolean var) {
-        greyPane.toFront();
+        if (var == true){
+            greyPane.toFront();
+        } else {
+            greyPane.toBack();
+        }
     }
 
     /**
