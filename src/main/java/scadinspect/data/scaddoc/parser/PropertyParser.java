@@ -10,32 +10,59 @@ import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
- * Created by richteto on 23.03.2017.
+ * Property parser definition parsing a scadFile to the internal modules
+ *
+ * @author richteto on 3/23/17.
  */
 public class PropertyParser {
 
   private Collection<String> comments;
 
-  private String commentPattern = "/\\*\\*.+\\*/";
-  private String keyPattern = "(@~*\\w+)";
-  private String contentPattern = ("([^@]*)");
-  private Pattern comment = Pattern.compile(commentPattern);
-  private Pattern property = Pattern.compile(keyPattern + contentPattern);
+  private String commentRegex = "/\\*\\*.+?\\*/";
+  private String keyRegex = "(@~*\\w+)";
+  private String contentRegex = ("([^@]*)");
+  private Pattern commentPattern = Pattern.compile(commentRegex);
+  private Pattern propertyPattern = Pattern.compile(keyRegex + contentRegex);
 
+  /**
+   * Constructing a new property parser
+   *
+   * @param scadFile The file content to be parsed
+   */
   public PropertyParser(String scadFile) {
+    setScadFile(scadFile);
+  }
+
+  /**
+   * Constructing a new property parser without file to be parsed
+   */
+  public PropertyParser() {}
+
+  /**
+   * Setting the scad file to a new input string
+   * @param scadFile The file content to be parsed
+   */
+  public void setScadFile(String scadFile) {
+    Matcher commentMatcher = commentPattern.matcher(scadFile);
     comments = new HashSet<>();
-    Matcher commentMatcher = comment.matcher(scadFile);
     while (commentMatcher.find()) {
       comments.add(commentMatcher.group(0).replaceAll("\n|\\*|/|\\*", "").replaceAll("\\s", " "));
     }
   }
 
+  /**
+   * Parsing the scad file content to a collection of internal modules
+   * @return Collection of internal modules
+   */
   public Collection<Module> parseModules() {
+    if (comments == null) {
+      return null;
+    }
     Collection<Module> modules = new HashSet<>();
 
     for (String comment : comments) {
       Module module = new Module();
-      Matcher propertyMatcher = property.matcher(comment);
+      Matcher propertyMatcher = propertyPattern.matcher(comment);
 
       while (propertyMatcher.find()) {
         String key = propertyMatcher.group(1).replaceFirst("@", "").trim();
