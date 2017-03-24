@@ -8,11 +8,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
+import scadinspect.control.ProjectHandling;
 
 public class SettingsDialog {
     
     public static void openDialog(){
 
+        ProjectHandling.showModal();
         Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
 
         Dialog<Boolean> dialog = new Dialog<>();
@@ -53,6 +55,7 @@ public class SettingsDialog {
                 userPrefs.putBoolean("SET_AUTOREFRESH", false);
             }
         }
+        ProjectHandling.hideModel();
     }
     
 }
