@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.BorderPane;
 
+import java.util.logging.Level;
+
 /**
  * Area for general status messages and the progress bar (especially for 'refresh' progress).
  * Can currently be activated by clicking the "Refresh" button in the toolbar.
