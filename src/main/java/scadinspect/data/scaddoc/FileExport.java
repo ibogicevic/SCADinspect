@@ -46,23 +46,6 @@ public class FileExport {
    * @param path Path to the location where the XML file should be saved
    */
   public File saveAsXml(List<Module> modules, String path) throws IOException {
-    Collection<JSONObject> json = jsonex.getJsonList(modules);
-
-    StringBuilder sb = new StringBuilder();
-
-    sb.append("<modules>");
-    for (JSONObject jso : json) {
-      sb.append(XML.toString(jso, "module"));
-    }
-    sb.append("</modules>");
-
-    String xmlString = sb.toString();
-
-    File file = new File(path);
-    fileWriter = new FileWriter(file);
-    fileWriter.write(xmlString);
-    fileWriter.close();
-
-    return file;
+    return null;
   }
 }

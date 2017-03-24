@@ -1,8 +1,5 @@
 package scadinspect.data.scaddoc;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -70,15 +67,6 @@ public class JsonExport {
     for (Module module : modules) {
       //converts each module to json object and adds it to the json array
       list.put(singleModule(module));
-    }
-    return list;
-  }
-
-  public Collection<JSONObject> getJsonList(List<Module> modules) {
-    Collection<JSONObject> list = new HashSet<>();
-    for (Module module : modules) {
-      //converts each module to json object and adds it to the json array
-      list.add(singleModule(module));
     }
     return list;
   }
