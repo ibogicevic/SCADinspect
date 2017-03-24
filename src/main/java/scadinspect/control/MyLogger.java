@@ -10,7 +10,7 @@ import java.util.logging.*;
 public class MyLogger {
     public Logger logger;
 
-    private long MAX_FILE_SIZE = 500;
+    private long MAX_FILE_SIZE = 50;
     private int logFileCount = 0;
     private String logFileNameBase = "log_";
 
