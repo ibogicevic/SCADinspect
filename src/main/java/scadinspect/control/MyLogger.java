@@ -10,10 +10,9 @@ import java.util.logging.*;
 public class MyLogger {
     public Logger logger;
 
-    public static final long FILE_SIZE = 100;
+    private long MAX_FILE_SIZE = 500;
     private int logFileCount = 0;
-    private String logFile;
-
+    private String logFileNameBase = "log_";
 
     public MyLogger() throws IOException {
         // get and configure global logger
@@ -27,38 +26,41 @@ public class MyLogger {
             rootLogger.removeHandler(handlers[0]);
         }
 
-        // get Number of newest logfile
+        // set number of log files
         logFileCount = getNumberOfLogFiles(new File("."));
-        logFile = "logAll_" + logFileCount + ".txt";
 
-        // check if file is already too large, then create new one and increase counter
-        long size = new File(logFile).length();
-
-        if (size >= FILE_SIZE) {
+        // increase number of log files if most current is too large
+        if (lastLogTooBig()) {
             logFileCount++;
-            logFile = "logAll_" + logFileCount + ".txt";
         }
 
         // setup file output
-        Handler logAllHandler = new FileHandler(logFile, true);
-        logAllHandler.setFormatter(new SimpleFormatter());
-        logger.addHandler(logAllHandler);
+        Handler fileHandler = new FileHandler(logFileNameBase + logFileCount + ".txt", true);
+        fileHandler.setFormatter(new SimpleFormatter());
+        logger.addHandler(fileHandler);
     }
 
-    private int getNumberOfLogFiles(File folder){
-    int nr=0;
-            for (final File fileEntry : folder.listFiles()) {
+    private int getNumberOfLogFiles(File folder) {
+        int numberOfLogs = 0;
 
-               String fileName=fileEntry.getName();
-               if(fileName.startsWith("logAll") && fileName.contains("_")){
-                   String str1=(fileName.split("_")[1]).split("\\.")[0];
-                    int number=Integer.parseInt(str1);
-                    if(number>nr){
-                        nr=number;
-                    }
+        for (final File fileEntry : folder.listFiles()) {
+           String fileName = fileEntry.getName();
+
+           if (fileName.startsWith("log_")){
+               String str1 = (fileName.split("_")[1]).split("\\.")[0];
+               int currentNumber = Integer.parseInt(str1);
+
+               if (currentNumber > numberOfLogs){
+                   numberOfLogs = currentNumber;
                }
-            }
+           }
+        }
 
-        return nr;
+        return numberOfLogs;
+    }
+
+    private boolean lastLogTooBig() {
+        long size = new File(logFileNameBase + logFileCount + ".txt").length();
+        return size > MAX_FILE_SIZE ? true : false;
     }
 }
