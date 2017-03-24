@@ -74,6 +74,7 @@ public class ToolbarArea extends ToolBar {
         aboutLink.setGraphic(loadResizedIcon("about-icon"));
 
 
+
         // status of buttons
         disableButtons(true);
         // actionlisteners
@@ -87,6 +88,7 @@ public class ToolbarArea extends ToolBar {
         this.getItems().add(new Separator());
         this.getItems().add(settingsButton);
         this.getItems().add(new Separator());
+
         HBox.setHgrow(seperatorPane, Priority.ALWAYS);
         vbox.getChildren().add(helpLink);
         vbox.getChildren().add(aboutLink);
