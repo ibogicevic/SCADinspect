@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 
 /**
  * Toolbar at the top of the main window
+ *
  * @author ivan
  */
 public class ToolbarArea extends ToolBar {
@@ -43,7 +44,6 @@ public class ToolbarArea extends ToolBar {
 	 * @return the icon as ImageView
 	 */
 	private ImageView loadIcon(String fileName) {
-            System.out.println(fileName);
 		InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
 		Image image = new Image(inputStream);
 		ImageView imageView = new ImageView(image);
@@ -73,6 +73,9 @@ public class ToolbarArea extends ToolBar {
 		openProjectFileButton.setOnAction(e -> projectHandler.openProjectFile());
 		openProjectFolderButton.setOnAction(e -> projectHandler.openProjectFolder());
 		closeProjectButton.setOnAction(e -> projectHandler.closeProject());
+		refreshButton.setOnAction(e -> Main.getInstance().statusArea.simulateProgress());
+        aboutButton.setOnAction(e -> AboutDialog.openDialog());
+        settingsButton.setOnAction(e -> SettingsDialog.openDialog());
 		exitButton.setOnAction(e -> {Platform.exit();});
 		// add all buttons
 		this.getItems().add(openProjectFileButton);

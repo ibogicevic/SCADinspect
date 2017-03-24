@@ -137,14 +137,4 @@ public class ProjectHandling {
       fileList.clear();
     }
   }
-
-  /**
-   * Returns the currently opened Files as an List of type File
-   * 
-   * @return fileList
-   */
-  public List<File> getFileList() {
-    return fileList;
-  }
-
 }
