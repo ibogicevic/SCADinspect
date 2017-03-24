@@ -56,6 +56,14 @@ public class ToolbarArea extends ToolBar {
         ImageView imageView = new ImageView(image);
         return imageView;
     }
+    private ImageView loadResizedIcon(String fileName) {
+        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
+        Image image = new Image(inputStream);
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(12);
+        imageView.setFitHeight(12);
+        return imageView;
+    }
 
     /**
      * Constructor of ToolbarArea
@@ -65,8 +73,8 @@ public class ToolbarArea extends ToolBar {
         openProjectButton.setGraphic(loadIcon("open-folder-outline"));
 
         settingsButton.setGraphic(loadIcon("cog-wheel-silhouette"));
-        helpLink.setGraphic(loadIcon("help-icon"));
-        aboutLink.setGraphic(loadIcon("about-icon"));
+        helpLink.setGraphic(loadResizedIcon("help-icon"));
+        aboutLink.setGraphic(loadResizedIcon("about-icon"));
 
 
         // status of buttons
