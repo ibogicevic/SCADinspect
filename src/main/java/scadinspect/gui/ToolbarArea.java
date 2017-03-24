@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 
 /**
  * Toolbar at the top of the main window
+ *
  * @author ivan
  */
 public class ToolbarArea extends ToolBar {

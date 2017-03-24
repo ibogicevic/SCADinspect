@@ -1,39 +1,53 @@
 package scadinspect.gui;
 
-import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
 import javafx.application.Application;
-import javafx.geometry.Orientation;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import scadinspect.control.MyLogger;
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Startup JavaFX frame
+ *
  * @author ivan
  */
 public class Main extends Application {
 
-	/** Name of the application **/
-	public final static String APPNAME = "SCADinspect";
-        
-        /** Location of the resource files **/
-	public final static String RESOURCES_DIR = "/resources/";
-        
-	/** Ratio between window height and screen height **/
-	private final static double WINDOW_HEIGHT = 0.25;
-	
-	// singleton pattern
-	private static Main instance;
-	public static Main getInstance() {
-		return instance;
-	}
-	
-    // gui areas
+    /**
+     * Name of the application *
+     */
+    public static final String APPNAME = "SCADinspect";
+
+    /**
+     * Location of the resource files *
+     */
+    public static final String RESOURCES_DIR = "/resources/";
+
+    /**
+     * Ratio between window height and screen height *
+     */
+    private static final double WINDOW_HEIGHT = 0.25;
+
+    /**
+     * Pre-configured logger that outputs to  *
+     */
+    public static Logger logger = null;
+
+    // singleton pattern
+    private static Main instance;
+
+    public static Main getInstance() {
+        return instance;
+    }
+
+
+  // gui areas
 	public ToolbarArea toolbarArea = new ToolbarArea();
 	//public ExplorerArea explorerArea = new ExplorerArea();
 	public EditorArea editorArea = new EditorArea();;

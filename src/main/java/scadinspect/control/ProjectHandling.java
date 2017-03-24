@@ -10,7 +10,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
 public class ProjectHandling {
-
+  
   /**
    * TODO: Closing of the Project when clicked on "Open folder" and a new directory is choosen else
    * the current path remains and list is still loaded
