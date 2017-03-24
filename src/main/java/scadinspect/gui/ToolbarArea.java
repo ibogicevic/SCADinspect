@@ -73,8 +73,6 @@ public class ToolbarArea extends ToolBar {
         helpLink.setGraphic(loadResizedIcon("help-icon"));
         aboutLink.setGraphic(loadResizedIcon("about-icon"));
 
-
-
         // status of buttons
         disableButtons(true);
         // actionlisteners
