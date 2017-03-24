@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -51,6 +52,9 @@ public class Main extends Application {
     public String currentProject = null;
 
     // remember stage for subwindows
+    private BorderPane mainPane;
+    private StackPane mainStack;
+    private BorderPane greyPane;
     private Stage primaryStage;
 
     public Stage getPrimaryStage() {
@@ -83,9 +87,17 @@ public class Main extends Application {
         mainPane.setCenter(tabPane);
         mainPane.setBottom(bottomPane);
 
+        // main stack
+        mainStack = new StackPane();
+        greyPane = new BorderPane();
+        greyPane.setStyle(
+                "-fx-background-color: rgba(105, 105, 105, 0.9);"
+        );
+        mainStack.getChildren().addAll(greyPane, mainPane);
+
         // show main pane
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        Scene scene = new Scene(mainPane, screenBounds.getWidth(), WINDOW_HEIGHT * screenBounds.getHeight(), true);
+        Scene scene = new Scene(mainStack, screenBounds.getWidth(), WINDOW_HEIGHT * screenBounds.getHeight(), true);
         primaryStage.setTitle(APPNAME);
         primaryStage.setScene(scene);
         primaryStage.setY(0.7 * screenBounds.getHeight());
@@ -103,6 +115,10 @@ public class Main extends Application {
      */
     public boolean isProjectOpen() {
         return (currentProject != null);
+    }
+
+    public void modalToFront(Boolean var) {
+        greyPane.toFront();
     }
 
     /**

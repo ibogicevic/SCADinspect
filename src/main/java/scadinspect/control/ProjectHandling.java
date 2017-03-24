@@ -36,4 +36,9 @@ public class ProjectHandling {
         Main.getInstance().toolbarArea.disableButtons(true);
         Main.getInstance().bottomArea.disableButtons(true);
     }
+
+    public static void showModal() {
+        Main.getInstance().modalToFront(true);
+    }
+
 }
