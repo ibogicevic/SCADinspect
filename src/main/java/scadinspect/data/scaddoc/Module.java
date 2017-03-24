@@ -15,6 +15,7 @@ public class Module {
 
   /**
    * Creating a new Module knowing some properties already
+   *
    * @param properties The properties to use within the module
    */
   public Module(Collection<Property> properties) {
@@ -30,6 +31,7 @@ public class Module {
 
   /**
    * Adding a new property to the module
+   *
    * @param property The property to be added
    */
   public void addProperty(Property property) {
@@ -38,6 +40,7 @@ public class Module {
 
   /**
    * Getting all properties of the module
+   *
    * @return The collection of properties
    */
   public Collection<Property> getProperties() {
