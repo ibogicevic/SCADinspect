@@ -55,22 +55,22 @@ class PropertyParserTest {
     Collection<Module> modules=new HashSet<>();
     Module wheel = new Module();
     wheel.addProperty(new SingleProperty<>("part", "Wheel"));
-    wheel.addProperty(new PairProperty<>("price", 100, "EUR"));
-    wheel.addProperty(new SingleProperty<>("amount", 4));
-    wheel.addProperty(new PairProperty<>("weight", 12, "kg"));
+    wheel.addProperty(new PairProperty<>("price", "100", "EUR"));
+    wheel.addProperty(new SingleProperty<>("amount", "4"));
+    wheel.addProperty(new PairProperty<>("weight", "12", "kg"));
     wheel.addProperty(new MultiProperty<>("materials", "Rubber", "Aluminium"));
     wheel.addProperty(new SingleProperty<>("url", "https://example.com"));
 
     Module motor = new Module();
     motor.addProperty(new SingleProperty<>("part", "Motor"));
-    motor.addProperty(new PairProperty<>("price", 1000, "USD"));
-    motor.addProperty(new SingleProperty<>("amount", 1));
-    motor.addProperty(new PairProperty<>("weight", 200, "kg"));
+    motor.addProperty(new PairProperty<>("price", "1000", "USD"));
+    motor.addProperty(new SingleProperty<>("amount", "1"));
+    motor.addProperty(new PairProperty<>("weight", "200", "kg"));
     motor.addProperty(new SingleProperty<>("materials", "Steel"));
     motor.addProperty(new SingleProperty<>("url", "https://example.com"));
 
-    modules.add(wheel);
     modules.add(motor);
+    modules.add(wheel);
 
     String testFile="// logo.scad - Basic example of module, top-level variable and $fn usage\n"
         + "\n"
@@ -78,7 +78,7 @@ class PropertyParserTest {
         + "\n"
         + "/** few\n"
         + "femfiweocm\n"
-        + "@part wheel\n"
+        + "@part Wheel\n"
         + "@price 100~EUR\n"
         + "@amount 4\n"
         + "@weight 12~kg\n"
@@ -126,6 +126,9 @@ class PropertyParserTest {
     propertyParser = new PropertyParser(testFile);
     Collection<Module> parsed = propertyParser.parseModules();
 
-    assertEquals(modules, parsed);
+    JsonExport exporter=new JsonExport();
+    assertEquals(exporter.getJson(parsed),exporter.getJson(modules));
+
+   // assertEquals(modules, parsed);
   }
 }

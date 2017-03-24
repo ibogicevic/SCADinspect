@@ -48,7 +48,7 @@ public class PropertyParser {
     Matcher commentMatcher = commentPattern.matcher(scadFile);
     comments = new HashSet<>();
     while (commentMatcher.find()) {
-      comments.add(commentMatcher.group(0).replaceAll("\\r\\n?|\\*|\\*/|/\\*\\*", "").replaceAll("\\s", " "));
+      comments.add(commentMatcher.group(0).replaceAll("\\r\\n?|\\*/|\\*|/\\*\\*", "").replaceAll("\\s", " "));
     }
   }
 
