@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
+import scadinspect.data.scaddoc.properties.Property;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
@@ -26,22 +27,24 @@ class FileExportTest {
   @BeforeAll
   static void setupModules() {
     modules = new LinkedList<>();
+    List<Property> wheelProps = new LinkedList<>();
+    List<Property> motorProps = new LinkedList<>();
 
-    Module wheel = new Module();
-    wheel.addProperty(new SingleProperty<>("part", "Wheel"));
-    wheel.addProperty(new PairProperty<>("price", 100, "EUR"));
-    wheel.addProperty(new SingleProperty<>("amount", 4));
-    wheel.addProperty(new PairProperty<>("weight", 12, "kg"));
-    wheel.addProperty(new MultiProperty<>("materials", "Rubber", "Aluminium"));
-    wheel.addProperty(new SingleProperty<>("url", "https://example.com"));
+    wheelProps.add(new SingleProperty<>("amount", 4));
+    wheelProps.add(new MultiProperty<>("materials", "Rubber", "Aluminium"));
+    wheelProps.add(new PairProperty<>("price", 100, "EUR"));
+    wheelProps.add(new SingleProperty<>("part", "Wheel"));
+    wheelProps.add(new PairProperty<>("weight", 12, "kg"));
+    wheelProps.add(new SingleProperty<>("url", "https://example.com"));
+    Module wheel = new Module(wheelProps);
 
-    Module motor = new Module();
-    motor.addProperty(new SingleProperty<>("part", "Motor"));
-    motor.addProperty(new PairProperty<>("price", 1000, "USD"));
-    motor.addProperty(new SingleProperty<>("amount", 1));
-    motor.addProperty(new PairProperty<>("weight", 200, "kg"));
-    motor.addProperty(new SingleProperty<>("materials", "Steel"));
-    motor.addProperty(new SingleProperty<>("url", "https://example.com"));
+    motorProps.add(new SingleProperty<>("amount", 1));
+    motorProps.add(new SingleProperty<>("materials", "Steel"));
+    motorProps.add(new PairProperty<>("price", 1000, "USD"));
+    motorProps.add(new SingleProperty<>("part", "Motor"));
+    motorProps.add(new PairProperty<>("weight", 200, "kg"));
+    motorProps.add(new SingleProperty<>("url", "https://example.com"));
+    Module motor = new Module(motorProps);
 
     modules.add(wheel);
     modules.add(motor);
@@ -67,19 +70,4 @@ class FileExportTest {
 
     assertEquals(isEqual, true);
   }
-
-  //@Test
-  //void saveAsXML() throws IOException {
-  //  File sampleFile = new File("./spec/samples/output_sample.xml");
-  //  File exportedFile = fExport.saveAsXml(modules, "./export.xml");
-  //
-  //  byte[] sample = Files.readAllBytes(sampleFile.toPath());
-  //  byte[] exported = Files.readAllBytes(exportedFile.toPath());
-  //
-  //  boolean isEqual = Arrays.equals(sample, exported);
-  //
-  //  exportedFile.delete();
-  //
-  //  assertEquals(isEqual, true);
-  //}
 }
