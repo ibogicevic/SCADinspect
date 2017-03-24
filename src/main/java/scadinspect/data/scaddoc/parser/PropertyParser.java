@@ -23,13 +23,14 @@ public class PropertyParser {
   private Pattern property = Pattern.compile(keyPattern + contentPattern);
 
   public PropertyParser(String scadFile) {
+    comments = new HashSet<>();
     Matcher commentMatcher = comment.matcher(scadFile);
     while (commentMatcher.find()) {
       comments.add(commentMatcher.group(0).replaceAll("\n|\\*|/|\\*", "").replaceAll("\\s", " "));
     }
   }
 
-  public Collection<Module> parseModule() {
+  public Collection<Module> parseModules() {
     Collection<Module> modules = new HashSet<>();
 
     for (String comment : comments) {

@@ -21,11 +21,6 @@ class PropertyParserTest {
   PropertyParser propertyParser;
   String content;
 
-  @BeforeEach
-  void instantiate() {
-    propertyParser = new PropertyParser(content);
-  }
-
   @Test
   void parseModule() {
     content = "/**"
@@ -34,12 +29,14 @@ class PropertyParserTest {
         + "* @material wood; metal"
         + "* @comment So könnte das Ganze funktionieren..."
         + "*/";
+    propertyParser = new PropertyParser(content);
     Module output = new Module();
     output.addProperty(new SingleProperty<>("title", "Module_1"));
     output.addProperty(new PairProperty<>("price", "100", "EUR"));
     output.addProperty(new MultiProperty<>("material", "wood", "metal"));
     output.addProperty(new SingleProperty<>("comment", "So könnte das Ganze funktionieren..."));
-    Collection<Property> parsed = propertyParser.parseModule().getProperties();
+    System.out.println(propertyParser.parseModules());
+    Collection<Property> parsed = propertyParser.parseModules().iterator().next().getProperties();
     Collection<String> stringParsed = new HashSet<>();
     for (Property property : parsed) {
       stringParsed.add(property.toString());
