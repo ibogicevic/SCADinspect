@@ -30,21 +30,23 @@ public class PropertyParser {
     Module module = new Module();
     while (matcher.find()) {
       System.out.println(matcher.group(0));
-      String key = matcher.group(1);
+      String key = matcher.group(1).replaceFirst("@", "").trim();
       System.out.println(key);
-      String content = matcher.group(2);
+      String content = matcher.group(2).trim();
       System.out.println(content);
       //Check whether it is a pair property
       String[] pair = content.split("~");
       if (pair.length == 2) {
         module.addProperty(new PairProperty(key, pair[0], pair[1]));
+      } else {
+        //List Check
+        String[] list = content.split(";\\s*");
+        if (list.length > 1) {
+          module.addProperty(new MultiProperty(key, list));
+        } else {
+          module.addProperty(new SingleProperty(key, content));
+        }
       }
-      //List Check
-      String[] list = content.split(";\\s*");
-      if (list.length > 1) {
-        module.addProperty(new MultiProperty(key, list));
-      }
-      module.addProperty(new SingleProperty(key, content));
     }
     return module;
   }

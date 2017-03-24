@@ -28,4 +28,14 @@ public class Module {
     return properties;
   }
 
+  @Override
+  public String toString() {
+    String res= "{";
+    for (Property property: properties) {
+      res+=property.toString()+"\n";
+    }
+    res+="}";
+    return res;
+  }
+
 }
