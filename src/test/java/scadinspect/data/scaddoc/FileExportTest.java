@@ -2,8 +2,10 @@ package scadinspect.data.scaddoc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.sun.xml.internal.bind.v2.util.StackRecorder;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -61,11 +63,9 @@ class FileExportTest {
     byte[] sample = Files.readAllBytes(sampleFile.toPath());
     byte[] exported = Files.readAllBytes(exportedFile.toPath());
 
-    boolean isEqual = Arrays.equals(sample, exported);
-
     exportedFile.delete();
 
-    assertEquals(isEqual, true);
+    assertEquals(new String(sample).replaceAll("\\r\\n?","\n"), new String(exported).replaceAll("\\r\\n?","\n"));
   }
 
   //@Test
