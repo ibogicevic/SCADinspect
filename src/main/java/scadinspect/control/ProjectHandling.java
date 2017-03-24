@@ -147,13 +147,4 @@ public class ProjectHandling {
     return fileList;
   }
 
-  /**
-   * For debugging purposes: Prints out all loaded files in console
-   */
-  private void showFilesInList() {
-    for (File file : fileList) {
-      System.out.println(file.getName());
-    }
-  }
-
 }
