@@ -29,9 +29,7 @@ public class ToolbarArea extends ToolBar {
     Pane seperatorPane = new Pane();
     private Button openProjectButton = new Button("Open");
     private Button settingsButton = new Button("Settings");
-
     private Hyperlink helpLink = new Hyperlink("Help");
-
     private Hyperlink aboutLink = new Hyperlink("About");
 
 
@@ -56,6 +54,14 @@ public class ToolbarArea extends ToolBar {
         ImageView imageView = new ImageView(image);
         return imageView;
     }
+    private ImageView loadResizedIcon(String fileName) {
+        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
+        Image image = new Image(inputStream);
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(12);
+        imageView.setFitWidth(12);
+        return imageView;
+    }
 
     /**
      * Constructor of ToolbarArea
@@ -63,10 +69,9 @@ public class ToolbarArea extends ToolBar {
     public ToolbarArea() {
         // set button icons
         openProjectButton.setGraphic(loadIcon("open-folder-outline"));
-
         settingsButton.setGraphic(loadIcon("cog-wheel-silhouette"));
-        helpLink.setGraphic(loadIcon("help-icon"));
-        aboutLink.setGraphic(loadIcon("about-icon"));
+        helpLink.setGraphic(loadResizedIcon("help-icon"));
+        aboutLink.setGraphic(loadResizedIcon("about-icon"));
 
 
         // status of buttons
@@ -79,12 +84,9 @@ public class ToolbarArea extends ToolBar {
         settingsButton.setOnAction(e -> SettingsDialog.openDialog());
         // add all buttons
         this.getItems().add(openProjectButton);
-
         this.getItems().add(new Separator());
-
         this.getItems().add(settingsButton);
         this.getItems().add(new Separator());
-
         HBox.setHgrow(seperatorPane, Priority.ALWAYS);
         vbox.getChildren().add(helpLink);
         vbox.getChildren().add(aboutLink);
