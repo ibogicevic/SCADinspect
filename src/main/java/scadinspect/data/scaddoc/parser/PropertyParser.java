@@ -45,16 +45,11 @@ public class PropertyParser {
    * @param scadFile The file content to be parsed
    */
   public void setScadFile(String scadFile) {
-    System.out.println("1");
     Matcher commentMatcher = commentPattern.matcher(scadFile);
-    System.out.println("2");
     comments = new HashSet<>();
-    System.out.println("3");
     while (commentMatcher.find()) {
-      System.out.println("4");
-      comments.add(commentMatcher.group(0).replaceAll("\n|\\*|/|\\*", "").replaceAll("\\s", " "));
+      comments.add(commentMatcher.group(0).replaceAll("\\r\\n?|\\*|\\*/|/\\*\\*", "").replaceAll("\\s", " "));
     }
-    System.out.println("5");
   }
 
   /**
