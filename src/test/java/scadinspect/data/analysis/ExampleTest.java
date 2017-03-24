@@ -5,9 +5,9 @@
  */
 package scadinspect.data.analysis;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
-import scadinspect.data.analysis.Issue;
-import static org.junit.Assert.*;
 /**
  *
  * @author balsfull
@@ -16,6 +16,6 @@ public class ExampleTest {
     
     @Test
     public void testInstance() {
-        assertNotNull(new Issue());
+        assertNotNull(new Issue(false, null, 0, null, null, null));
     }
 }
