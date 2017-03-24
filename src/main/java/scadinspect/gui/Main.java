@@ -39,12 +39,17 @@ public class Main extends Application {
 
     // gui areas
     public ToolbarArea toolbarArea = new ToolbarArea();
+    public ToolbarArea helpToolbarArea = new ToolbarArea();
     //public ExplorerArea explorerArea = new ExplorerArea();
     public TabArea tabArea = new TabArea();
+    public TabArea helpTabArea = new TabArea();
     // public InspectorArea inspectorArea = new InspectorArea();
     // public MessagesArea messagesArea = new MessagesArea();
     public StatusArea statusArea = new StatusArea();
+    public StatusArea helpStatusArea = new StatusArea();
+
     public BottomArea bottomArea = new BottomArea();
+    public BottomArea helpBottomArea = new BottomArea();
 
     /**
      * root path to current open project, null if no project open
@@ -53,6 +58,7 @@ public class Main extends Application {
 
     // remember stage for subwindows
     private BorderPane mainPane;
+    private BorderPane helpPane;
     private StackPane mainStack;
     private BorderPane greyPane;
     private Stage primaryStage;
@@ -76,10 +82,19 @@ public class Main extends Application {
         BorderPane tabPane = new BorderPane();
         tabPane.setCenter(tabArea);
 
+        //Help
+        BorderPane helpTabPane = new BorderPane();
+        helpTabPane.setCenter(helpTabArea);
+
         // Status and BottomArea
         BorderPane bottomPane = new BorderPane();
         bottomPane.setCenter(bottomArea);
         bottomPane.setBottom(statusArea);
+
+        //Help
+        BorderPane helpBottomPane = new BorderPane();
+        bottomPane.setCenter(helpBottomArea);
+        bottomPane.setBottom(helpStatusArea);
 
         // add all areas
         BorderPane mainPane = new BorderPane();
@@ -87,13 +102,22 @@ public class Main extends Application {
         mainPane.setCenter(tabPane);
         mainPane.setBottom(bottomPane);
 
+        //Help
+        BorderPane helpMainPane = new BorderPane();
+        helpMainPane.setTop(helpToolbarArea);
+        helpMainPane.setCenter(helpTabPane);
+        helpMainPane.setBottom(helpBottomPane);
+
+
         // main stack
         mainStack = new StackPane();
         greyPane = new BorderPane();
+        helpPane = new BorderPane();
         greyPane.setStyle(
                 "-fx-background-color: rgba(105, 105, 105, 0.9);"
         );
         mainStack.getChildren().addAll(greyPane, mainPane);
+        helpPane.getChildren().add(0, helpMainPane);
 
         // show main pane
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
