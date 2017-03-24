@@ -80,7 +80,7 @@ public class ToolbarArea extends ToolBar {
         openProjectButton.setOnAction(e -> ProjectHandling.openProject());
 
         helpLink.setOnAction(e -> ProjectHandling.openProject());
-        aboutLink.setOnAction(e -> ProjectHandling.openProject());
+        aboutLink.setOnAction(e -> AboutDialog.openDialog());
         settingsButton.setOnAction(e -> SettingsDialog.openDialog());
         // add all buttons
         this.getItems().add(openProjectButton);
