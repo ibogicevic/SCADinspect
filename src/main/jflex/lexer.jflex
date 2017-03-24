@@ -24,7 +24,7 @@ import scadinspect.parser.error.*;
 %eofval}
 
 %{
-  StringBuffer string = new StringBuffer();
+  StringBuilder stringContents = new StringBuilder();
   ComplexSymbolFactory symbolFactory;
 
   public OpenScadLexer(java.io.Reader in, ComplexSymbolFactory sf){
@@ -111,19 +111,19 @@ H = [0-9a-fA-F]
 /* strings */
 /* TODO unicode handeling */
 /* TODO build string */
-<YYINITIAL> \"			    { yybegin(cond_string);}
+<YYINITIAL> \"			    { yybegin(cond_string); stringContents.setLength(0); }
 <cond_string> {
-\\n			                { }
-\\t			                { }
-\\r			                { }
-\\\\		                { }
-\\\"		                { }
-\\x[0-7]{H}             { }
+\\n			                { stringContents.append('\n'); }
+\\t			                { stringContents.append('\t'); }
+\\r			                { stringContents.append('\r'); }
+\\\\ 		                { stringContents.append('\\'); }
+\\\"		                { stringContents.append('\"'); }
+\\x[0-7]{H}             { /* TODO handle escaped hex numbers */}
 \\u{H}{4}|\\U{H}{6}     { }
-[^\\\n\"]		            { }
+[^\\\n\"]		            { stringContents.append( yytext() ); }
 [\n\r]		              { }
 \"			                { yybegin(YYINITIAL);
-                          return symbol("string", OpenScadSymbols.TOK_STRING);
+                          return symbol("string", OpenScadSymbols.TOK_STRING, (String) stringContents.toString());
                         }
 } /* close cond_string */
 
