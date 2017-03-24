@@ -1,13 +1,7 @@
 package scadinspect.gui;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -19,82 +13,67 @@ import scadinspect.data.analysis.Issue;
  */
 
 public class IssueList {
+
   private TableView<Issue> issueList = new TableView<>();
 
-  private final ObservableList<Issue> issueData =
-      FXCollections.observableArrayList(
-          new Issue(true, "asdf", 15, "asdf", "asdf", "asdf", "asdf")
-      );
-/*
-  public void showTable () {
-    issueList.setEditable(true);
+  private final ObservableList<Issue> issueData = FXCollections.observableArrayList();
 
-    TableColumn issuesCol = new TableColumn("Issues");
-    issuesCol.setMinWidth(100);
-    TableColumn resourcesCol = new TableColumn("Resources");
+  //TableColumn issuesCol = new TableColumn("issues");
+  TableColumn resourcesCol = new TableColumn("resources");
+  //TableColumn typeCol = new TableColumn("type");
+  TableColumn lineNumberCol = new TableColumn("Line number");
+  TableColumn issueIdentifierCol = new TableColumn("Identifier");
+  TableColumn descriptionCol = new TableColumn("Description");
+  TableColumn codeSnippedCol = new TableColumn("Preview");
 
+  public TableView showList() {
+    ArrayList<Issue> issues = new ArrayList<>();
 
-  }
-  */
-  TableColumn issues = new TableColumn("issues");
-  TableColumn resources = new TableColumn("resources");
+    for(int i = 0; i < 10; i++){
+      issues.add(i, new Issue(true, "example.scad"+i,15+(i*2), "randomIdentifier"+i, "description"+i,"console.log(\"error\")"+i
+      ));
+    }
 
-  public TableView showList () {
+    addDataToTable(issues);
 
     issueList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     //addDataToTable();
 
-    issues.setCellValueFactory(
+    /*
+    typeCol.setCellValueFactory(
+        new PropertyValueFactory<Issue,String >("isError")
+    );
+    */
+
+    lineNumberCol.setCellValueFactory(
+        new PropertyValueFactory<Issue, Integer>("lineNumber")
+    );
+
+    issueIdentifierCol.setCellValueFactory(
+        new PropertyValueFactory<Issue,String>("issueIdentifier")
+    );
+
+    descriptionCol.setCellValueFactory(
         new PropertyValueFactory<Issue, String>("description")
     );
 
+    codeSnippedCol.setCellValueFactory(
+        new PropertyValueFactory<Issue, String>("codeSnippet")
+    );
+
+    resourcesCol.setCellValueFactory(
+        new PropertyValueFactory<Issue, String>("sourceFile")
+    );
+
     issueList.setItems(issueData);
-    
-    issueList.getColumns().add(issues);
-    issueList.getColumns().add(resources);
-
-
-
+    issueList.getColumns().addAll(issueIdentifierCol, descriptionCol, codeSnippedCol, lineNumberCol, resourcesCol);
 
     return issueList;
   }
 
-  ArrayList<Issue> dummy = new ArrayList<>();
-
-
-  /*
-  addDataToTable gets an array list with issue objects.
-  a for loop circles through the list
-  issue objects get added to row
-  */
-
-  public void addDataToTable () {
-    dummyData();
-
-
-
-    for(int i = 0; i < dummy.size(); i++){
-      Integer tempLineNumber = dummy.get(i).getLineNumber();
-      tempLineNumber.toString();
-      String tempIsError;
-      if(dummy.get(i).getIsError()){
-        tempIsError = "Error";
-      } else {
-        tempIsError = "Warning";
-      }
-
-      //issueData.add(i, tempIsError + " " + dummy.get(i).getSourceFile() + " " + tempLineNumber + " " + dummy.get(i).getIssueIdentifier() + " " + dummy.get(i).getDescription());
+  public void addDataToTable(ArrayList<Issue> issues){
+    for(int i = 0; i < issues.size(); i++){
+      issueData.add(i, issues.get(i));
     }
-
-
-
   }
-
-  public void dummyData () {
-    Issue asdf = new scadinspect.data.analysis.Issue(true,"asdf",15,"asdf","asdf","asdf", "asdf");
-    Issue fdsa = new scadinspect.data.analysis.Issue(false,"fdsa",15,"fdsa","fdsa","fdsa", "fdsa");
-    dummy.add(0, asdf);
-    dummy.add(1, fdsa);
-  }
-
 }

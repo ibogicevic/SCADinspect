@@ -20,7 +20,7 @@ public class Main extends Application {
 	public final static String APPNAME = "SCADinspect";
 
 	/** Location of the resource files **/
-	public final static String RESOURCES_DIR = "/resources/";
+	public final static String RESOURCES_DIR = "/resourcesCol/";
 
 	/** Ratio between window height and screen height **/
 	private final static double WINDOW_HEIGHT = 0.25;

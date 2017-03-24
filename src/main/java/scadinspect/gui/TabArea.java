@@ -1,48 +1,44 @@
 package scadinspect.gui;
 
-import gui.DocumentationList;
-import gui.IssueList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.web.HTMLEditor;
 
 /**
  * Area for 'Issues' and 'Documentation' Tabulators, sets content for Tabs here.
+ *
  * @author Tim Walter
  */
 public class TabArea extends TabPane {
-	IssueList issueList = new IssueList();
-	DocumentationList documentationList = new DocumentationList();
 
-	public TabArea() {
-		TableView issue = generateIssueTable(issueList);
-		TableView documentations = generateDocTable(documentationList);
+  IssueList issueList = new IssueList();
+  DocumentationList documentationList = new DocumentationList();
 
+  public TabArea() {
+    TableView issue = generateIssueTable(issueList);
+    TableView documentations = generateDocTable(documentationList);
 
-		//issue tab
-		Tab issues = new Tab();
-		issues.setText("Issues");
-		issues.setContent(issue); //SET CONTENT FOR issueArea HERE
+    //issue tab
+    Tab issues = new Tab();
+    issues.setText("Issues");
+    issues.setContent(issue); //SET CONTENT FOR issueArea HERE
 
-		//documentation tab
-		Tab documentation = new Tab();
-		documentation.setText("Documentation");
-		documentation.setContent(documentations); //SET CONTENT FOR documentationArea HERE
+    //documentation tab
+    Tab documentation = new Tab();
+    documentation.setText("Documentation");
+    documentation.setContent(documentations); //SET CONTENT FOR documentationArea HERE
 
-		this.getTabs().add(issues);
-		this.getTabs().add(documentation);
-	}
+    this.getTabs().add(issues);
+    this.getTabs().add(documentation);
+  }
 
-	private TableView generateIssueTable (IssueList issueList) {
-		TableView table = issueList.showList();
-		return table;
-	}
+  private TableView generateIssueTable(IssueList issueList) {
+    TableView table = issueList.showList();
+    return table;
+  }
 
-	private TableView generateDocTable (DocumentationList documentationList){
-		TableView table = documentationList.showList();
-		return table;
-	}
+  private TableView generateDocTable(DocumentationList documentationList) {
+    TableView table = documentationList.showList();
+    return table;
+  }
 }
