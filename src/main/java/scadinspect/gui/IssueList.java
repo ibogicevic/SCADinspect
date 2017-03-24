@@ -66,7 +66,7 @@ public class IssueList {
     );
 
     issueList.setItems(issueData);
-    issueList.getColumns().addAll(issueIdentifierCol, descriptionCol, codeSnippedCol, lineNumberCol, resourcesCol);
+    issueList.getColumns().addAll(issueIdentifierCol, descriptionCol, codeSnippedCol, resourcesCol, lineNumberCol);
 
     return issueList;
   }
