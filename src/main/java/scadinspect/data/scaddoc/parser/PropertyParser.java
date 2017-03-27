@@ -1,7 +1,9 @@
 package scadinspect.data.scaddoc.parser;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import scadinspect.data.scaddoc.Module;
@@ -48,7 +50,8 @@ public class PropertyParser {
     Matcher commentMatcher = commentPattern.matcher(scadFile);
     comments = new HashSet<>();
     while (commentMatcher.find()) {
-      comments.add(commentMatcher.group(0).replaceAll("\\r\\n?|\\*/|\\*|/\\*\\*", "").replaceAll("\\s", " "));
+      comments.add(commentMatcher.group(0).replaceAll("\\r\\n?|\\*/|\\*|/\\*\\*", "")
+          .replaceAll("\\s", " "));
     }
   }
 
@@ -73,14 +76,46 @@ public class PropertyParser {
         // Check whether it is a pair property
         String[] pair = content.split("~");
         if (pair.length == 2) {
-          module.addProperty(new PairProperty<>(key, pair[0], pair[1]));
+          try {
+            module.addProperty(new PairProperty<>(key, Integer.parseInt(pair[0]), pair[1]));
+          } catch (NumberFormatException e) {
+            try {
+              module.addProperty(new PairProperty<>(key, Double.parseDouble(pair[0]), pair[1]));
+            } catch (NumberFormatException r) {
+              module.addProperty(new PairProperty<>(key, pair[0], pair[1]));
+            }
+          }
         } else {
           // List Check
           String[] list = content.split(";\\s*");
           if (list.length > 1) {
-            module.addProperty(new MultiProperty<>(key, list));
+            try {
+              List<Integer> castedList = new ArrayList<>();
+              for (String elem : list) {
+                castedList.add(Integer.parseInt(elem));
+              }
+              module.addProperty(new MultiProperty<>(key, castedList));
+            } catch (NumberFormatException e) {
+              try {
+                List<Double> castedList = new ArrayList<>();
+                for (String elem : list) {
+                  castedList.add(Double.parseDouble(elem));
+                }
+                module.addProperty(new MultiProperty<>(key, castedList));
+              } catch (NumberFormatException r) {
+                module.addProperty(new MultiProperty<>(key, list));
+              }
+            }
           } else {
-            module.addProperty(new SingleProperty<>(key, content));
+            try {
+              module.addProperty(new SingleProperty<>(key, Integer.parseInt(content)));
+            } catch (NumberFormatException e) {
+              try {
+                module.addProperty(new SingleProperty<>(key, Double.parseDouble(content)));
+              } catch (NumberFormatException r) {
+                module.addProperty(new SingleProperty<>(key, content));
+              }
+            }
           }
         }
       }
