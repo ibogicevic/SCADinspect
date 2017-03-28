@@ -89,23 +89,19 @@ public class PropertyParser {
           // List Check
           String[] list = content.split(";\\s*");
           if (list.length > 1) {
-            try {
-              List<Integer> castedList = new ArrayList<>();
-              for (String elem : list) {
-                castedList.add(Integer.parseInt(elem));
-              }
-              module.addProperty(new MultiProperty<>(key, castedList));
-            } catch (NumberFormatException e) {
+            List<Object> castedList = new ArrayList<>();
+            for (String elem : list) {
               try {
-                List<Double> castedList = new ArrayList<>();
-                for (String elem : list) {
+                castedList.add(Integer.parseInt(elem));
+              } catch (NumberFormatException e) {
+                try {
                   castedList.add(Double.parseDouble(elem));
+                } catch (NumberFormatException r) {
+                  castedList.add(elem);
                 }
-                module.addProperty(new MultiProperty<>(key, castedList));
-              } catch (NumberFormatException r) {
-                module.addProperty(new MultiProperty<>(key, list));
               }
             }
+            module.addProperty(new MultiProperty<>(key, castedList));
           } else {
             try {
               module.addProperty(new SingleProperty<>(key, Integer.parseInt(content)));
