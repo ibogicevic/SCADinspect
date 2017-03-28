@@ -2,8 +2,9 @@ package scadinspect.data.scaddoc.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
+import org.json.JSONArray;
 import org.junit.jupiter.api.Test;
 import scadinspect.data.scaddoc.JsonExport;
 import scadinspect.data.scaddoc.Module;
@@ -44,7 +45,7 @@ class PropertyParserTest {
   void parseEmptyModule() {
     content = " ";
     propertyParser = new PropertyParser(content);
-    Collection<Module> expected=new HashSet<>();
+    Collection<Module> expected=new ArrayList<>();
     Collection<Module> parsed = propertyParser.parseModules();
 
     assertEquals(expected, parsed);
@@ -52,7 +53,7 @@ class PropertyParserTest {
 
   @Test
   void sampleFile() {
-    Collection<Module> modules=new HashSet<>();
+    Collection<Module> modules=new ArrayList<>();
     Module wheel = new Module();
     wheel.addProperty(new SingleProperty<>("part", "Wheel"));
     wheel.addProperty(new PairProperty<>("price", 100, "EUR"));
@@ -127,8 +128,108 @@ class PropertyParserTest {
     Collection<Module> parsed = propertyParser.parseModules();
 
     JsonExport exporter=new JsonExport();
-    //assertEquals(exporter.getJson(modules),exporter.getJson(parsed));
+    JSONArray test=exporter.getJsonArray(modules);
 
-    assertEquals(modules, parsed);
+    assertEquals(exporter.getJsonArray(modules).toString(2),exporter.getJsonArray(parsed).toString(2));
+
+   // assertEquals(modules, parsed);
+  }
+  @Test
+  void parsePairProperty() {
+    content = "/**"
+        + "* @float 0.1~a"
+        + "* @int 1~b"
+        + "* @string a~c"
+        + "*/";
+    propertyParser = new PropertyParser(content);
+
+    Module output = new Module();
+
+    output.addProperty(new PairProperty<>("float", 0.1, "a"));
+    output.addProperty(new PairProperty<>("int", 1, "b"));
+    output.addProperty(new PairProperty<>("string", "a", "c"));
+
+    Module parsed = propertyParser.parseModules().iterator().next();
+
+    assertEquals(output, parsed);
+  }
+  @Test
+  void parseSingleProperty() {
+    content = "/**"
+        + "* @float 0.1"
+        + "* @int 1"
+        + "* @string a"
+        + "*/";
+    propertyParser = new PropertyParser(content);
+
+    Module output = new Module();
+
+    output.addProperty(new SingleProperty<>("float", 0.1 ));
+    output.addProperty(new SingleProperty<>("int", 1 ));
+    output.addProperty(new SingleProperty<>("string", "a" ));
+
+    Module parsed = propertyParser.parseModules().iterator().next();
+
+    assertEquals(output, parsed);
+  }
+  @Test
+  void parseMultiProperty() {
+    content = "/**"
+        + "* @float 0.1;0.2"
+        + "* @int 1;2"
+        + "* @string     a    ; b  ;  c   "
+        + "* @doubleInt 0.1 ; 1.0"
+        + "* @mixed 0.1 ; 1          ;   c    "
+        + "*/";
+    propertyParser = new PropertyParser(content);
+
+    Module output = new Module();
+
+    output.addProperty(new MultiProperty<>("float", 0.1 ,0.2));
+    output.addProperty(new MultiProperty<>("int", 1 ,2));
+    output.addProperty(new MultiProperty<>("string", "a" ,"b","c"));
+    output.addProperty(new MultiProperty<>("doubleInt", 0.1 ,1));
+    output.addProperty(new MultiProperty<>("mixed", 0.1 ,1,"c"));
+
+
+    propertyParser = new PropertyParser(content);
+    Collection<Module> parsed = propertyParser.parseModules();
+    Collection<Module> expected =new ArrayList<>();
+    expected.add(output);
+    JsonExport exporter=new JsonExport();
+    assertEquals(exporter.getJson(expected),exporter.getJson(parsed));
+
+  }
+  @Test
+  void wrongInitialisation() {
+    propertyParser = new PropertyParser();
+    assertEquals(null, propertyParser.parseModules());
+  }
+  @Test
+  void alternativeConstructor() {
+    content = "/**"
+        + "* @float 0.1;0.2"
+        + "* @int 1;2"
+        + "* @string     a    ; b  ;  c   "
+        + "* @doubleInt 0.1 ; 1.0"
+        + "* @mixed 0.1 ; 1          ;   c    "
+        + "*/";
+    propertyParser = new PropertyParser();
+    propertyParser.setScadFile(content);
+    Module output = new Module();
+
+    output.addProperty(new MultiProperty<>("float", 0.1 ,0.2));
+    output.addProperty(new MultiProperty<>("int", 1 ,2));
+    output.addProperty(new MultiProperty<>("string", "a" ,"b","c"));
+    output.addProperty(new MultiProperty<>("doubleInt", 0.1 ,1));
+    output.addProperty(new MultiProperty<>("mixed", 0.1 ,1,"c"));
+
+
+    propertyParser = new PropertyParser(content);
+    Collection<Module> parsed = propertyParser.parseModules();
+    Collection<Module> expected =new ArrayList<>();
+    expected.add(output);
+    JsonExport exporter=new JsonExport();
+    assertEquals(exporter.getJson(expected),exporter.getJson(parsed));
   }
 }

@@ -64,7 +64,7 @@ public class PropertyParser {
     if (comments == null) {
       return null;
     }
-    Collection<Module> modules = new HashSet<>();
+    Collection<Module> modules = new ArrayList<>();
 
     for (String comment : comments) {
       Module module = new Module();
