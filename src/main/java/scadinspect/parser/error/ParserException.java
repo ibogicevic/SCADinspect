@@ -7,7 +7,7 @@ import scadinspect.data.analysis.Issue;
  */
 public class ParserException extends Exception {
 
-    private final String issueId = "E-000";
+    private final String defaultIssueId = "E-000";
 
     private final String file;
     private final int line;
@@ -32,7 +32,7 @@ public class ParserException extends Exception {
     }
 
     public String getIssueId() {
-        return issueId;
+        return defaultIssueId;
     }
 
     public String getFile() {
