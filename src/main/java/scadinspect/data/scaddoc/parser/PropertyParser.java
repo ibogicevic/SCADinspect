@@ -91,6 +91,7 @@ public class PropertyParser {
           if (list.length > 1) {
             List<Object> castedList = new ArrayList<>();
             for (String elem : list) {
+              elem = elem.trim();
               try {
                 castedList.add(Integer.parseInt(elem));
               } catch (NumberFormatException e) {
