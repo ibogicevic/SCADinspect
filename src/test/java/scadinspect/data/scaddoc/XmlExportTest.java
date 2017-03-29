@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import scadinspect.data.scaddoc.properties.MultiProperty;
@@ -41,7 +42,7 @@ class XmlExportTest {
   void emptyList() throws Exception {
     assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
             + "<modules/>\n",
-        exporter.getXml(modules));
+        exporter.getXml(modules).replaceAll("\\r\\n?", "\n"));
   }
 
   /**
@@ -58,7 +59,7 @@ class XmlExportTest {
             + "    <key>1</key>\n"
             + "  </module>\n"
             + "</modules>\n",
-        exporter.getXml(modules));
+        exporter.getXml(modules).replaceAll("\\r\\n?", "\n"));
 
   }
 
@@ -75,7 +76,7 @@ class XmlExportTest {
         + "  <module>\n"
         + "    <key>0.1</key>\n"
         + "  </module>\n"
-        + "</modules>\n", exporter.getXml(modules));
+        + "</modules>\n", exporter.getXml(modules).replaceAll("\\r\\n?", "\n"));
   }
 
   /**
@@ -91,7 +92,7 @@ class XmlExportTest {
         + "  <module>\n"
         + "    <key>value</key>\n"
         + "  </module>\n"
-        + "</modules>\n", exporter.getXml(modules));
+        + "</modules>\n", exporter.getXml(modules).replaceAll("\\r\\n?", "\n"));
   }
 
   /**
@@ -108,7 +109,7 @@ class XmlExportTest {
         + "    <key>1, 2, 3</key>\n"
         + "  </module>\n"
         + "</modules>\n",
-        exporter.getXml(modules));
+        exporter.getXml(modules).replaceAll("\\r\\n?", "\n"));
   }
 
   /**
@@ -124,7 +125,7 @@ class XmlExportTest {
         + "  <module>\n"
         + "    <key>0.1, 1.1, 2, 4</key>\n"
         + "  </module>\n"
-        + "</modules>\n", exporter.getXml(modules));
+        + "</modules>\n", exporter.getXml(modules).replaceAll("\\r\\n?", "\n"));
   }
 
   /**
@@ -140,7 +141,7 @@ class XmlExportTest {
         + "  <module>\n"
         + "    <key>a, b, c</key>\n"
         + "  </module>\n"
-        + "</modules>\n", exporter.getXml(modules));
+        + "</modules>\n", exporter.getXml(modules).replaceAll("\\r\\n?", "\n"));
   }
 
   /**
@@ -160,7 +161,7 @@ class XmlExportTest {
             + "    </price>\n"
             + "  </module>\n"
             + "</modules>\n",
-        exporter.getXml(modules));
+        exporter.getXml(modules).replaceAll("\\r\\n?", "\n"));
   }
 
   /**
@@ -180,7 +181,7 @@ class XmlExportTest {
             + "    </price>\n"
             + "  </module>\n"
             + "</modules>\n",
-        exporter.getXml(modules));
+        exporter.getXml(modules).replaceAll("\\r\\n?", "\n"));
   }
 
   /**
@@ -200,7 +201,7 @@ class XmlExportTest {
             + "    </weight>\n"
             + "  </module>\n"
             + "</modules>\n",
-        exporter.getXml(modules));
+        exporter.getXml(modules).replaceAll("\\r\\n?", "\n"));
   }
 
    @Test
@@ -223,6 +224,6 @@ class XmlExportTest {
         + "    <key>value</key>\n"
         + "  </module>\n"
         + "</modules>\n",
-        exporter.getXml(modules));
+        exporter.getXml(modules).replaceAll("\\r\\n?", "\n"));
    }
 }
