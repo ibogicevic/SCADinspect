@@ -1,7 +1,7 @@
 package scadinspect.data.scaddoc;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import scadinspect.data.scaddoc.properties.Property;
 
 /**
@@ -26,7 +26,7 @@ public class Module {
    * Creating a new module with an empty collection of properties
    */
   public Module() {
-    this(new HashSet<>());
+    this(new ArrayList<>());
   }
 
   /**
@@ -69,11 +69,11 @@ public class Module {
       return false;
     }
 
-    Collection<String> stringOther = new HashSet<>();
+    Collection<String> stringOther = new ArrayList<>();
     for (Property property : ((Module) other).getProperties()) {
       stringOther.add(property.toString());
     }
-    Collection<String> stringThis = new HashSet<>();
+    Collection<String> stringThis = new ArrayList<>();
     for (Property property : properties) {
       stringThis.add(property.toString());
     }
@@ -91,4 +91,6 @@ public class Module {
     }
     return true;
   }
+
+
 }
