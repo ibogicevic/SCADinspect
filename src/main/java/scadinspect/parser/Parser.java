@@ -37,7 +37,7 @@ public class Parser {
 
     } catch (Exception e) {
       //TODO convert to issue, log out the message using the logger
-      issues.add(new Issue(true, null, 0, "E-003", "Unknown Parser Error", null));
+      issues.add(new Issue(Issue.issueType.ERROR, null, 0, "E-003", "Unknown Parser Error", null));
       success = false;
     }
 

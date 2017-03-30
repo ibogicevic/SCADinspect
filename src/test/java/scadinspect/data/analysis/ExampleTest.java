@@ -15,6 +15,6 @@ public class ExampleTest {
     
     @Test
     public void testInstance() {
-        assertNotNull(new Issue(false, null, 0, null, null, null));
+        assertNotNull(new Issue(Issue.issueType.ERROR, null, 0, null, null, null));
     }
 }

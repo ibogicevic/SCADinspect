@@ -10,6 +10,7 @@ import java_cup.runtime.Scanner;
 import java_cup.runtime.Symbol;
 import java_cup.runtime.SymbolFactory;
 import scadinspect.data.analysis.Issue;
+import scadinspect.data.analysis.Issue.issueType;
 import scadinspect.parser.error.ParserException;
 import scadinspect.parser.generated.OpenScadParser;
 
@@ -45,15 +46,15 @@ public class CustomErrorOpenScadParser extends OpenScadParser {
       ComplexSymbol cs = (ComplexSymbol)info;
       //TODO get filename, code snippet?
       //TODO really, we need to get that filename somehow
-      errors.add(new Issue(true, null, cs.getLeft().getLine() , this.errorID, message + " for input symbol \"" + cs.getName() + "\" spanning from " + cs.getLeft() + " to " + cs.getRight(), null));
+      errors.add(new Issue(Issue.issueType.ERROR, null, cs.getLeft().getLine() , this.errorID, message + " for input symbol \"" + cs.getName() + "\" spanning from " + cs.getLeft() + " to " + cs.getRight(), null));
     } else if(info instanceof Symbol) {
         if(((Symbol)info).left != -1) {
-            errors.add(new Issue(true, null, 0, this.errorID, message +  " at character " + ((Symbol)info).left + " of input", null));
+            errors.add(new Issue(Issue.issueType.ERROR, null, 0, this.errorID, message +  " at character " + ((Symbol)info).left + " of input", null));
         } else {
-           errors.add(new Issue(true, null, 0, this.errorID, message , null));
+           errors.add(new Issue(Issue.issueType.ERROR, null, 0, this.errorID, message , null));
         }
     } else {
-        errors.add(new Issue(true, null, 0, this.errorID, message , null));
+        errors.add(new Issue(Issue.issueType.ERROR, null, 0, this.errorID, message , null));
     }
   }
 
