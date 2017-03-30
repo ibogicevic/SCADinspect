@@ -58,7 +58,8 @@ public class PropertyParser {
   /**
    * Parsing the scad file content to a collection of internal modules
    *
-   * @return Collection of internal modules
+   * @return Collection of internal modules, returns null if the parsable file is not set or does
+   * not contain any parsable comment
    */
   public Collection<Module> parseModules() {
     if (comments == null) {
