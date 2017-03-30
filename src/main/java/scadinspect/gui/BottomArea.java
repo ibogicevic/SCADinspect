@@ -52,6 +52,8 @@ public class BottomArea extends ToolBar{
      * Constructor of BottomArea
      */
     public BottomArea() {
+        ProjectHandling projectHandler = new ProjectHandling();
+
         //set button icons
         closeProjectButton.setGraphic(loadIcon("cross-mark-on-a-black-circle-background"));
         exportButton.setGraphic(loadIcon("text-file"));
@@ -59,7 +61,7 @@ public class BottomArea extends ToolBar{
         //status of buttons
         disableButtons(true);
         // action listeners
-        closeProjectButton.setOnAction(e -> ProjectHandling.closeProject());
+        closeProjectButton.setOnAction(e -> projectHandler.closeProject());
         refreshButton.setOnAction(e -> Main.getInstance().statusArea.simulateProgress());
         // TODO: export Button action
 
