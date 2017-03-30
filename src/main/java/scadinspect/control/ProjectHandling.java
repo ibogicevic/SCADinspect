@@ -54,8 +54,8 @@ public class ProjectHandling {
      */
 
     if (projectFile != null) {
-      setProjectPath(projectFile);
       fileList.add(projectFile);
+      setProjectPath(projectFile);
     }
   }
 
@@ -71,8 +71,8 @@ public class ProjectHandling {
      * contents of the subfolder to the fileList
      */
     if (projectDirectory != null) {
-      setProjectPath(projectDirectory);
       addFilesToList(projectDirectory.getAbsolutePath());
+      setProjectPath(projectDirectory);
     }
   }
 
@@ -92,7 +92,7 @@ public class ProjectHandling {
 
   /**
    * Sets the current project path in the Title and the App name
-   * 
+   * Also this is the last called function when the files are fully loaded
    * @param rootPath
    */
   private void setCurrentProject(String rootPath) {
@@ -141,5 +141,13 @@ public class ProjectHandling {
       Main.getInstance().getPrimaryStage().setTitle(Main.APPNAME);
       fileList.clear();
     }
+  }
+  
+  /**
+   * Getter method for getting all opened files as an ArrayList
+   * @return fileList
+   */
+  public List<File> getProjectFiles(){
+    return fileList;
   }
 }
