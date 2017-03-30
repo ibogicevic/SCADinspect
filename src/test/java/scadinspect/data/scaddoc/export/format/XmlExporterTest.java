@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import scadinspect.data.scaddoc.Module;
-import scadinspect.data.scaddoc.export.format.XmlExport;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
@@ -16,16 +15,16 @@ import scadinspect.data.scaddoc.properties.SingleProperty;
 /**
  * Created by desyon on 3/24/17.
  */
-class XmlExportTest {
+class XmlExporterTest {
 
-  private XmlExport exporter;
+  private XmlExporter exporter;
   private List<Module> modules;
 
   private String lineSeparator;
 
   @BeforeEach
   void instantiate() {
-    exporter = new XmlExport();
+    exporter = new XmlExporter();
     modules = new ArrayList<>();
     lineSeparator = System.lineSeparator();
   }
@@ -34,7 +33,7 @@ class XmlExportTest {
   void testThrow() {
     modules = null;
     assertThrows(Exception.class, ()
-        -> exporter.getXml(modules));
+        -> exporter.getOutput(modules));
   }
 
   /**
@@ -46,7 +45,7 @@ class XmlExportTest {
   void emptyList() throws Exception {
     assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
             + "<modules/>" + lineSeparator,
-        exporter.getXml(modules));
+        exporter.getOutput(modules));
   }
 
   /**
@@ -63,7 +62,7 @@ class XmlExportTest {
             + "    <key>1</key>" + lineSeparator
             + "  </module>" + lineSeparator
             + "</modules>" + lineSeparator,
-        exporter.getXml(modules));
+        exporter.getOutput(modules));
 
   }
 
@@ -80,7 +79,7 @@ class XmlExportTest {
         + "  <module>" + lineSeparator
         + "    <key>0.1</key>" + lineSeparator
         + "  </module>" + lineSeparator
-        + "</modules>" + lineSeparator, exporter.getXml(modules));
+        + "</modules>" + lineSeparator, exporter.getOutput(modules));
   }
 
   /**
@@ -96,7 +95,7 @@ class XmlExportTest {
         + "  <module>" + lineSeparator
         + "    <key>value</key>" + lineSeparator
         + "  </module>" + lineSeparator
-        + "</modules>" + lineSeparator, exporter.getXml(modules));
+        + "</modules>" + lineSeparator, exporter.getOutput(modules));
   }
 
   /**
@@ -113,7 +112,7 @@ class XmlExportTest {
             + "    <key>1, 2, 3</key>" + lineSeparator
             + "  </module>" + lineSeparator
             + "</modules>" + lineSeparator,
-        exporter.getXml(modules));
+        exporter.getOutput(modules));
   }
 
   /**
@@ -129,7 +128,7 @@ class XmlExportTest {
         + "  <module>" + lineSeparator
         + "    <key>0.1, 1.1, 2, 4</key>" + lineSeparator
         + "  </module>" + lineSeparator
-        + "</modules>" + lineSeparator, exporter.getXml(modules));
+        + "</modules>" + lineSeparator, exporter.getOutput(modules));
   }
 
   /**
@@ -145,7 +144,7 @@ class XmlExportTest {
         + "  <module>" + lineSeparator
         + "    <key>a, b, c</key>" + lineSeparator
         + "  </module>" + lineSeparator
-        + "</modules>" + lineSeparator, exporter.getXml(modules));
+        + "</modules>" + lineSeparator, exporter.getOutput(modules));
   }
 
   /**
@@ -165,7 +164,7 @@ class XmlExportTest {
             + "    </price>" + lineSeparator
             + "  </module>" + lineSeparator
             + "</modules>" + lineSeparator,
-        exporter.getXml(modules));
+        exporter.getOutput(modules));
   }
 
   /**
@@ -185,7 +184,7 @@ class XmlExportTest {
             + "    </price>" + lineSeparator
             + "  </module>" + lineSeparator
             + "</modules>" + lineSeparator,
-        exporter.getXml(modules));
+        exporter.getOutput(modules));
   }
 
   /**
@@ -205,7 +204,7 @@ class XmlExportTest {
             + "    </weight>" + lineSeparator
             + "  </module>" + lineSeparator
             + "</modules>" + lineSeparator,
-        exporter.getXml(modules));
+        exporter.getOutput(modules));
   }
 
   @Test
@@ -228,6 +227,6 @@ class XmlExportTest {
             + "    <key>value</key>" + lineSeparator
             + "  </module>" + lineSeparator
             + "</modules>" + lineSeparator,
-        exporter.getXml(modules));
+        exporter.getOutput(modules));
   }
 }

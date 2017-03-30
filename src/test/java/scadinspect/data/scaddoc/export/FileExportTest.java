@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.error.FileExportException;
-import scadinspect.data.scaddoc.export.FileExport;
+import scadinspect.data.scaddoc.export.format.ExportFormat;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.Property;
@@ -74,7 +74,7 @@ class FileExportTest {
   void saveAsJson() throws FileExportException, IOException {
 
     File sampleFile = new File("./spec/samples/output_sample.json");
-    File exportedFile = fExport.saveAsJson(modules, "./export.json");
+    File exportedFile = fExport.save(ExportFormat.JSON, modules, "./export.json");
 
     byte[] sample = Files.readAllBytes(sampleFile.toPath());
     byte[] exported = Files.readAllBytes(exportedFile.toPath());
@@ -96,7 +96,7 @@ class FileExportTest {
   void saveAsXml() throws FileExportException, IOException {
 
     File sampleFile = new File("./spec/samples/output_sample.xml");
-    File exportedFile = fExport.saveAsXml(modules, "./export.xml");
+    File exportedFile = fExport.save(ExportFormat.XML, modules, "./export.xml");
 
     byte[] sample = Files.readAllBytes(sampleFile.toPath());
     byte[] exported = Files.readAllBytes(exportedFile.toPath());
@@ -108,20 +108,20 @@ class FileExportTest {
   }
 
   /**
-   * Tests if an exception is thrown on XMLExport on wrong input
-   */
-  @Test
-  void throwFromXML() {
-    assertThrows(FileExportException.class, () ->
-        fExport.saveAsXml(null, null));
-  }
-
-  /**
    * Tests if an exception is thrown on JSONExport on wrong input
    */
   @Test
   void throwFromJson() {
     assertThrows(FileExportException.class, () ->
-        fExport.saveAsJson(null, null));
+        fExport.save(ExportFormat.JSON, null, null));
+  }
+
+  /**
+   * Tests if an exception is thrown on XMLExport on wrong input
+   */
+  @Test
+  void throwFromXML() {
+    assertThrows(FileExportException.class, () ->
+        fExport.save(ExportFormat.XML, null, null));
   }
 }

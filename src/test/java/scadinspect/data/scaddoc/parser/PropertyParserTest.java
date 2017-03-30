@@ -4,9 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import org.json.JSONArray;
 import org.junit.jupiter.api.Test;
-import scadinspect.data.scaddoc.export.format.JsonExport;
+import scadinspect.data.scaddoc.export.format.JsonExporter;
 import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
@@ -136,13 +135,10 @@ class PropertyParserTest {
     propertyParser = new PropertyParser(testFile);
     Collection<Module> parsed = propertyParser.parseModules();
 
-    JsonExport exporter = new JsonExport();
-    JSONArray test = exporter.getJsonArray(modules);
+    JsonExporter exporter = new JsonExporter();
 
-    assertEquals(exporter.getJsonArray(modules).toString(2),
-        exporter.getJsonArray(parsed).toString(2));
-
-    // assertEquals(modules, parsed);
+    assertEquals(exporter.getOutput(modules),
+        exporter.getOutput(parsed));
   }
 
   /**
@@ -217,8 +213,8 @@ class PropertyParserTest {
     Collection<Module> parsed = propertyParser.parseModules();
     Collection<Module> expected = new ArrayList<>();
     expected.add(output);
-    JsonExport exporter = new JsonExport();
-    assertEquals(exporter.getJson(expected), exporter.getJson(parsed));
+    JsonExporter exporter = new JsonExporter();
+    assertEquals(exporter.getOutput(expected), exporter.getOutput(parsed));
 
   }
 
@@ -257,7 +253,7 @@ class PropertyParserTest {
     Collection<Module> parsed = propertyParser.parseModules();
     Collection<Module> expected = new ArrayList<>();
     expected.add(output);
-    JsonExport exporter = new JsonExport();
-    assertEquals(exporter.getJson(expected), exporter.getJson(parsed));
+    JsonExporter exporter = new JsonExporter();
+    assertEquals(exporter.getOutput(expected), exporter.getOutput(parsed));
   }
 }
