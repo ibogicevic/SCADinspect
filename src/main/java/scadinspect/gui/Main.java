@@ -6,6 +6,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import scadinspect.control.MyLogger;
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Startup JavaFX frame
@@ -29,12 +34,18 @@ public class Main extends Application {
      */
     private static final double WINDOW_HEIGHT = 0.25;
 
+    /**
+     * Pre-configured logger that outputs to  *
+     */
+    public static Logger logger = null;
+
     // singleton pattern
     private static Main instance;
 
     public static Main getInstance() {
         return instance;
     }
+
 
     // gui areas
     public ToolbarArea toolbarArea = new ToolbarArea();
@@ -61,6 +72,14 @@ public class Main extends Application {
      * Application startup function
      */
     public void start(Stage primaryStage) {
+        System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc] %4$s: %5$s%n");
+
+        try {
+            logger = new MyLogger().logger;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // remember singleton instance (instantiated by javafx)
         Main.instance = this;
 
@@ -86,8 +105,11 @@ public class Main extends Application {
         primaryStage.setX(0);
         primaryStage.show();
 
+
         // load default workspace
         //ProjectHandling.openProject("");
+
+        logger.log(Level.INFO, "(" + this.getClass().getName() + ") " + "successfully started");
     }
 
     /**
@@ -98,6 +120,14 @@ public class Main extends Application {
     public boolean isProjectOpen() {
         return (currentProject != null);
     }
+    
+    /**
+     * Sets the current project path
+     * @param currentProject
+     */
+    public void setCurrentProject(String currentProject){
+      this.currentProject=currentProject;
+  }
 
     /**
      * Main control loop, gives control to JavaFX

@@ -18,7 +18,8 @@ import javafx.scene.image.ImageView;
 public class ToolbarArea extends ToolBar {
 
     // initialize buttons
-    private Button openProjectButton = new Button("Open");
+    private Button openProjectFileButton = new Button("Open file");
+    private Button openProjectFolderButton = new Button("Open folder");
     private Button closeProjectButton = new Button("Close");
     private Button refreshButton = new Button("Refresh");
     private Button exportButton = new Button("Export");
@@ -55,8 +56,12 @@ public class ToolbarArea extends ToolBar {
      * Constructor of ToolbarArea
      */
     public ToolbarArea() {
+        // instanciate classes
+        ProjectHandling projectHandler = new ProjectHandling();
+      
         // set button icons
-        openProjectButton.setGraphic(loadIcon("open-folder-outline"));
+        openProjectFileButton.setGraphic(loadIcon("open-folder-outline"));
+        openProjectFolderButton.setGraphic(loadIcon("open-folder-outline"));
         closeProjectButton.setGraphic(loadIcon("cross-mark-on-a-black-circle-background"));
         refreshButton.setGraphic(loadIcon("refresh-page-option"));
         exportButton.setGraphic(loadIcon("text-file"));
@@ -67,18 +72,18 @@ public class ToolbarArea extends ToolBar {
         // status of buttons
         disableButtons(true);
         // actionlisteners
-        openProjectButton.setOnAction(e -> ProjectHandling.openProject());
-        closeProjectButton.setOnAction(e -> ProjectHandling.closeProject());
-        exitButton.setOnAction(e -> Platform.exit());
+        openProjectFileButton.setOnAction(e -> projectHandler.openProjectFile());
+        openProjectFolderButton.setOnAction(e -> projectHandler.openProjectFolder());
+        closeProjectButton.setOnAction(e -> projectHandler.closeProject());
         refreshButton.setOnAction(e -> Main.getInstance().statusArea.simulateProgress());
-        exitButton.setOnAction(e -> {
-            Platform.exit();
-        });
+        aboutButton.setOnAction(e -> AboutDialog.openDialog());
         settingsButton.setOnAction(e -> SettingsDialog.openDialog());
         exportButton.setOnAction(e -> ExportDialog.openDialog());
-
+        exitButton.setOnAction(e -> Platform.exit());
+      
         // add all buttons
-        this.getItems().add(openProjectButton);
+        this.getItems().add(openProjectFileButton);
+        this.getItems().add(openProjectFolderButton);
         this.getItems().add(closeProjectButton);
         this.getItems().add(refreshButton);
         this.getItems().add(new Separator());
