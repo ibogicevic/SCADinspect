@@ -2,6 +2,7 @@ package scadinspect.gui;
 
 import java.io.InputStream;
 import java.nio.file.attribute.PosixFilePermission;
+import java.util.prefs.Preferences;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -28,6 +29,7 @@ public class ToolbarArea extends ToolBar {
     private MenuItem openFileButton = new MenuItem("Open file", loadIcon("open-folder-outline"));
     private MenuItem openFolderButton = new MenuItem("Open folder", loadIcon("open-folder-outline"));
     private SplitMenuButton openProjectButton = new SplitMenuButton(openFileButton, openFolderButton);
+    private Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
     private Button settingsButton = new Button("Settings");
     private Hyperlink helpLink = new Hyperlink("Help");
     private Hyperlink aboutLink = new Hyperlink("About");
@@ -71,14 +73,22 @@ public class ToolbarArea extends ToolBar {
         ProjectHandling projectHandler = new ProjectHandling();
 
         // configure open button
-        openProjectButton.setText("Open file");
         openProjectButton.setGraphic(loadIcon("open-folder-outline"));
-        openProjectButton.setOnAction(event -> projectHandler.openProjectFile());
+        // Read settings
+        if (userPrefs.getInt("SET_OPENBUTTON", 0) == 0) {
+            openProjectButton.setText("Open file");
+            openProjectButton.setOnAction(event -> projectHandler.openProjectFile());
+        } else {
+            openProjectButton.setText("Open Folder");
+            openProjectButton.setOnAction(event -> projectHandler.openProjectFolder());
+        }
         openFolderButton.setOnAction(e -> {
+            userPrefs.putInt("SET_OPENBUTTON", 1);
             openProjectButton.setText("Open Folder");
             openProjectButton.setOnAction(event -> projectHandler.openProjectFolder());
         });
         openFileButton.setOnAction(e -> {
+            userPrefs.putInt("SET_OPENBUTTON", 0);
             openProjectButton.setText("Open File");
             openProjectButton.setOnAction(event -> projectHandler.openProjectFile());
         });
