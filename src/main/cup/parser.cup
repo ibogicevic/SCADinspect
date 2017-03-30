@@ -2,6 +2,8 @@
 
 package scadinspect.parser.generated;
 
+import scadinspect.parser.ast.*;
+
 /* Expect 2 shift/reduce conflict for ifelse_statement - "dangling else problem", handled in CUP config */
 
 /* error reporting is overwittern in CustomErrorOpenScadParser */
@@ -40,8 +42,8 @@ terminal EXCLAMATION_MARK, QUESTION_MARK, HASH, PERCENT, ASTERISK, SLASH, PLUS, 
 terminal LET, LOW_PRIO_LEFT, LOW_PRIO_RIGHT, HIGH_PRIO_LEFT, HIGH_PRIO_RIGHT;
 
 
-non terminal input;
-non terminal statement;
+non terminal InputNode input;
+non terminal StatementNode statement;
 non terminal inner_input;
 non terminal assignment;
 non terminal module_instantiation;
@@ -88,30 +90,35 @@ start with input;
 
 input ::=
           /* empty */
-        {: /* TODO build parse tree here */ :}
-        | TOK_USE input
-        {:  :}
-        | statement input
-        {:  :}
+        {:  /* TODO build parse tree here */
+            RESULT = new InputNode(); :}
+        | TOK_USE:u input:i
+        {:  InputNode inputNode = new InputNode(i);
+            inputNode.uses.add(u);
+            RESULT = inputNode; :}
+        | statement:s input:i
+        {:  InputNode inputNode = new InputNode(i);
+            inputNode.statements.add(s);
+            RESULT = inputNode; :}
         ;
 
 statement ::=
           SEMICOLON
-        {:  :}
+        {: RESULT = new StatementNode(); :}
         | BRACKET_CURLY_OPEN inner_input BRACKET_CURLY_CLOSE
-        {:  :}
+        {: RESULT = new StatementNode(); :}
         | module_instantiation
-        {:  :}
+        {: RESULT = new StatementNode(); :}
         | assignment
-        {:  :}
+        {: RESULT = new StatementNode(); :}
         | TOK_MODULE TOK_ID
           BRACKET_ROUND_OPEN arguments_decl optional_commas BRACKET_ROUND_CLOSE
           statement
-        {:  :}
+        {: RESULT = new StatementNode(); :}
         | TOK_FUNCTION TOK_ID
           BRACKET_ROUND_OPEN arguments_decl optional_commas  BRACKET_ROUND_CLOSE
           EQUAL expr SEMICOLON
-        {:  :}
+        {: RESULT = new StatementNode(); :}
         ;
 
 inner_input ::=
@@ -359,33 +366,4 @@ argument_call ::=
         | TOK_ID EQUAL expr
         {:  :}
         ;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
