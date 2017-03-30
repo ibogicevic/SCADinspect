@@ -2,11 +2,15 @@ package scadinspect.gui;
 
 import java.util.Optional;
 import java.util.prefs.Preferences;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 
 public class SettingsDialog {
@@ -38,6 +42,21 @@ public class SettingsDialog {
             }
             
             grid.add(autorefresh, 0, 0);
+            
+            //Create ComboBox for Logging Level
+            Text logtext = new Text("Logging Level:");
+            
+            ObservableList<String> options = 
+                FXCollections.observableArrayList(
+                    "None",
+                    "Severe",
+                    "Warning",
+                    "Info"
+                );
+            final ComboBox loggingCombo = new ComboBox(options);
+                        
+            grid.add(logtext, 0, 1);
+            grid.add(loggingCombo, 1, 1);
                      
             dialog.getDialogPane().setContent(grid);
             
