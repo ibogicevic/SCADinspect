@@ -3,10 +3,8 @@ package scadinspect.data.scaddoc;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
-import org.json.JSONObject;
-import org.json.XML;
+import scadinspect.data.scaddoc.error.FileExportException;
 
 /**
  * @author eric, desyon on 3/23/17.
@@ -20,49 +18,49 @@ public class FileExport {
    * @exception IllegalArgumentException if aFile is a directory.
    * @exception IllegalArgumentException if aFile cannot be written.
    */
-
-  private JsonExport jsonex;
   private FileWriter fileWriter;
 
-  public FileExport() {
-    jsonex = new JsonExport();
-  }
-
   /**
    * @param modules List of modules that are saved to a file
    * @param path Path to the location where the XML file should be saved
    */
-  public File saveAsJson(List<Module> modules, String path) throws IOException {
-    File file = new File(path);
-    fileWriter = new FileWriter(file);
-    fileWriter.write(jsonex.getJson(modules));
-    fileWriter.close();
+  public File saveAsJson(List<Module> modules, String path) throws FileExportException {
+    JsonExport jsonEx = new JsonExport();
 
-    return file;
-  }
+    try {
+      File file = new File(path);
+      fileWriter = new FileWriter(file);
 
-  /**
-   * @param modules List of modules that are saved to a file
-   * @param path Path to the location where the XML file should be saved
-   */
-  public File saveAsXml(List<Module> modules, String path) throws IOException {
-    Collection<JSONObject> json = jsonex.getJsonList(modules);
+      fileWriter.write(jsonEx.getJson(modules));
+      fileWriter.close();
 
-    StringBuilder sb = new StringBuilder();
-
-    sb.append("<modules>");
-    for (JSONObject jso : json) {
-      sb.append(XML.toString(jso, "module"));
+      return file;
+    } catch (Exception e) {
+      //TODO: log exception
+      FileExportException exportException = new FileExportException(e);
+      throw exportException;
     }
-    sb.append("</modules>");
+  }
 
-    String xmlString = sb.toString();
+  /**
+   * @param modules List of modules that are saved to a file
+   * @param path Path to the location where the XML file should be saved
+   */
+  public File saveAsXml(List<Module> modules, String path) throws FileExportException {
+    XmlExport xmlEx = new XmlExport();
 
-    File file = new File(path);
-    fileWriter = new FileWriter(file);
-    fileWriter.write(xmlString);
-    fileWriter.close();
+    try {
+      File file = new File(path);
+      fileWriter = new FileWriter(file);
 
-    return file;
+      fileWriter.write(xmlEx.getXml(modules));
+      fileWriter.close();
+
+      return file;
+    } catch (Exception e) {
+      //TODO: log exception
+      FileExportException exportException = new FileExportException(e);
+      throw exportException;
+    }
   }
 }
