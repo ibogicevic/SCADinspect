@@ -2,7 +2,6 @@ package scadinspect.data.scaddoc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.sun.xml.internal.bind.v2.util.StackRecorder;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
