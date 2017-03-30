@@ -4,16 +4,13 @@ import java.io.InputStream;
 import java.nio.file.attribute.PosixFilePermission;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Hyperlink;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import scadinspect.control.ProjectHandling;
 import javafx.application.Platform;
-import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
-import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -27,8 +24,11 @@ public class ToolbarArea extends ToolBar {
     // initialize buttons
     VBox vbox = new VBox();
     Pane seperatorPane = new Pane();
-    private Button openProjectFileButton = new Button("Open file");
-    private Button openProjectFolderButton = new Button("Open folder");    private Button settingsButton = new Button("Settings");
+
+    private MenuItem openFileButton = new MenuItem("Open file", loadIcon("open-folder-outline"));
+    private MenuItem openFolderButton = new MenuItem("Open folder", loadIcon("open-folder-outline"));
+    private SplitMenuButton openProjectButton = new SplitMenuButton(openFileButton, openFolderButton);
+    private Button settingsButton = new Button("Settings");
     private Hyperlink helpLink = new Hyperlink("Help");
     private Hyperlink aboutLink = new Hyperlink("About");
 
@@ -70,25 +70,33 @@ public class ToolbarArea extends ToolBar {
         // instanciate classes
         ProjectHandling projectHandler = new ProjectHandling();
 
+        // configure open button
+        openProjectButton.setText("Open file");
+        openProjectButton.setGraphic(loadIcon("open-folder-outline"));
+        openProjectButton.setOnAction(event -> projectHandler.openProjectFile());
+        openFolderButton.setOnAction(e -> {
+            openProjectButton.setText("Open Folder");
+            openProjectButton.setOnAction(event -> projectHandler.openProjectFolder());
+        });
+        openFileButton.setOnAction(e -> {
+            openProjectButton.setText("Open File");
+            openProjectButton.setOnAction(event -> projectHandler.openProjectFile());
+        });
+
         // set button icons
-        openProjectFileButton.setGraphic(loadIcon("open-folder-outline"));
-        openProjectFolderButton.setGraphic(loadIcon("open-folder-outline"));
         settingsButton.setGraphic(loadIcon("cog-wheel-silhouette"));
         helpLink.setGraphic(loadResizedIcon("help-icon"));
         aboutLink.setGraphic(loadResizedIcon("about-icon"));
 
         // status of buttons
         disableButtons(true);
-        // actionlisteners
-        openProjectFileButton.setOnAction(e -> projectHandler.openProjectFile());
-        openProjectFolderButton.setOnAction(e -> projectHandler.openProjectFolder());
+
 
         helpLink.setOnAction(e -> ProjectHandling.showModal());
         aboutLink.setOnAction(e -> AboutDialog.openDialog());
         settingsButton.setOnAction(e -> SettingsDialog.openDialog());
         // add all buttons
-        this.getItems().add(openProjectFileButton);
-        this.getItems().add(openProjectFolderButton);
+        this.getItems().add(openProjectButton);
         this.getItems().add(new Separator());
         this.getItems().add(settingsButton);
         this.getItems().add(new Separator());
