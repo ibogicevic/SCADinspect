@@ -1,6 +1,7 @@
 package scadinspect.gui;
 
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.prefs.Preferences;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,13 +54,13 @@ public class SettingsDialog {
                 "Warning",
                 "Info"
             );
+        
         final ComboBox loggingCombo = new ComboBox(options);
                    
         grid.add(logtext, 0, 1);
         grid.add(loggingCombo, 1, 1);
                    
         dialog.getDialogPane().setContent(grid);
-            
         dialog.initModality(Modality.APPLICATION_MODAL);
             
         Optional<Boolean> result = dialog.showAndWait();
@@ -68,8 +69,19 @@ public class SettingsDialog {
             // ... user clicks "ok", save settings
             if (autorefresh.isSelected()) {
                 userPrefs.putBoolean("SET_AUTOREFRESH", true);
-            } else {
+            } 
+            else {
                 userPrefs.putBoolean("SET_AUTOREFRESH", false);
+            }
+            Object val = loggingCombo.getValue();
+            if(val != null && val instanceof String) {
+                try {
+                    Level logLevel = Level.parse((String) val);
+                    userPrefs.put("LOG_LEVEL", logLevel.getName());
+                    Main.getInstance().getLogHandler().setLogLevel(logLevel);
+                } catch(Exception e) {
+                    Main.logger.log(Level.WARNING, "Unable to set log level to " + val + " .", e);
+                }
             }
         }
     }

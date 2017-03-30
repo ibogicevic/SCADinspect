@@ -1,0 +1,1 @@
+[Do Mär 30 14:48:37 MESZ 2017] INFO: (scadinspect.gui.Main) successfully started
