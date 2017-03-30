@@ -10,9 +10,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
 /**
- * 
  * @author bilir
- *
  */
 public class ProjectHandling {
 
@@ -28,6 +26,11 @@ public class ProjectHandling {
   // Filter for the chooser
   private final FileChooser.ExtensionFilter extensionFilter =
       new FileChooser.ExtensionFilter("SCAD files", "*.scad");
+
+  // Definition of the variables
+  private File projectFile;
+  private File projectDirectory;
+  private List<File> fileList = new ArrayList();
 
   /**
    * Default constructor where the extension filter for the fileChooser is set. This assures that
@@ -89,7 +92,7 @@ public class ProjectHandling {
 
   /**
    * Sets the current project path in the Title and the App name
-   * 
+   * Is the last called function after all files have been added to fileList
    * @param rootPath
    */
   private void setCurrentProject(String rootPath) {
