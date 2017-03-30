@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import scadinspect.data.scaddoc.error.FileExportException;
 
 /**
  * @author eric, desyon on 3/23/17.
@@ -23,7 +24,7 @@ public class FileExport {
    * @param modules List of modules that are saved to a file
    * @param path Path to the location where the XML file should be saved
    */
-  public File saveAsJson(List<Module> modules, String path) throws Exception {
+  public File saveAsJson(List<Module> modules, String path) throws FileExportException {
     JsonExport jsonEx = new JsonExport();
 
     try {
@@ -34,10 +35,11 @@ public class FileExport {
       fileWriter.close();
 
       return file;
-    } catch (Exception e){
+    } catch (Exception e) {
       //TODO: log exception
-      System.out.println(e);
-      throw e;
+      FileExportException exportException = new FileExportException();
+      exportException.initCause(e);
+      throw exportException;
     }
   }
 

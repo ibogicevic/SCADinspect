@@ -1,7 +1,7 @@
 package scadinspect.data.scaddoc;
 
 /**
- * Created by eric on 24.03.17.
+ * @author eric on 24.03.17.
  */
 
 import java.io.StringWriter;

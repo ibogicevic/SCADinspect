@@ -6,11 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import scadinspect.data.scaddoc.error.FileExportException;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.Property;
@@ -86,8 +88,18 @@ class FileExportTest {
   }
 
   @Test
-  void testThrow() throws IOException {
-    assertThrows(Exception.class, () ->
-        fExport.saveAsXml(null, null));
+  void testThrowFromXML() throws IOException {
+    File testFile = new File("./test");
+    List<Module> module = new ArrayList<>();
+
+    Module trigger = new Module();
+    trigger.addProperty(new SingleProperty<>("<key>", "<value>"));
+
+    module.add(trigger);
+
+    assertThrows(FileExportException.class, () ->
+        fExport.saveAsXml(module, testFile.getPath()));
+
+    testFile.delete();
   }
 }
