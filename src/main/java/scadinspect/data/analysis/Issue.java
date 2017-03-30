@@ -8,7 +8,7 @@ public class Issue {
     private boolean isError;
     private String sourceFile;
     private int lineNumber;
-    private String issueIdentifier;
+    private String issueIdentifier;  // Maybe change this to enum
     private String description;
     private String codeSnippet;
 
