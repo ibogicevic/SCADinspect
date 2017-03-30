@@ -18,10 +18,11 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import scadinspect.data.scaddoc.Module;
+import scadinspect.data.scaddoc.error.FileExportException;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.Property;
 
-public class XmlExport {
+public class XmlExporter implements Exporter {
 
   /**
    * @param modules Collection of Module objects, which will be recreated as XML
@@ -30,36 +31,40 @@ public class XmlExport {
    * @throws TransformerException Specifies an exceptional condition that occurred during the
    * transformation process.
    */
-  public String getXml(Collection<Module> modules)
-      throws ParserConfigurationException, TransformerException {
+  @Override
+  public String getOutput(Collection<Module> modules)
+      throws FileExportException {
+    try {
+      DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+      DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
-    DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+      // root elements
+      Document doc = docBuilder.newDocument();
+      Element rootElement = doc.createElement("modules");
+      doc.appendChild(rootElement);
 
-    // root elements
-    Document doc = docBuilder.newDocument();
-    Element rootElement = doc.createElement("modules");
-    doc.appendChild(rootElement);
+      for (Module module : modules) {
+        // Create module node for each module present and append it
+        rootElement.appendChild(createModuleNode(module, doc));
+      }
 
-    for (Module module : modules) {
-      // Create module node for each module present and append it
-      rootElement.appendChild(createModuleNode(module, doc));
+      // write the content into xml format
+      TransformerFactory transformerFactory = TransformerFactory.newInstance();
+      Transformer transformer = transformerFactory.newTransformer();
+      transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+      transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+      transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+      DOMSource source = new DOMSource(doc);
+      StringWriter sw = new StringWriter();
+      StreamResult result = new StreamResult(sw);
+      transformer.transform(source, result);
+
+      //return XML String + do some **magic**
+      return sw.getBuffer().toString().replaceAll("((?<=>)\\[)|(](?=<))", "");
+    } catch(TransformerException|ParserConfigurationException e) {
+      FileExportException exportException = new FileExportException(e);
+      throw exportException;
     }
-
-    // write the content into xml format
-    TransformerFactory transformerFactory = TransformerFactory.newInstance();
-    Transformer transformer = transformerFactory.newTransformer();
-    transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-    DOMSource source = new DOMSource(doc);
-    StringWriter sw = new StringWriter();
-    StreamResult result = new StreamResult(sw);
-    transformer.transform(source, result);
-
-    //return XML String + do some **magic**
-    return sw.getBuffer().toString().replaceAll("((?<=>)\\[)|(](?=<))", "");
-
 
   }
 

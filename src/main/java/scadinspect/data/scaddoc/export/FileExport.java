@@ -2,12 +2,14 @@ package scadinspect.data.scaddoc.export;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
-import scadinspect.control.MyLogger;
 import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.error.FileExportException;
-import scadinspect.data.scaddoc.export.format.JsonExport;
-import scadinspect.data.scaddoc.export.format.XmlExport;
+import scadinspect.data.scaddoc.export.format.ExportFormat;
+import scadinspect.data.scaddoc.export.format.Exporter;
+import scadinspect.data.scaddoc.export.format.JsonExporter;
+import scadinspect.data.scaddoc.export.format.XmlExporter;
 
 /**
  * Provides all means to convert a List of Modules into multiple formats of character files.
@@ -18,54 +20,42 @@ import scadinspect.data.scaddoc.export.format.XmlExport;
 
 public class FileExport {
 
-  private static MyLogger logger;
   /**
-   * @exception FileExportException if some failure during the export. Further information can be in
+   * @param format of type ExportFormat for desired output
+   * @param modules List of modules that are saved to a file
+   * @param path Path to the location where the XML file should be saved
+   * @throws FileExportException if some failure during the export. Further information can be in
    * the init cause.
    */
-  private FileWriter fileWriter;
-
-  /**
-   * @param modules List of modules that are saved to a file
-   * @param path Path to the location where the XML file should be saved
-   */
-  public File saveAsJson(List<Module> modules, String path) throws FileExportException {
-    JsonExport jsonEx = new JsonExport();
-
+  public File save(ExportFormat format, List<Module> modules, String path)
+      throws FileExportException {
     try {
       File file = new File(path);
-      fileWriter = new FileWriter(file);
+      FileWriter fw = new FileWriter(file);
 
-      fileWriter.write(jsonEx.getJson(modules));
-      fileWriter.close();
+      Exporter exporter = null;
 
-      return file;
-    } catch (Exception e) {
-      //TODO: Log Exception
-      FileExportException exportException = new FileExportException(e);
-      throw exportException;
-    }
-  }
+      switch (format) {
+        case XML:
+          exporter = new XmlExporter();
+          break;
+        case JSON:
+          exporter = new JsonExporter();
+          break;
+        case MD:
+          break;
+        case CSV:
+          break;
+        case HTML:
+          break;
+      }
 
-  /**
-   * @param modules List of modules that are saved to a file
-   * @param path Path to the location where the XML file should be saved
-   */
-  public File saveAsXml(List<Module> modules, String path) throws FileExportException {
-    XmlExport xmlEx = new XmlExport();
-
-    try {
-      File file = new File(path);
-      fileWriter = new FileWriter(file);
-
-      fileWriter.write(xmlEx.getXml(modules));
-      fileWriter.close();
+      fw.write(exporter.getOutput(modules));
+      fw.close();
 
       return file;
-    } catch (Exception e) {
-      //TODO: Log Exception
-      FileExportException exportException = new FileExportException(e);
-      throw exportException;
+    } catch (IOException | NullPointerException e) {
+      throw new FileExportException(e);
     }
   }
 }
