@@ -156,7 +156,9 @@ class JsonExportTest {
             + "}}]",
         exporter.getJson(modules));
   }
-
+  /**
+   * Test against the defined example Json
+   */
   @Test
   void sampleJSON(){
     Module wheel = new Module();
