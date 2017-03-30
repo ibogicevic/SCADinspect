@@ -66,11 +66,11 @@ public class Main extends Application {
   public String currentProject = null;
 
 
-
   /**
    * holds the modules found by propertyParser
    */
   private List<Module> modules;
+
   public List<Module> getModules() {
     return modules;
   }
