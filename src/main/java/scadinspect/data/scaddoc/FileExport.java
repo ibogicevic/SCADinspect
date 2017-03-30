@@ -37,8 +37,7 @@ public class FileExport {
       return file;
     } catch (Exception e) {
       //TODO: log exception
-      FileExportException exportException = new FileExportException();
-      exportException.initCause(e);
+      FileExportException exportException = new FileExportException(e);
       throw exportException;
     }
   }
@@ -47,7 +46,7 @@ public class FileExport {
    * @param modules List of modules that are saved to a file
    * @param path Path to the location where the XML file should be saved
    */
-  public File saveAsXml(List<Module> modules, String path) throws Exception {
+  public File saveAsXml(List<Module> modules, String path) throws FileExportException {
     XmlExport xmlEx = new XmlExport();
 
     try {
@@ -60,8 +59,8 @@ public class FileExport {
       return file;
     } catch (Exception e) {
       //TODO: log exception
-      System.out.println(e);
-      throw e;
+      FileExportException exportException = new FileExportException(e);
+      throw exportException;
     }
   }
 }

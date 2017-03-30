@@ -88,18 +88,14 @@ class FileExportTest {
   }
 
   @Test
-  void testThrowFromXML() throws IOException {
-    File testFile = new File("./test");
-    List<Module> module = new ArrayList<>();
-
-    Module trigger = new Module();
-    trigger.addProperty(new SingleProperty<>("<key>", "<value>"));
-
-    module.add(trigger);
-
+  void throwFromXML() {
     assertThrows(FileExportException.class, () ->
-        fExport.saveAsXml(module, testFile.getPath()));
+        fExport.saveAsXml(null, null));
+  }
 
-    testFile.delete();
+  @Test
+  void throwFromJson() {
+    assertThrows(FileExportException.class, () ->
+      fExport.saveAsJson(null, null));
   }
 }
