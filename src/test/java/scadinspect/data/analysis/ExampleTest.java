@@ -5,9 +5,8 @@
  */
 package scadinspect.data.analysis;
 
-import org.junit.Test;
-import scadinspect.data.analysis.Issue;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Test;
 /**
  *
  * @author balsfull
