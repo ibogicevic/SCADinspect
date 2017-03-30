@@ -131,6 +131,7 @@ public class Main extends Application {
         // main stack
         mainStack = new StackPane();
         greyPane = new BorderPane();
+        greyPane.setVisible(false);
         helpPane = new BorderPane();
         greyPane.setStyle(
                 "-fx-background-color: rgba(105, 105, 105, 0.9);"
@@ -165,8 +166,10 @@ public class Main extends Application {
 
     public void modalToFront(Boolean var) {
         if (var == true){
+            greyPane.setVisible(var);
             greyPane.toFront();
         } else {
+            greyPane.setVisible(var);
             greyPane.toBack();
         }
     }
