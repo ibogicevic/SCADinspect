@@ -4,7 +4,7 @@ package scadinspect.parser.generated;
 
 /* Expect 2 shift/reduce conflict for ifelse_statement - "dangling else problem", handled in CUP config */
 
-/* TODO overwrite error reporting */
+/* error reporting is overwittern in CustomErrorOpenScadParser */
 
 terminal TOK_ERROR;
 
@@ -178,7 +178,7 @@ child_statement ::=
 // "for", "let" and "each" are valid module identifiers
 module_id ::=
           TOK_ID:i
-        {: System.out.println("Module ID: " +  i); :}
+        {: /*System.out.println("Module ID: " +  i); */:}
         | TOK_FOR
         {:  :}
         | TOK_LET
@@ -208,10 +208,10 @@ expr ::=
         | expr DOT TOK_ID
         {:  :}
         | TOK_STRING:s
-        {: System.out.println("String: " + s);  :}
+        {: /* System.out.println("String: " + s); */  :}
         | TOK_NUMBER:n
-        {:  /*test TODO use this */
-            System.out.println("Number value: " + (Double) n); :}
+        {:
+           /* System.out.println("Number value: " + (Double) n); */:}
         | BRACKET_SQUARE_OPEN expr COLON expr BRACKET_SQUARE_CLOSE
         {:  :}
         | BRACKET_SQUARE_OPEN expr COLON expr COLON expr BRACKET_SQUARE_CLOSE

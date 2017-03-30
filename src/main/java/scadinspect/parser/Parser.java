@@ -20,29 +20,33 @@ public class Parser {
     ParseTree parseTree = null;
     Symbol parseSymbol = null;
     Collection<Issue> issues = new ArrayList<>();
-    boolean success = true;
+    boolean success = true; /* flipped to false, if any errors occur */
 
+    /* prepare the parsing */
     ComplexSymbolFactory csf = new ComplexSymbolFactory();
     ScannerBuffer lexer = new ScannerBuffer(new OpenScadLexer(in, csf));
     CustomErrorOpenScadParser parser = new CustomErrorOpenScadParser(lexer, csf);
+
     try {
-      //parseSymbol = parser.debug_parse(); //TODO change to non debug
       parseSymbol = parser.parse();
       parseTree = new ParseTree(parseSymbol, (ASTNode) parseSymbol.value);
+
     } catch (ParserException pe) {
       issues.add(pe.toIssue());
       success = false;
+
     } catch (Exception e) {
-      //TODO convert to issue
-      System.out.println(e);
+      //TODO convert to issue, log out the message using the logger
       issues.add(new Issue(true, null, 0, "E-003", "Unknown Parser Error", null));
       success = false;
     }
+
+    /* even if an exception was thrown, there may be more issues to handle */
     if (!parser.getErrors().isEmpty()) {
-      parser.getErrors().forEach(System.out::println);
       issues.addAll(parser.getErrors());
       success = false;
     }
+
     return new ParserResult(success, parseTree, parseSymbol, issues);
   }
 }

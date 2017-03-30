@@ -22,6 +22,7 @@ public class CustomErrorOpenScadParser extends OpenScadParser {
 
   public static final String errorID = "E-002";
 
+  //TODO use logger everywhere
 
   public CustomErrorOpenScadParser(Scanner s, SymbolFactory sf) {
     super(s, sf);
@@ -42,22 +43,17 @@ public class CustomErrorOpenScadParser extends OpenScadParser {
   public void report_error(String message, Object info) {
     if(info instanceof ComplexSymbol) {
       ComplexSymbol cs = (ComplexSymbol)info;
-      //TODO get filename, code snippet
+      //TODO get filename, code snippet?
+      //TODO really, we need to get that filename somehow
       errors.add(new Issue(true, null, cs.getLeft().getLine() , this.errorID, message + " for input symbol \"" + cs.getName() + "\" spanning from " + cs.getLeft() + " to " + cs.getRight(), null));
-      //System.err.println(message + " for input symbol \"" + cs.getName() + "\" spanning from " + cs.getLeft() + " to " + cs.getRight());
-    } else {
-      System.err.print(message);
-      System.err.flush();
-      if(info instanceof Symbol) {
+    } else if(info instanceof Symbol) {
         if(((Symbol)info).left != -1) {
-          //TODO get filename, codesnipped
-          errors.add(new Issue(true, null, 0, this.errorID, "Parser error at character " + ((Symbol)info).left + " of input", null));
-          System.err.println(" at character " + ((Symbol)info).left + " of input");
+            errors.add(new Issue(true, null, 0, this.errorID, message +  " at character " + ((Symbol)info).left + " of input", null));
         } else {
-          System.err.println("");
+           errors.add(new Issue(true, null, 0, this.errorID, message , null));
         }
-      }
-
+    } else {
+        errors.add(new Issue(true, null, 0, this.errorID, message , null));
     }
   }
 
@@ -78,7 +74,9 @@ public class CustomErrorOpenScadParser extends OpenScadParser {
       list.add(this.symbl_name_from_id(expected.intValue()));
     }
 
-    System.out.println("instead expected token classes are " + list);
+      //TODO get this into the respective issue
+      //and log it
+    //System.out.println("instead expected token classes are " + list);
   }
 
 }
