@@ -1,5 +1,6 @@
 package scadinspect.gui;
 
+import java.util.prefs.BackingStoreException;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -29,7 +30,7 @@ public class Main extends Application {
      */
     public static final String RESOURCES_DIR = "/resources/";
     public static Logger logger = null;
-    
+
     /**
      * Ratio between window height and screen height *
      */
@@ -76,9 +77,8 @@ public class Main extends Application {
         System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc] %4$s: %5$s%n");
 
         try {
-            logHandler = new LogHandler();
             logger = logHandler.getLogger();
-        } catch (IOException e) {
+        } catch (IOException|BackingStoreException e) {
             e.printStackTrace();
         }
 
@@ -122,7 +122,7 @@ public class Main extends Application {
     public boolean isProjectOpen() {
         return (currentProject != null);
     }
-    
+
     /**
      * Sets the current project path
      * @param currentProject
@@ -130,7 +130,7 @@ public class Main extends Application {
     public void setCurrentProject(String currentProject){
       this.currentProject=currentProject;
     }
-    
+
     public LogHandler getLogHandler() {
         return logHandler;
     }
