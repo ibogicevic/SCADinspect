@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import scadinspect.control.MyLogger;
+import scadinspect.control.LogHandler;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -28,7 +28,8 @@ public class Main extends Application {
      * Location of the resource files *
      */
     public static final String RESOURCES_DIR = "/resources/";
-
+    public static Logger logger = null;
+    
     /**
      * Ratio between window height and screen height *
      */
@@ -37,7 +38,7 @@ public class Main extends Application {
     /**
      * Pre-configured logger that outputs to  *
      */
-    public static Logger logger = null;
+    private LogHandler logHandler = null;
 
     // singleton pattern
     private static Main instance;
@@ -75,7 +76,8 @@ public class Main extends Application {
         System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc] %4$s: %5$s%n");
 
         try {
-            logger = new MyLogger().logger;
+            logHandler = new LogHandler();
+            logger = logHandler.getLogger();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -109,7 +111,7 @@ public class Main extends Application {
         // load default workspace
         //ProjectHandling.openProject("");
 
-        logger.log(Level.INFO, "(" + this.getClass().getName() + ") " + "successfully started");
+        logger.log(Level.INFO, "({0}) successfully started", this.getClass().getName());
     }
 
     /**
@@ -127,7 +129,11 @@ public class Main extends Application {
      */
     public void setCurrentProject(String currentProject){
       this.currentProject=currentProject;
-  }
+    }
+    
+    public LogHandler getLogHandler() {
+        return logHandler;
+    }
 
     /**
      * Main control loop, gives control to JavaFX
