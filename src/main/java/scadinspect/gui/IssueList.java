@@ -20,7 +20,7 @@ public class IssueList {
 
   //TableColumn issuesCol = new TableColumn("issues");
   TableColumn resourcesCol = new TableColumn("resources");
-  //TableColumn typeCol = new TableColumn("type");
+  TableColumn typeCol = new TableColumn("type");
   TableColumn lineNumberCol = new TableColumn("Line number");
   TableColumn issueIdentifierCol = new TableColumn("Identifier");
   TableColumn descriptionCol = new TableColumn("Description");
@@ -30,7 +30,7 @@ public class IssueList {
     ArrayList<Issue> issues = new ArrayList<>();
 
     for(int i = 0; i < 10; i++){
-      issues.add(i, new Issue(true, "example.scad"+i,15+(i*2), "randomIdentifier"+i, "description"+i,"console.log(\"error\")"+i
+      issues.add(i, new Issue(Issue.issueType.ERROR, "example.scad"+i,15+(i*2), "randomIdentifier"+i, "description"+i,"console.log(\"error\")"+i
       ));
     }
 
@@ -44,6 +44,10 @@ public class IssueList {
         new PropertyValueFactory<Issue,String >("isError")
     );
     */
+
+    typeCol.setCellValueFactory(
+            new PropertyValueFactory<Issue, String>("type")
+    );
 
     lineNumberCol.setCellValueFactory(
         new PropertyValueFactory<Issue, Integer>("lineNumber")
@@ -66,7 +70,7 @@ public class IssueList {
     );
 
     issueList.setItems(issueData);
-    issueList.getColumns().addAll(issueIdentifierCol, descriptionCol, codeSnippedCol, resourcesCol, lineNumberCol);
+    issueList.getColumns().addAll(typeCol, issueIdentifierCol, descriptionCol, codeSnippedCol, resourcesCol, lineNumberCol);
 
     return issueList;
   }
