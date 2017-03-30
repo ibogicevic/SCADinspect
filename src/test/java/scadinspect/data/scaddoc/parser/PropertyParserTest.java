@@ -20,6 +20,9 @@ class PropertyParserTest {
   PropertyParser propertyParser;
   String content;
 
+  /**
+   * Test a single Module
+   */
   @Test
   void parseOneModule() {
     content = "/**"
@@ -41,19 +44,25 @@ class PropertyParserTest {
     assertEquals(output, parsed);
   }
 
+  /**
+   * Test an empty Module
+   */
   @Test
   void parseEmptyModule() {
     content = " ";
     propertyParser = new PropertyParser(content);
-    Collection<Module> expected=new ArrayList<>();
+    Collection<Module> expected = new ArrayList<>();
     Collection<Module> parsed = propertyParser.parseModules();
 
     assertEquals(expected, parsed);
   }
 
+  /**
+   * Test against the defined example file
+   */
   @Test
   void sampleFile() {
-    Collection<Module> modules=new ArrayList<>();
+    Collection<Module> modules = new ArrayList<>();
     Module wheel = new Module();
     wheel.addProperty(new SingleProperty<>("part", "Wheel"));
     wheel.addProperty(new PairProperty<>("price", 100, "EUR"));
@@ -73,7 +82,7 @@ class PropertyParserTest {
     modules.add(motor);
     modules.add(wheel);
 
-    String testFile="// logo.scad - Basic example of module, top-level variable and $fn usage\n"
+    String testFile = "// logo.scad - Basic example of module, top-level variable and $fn usage\n"
         + "\n"
         + "Logo(50);\n"
         + "\n"
@@ -127,13 +136,18 @@ class PropertyParserTest {
     propertyParser = new PropertyParser(testFile);
     Collection<Module> parsed = propertyParser.parseModules();
 
-    JsonExport exporter=new JsonExport();
-    JSONArray test=exporter.getJsonArray(modules);
+    JsonExport exporter = new JsonExport();
+    JSONArray test = exporter.getJsonArray(modules);
 
-    assertEquals(exporter.getJsonArray(modules).toString(2),exporter.getJsonArray(parsed).toString(2));
+    assertEquals(exporter.getJsonArray(modules).toString(2),
+        exporter.getJsonArray(parsed).toString(2));
 
-   // assertEquals(modules, parsed);
+    // assertEquals(modules, parsed);
   }
+
+  /**
+   * Test parsing of Pair Property with type Int Double and String
+   */
   @Test
   void parsePairProperty() {
     content = "/**"
@@ -153,6 +167,10 @@ class PropertyParserTest {
 
     assertEquals(output, parsed);
   }
+
+  /**
+   * Test parsing of Single Property with type Int Double and String
+   */
   @Test
   void parseSingleProperty() {
     content = "/**"
@@ -164,14 +182,18 @@ class PropertyParserTest {
 
     Module output = new Module();
 
-    output.addProperty(new SingleProperty<>("float", 0.1 ));
-    output.addProperty(new SingleProperty<>("int", 1 ));
-    output.addProperty(new SingleProperty<>("string", "a" ));
+    output.addProperty(new SingleProperty<>("float", 0.1));
+    output.addProperty(new SingleProperty<>("int", 1));
+    output.addProperty(new SingleProperty<>("string", "a"));
 
     Module parsed = propertyParser.parseModules().iterator().next();
 
     assertEquals(output, parsed);
   }
+
+  /**
+   * Test parsing of Multi Property with type Int Double and String
+   */
   @Test
   void parseMultiProperty() {
     content = "/**"
@@ -185,26 +207,33 @@ class PropertyParserTest {
 
     Module output = new Module();
 
-    output.addProperty(new MultiProperty<>("float", 0.1 ,0.2));
-    output.addProperty(new MultiProperty<>("int", 1 ,2));
-    output.addProperty(new MultiProperty<>("string", "a" ,"b","c"));
-    output.addProperty(new MultiProperty<>("doubleInt", 0.1 ,1));
-    output.addProperty(new MultiProperty<>("mixed", 0.1 ,1,"c"));
-
+    output.addProperty(new MultiProperty<>("float", 0.1, 0.2));
+    output.addProperty(new MultiProperty<>("int", 1, 2));
+    output.addProperty(new MultiProperty<>("string", "a", "b", "c"));
+    output.addProperty(new MultiProperty<>("doubleInt", 0.1, 1));
+    output.addProperty(new MultiProperty<>("mixed", 0.1, 1, "c"));
 
     propertyParser = new PropertyParser(content);
     Collection<Module> parsed = propertyParser.parseModules();
-    Collection<Module> expected =new ArrayList<>();
+    Collection<Module> expected = new ArrayList<>();
     expected.add(output);
-    JsonExport exporter=new JsonExport();
-    assertEquals(exporter.getJson(expected),exporter.getJson(parsed));
+    JsonExport exporter = new JsonExport();
+    assertEquals(exporter.getJson(expected), exporter.getJson(parsed));
 
   }
+
+  /**
+   * Test what happens with no file
+   */
   @Test
   void wrongInitialisation() {
     propertyParser = new PropertyParser();
     assertEquals(null, propertyParser.parseModules());
   }
+
+  /**
+   * Test what happens with added file
+   */
   @Test
   void alternativeConstructor() {
     content = "/**"
@@ -218,18 +247,17 @@ class PropertyParserTest {
     propertyParser.setScadFile(content);
     Module output = new Module();
 
-    output.addProperty(new MultiProperty<>("float", 0.1 ,0.2));
-    output.addProperty(new MultiProperty<>("int", 1 ,2));
-    output.addProperty(new MultiProperty<>("string", "a" ,"b","c"));
-    output.addProperty(new MultiProperty<>("doubleInt", 0.1 ,1));
-    output.addProperty(new MultiProperty<>("mixed", 0.1 ,1,"c"));
-
+    output.addProperty(new MultiProperty<>("float", 0.1, 0.2));
+    output.addProperty(new MultiProperty<>("int", 1, 2));
+    output.addProperty(new MultiProperty<>("string", "a", "b", "c"));
+    output.addProperty(new MultiProperty<>("doubleInt", 0.1, 1));
+    output.addProperty(new MultiProperty<>("mixed", 0.1, 1, "c"));
 
     propertyParser = new PropertyParser(content);
     Collection<Module> parsed = propertyParser.parseModules();
-    Collection<Module> expected =new ArrayList<>();
+    Collection<Module> expected = new ArrayList<>();
     expected.add(output);
-    JsonExport exporter=new JsonExport();
-    assertEquals(exporter.getJson(expected),exporter.getJson(parsed));
+    JsonExport exporter = new JsonExport();
+    assertEquals(exporter.getJson(expected), exporter.getJson(parsed));
   }
 }
