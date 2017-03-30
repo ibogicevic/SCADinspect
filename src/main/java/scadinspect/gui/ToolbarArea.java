@@ -27,8 +27,8 @@ public class ToolbarArea extends ToolBar {
     // initialize buttons
     VBox vbox = new VBox();
     Pane seperatorPane = new Pane();
-    private Button openProjectButton = new Button("Open");
-    private Button settingsButton = new Button("Settings");
+    private Button openProjectFileButton = new Button("Open file");
+    private Button openProjectFolderButton = new Button("Open folder");    private Button settingsButton = new Button("Settings");
     private Hyperlink helpLink = new Hyperlink("Help");
     private Hyperlink aboutLink = new Hyperlink("About");
 
@@ -67,8 +67,12 @@ public class ToolbarArea extends ToolBar {
      * Constructor of ToolbarArea
      */
     public ToolbarArea() {
+        // instanciate classes
+        ProjectHandling projectHandler = new ProjectHandling();
+
         // set button icons
-        openProjectButton.setGraphic(loadIcon("open-folder-outline"));
+        openProjectFileButton.setGraphic(loadIcon("open-folder-outline"));
+        openProjectFolderButton.setGraphic(loadIcon("open-folder-outline"));
         settingsButton.setGraphic(loadIcon("cog-wheel-silhouette"));
         helpLink.setGraphic(loadResizedIcon("help-icon"));
         aboutLink.setGraphic(loadResizedIcon("about-icon"));
@@ -76,13 +80,15 @@ public class ToolbarArea extends ToolBar {
         // status of buttons
         disableButtons(true);
         // actionlisteners
-        openProjectButton.setOnAction(e -> ProjectHandling.openProject());
+        openProjectFileButton.setOnAction(e -> projectHandler.openProjectFile());
+        openProjectFolderButton.setOnAction(e -> projectHandler.openProjectFolder());
 
         helpLink.setOnAction(e -> ProjectHandling.showModal());
         aboutLink.setOnAction(e -> AboutDialog.openDialog());
         settingsButton.setOnAction(e -> SettingsDialog.openDialog());
         // add all buttons
-        this.getItems().add(openProjectButton);
+        this.getItems().add(openProjectFileButton);
+        this.getItems().add(openProjectFolderButton);
         this.getItems().add(new Separator());
         this.getItems().add(settingsButton);
         this.getItems().add(new Separator());

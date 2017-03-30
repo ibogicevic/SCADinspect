@@ -159,6 +159,14 @@ public class Main extends Application {
     public boolean isProjectOpen() {
         return (currentProject != null);
     }
+    
+    /**
+     * Sets the current project path
+     * @param currentProject
+     */
+    public void setCurrentProject(String currentProject){
+      this.currentProject=currentProject;
+  }
 
 
 
