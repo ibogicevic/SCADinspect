@@ -16,7 +16,6 @@ import javafx.stage.Modality;
 public class SettingsDialog {
     
     public static void openDialog(){
-
         Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
 
         Dialog<Boolean> dialog = new Dialog<>();
