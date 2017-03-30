@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.LinkedList;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,13 +18,16 @@ import scadinspect.data.scaddoc.properties.Property;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
- * @author desyon on 3/23/17.
+ * @author desyon, eric on 3/23/17.
  */
 class FileExportTest {
 
   static private List<Module> modules;
   private FileExport fExport;
 
+  /**
+   * Prepares the list of modules that is used to test the exporting before any tests are run.
+   */
   @BeforeAll
   static void setupModules() {
     modules = new LinkedList<>();
@@ -52,13 +54,22 @@ class FileExportTest {
     modules.add(motor);
   }
 
+  /**
+   * Instantiates the file exporter before each of the tests.
+   */
   @BeforeEach
   void instantiate() {
     fExport = new FileExport();
   }
 
+  /**
+   * Tests the export to JSON format
+   *
+   * @throws FileExportException if something went wrong during the export
+   * @throws IOException if the creation of the test file failed
+   */
   @Test
-  void saveAsJson() throws Exception {
+  void saveAsJson() throws FileExportException, IOException {
 
     File sampleFile = new File("./spec/samples/output_sample.json");
     File exportedFile = fExport.saveAsJson(modules, "./export.json");
@@ -72,8 +83,15 @@ class FileExportTest {
         new String(exported).replaceAll("\\r\\n?", "\n"));
   }
 
+
+  /**
+   * Tests the export to XML format
+   *
+   * @throws FileExportException if something went wrong during the export
+   * @throws IOException if the creation of the test file failed
+   */
   @Test
-  void saveAsXml() throws Exception {
+  void saveAsXml() throws FileExportException, IOException {
 
     File sampleFile = new File("./spec/samples/output_sample.xml");
     File exportedFile = fExport.saveAsXml(modules, "./export.xml");
@@ -87,15 +105,21 @@ class FileExportTest {
         new String(exported).replaceAll("\\r\\n?", "\n"));
   }
 
+  /**
+   * Tests if an exception is thrown on XMLExport on wrong input
+   */
   @Test
   void throwFromXML() {
     assertThrows(FileExportException.class, () ->
         fExport.saveAsXml(null, null));
   }
 
+  /**
+   * Tests if an exception is thrown on JSONExport on wrong input
+   */
   @Test
   void throwFromJson() {
     assertThrows(FileExportException.class, () ->
-      fExport.saveAsJson(null, null));
+        fExport.saveAsJson(null, null));
   }
 }

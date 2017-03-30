@@ -2,21 +2,23 @@ package scadinspect.data.scaddoc;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
+import scadinspect.control.MyLogger;
 import scadinspect.data.scaddoc.error.FileExportException;
 
 /**
+ * Provides all means to convert a List of Modules into multiple formats of character files.
+ * This includes JSON and XML files.
+ *
  * @author eric, desyon on 3/23/17.
  */
 
-//TODO: Write proper XML export implementation
 public class FileExport {
 
+  private static MyLogger logger;
   /**
-   * @exception IOException if stream to aFile cannot be written to or closed.
-   * @exception IllegalArgumentException if aFile is a directory.
-   * @exception IllegalArgumentException if aFile cannot be written.
+   * @exception FileExportException if some failure during the export. Further information can be in
+   * the init cause.
    */
   private FileWriter fileWriter;
 
@@ -36,7 +38,7 @@ public class FileExport {
 
       return file;
     } catch (Exception e) {
-      //TODO: log exception
+      //TODO: Log Exception
       FileExportException exportException = new FileExportException(e);
       throw exportException;
     }
@@ -58,7 +60,7 @@ public class FileExport {
 
       return file;
     } catch (Exception e) {
-      //TODO: log exception
+      //TODO: Log Exception
       FileExportException exportException = new FileExportException(e);
       throw exportException;
     }
