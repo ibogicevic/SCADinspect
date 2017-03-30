@@ -16,7 +16,11 @@ public class TabArea extends TabPane {
   DocumentationList documentationList = new DocumentationList();
 
   public TabArea() {
-    TableView issue = generateIssueTable(issueList);
+
+    // Tabs can't be closed
+    this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+
+      TableView issue = generateIssueTable(issueList);
     TableView documentations = generateDocTable(documentationList);
 
     //issue tab
