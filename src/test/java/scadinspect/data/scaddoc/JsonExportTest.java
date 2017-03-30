@@ -156,11 +156,12 @@ class JsonExportTest {
             + "}}]",
         exporter.getJson(modules));
   }
+
   /**
    * Test against the defined example Json
    */
   @Test
-  void sampleJSON(){
+  void sampleJSON() {
     Module wheel = new Module();
     wheel.addProperty(new SingleProperty<>("part", "Wheel"));
     wheel.addProperty(new PairProperty<>("price", 100, "EUR"));

@@ -2,7 +2,6 @@ package scadinspect.data.scaddoc;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.ArrayList;
 import scadinspect.data.scaddoc.properties.Property;
 
 /**
@@ -10,7 +9,7 @@ import scadinspect.data.scaddoc.properties.Property;
  *
  * @author richteto on 17.03.2017.
  */
-public class Module{
+public class Module {
 
   private Collection<Property> properties;
 

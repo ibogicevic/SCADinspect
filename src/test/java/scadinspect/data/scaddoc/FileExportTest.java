@@ -4,9 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
@@ -64,6 +62,7 @@ class FileExportTest {
 
     exportedFile.delete();
 
-    assertEquals(new String(sample).replaceAll("\\r\\n?","\n"), new String(exported).replaceAll("\\r\\n?","\n"));
+    assertEquals(new String(sample).replaceAll("\\r\\n?", "\n"),
+        new String(exported).replaceAll("\\r\\n?", "\n"));
   }
 }
