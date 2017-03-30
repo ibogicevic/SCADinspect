@@ -58,23 +58,28 @@ public class ScadDocuFile {
     modules.add(module);
   }
 
+  /**
+   * Finds and returns all keys in all modules of one SCAD file
+   *
+   * @return all keys available
+   */
+  public Collection<String> getAllKeys() {
+    Collection<String> keys = new HashSet<>();
+    for (Module module : modules) {
+      for (Property property : module.getProperties()) {
+        if (!keys.contains(property.getKey())) {
+          keys.add(property.getKey());
+        }
+      }
+    }
+    return keys;
+  }
+
   public Path getPath() {
     return path;
   }
 
   public Collection<Module> getModules() {
     return modules;
-  }
-
-  public Collection<String> getAllKeys() {
-    Collection<String> keys = new HashSet<>();
-    for(Module module : modules){
-      for(Property property: module.getProperties()){
-        if(!keys.contains(property.getKey())){
-          keys.add(property.getKey());
-        }
-      }
-    }
-    return keys;
   }
 }
