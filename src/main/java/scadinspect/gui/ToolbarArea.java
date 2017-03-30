@@ -1,7 +1,14 @@
 package scadinspect.gui;
 
 import java.io.InputStream;
+import java.nio.file.attribute.PosixFilePermission;
 
+import javafx.geometry.Pos;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import scadinspect.control.ProjectHandling;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
@@ -18,15 +25,13 @@ import javafx.scene.image.ImageView;
 public class ToolbarArea extends ToolBar {
 
     // initialize buttons
+    VBox vbox = new VBox();
+    Pane seperatorPane = new Pane();
     private Button openProjectFileButton = new Button("Open file");
-    private Button openProjectFolderButton = new Button("Open folder");
-    private Button closeProjectButton = new Button("Close");
-    private Button refreshButton = new Button("Refresh");
-    private Button exportButton = new Button("Export");
-    private Button settingsButton = new Button("Settings");
-    private Button helpButton = new Button("Help");
-    private Button aboutButton = new Button("About");
-    private Button exitButton = new Button("Exit");
+    private Button openProjectFolderButton = new Button("Open folder");    private Button settingsButton = new Button("Settings");
+    private Hyperlink helpLink = new Hyperlink("Help");
+    private Hyperlink aboutLink = new Hyperlink("About");
+
 
     /**
      * Disable buttons when no project is open
@@ -34,9 +39,7 @@ public class ToolbarArea extends ToolBar {
      * @param value true if buttons shall be disabled (no open project)
      */
     public void disableButtons(boolean value) {
-        closeProjectButton.setDisable(value);
-        refreshButton.setDisable(value);
-        exportButton.setDisable(value);
+
         settingsButton.setDisable(value);
     }
 
@@ -51,6 +54,14 @@ public class ToolbarArea extends ToolBar {
         ImageView imageView = new ImageView(image);
         return imageView;
     }
+    private ImageView loadResizedIcon(String fileName) {
+        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
+        Image image = new Image(inputStream);
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(12);
+        imageView.setFitWidth(12);
+        return imageView;
+    }
 
     /**
      * Constructor of ToolbarArea
@@ -58,38 +69,34 @@ public class ToolbarArea extends ToolBar {
     public ToolbarArea() {
         // instanciate classes
         ProjectHandling projectHandler = new ProjectHandling();
-      
+
         // set button icons
         openProjectFileButton.setGraphic(loadIcon("open-folder-outline"));
         openProjectFolderButton.setGraphic(loadIcon("open-folder-outline"));
-        closeProjectButton.setGraphic(loadIcon("cross-mark-on-a-black-circle-background"));
-        refreshButton.setGraphic(loadIcon("refresh-page-option"));
-        exportButton.setGraphic(loadIcon("text-file"));
         settingsButton.setGraphic(loadIcon("cog-wheel-silhouette"));
-        helpButton.setGraphic(loadIcon("question-sign"));
-        aboutButton.setGraphic(loadIcon("information-symbol"));
-        exitButton.setGraphic(loadIcon("sign-out-option"));
+        helpLink.setGraphic(loadResizedIcon("help-icon"));
+        aboutLink.setGraphic(loadResizedIcon("about-icon"));
+
         // status of buttons
         disableButtons(true);
         // actionlisteners
         openProjectFileButton.setOnAction(e -> projectHandler.openProjectFile());
         openProjectFolderButton.setOnAction(e -> projectHandler.openProjectFolder());
-        closeProjectButton.setOnAction(e -> projectHandler.closeProject());
-        refreshButton.setOnAction(e -> Main.getInstance().statusArea.simulateProgress());
-        aboutButton.setOnAction(e -> AboutDialog.openDialog());
+
+        helpLink.setOnAction(e -> ProjectHandling.showModal());
+        aboutLink.setOnAction(e -> AboutDialog.openDialog());
         settingsButton.setOnAction(e -> SettingsDialog.openDialog());
-        exitButton.setOnAction(e -> Platform.exit());
         // add all buttons
         this.getItems().add(openProjectFileButton);
         this.getItems().add(openProjectFolderButton);
-        this.getItems().add(closeProjectButton);
-        this.getItems().add(refreshButton);
         this.getItems().add(new Separator());
-        this.getItems().add(exportButton);
         this.getItems().add(settingsButton);
         this.getItems().add(new Separator());
-        this.getItems().add(helpButton);
-        this.getItems().add(aboutButton);
-        this.getItems().add(exitButton);
+
+        HBox.setHgrow(seperatorPane, Priority.ALWAYS);
+        vbox.getChildren().add(helpLink);
+        vbox.getChildren().add(aboutLink);
+        this.getItems().add(seperatorPane);
+        this.getItems().add(vbox);
     }
 }
