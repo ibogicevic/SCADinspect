@@ -35,31 +35,36 @@ public class SettingsDialog {
         grid.setVgap(10);
             
         CheckBox autorefresh = new CheckBox("Autorefresh On/Off");
+        grid.add(autorefresh, 0, 0);
 
-        //Get previously saved settings, default to false
+        //Create ComboBox for Logging Level
+        Text logtext = new Text("Logging Level:");
+
+        ObservableList<String> options =
+                FXCollections.observableArrayList(
+                        "None",
+                        "Severe",
+                        "Warning",
+                        "Info"
+                );
+        final ComboBox loggingCombo = new ComboBox(options);
+
+        grid.add(logtext, 0, 1);
+        grid.add(loggingCombo, 1, 1);
+
+
+        // Get previously saved settings, default to false
+        // Autorefresh
         if (userPrefs.getBoolean("SET_AUTOREFRESH", false)) {
             autorefresh.setSelected(true);
         } else {
             autorefresh.setSelected(false);
         }
-        
-        grid.add(autorefresh, 0, 0);
-        
-        //Create ComboBox for Logging Level
-        Text logtext = new Text("Logging Level:");
-           
-        ObservableList<String> options = 
-            FXCollections.observableArrayList(
-                "None",
-                "Severe",
-                "Warning",
-                "Info"
-            );
-        final ComboBox loggingCombo = new ComboBox(options);
-                   
-        grid.add(logtext, 0, 1);
-        grid.add(loggingCombo, 1, 1);
-                   
+        // Logging Level
+        loggingCombo.getSelectionModel().select(userPrefs.getInt("SET_LOGGING_LEVEL", 0));
+
+
+        // Load contents in dialog
         dialog.getDialogPane().setContent(grid);
             
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -68,11 +73,17 @@ public class SettingsDialog {
 
         if (result.isPresent()){
             // ... user clicks "ok", save settings
+
+            // Autorefresh
             if (autorefresh.isSelected()) {
                 userPrefs.putBoolean("SET_AUTOREFRESH", true);
             } else {
                 userPrefs.putBoolean("SET_AUTOREFRESH", false);
             }
+
+            // Logging
+            userPrefs.putInt("SET_LOGGING_LEVEL", loggingCombo.getSelectionModel().getSelectedIndex());
+
         }
         ProjectHandling.hideModel();
     }
