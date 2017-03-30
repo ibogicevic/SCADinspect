@@ -42,7 +42,7 @@ public class ToolbarArea extends ToolBar {
      */
     public void disableButtons(boolean value) {
 
-        settingsButton.setDisable(value);
+        
     }
 
     /**
