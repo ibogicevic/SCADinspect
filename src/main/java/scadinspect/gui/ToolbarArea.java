@@ -58,7 +58,7 @@ public class ToolbarArea extends ToolBar {
     public ToolbarArea() {
         // instanciate classes
         ProjectHandling projectHandler = new ProjectHandling();
-      
+
         // set button icons
         openProjectFileButton.setGraphic(loadIcon("open-folder-outline"));
         openProjectFolderButton.setGraphic(loadIcon("open-folder-outline"));

@@ -8,7 +8,10 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import scadinspect.control.LogHandler;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,12 +53,12 @@ public class Main extends Application {
 
     // gui areas
     public ToolbarArea toolbarArea = new ToolbarArea();
-    //public ExplorerArea explorerArea = new ExplorerArea();
     public TabArea tabArea = new TabArea();
-    // public InspectorArea inspectorArea = new InspectorArea();
-    // public MessagesArea messagesArea = new MessagesArea();
     public StatusArea statusArea = new StatusArea();
 
+    // list of open scad-files
+    private List<File> fileList = new ArrayList<>();
+    
     /**
      * root path to current open project, null if no project open
      */
@@ -66,6 +69,14 @@ public class Main extends Application {
 
     public Stage getPrimaryStage() {
         return this.primaryStage;
+    }
+    
+    /**
+     * Gives the list of currently open scad-files
+     * @return list of scad-files currently open
+     */
+    public List<File> getFileList() {
+    	return fileList;
     }
 
     @Override
@@ -106,10 +117,6 @@ public class Main extends Application {
         primaryStage.setY(0.7 * screenBounds.getHeight());
         primaryStage.setX(0);
         primaryStage.show();
-
-
-        // load default workspace
-        //ProjectHandling.openProject("");
 
         logger.log(Level.INFO, "({0}) successfully started", this.getClass().getName());
     }
