@@ -2,17 +2,9 @@ package scadinspect.control;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import scadinspect.data.scaddoc.JsonExport;
-import scadinspect.data.scaddoc.Module;
-import scadinspect.data.scaddoc.parser.PropertyParser;
 import scadinspect.gui.Main;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -52,6 +44,7 @@ public class ProjectHandling {
    * Opens the dialog to choose a file
    */
   public void openProjectFile() {
+	File projectFile;
     projectFile = fileChooser.showOpenDialog(Main.getInstance().getPrimaryStage());
 
     /**
@@ -60,8 +53,8 @@ public class ProjectHandling {
      */
 
     if (projectFile != null) {
-      fileList.add(projectFile);
       setProjectPath(projectFile);
+      Main.getInstance().getFileList().add(projectFile);
     }
   }
 
@@ -69,6 +62,7 @@ public class ProjectHandling {
    * Opens the dialog to choose a directory
    */
   public void openProjectFolder() {
+	File projectDirectory;
     projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
 
     /**
@@ -77,14 +71,16 @@ public class ProjectHandling {
      * contents of the subfolder to the fileList
      */
     if (projectDirectory != null) {
-      addFilesToList(projectDirectory.getAbsolutePath());
       setProjectPath(projectDirectory);
+      addFilesToList(projectDirectory.getAbsolutePath());
     }
   }
 
   /**
    * Checks if a path for the project is set, if so it closes the last open project and then sets
    * the pathname in the title and enables the buttons
+   * 
+   * @param projectPath
    */
   private void setProjectPath(File projectPath) {
     closeProject();
@@ -97,18 +93,20 @@ public class ProjectHandling {
   /**
    * Sets the current project path in the Title and the App name
    * Is the last called function after all files have been added to fileList
+   * @param rootPath
    */
   private void setCurrentProject(String rootPath) {
     // update window title
     Main.getInstance().getPrimaryStage().setTitle(Main.APPNAME + " – " + rootPath);
     // remember open project
     Main.getInstance().currentProject = rootPath;
-    parseFiles();
   }
 
   /**
    * Gets the files in the current directory and it subfolders. Also it adds only .scad files to the
    * list
+   * 
+   * @param projectDirectory
    */
   private void addFilesToList(String projectDirectory) {
     // Set the current folder
@@ -119,7 +117,7 @@ public class ProjectHandling {
 
       // If the current file is a scad file add it to the list
       if (file.isFile() && file.toString().endsWith(".scad")) {
-        fileList.add(file);
+        Main.getInstance().getFileList().add(file);
       } else {
         /**
          * If the current selected file is a folder, go recursively call the function with the
@@ -141,29 +139,7 @@ public class ProjectHandling {
     if (Main.getInstance().isProjectOpen() == true) {
       Main.getInstance().setCurrentProject("");
       Main.getInstance().getPrimaryStage().setTitle(Main.APPNAME);
-      fileList.clear();
+      Main.getInstance().getFileList().clear();
     }
-  }
-
-  /**
-   * called after all filepath have been collected loads fields convert them to string parses them
-   * with propertyParser and saves them in Main class
-   */
-  private void parseFiles()  {
-    PropertyParser parser=new PropertyParser();
-    JsonExport export=new JsonExport();
-    for (File file : fileList) {
-      try {
-        String module=new String(Files.readAllBytes(file.toPath()));
-        parser.setScadFile(module);
-        Collection<Module> modules=parser.parseModules();
-        System.out.println(export.getJson(modules));
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-
-
-    }
-    Main.getInstance().setModules(null);
   }
 }

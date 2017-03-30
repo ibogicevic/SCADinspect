@@ -1,18 +1,17 @@
 package scadinspect.gui;
 
-import java.rmi.MarshalledObject;
-import java.util.Collection;
-import java.util.List;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
-import javafx.print.Collation;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import scadinspect.control.MyLogger;
+import scadinspect.control.LogHandler;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import scadinspect.data.scaddoc.Module;
@@ -24,46 +23,47 @@ import scadinspect.data.scaddoc.Module;
  */
 public class Main extends Application {
 
-  /**
-   * Name of the application *
-   */
-  public static final String APPNAME = "SCADinspect";
+    /**
+     * Name of the application *
+     */
+    public static final String APPNAME = "SCADinspect";
 
-  /**
-   * Location of the resource files *
-   */
-  public static final String RESOURCES_DIR = "/resources/";
+    /**
+     * Location of the resource files *
+     */
+    public static final String RESOURCES_DIR = "/resources/";
+    public static Logger logger = null;
 
-  /**
-   * Ratio between window height and screen height *
-   */
-  private static final double WINDOW_HEIGHT = 0.25;
+    /**
+     * Ratio between window height and screen height *
+     */
+    private static final double WINDOW_HEIGHT = 0.25;
 
-  /**
-   * Pre-configured logger that outputs to  *
-   */
-  public static Logger logger = null;
+    /**
+     * Pre-configured logger that outputs to  *
+     */
+    private LogHandler logHandler = null;
 
-  // singleton pattern
-  private static Main instance;
+    // singleton pattern
+    private static Main instance;
 
-  public static Main getInstance() {
-    return instance;
-  }
+    public static Main getInstance() {
+        return instance;
+    }
 
 
-  // gui areas
-  public ToolbarArea toolbarArea = new ToolbarArea();
-  //public ExplorerArea explorerArea = new ExplorerArea();
-  public TabArea tabArea = new TabArea();
-  // public InspectorArea inspectorArea = new InspectorArea();
-  // public MessagesArea messagesArea = new MessagesArea();
-  public StatusArea statusArea = new StatusArea();
+    // gui areas
+    public ToolbarArea toolbarArea = new ToolbarArea();
+    public TabArea tabArea = new TabArea();
+    public StatusArea statusArea = new StatusArea();
 
-  /**
-   * root path to current open project, null if no project open
-   */
-  public String currentProject = null;
+    // list of open scad-files
+    private List<File> fileList = new ArrayList<>();
+
+    /**
+     * root path to current open project, null if no project open
+     */
+    public String currentProject = null;
 
 
   /**
@@ -82,77 +82,87 @@ public class Main extends Application {
   // remember stage for subwindows
   private Stage primaryStage;
 
-  public Stage getPrimaryStage() {
-    return this.primaryStage;
-  }
-
-  @Override
-  /**
-   * Application startup function
-   */
-  public void start(Stage primaryStage) {
-    System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc] %4$s: %5$s%n");
-
-    try {
-      logger = new MyLogger().logger;
-    } catch (IOException e) {
-      e.printStackTrace();
+    public Stage getPrimaryStage() {
+        return this.primaryStage;
     }
 
-    // remember singleton instance (instantiated by javafx)
-    Main.instance = this;
+    /**
+     * Gives the list of currently open scad-files
+     * @return list of scad-files currently open
+     */
+    public List<File> getFileList() {
+    	return fileList;
+    }
 
-    // remember stage for subwindows
-    this.primaryStage = primaryStage;
+    @Override
+    /**
+     * Application startup function
+     */
+    public void start(Stage primaryStage) {
+        System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc] %4$s: %5$s%n");
 
-    // Documentation and Issues Tabulators
-    BorderPane tabPane = new BorderPane();
-    tabPane.setCenter(tabArea);
+        try {
+            logHandler = new LogHandler();
+            logger = logHandler.getLogger();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    // add all areas
-    BorderPane mainPane = new BorderPane();
-    mainPane.setTop(toolbarArea);
-    mainPane.setCenter(tabPane);
-    mainPane.setBottom(statusArea);
+        // remember singleton instance (instantiated by javafx)
+        Main.instance = this;
 
-    // show main pane
-    Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-    Scene scene = new Scene(mainPane, screenBounds.getWidth(),
-        WINDOW_HEIGHT * screenBounds.getHeight(), true);
-    primaryStage.setTitle(APPNAME);
-    primaryStage.setScene(scene);
-    primaryStage.setY(0.7 * screenBounds.getHeight());
-    primaryStage.setX(0);
-    primaryStage.show();
+        // remember stage for subwindows
+        this.primaryStage = primaryStage;
 
-    // load default workspace
-    //ProjectHandling.openProject("");
+        // Documentation and Issues Tabulators
+        BorderPane tabPane = new BorderPane();
+        tabPane.setCenter(tabArea);
 
-    logger.log(Level.INFO, "(" + this.getClass().getName() + ") " + "successfully started");
-  }
+        // add all areas
+        BorderPane mainPane = new BorderPane();
+        mainPane.setTop(toolbarArea);
+        mainPane.setCenter(tabPane);
+        mainPane.setBottom(statusArea);
 
-  /**
-   * Check whether a project file or project folder is open
-   *
-   * @return true if a project is open, else false
-   */
-  public boolean isProjectOpen() {
-    return (currentProject != null);
-  }
+        // show main pane
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        Scene scene = new Scene(mainPane, screenBounds.getWidth(), WINDOW_HEIGHT * screenBounds.getHeight(), true);
+        primaryStage.setTitle(APPNAME);
+        primaryStage.setScene(scene);
+        primaryStage.setY(0.7 * screenBounds.getHeight());
+        primaryStage.setX(0);
+        primaryStage.show();
 
-  /**
-   * Sets the current project path
-   */
-  public void setCurrentProject(String currentProject) {
-    this.currentProject = currentProject;
-  }
+        logger.log(Level.INFO, "({0}) successfully started", this.getClass().getName());
+    }
 
-  /**
-   * Main control loop, gives control to JavaFX
-   *
-   * @param args unused
-   */
-  public static void main(String[] args) {
-    launch(args);
-  }
+    /**
+     * Check whether a project file or project folder is open
+     *
+     * @return true if a project is open, else false
+     */
+    public boolean isProjectOpen() {
+        return (currentProject != null);
+    }
+    
+    /**
+     * Sets the current project path
+     * @param currentProject
+     */
+    public void setCurrentProject(String currentProject){
+      this.currentProject=currentProject;
+    }
+
+    public LogHandler getLogHandler() {
+        return logHandler;
+    }
+
+    /**
+     * Main control loop, gives control to JavaFX
+     *
+     * @param args unused
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
