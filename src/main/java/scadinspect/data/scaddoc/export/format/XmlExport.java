@@ -1,4 +1,4 @@
-package scadinspect.data.scaddoc;
+package scadinspect.data.scaddoc.export.format;
 
 /**
  * @author eric on 24.03.17.
@@ -17,6 +17,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.Property;
 

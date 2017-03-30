@@ -1,4 +1,4 @@
-package scadinspect.data.scaddoc;
+package scadinspect.data.scaddoc.export;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -11,7 +11,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.error.FileExportException;
+import scadinspect.data.scaddoc.export.FileExport;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.Property;

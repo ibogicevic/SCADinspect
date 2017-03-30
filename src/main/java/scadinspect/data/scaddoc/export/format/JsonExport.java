@@ -1,8 +1,9 @@
-package scadinspect.data.scaddoc;
+package scadinspect.data.scaddoc.export.format;
 
 import java.util.Collection;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.properties.Property;
 import scadinspect.data.scaddoc.properties.helper.Pair;
 

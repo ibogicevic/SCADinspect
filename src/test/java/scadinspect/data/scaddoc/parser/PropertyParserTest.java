@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import org.json.JSONArray;
 import org.junit.jupiter.api.Test;
-import scadinspect.data.scaddoc.JsonExport;
+import scadinspect.data.scaddoc.export.format.JsonExport;
 import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;

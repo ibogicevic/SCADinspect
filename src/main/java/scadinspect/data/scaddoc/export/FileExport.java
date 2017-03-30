@@ -1,10 +1,13 @@
-package scadinspect.data.scaddoc;
+package scadinspect.data.scaddoc.export;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.util.List;
 import scadinspect.control.MyLogger;
+import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.error.FileExportException;
+import scadinspect.data.scaddoc.export.format.JsonExport;
+import scadinspect.data.scaddoc.export.format.XmlExport;
 
 /**
  * Provides all means to convert a List of Modules into multiple formats of character files.
