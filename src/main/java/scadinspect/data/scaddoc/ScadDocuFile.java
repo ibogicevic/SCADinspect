@@ -3,7 +3,9 @@ package scadinspect.data.scaddoc;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import scadinspect.data.scaddoc.parser.PropertyParser;
+import scadinspect.data.scaddoc.properties.Property;
 
 /**
  * The internal documentation of a single Scad file
@@ -62,5 +64,17 @@ public class ScadDocuFile {
 
   public Collection<Module> getModules() {
     return modules;
+  }
+
+  public Collection<String> getAllKeys() {
+    Collection<String> keys = new HashSet<>();
+    for(Module module : modules){
+      for(Property property: module.getProperties()){
+        if(!keys.contains(property.getKey())){
+          keys.add(property.getKey());
+        }
+      }
+    }
+    return keys;
   }
 }
