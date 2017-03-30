@@ -1,7 +1,7 @@
 package scadinspect.data.scaddoc.properties;
 
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Multiple value property definition like [1, 2, 3, 4]
@@ -9,10 +9,10 @@ import java.util.Collection;
  *
  * @author desyon on 3/17/17.
  */
-public class MultiProperty<T> implements Property<Collection<T>> {
+public class MultiProperty<T> implements Property<List<T>> {
 
   private String key;
-  private Collection<T> values;
+  private List<T> values;
 
   /**
    * Constructing a new multiple value property
@@ -20,7 +20,7 @@ public class MultiProperty<T> implements Property<Collection<T>> {
    * @param key The key name to store the values
    * @param values The collection of values to be stored
    */
-  public MultiProperty(String key, Collection<T> values) {
+  public MultiProperty(String key, List<T> values) {
     this.key = key;
     this.values = values;
   }
@@ -41,7 +41,7 @@ public class MultiProperty<T> implements Property<Collection<T>> {
   }
 
   @Override
-  public Collection<T> getValue() {
+  public List<T> getValue() {
     return values;
   }
 

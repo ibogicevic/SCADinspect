@@ -1,4 +1,6 @@
-log_*.*
+### Log files ###
+log_*.txt
+*.log
 
 ### Open Scad ###
 
