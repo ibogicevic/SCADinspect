@@ -71,7 +71,7 @@ public class Main extends Application {
     private BorderPane mainPane;
     private BorderPane helpPane;
     private StackPane mainStack;
-    private BorderPane greyPane;
+    public GreyPane greyPane;
     private Stage primaryStage;
 
     public Stage getPrimaryStage() {
@@ -130,12 +130,8 @@ public class Main extends Application {
 
         // main stack
         mainStack = new StackPane();
-        greyPane = new BorderPane();
-        greyPane.setVisible(false);
+        greyPane = new GreyPane(true);
         helpPane = new BorderPane();
-        greyPane.setStyle(
-                "-fx-background-color: rgba(105, 105, 105, 0.9);"
-        );
         mainStack.getChildren().addAll(greyPane, mainPane);
         helpPane.getChildren().add(0, helpMainPane);
 
@@ -164,15 +160,7 @@ public class Main extends Application {
         return (currentProject != null);
     }
 
-    public void modalToFront(Boolean var) {
-        if (var == true){
-            greyPane.setVisible(var);
-            greyPane.toFront();
-        } else {
-            greyPane.setVisible(var);
-            greyPane.toBack();
-        }
-    }
+
 
     /**
      * Main control loop, gives control to JavaFX

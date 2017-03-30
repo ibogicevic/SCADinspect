@@ -2,6 +2,7 @@ package scadinspect.control;
 
 import java.io.File;
 
+import scadinspect.gui.GreyPane;
 import scadinspect.gui.Main;
 import javafx.stage.DirectoryChooser;
 
@@ -38,11 +39,11 @@ public class ProjectHandling {
     }
 
     public static void showModal() {
-        Main.getInstance().modalToFront(true);
+        Main.getInstance().greyPane.modalToFront(true);
     }
 
     public static void hideModel() {
-        Main.getInstance().modalToFront(false);
+        Main.getInstance().greyPane.modalToFront(false);
 
     }
 
