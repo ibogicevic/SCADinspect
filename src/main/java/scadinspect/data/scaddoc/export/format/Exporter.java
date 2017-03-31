@@ -1,6 +1,5 @@
 package scadinspect.data.scaddoc.export.format;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 import java.util.Collection;
 import scadinspect.data.scaddoc.ScadDocuFile;
 

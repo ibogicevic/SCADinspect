@@ -85,8 +85,8 @@ class FileExportTest {
 
     exportedFile.delete();
 
-    assertEquals(new String(sample).replaceAll("\\r\\n?", "\n"),
-        new String(exported).replaceAll("\\r\\n?", "\n"));
+    assertEquals(new String(sample).replaceAll("\\r?\\n", "\n"),
+        new String(exported).replaceAll("\\r?\\n", "\n"));
   }
 
 
