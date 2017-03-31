@@ -35,12 +35,9 @@ public class XmlExporter implements Exporter {
   @Override
   public String getOutput(ScadDocuFile file)
       throws ParserException, ParserConfigurationException, TransformerException {
-    DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-
     // root elements
-    Document doc = docBuilder.newDocument();
-    Element rootElement = doc.createElement("modules");
+    Document doc = getDoc();
+    Element rootElement = doc.createElement(file.getPath().toString());
     doc.appendChild(rootElement);
 
     for (Module module : file.getModules()) {
@@ -48,25 +45,26 @@ public class XmlExporter implements Exporter {
       rootElement.appendChild(createModuleNode(module, doc));
     }
 
-    // write the content into xml format
-    TransformerFactory transformerFactory = TransformerFactory.newInstance();
-    Transformer transformer = transformerFactory.newTransformer();
-    transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-    DOMSource source = new DOMSource(doc);
-    StringWriter sw = new StringWriter();
-    StreamResult result = new StreamResult(sw);
-    transformer.transform(source, result);
-
-    //return XML String + do some **magic**
-    return sw.getBuffer().toString().replaceAll("((?<=>)\\[)|(](?=<))", "");
+    return transform(doc);
   }
 
   @Override
   public String getOutput(Collection<ScadDocuFile> files) throws Exception {
-    // TODO Implement
-    return null;
+    // root elements
+    Document doc = getDoc();
+    Element rootElement = doc.createElement("files");
+    doc.appendChild(rootElement);
+
+    for (ScadDocuFile file : files) {
+      Element fileElement = doc.createElement(file.getPath().toString());
+      for (Module module : file.getModules()) {
+        // Create module node for each module present and append it
+        fileElement.appendChild(createModuleNode(module, doc));
+      }
+      rootElement.appendChild(fileElement);
+    }
+
+    return transform(doc);
   }
 
   /**
@@ -106,5 +104,29 @@ public class XmlExporter implements Exporter {
       node.appendChild(key);
     }
     return node;
+  }
+
+  private Document getDoc() throws ParserConfigurationException {
+    DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+    // root elements
+    return docBuilder.newDocument();
+  }
+
+  private String transform(Document doc) throws TransformerException {
+    // write the content into xml format
+    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    Transformer transformer = transformerFactory.newTransformer();
+    transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+    DOMSource source = new DOMSource(doc);
+    StringWriter sw = new StringWriter();
+    StreamResult result = new StreamResult(sw);
+    transformer.transform(source, result);
+
+    //return XML String + do some **magic**
+    return sw.getBuffer().toString().replaceAll("((?<=>)\\[)|(](?=<))", "");
   }
 }
