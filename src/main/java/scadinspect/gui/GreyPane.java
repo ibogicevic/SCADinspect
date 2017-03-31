@@ -7,6 +7,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 /**
@@ -51,12 +53,11 @@ public class GreyPane extends BorderPane{
 
             // initiate Message Area
             this.setCenter(messageLabel);
-            messageLabel.setMaxWidth(200.0);
+            messageLabel.setMaxWidth(400.0);
             messageLabel.setWrapText(true);
             messageLabel.setTextAlignment(TextAlignment.CENTER);
-            messageLabel.setStyle(
-                    "-fx-background-color: rgba(365, 365, 365, 0.9);"
-            );
+            messageLabel.setFont(Font.font("Comic Sans", 20));
+            messageLabel.setTextFill(Color.WHITE);
 
             //initiate BottomPane
             bottomPane = new BorderPane();
@@ -111,35 +112,31 @@ public class GreyPane extends BorderPane{
                 toolbarArea.switchButtons(0);
                 bottomArea.switchButtons(0);
                 prev.setVisible(false);
-                messageLabel.setText("Press this button to open an new ScadFile");
+                messageLabel.setText("Press this button to open an new ScadFile or use Dropdown to open a folder.");
                 break;
             }
             case 1: {
                 toolbarArea.switchButtons(1);
                 prev.setVisible(true);
-                messageLabel.setText("Press this button to open a new Folder");
+                messageLabel.setText("Press this button to access the settings. For example you can enable auto refresh or set the logging level.");
+                bottomArea.switchButtons(0);
                 break;
             }
             case 2: {
                 toolbarArea.switchButtons(2);
-                bottomArea.switchButtons(0);
-                messageLabel.setText("Press this button to access the settings. For example you can enable auto refresh or set the logging level.");
+                messageLabel.setText("Press this button to refresh the files.");
+                bottomArea.switchButtons(1);
                 break;
             }
             case 3: {
                 toolbarArea.switchButtons(3);
-                bottomArea.switchButtons(1);
-                messageLabel.setText("Press this button to refresh your files.");
+                messageLabel.setText("Press this button to close your current work.");
+                bottomArea.switchButtons(2);
                 break;
             }
             case 4: {
-                bottomArea.switchButtons(2);
-                messageLabel.setText("Press this button to export your current work.");
-                break;
-            }
-            case 5:{
+                messageLabel.setText("Press the button to close the current file..");
                 bottomArea.switchButtons(3);
-                messageLabel.setText("Press the button to close the current file.");
                 break;
             }
         }

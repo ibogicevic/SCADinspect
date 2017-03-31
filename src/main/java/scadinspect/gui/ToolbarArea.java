@@ -156,7 +156,7 @@ public class ToolbarArea extends ToolBar {
                 break;
             }
             case 2: {
-                settingsButton.setVisible(false;
+                settingsButton.setVisible(false);
                 break;
             }
             case 3: {
