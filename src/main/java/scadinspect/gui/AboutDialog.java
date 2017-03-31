@@ -66,7 +66,8 @@ public class AboutDialog {
     		"Visit https://github.com/ibogicevic/SCADinspect for more information\n"+
     		"\n"+
     		"Contributors:\n"+
-    		"-Ivan Bogicevic";
+    		"-Ivan Bogicevic\n"+
+            "-Tim Walter";
 	
 	final static String Text2 =
 			"Buttons used from http://www.flaticon.com/authors/dave-gandy\n"+
