@@ -5,12 +5,13 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
+import scadinspect.gui.GreyPane;
 import scadinspect.gui.Main;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
 /**
- * 
+ *
  * @author bilir
  *
  */
@@ -76,7 +77,7 @@ public class ProjectHandling {
   /**
    * Checks if a path for the project is set, if so it closes the last open project and then sets
    * the pathname in the title and enables the buttons
-   * 
+   *
    * @param projectPath
    */
   private void setProjectPath(File projectPath) {
@@ -89,7 +90,7 @@ public class ProjectHandling {
 
   /**
    * Sets the current project path in the Title and the App name
-   * 
+   *
    * @param rootPath
    */
   private void setCurrentProject(String rootPath) {
@@ -102,7 +103,7 @@ public class ProjectHandling {
   /**
    * Gets the files in the current directory and it subfolders. Also it adds only .scad files to the
    * list
-   * 
+   *
    * @param projectDirectory
    */
   private void addFilesToList(String projectDirectory) {
@@ -125,6 +126,8 @@ public class ProjectHandling {
         }
       }
     }
+      Main.getInstance().toolbarArea.disableButtons(false);
+      Main.getInstance().bottomArea.disableButtons(false);
   }
 
   /**
@@ -133,10 +136,21 @@ public class ProjectHandling {
    */
   public void closeProject() {
     Main.getInstance().toolbarArea.disableButtons(true);
-    if (Main.getInstance().isProjectOpen() == true) {
+      Main.getInstance().bottomArea.disableButtons(true);
+      if (Main.getInstance().isProjectOpen() == true) {
       Main.getInstance().setCurrentProject("");
       Main.getInstance().getPrimaryStage().setTitle(Main.APPNAME);
       Main.getInstance().getFileList().clear();
     }
   }
+
+    public static void showModal() {
+        Main.getInstance().greyPane.modalToFront(true);
+    }
+
+    public static void hideModel() {
+        Main.getInstance().greyPane.modalToFront(false);
+
+    }
+
 }
