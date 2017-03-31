@@ -31,6 +31,6 @@ public class Pair<T> {
 
   @Override
   public String toString() {
-    return "{value: " + value + ", metric: " + metric + "}";
+    return value + " " + metric;
   }
 }
