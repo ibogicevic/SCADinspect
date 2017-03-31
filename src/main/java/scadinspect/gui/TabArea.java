@@ -12,7 +12,7 @@ import javafx.scene.control.TableView;
  */
 public class TabArea extends TabPane {
 
-  IssueList issueList = new IssueList();
+  public IssueList issueList = new IssueList();
   DocumentationList documentationList = new DocumentationList();
 
   public TabArea() {

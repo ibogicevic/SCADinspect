@@ -67,11 +67,6 @@ public class Issue {
 
     }
 
-    /* Set code snippet after issue is instantiated */
-    public void setCodeSnippet() {
-
-    }
-
     @Override
     public String toString() {
         return "Issue{" +
