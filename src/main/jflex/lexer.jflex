@@ -101,9 +101,9 @@ H = [0-9a-fA-F]
 /* TODO what to do with unicode, CUP can handle it, openscad cant, except for in comments and strings? */
 
 /* numbers */
-<YYINITIAL> {D}+{E}? |
-{D}*\.{D}+{E}? |
-{D}+\.{D}*{E}?      { return symbol("number", OpenScadSymbols.TOK_NUMBER, (Double) Double.parseDouble(yytext())); }
+<YYINITIAL> {D}+{E}?            { return symbol("number", OpenScadSymbols.TOK_NUMBER, (Double) Double.parseDouble(yytext())); }
+<YYINITIAL> {D}*\.{D}+{E}?      { return symbol("number", OpenScadSymbols.TOK_NUMBER, (Double) Double.parseDouble(yytext())); }
+<YYINITIAL> {D}+\.{D}*{E}?      { return symbol("number", OpenScadSymbols.TOK_NUMBER, (Double) Double.parseDouble(yytext())); }
 
 /* identifiers */
 <YYINITIAL> "$"?[a-zA-Z0-9_]+   { return symbol("id", OpenScadSymbols.TOK_ID, (String) yytext() ); }
@@ -133,9 +133,9 @@ H = [0-9a-fA-F]
 
 /* line comments */
 /* unicode allowed and handeled by [^\n] */
-<YYINITIAL> "//"        { yybegin(cond_lcomment); }
+<YYINITIAL> "//"        {  yybegin(cond_lcomment); }
 <cond_lcomment> {
-\n                      { yybegin(YYINITIAL); }
+\n                      { yybegin(YYINITIAL);  }
 [^\n]                   { }
 } /* close cond_lcomment */
 
