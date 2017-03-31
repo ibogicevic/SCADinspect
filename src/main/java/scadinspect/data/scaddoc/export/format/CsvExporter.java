@@ -44,7 +44,7 @@ public class CsvExporter implements Exporter {
         for (Property property : properties) {
           if (property.getKey().equals(key)) {
             csvExport.append(
-                property.getValue().toString().replaceAll("\\[|\\]|\\n|\\r|\\{|\\}", "")
+                property.getValue().toString().replaceAll("\\[|\\]|\\n|\\r", "")
                     .replaceAll(",", ":"));
           }
         }
