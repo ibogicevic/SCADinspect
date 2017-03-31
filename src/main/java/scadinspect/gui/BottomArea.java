@@ -29,6 +29,7 @@ public class BottomArea extends ToolBar{
 
     //initialize SeparatorPane to align Buttons
     private Pane separatorPane = new Pane();
+    private Separator separator = new Separator();
 
     private ImageView loadIcon(String fileName) {
         InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
@@ -69,10 +70,39 @@ public class BottomArea extends ToolBar{
         HBox.setHgrow(separatorPane, Priority.ALWAYS);
         //adding all buttons
         this.getItems().add(refreshButton);
-        this.getItems().add(new Separator());
+        this.getItems().add(separator);
         this.getItems().add(separatorPane);
         this.getItems().add(exportButton);
         this.getItems().add(closeProjectButton);
 
+    }
+
+    //this function is necessary to highlight the specific buttons for the help tour
+    public void switchButtons(Integer button){
+        switch (button){
+            case 0: {
+                refreshButton.setVisible(false);
+                separator.setVisible(false);
+                exportButton.setVisible(false);
+                closeProjectButton.setVisible(false);
+                break;
+            }
+            case 1: {
+                refreshButton.setVisible(true);
+                exportButton.setVisible(false);
+                break;
+            }
+            case 2: {
+                refreshButton.setVisible(false);
+                exportButton.setVisible(true);
+                closeProjectButton.setVisible(false);
+                break;
+            }
+            case 3: {
+                exportButton.setVisible(false);
+                closeProjectButton.setVisible(true);
+                break;
+            }
+        }
     }
 }

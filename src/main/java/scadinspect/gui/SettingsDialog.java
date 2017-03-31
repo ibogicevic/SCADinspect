@@ -18,7 +18,10 @@ public class SettingsDialog {
     
     public static void openDialog(){
 
-        ProjectHandling.showModal();
+        Main.getInstance().greyStack.toFront();
+        Main.getInstance().greyPane.toFront();
+        Main.getInstance().greyStack.setVisible(true);
+
         Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
 
         Dialog<Boolean> dialog = new Dialog<>();
@@ -74,6 +77,7 @@ public class SettingsDialog {
                 userPrefs.putBoolean("SET_AUTOREFRESH", false);
             }
         }
-        ProjectHandling.hideModel();
+        Main.getInstance().greyStack.toBack();
+        Main.getInstance().greyStack.setVisible(false);
     }
 }

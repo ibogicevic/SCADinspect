@@ -69,8 +69,9 @@ public class Main extends Application {
 
     // remember stage for subwindows
     private BorderPane mainPane;
-    private BorderPane helpPane;
     private StackPane mainStack;
+    public StackPane greyStack;
+    public GreyPane helpPane;
     public GreyPane greyPane;
     private Stage primaryStage;
 
@@ -101,19 +102,11 @@ public class Main extends Application {
         BorderPane tabPane = new BorderPane();
         tabPane.setCenter(tabArea);
 
-        //Help
-        BorderPane helpTabPane = new BorderPane();
-        helpTabPane.setCenter(helpTabArea);
 
         // Status and BottomArea
         BorderPane bottomPane = new BorderPane();
         bottomPane.setCenter(bottomArea);
         bottomPane.setBottom(statusArea);
-
-        //Help
-        BorderPane helpBottomPane = new BorderPane();
-        bottomPane.setCenter(helpBottomArea);
-        bottomPane.setBottom(helpStatusArea);
 
         // add all areas
         BorderPane mainPane = new BorderPane();
@@ -121,19 +114,13 @@ public class Main extends Application {
         mainPane.setCenter(tabPane);
         mainPane.setBottom(bottomPane);
 
-        //Help
-        BorderPane helpMainPane = new BorderPane();
-        helpMainPane.setTop(helpToolbarArea);
-        helpMainPane.setCenter(helpTabPane);
-        helpMainPane.setBottom(helpBottomPane);
-
-
         // main stack
         mainStack = new StackPane();
-        greyPane = new GreyPane(true);
-        helpPane = new BorderPane();
-        mainStack.getChildren().addAll(greyPane, mainPane);
-        helpPane.getChildren().add(0, helpMainPane);
+        greyPane = new GreyPane(false);
+        helpPane = new GreyPane(true);
+        greyStack = new StackPane(greyPane, helpPane);
+        greyStack.setVisible(false);
+        mainStack.getChildren().addAll(greyStack, mainPane);
 
         // show main pane
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();

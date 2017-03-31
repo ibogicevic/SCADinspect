@@ -31,6 +31,7 @@ public class ToolbarArea extends ToolBar {
     private Button openProjectFolderButton = new Button("Open folder");    private Button settingsButton = new Button("Settings");
     private Hyperlink helpLink = new Hyperlink("Help");
     private Hyperlink aboutLink = new Hyperlink("About");
+    private Separator separator = new Separator();
 
 
     /**
@@ -83,15 +84,21 @@ public class ToolbarArea extends ToolBar {
         openProjectFileButton.setOnAction(e -> projectHandler.openProjectFile());
         openProjectFolderButton.setOnAction(e -> projectHandler.openProjectFolder());
 
-        helpLink.setOnAction(e -> ProjectHandling.showModal());
+        helpLink.setOnAction(e -> {
+            Main.getInstance().greyStack.toFront();
+            Main.getInstance().greyStack.setVisible(true);
+            Main.getInstance().helpPane.modalToFront(true);
+            Main.getInstance().helpPane.switchTour(0);
+        });
         aboutLink.setOnAction(e -> AboutDialog.openDialog());
         settingsButton.setOnAction(e -> SettingsDialog.openDialog());
+        separator = new Separator();
         // add all buttons
         this.getItems().add(openProjectFileButton);
         this.getItems().add(openProjectFolderButton);
-        this.getItems().add(new Separator());
+        this.getItems().add(separator);
         this.getItems().add(settingsButton);
-        this.getItems().add(new Separator());
+        //this.getItems().add(separator);
 
         HBox.setHgrow(seperatorPane, Priority.ALWAYS);
         vbox.getChildren().add(helpLink);
@@ -99,4 +106,47 @@ public class ToolbarArea extends ToolBar {
         this.getItems().add(seperatorPane);
         this.getItems().add(vbox);
     }
+
+
+
+     // this function is necessary to highlight the specific buttons for each tutorial step
+
+    public void switchButtons(Integer button){
+
+
+        switch (button) {
+            case 0: {
+                // hide all buttons except from openFile
+                openProjectFolderButton.setVisible(false);
+                settingsButton.setVisible(false);
+                separator.setVisible(false);
+                helpLink.setVisible(false);
+                aboutLink.setVisible(false);
+                openProjectFileButton.setVisible(true);
+
+                //disable all buttons
+                openProjectFileButton.setDisable(true);
+                openProjectFolderButton.setDisable(true);
+                settingsButton.setDisable(true);
+                break;
+            }
+            case 1: {
+                openProjectFileButton.setVisible(false);
+                openProjectFolderButton.setVisible(true);
+                settingsButton.setVisible(false);
+                break;
+            }
+            case 2: {
+                openProjectFolderButton.setVisible(false);
+                settingsButton.setVisible(true);
+                break;
+            }
+            case 3: {
+                settingsButton.setVisible(false);
+                break;
+            }
+
+        }
+    }
+
 }

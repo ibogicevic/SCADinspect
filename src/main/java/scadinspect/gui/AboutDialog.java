@@ -22,7 +22,12 @@ public class AboutDialog {
 	 * Application startup function
 	 */
 	public static void openDialog(){
-	    ProjectHandling.showModal();
+	    //ProjectHandling.showModal();
+	    Main.getInstance().greyPane.modalToFront(true);
+	    Main.getInstance().greyStack.toFront();
+        Main.getInstance().greyStack.setVisible(true);
+
+        //Main.getInstance().greyStack
 		Dialog<Boolean> dialog = new Dialog<>();
         dialog.setTitle("About");
         dialog.setHeaderText("SCADinspect - Version x.xx");
@@ -58,7 +63,8 @@ public class AboutDialog {
         
         dialog.getDialogPane().setContent(grid);
         dialog.showAndWait();
-        ProjectHandling.hideModel();
+        Main.getInstance().greyStack.toBack();
+        Main.getInstance().greyStack.setVisible(false);
         
         
 	}
