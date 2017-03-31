@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import scadinspect.data.scaddoc.Module;
 
 /**
  * Startup JavaFX frame
@@ -21,7 +22,7 @@ import java.util.logging.Logger;
  * @author ivan
  */
 public class Main extends Application {
-  
+
     /**
      * Name of the application *
      */
@@ -32,7 +33,7 @@ public class Main extends Application {
      */
     public static final String RESOURCES_DIR = "/resources/";
     public static Logger logger = null;
-    
+
     /**
      * Ratio between window height and screen height *
      */
@@ -58,19 +59,33 @@ public class Main extends Application {
 
     // list of open scad-files
     private List<File> fileList = new ArrayList<>();
-    
+
     /**
      * root path to current open project, null if no project open
      */
     public String currentProject = null;
 
-    // remember stage for subwindows
-    private Stage primaryStage;
+
+  /**
+   * holds the modules found by propertyParser
+   */
+  private List<Module> modules;
+
+  public List<Module> getModules() {
+    return modules;
+  }
+
+  public void setModules(List<Module> modules) {
+    this.modules = modules;
+  }
+
+  // remember stage for subwindows
+  private Stage primaryStage;
 
     public Stage getPrimaryStage() {
         return this.primaryStage;
     }
-    
+
     /**
      * Gives the list of currently open scad-files
      * @return list of scad-files currently open
@@ -137,7 +152,7 @@ public class Main extends Application {
     public void setCurrentProject(String currentProject){
       this.currentProject=currentProject;
     }
-    
+
     public LogHandler getLogHandler() {
         return logHandler;
     }
