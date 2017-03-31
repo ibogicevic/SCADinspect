@@ -16,34 +16,38 @@ public class TabArea extends TabPane {
   DocumentationList documentationList = new DocumentationList();
 
   public TabArea() {
+    TableView issue = generateIssueTable(issueList);
+    TableView documentations = generateDocTable(documentationList);
+
+      // issue tab
+      Tab issues = new Tab();
+      issues.setText("Issues");
+      issues.setContent(issue); //SET CONTENT FOR issueArea HERE
+
+      // documentation tab
+      Tab documentation = new Tab();
+      documentation.setText("Documentation");
+      documentation.setContent(documentations); //SET CONTENT FOR documentationArea HERE
+
+
+      this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+      this.getTabs().add(issues);
+      this.getTabs().add(documentation);
+  }
+
+  private TableView generateIssueTable(IssueList issueList) {
+      TableView table = issueList.showList();
+      return table;
+  }
+
+  private TableView generateDocTable(DocumentationList documentationList) {
+    TableView table = documentationList.generateList();
+    return table;
+  }
+}
 
     // Tabs can't be closed
     this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 
       TableView issue = generateIssueTable(issueList);
     TableView documentations = generateDocTable(documentationList);
-
-    //issue tab
-    Tab issues = new Tab();
-    issues.setText("Issues");
-    issues.setContent(issue); //SET CONTENT FOR issueArea HERE
-
-    //documentation tab
-    Tab documentation = new Tab();
-    documentation.setText("Documentation");
-    documentation.setContent(documentations); //SET CONTENT FOR documentationArea HERE
-
-    this.getTabs().add(issues);
-    this.getTabs().add(documentation);
-  }
-
-  private TableView generateIssueTable(IssueList issueList) {
-    TableView table = issueList.showList();
-    return table;
-  }
-
-  private TableView generateDocTable(DocumentationList documentationList) {
-    TableView table = documentationList.showList();
-    return table;
-  }
-}
