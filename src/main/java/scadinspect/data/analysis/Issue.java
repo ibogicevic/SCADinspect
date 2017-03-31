@@ -35,6 +35,11 @@ public class Issue {
         this.lineNumber = lineNumber;
         this.issueIdentifier = issueIdentifier;
         this.description = description;
+
+        // Set Code Snippet if File is declared
+        if(sourceFile != null) {
+            this.setCodeSnippet();
+        }
     }
 
     /*
@@ -65,10 +70,14 @@ public class Issue {
     }
 
     /* Set file name and code snippet after issue is instantiated */
-    public void setCodeSnippet() {
+    public void setSourceFile (String filename) {
+        this.sourceFile = filename;
+        this.setCodeSnippet();
+    }
+    private void setCodeSnippet() {
         if(this.lineNumber != 0) {
             try {
-                BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\IBM_ADMIN\\Documents\\GitHub\\SCADinspect\\TestCorpus\\Examples\\Basics\\CSG.scad"));
+                BufferedReader reader = new BufferedReader(new FileReader(this.sourceFile));
                 String line = "";
 
 
