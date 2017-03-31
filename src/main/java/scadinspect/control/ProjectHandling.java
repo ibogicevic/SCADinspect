@@ -29,11 +29,6 @@ public class ProjectHandling {
   private final FileChooser.ExtensionFilter extensionFilter =
       new FileChooser.ExtensionFilter("SCAD files", "*.scad");
 
-  // Definition of the variables
-  private File projectFile;
-  private File projectDirectory;
-  private List<File> fileList = new ArrayList();
-
   /**
    * Default constructor where the extension filter for the fileChooser is set. This assures that
    * only .scad files can be selected
@@ -46,6 +41,7 @@ public class ProjectHandling {
    * Opens the dialog to choose a file
    */
   public void openProjectFile() {
+	File projectFile;
     projectFile = fileChooser.showOpenDialog(Main.getInstance().getPrimaryStage());
 
     /**
@@ -55,7 +51,7 @@ public class ProjectHandling {
 
     if (projectFile != null) {
       setProjectPath(projectFile);
-      fileList.add(projectFile);
+      Main.getInstance().getFileList().add(projectFile);
     }
   }
 
@@ -63,6 +59,7 @@ public class ProjectHandling {
    * Opens the dialog to choose a directory
    */
   public void openProjectFolder() {
+	File projectDirectory;
     projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
 
     /**
@@ -86,7 +83,7 @@ public class ProjectHandling {
     closeProject();
     if (projectPath != null) {
       setCurrentProject(projectPath.getAbsolutePath().toString());
-      Main.getInstance().toolbarArea.disableButtons(false);
+      Main.getInstance().toolbarArea.setButtonsDisabled(false);
     }
   }
 
@@ -117,7 +114,7 @@ public class ProjectHandling {
 
       // If the current file is a scad file add it to the list
       if (file.isFile() && file.toString().endsWith(".scad")) {
-        fileList.add(file);
+        Main.getInstance().getFileList().add(file);
       } else {
         /**
          * If the current selected file is a folder, go recursively call the function with the
@@ -135,11 +132,11 @@ public class ProjectHandling {
    * the fileList.
    */
   public void closeProject() {
-    Main.getInstance().toolbarArea.disableButtons(true);
+    Main.getInstance().toolbarArea.setButtonsDisabled(true);
     if (Main.getInstance().isProjectOpen() == true) {
       Main.getInstance().setCurrentProject("");
       Main.getInstance().getPrimaryStage().setTitle(Main.APPNAME);
-      fileList.clear();
+      Main.getInstance().getFileList().clear();
     }
   }
 }
