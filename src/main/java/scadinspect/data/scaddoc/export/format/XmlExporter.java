@@ -48,8 +48,16 @@ public class XmlExporter implements Exporter {
     return transform(doc);
   }
 
+  /**
+   * @param files Collection of ScadDocuFiles that the exporter shall convert
+   * @return String object, which represents the created XML
+   * @throws ParserConfigurationException Indicates a serious configuration error.
+   * @throws TransformerException Specifies an exceptional condition that occurred during the
+   * transformation process.
+   */
   @Override
-  public String getOutput(Collection<ScadDocuFile> files) throws Exception {
+  public String getOutput(Collection<ScadDocuFile> files)
+      throws ParserConfigurationException, TransformerException {
     // root elements
     Document doc = getDoc();
     Element rootElement = doc.createElement("files");
@@ -106,6 +114,12 @@ public class XmlExporter implements Exporter {
     return node;
   }
 
+  /**
+   * Creates a empty Document that provides the base for the XML document
+   *
+   * @return a Document to build the XML File
+   * @throws ParserConfigurationException if the document creation failed
+   */
   private Document getDoc() throws ParserConfigurationException {
     DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
     DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -114,6 +128,14 @@ public class XmlExporter implements Exporter {
     return docBuilder.newDocument();
   }
 
+  /**
+   * Creates a formatted XML string
+   *
+   * @param doc Document to create the XML from
+   * @return beautified XML String
+   * @throws TransformerException if the transformer is configured wrong, or the document is
+   * incorrect
+   */
   private String transform(Document doc) throws TransformerException {
     // write the content into xml format
     TransformerFactory transformerFactory = TransformerFactory.newInstance();
