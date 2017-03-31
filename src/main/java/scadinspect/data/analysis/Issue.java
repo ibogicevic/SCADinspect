@@ -62,8 +62,9 @@ public class Issue {
         return codeSnippet;
     }
 
-    public void setDescription(String description) {
-      this.description = description;
+    /* Set code snippet after issue is instantiated */
+    public void setCodeSnippet() {
+
     }
 
     /* Set code snippet after issue is instantiated */
