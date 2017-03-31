@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,7 +58,7 @@ class FileExportTest {
     modules.add(wheel);
     modules.add(motor);
 
-    file = new ScadDocuFile(null, modules);
+    file = new ScadDocuFile(Paths.get("testPath"), modules);
   }
 
   /**
@@ -107,8 +108,8 @@ class FileExportTest {
 
     exportedFile.delete();
 
-    assertEquals(new String(sample).replaceAll("\\r\\n?", "\n"),
-        new String(exported).replaceAll("\\r\\n?", "\n"));
+    assertEquals(new String(sample).replaceAll("\\r?\\n", "\n"),
+        new String(exported).replaceAll("\\r?\\n", "\n"));
   }
 
   /**
