@@ -21,7 +21,7 @@ public class IssueList {
 
   //TableColumn issuesCol = new TableColumn("issues");
   TableColumn resourcesCol = new TableColumn("resources");
-  //TableColumn typeCol = new TableColumn("type");
+  TableColumn typeCol = new TableColumn("type");
   TableColumn lineNumberCol = new TableColumn("Line number");
   TableColumn issueIdentifierCol = new TableColumn("Identifier");
   TableColumn descriptionCol = new TableColumn("Description");
@@ -46,6 +46,10 @@ public class IssueList {
     );
     */
 
+    typeCol.setCellValueFactory(
+            new PropertyValueFactory<Issue, String>("type")
+    );
+
     lineNumberCol.setCellValueFactory(
         new PropertyValueFactory<Issue, Integer>("lineNumber")
     );
@@ -67,7 +71,7 @@ public class IssueList {
     );
 
     issueList.setItems(issueData);
-    issueList.getColumns().addAll(issueIdentifierCol, descriptionCol, codeSnippedCol, resourcesCol, lineNumberCol);
+    issueList.getColumns().addAll(typeCol, issueIdentifierCol, descriptionCol, codeSnippedCol, resourcesCol, lineNumberCol);
 
     return issueList;
   }

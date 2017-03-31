@@ -67,7 +67,7 @@ public class Main extends Application {
     // remember stage for subwindows
     private Stage primaryStage;
 
-    public Stage getPrimaryStage() {
+    public Stage getPrimaryStage() {;
         return this.primaryStage;
     }
     

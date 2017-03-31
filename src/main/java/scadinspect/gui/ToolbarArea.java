@@ -1,7 +1,9 @@
 package scadinspect.gui;
 
+import com.sun.org.apache.bcel.internal.classfile.Code;
 import java.io.InputStream;
 
+import scadinspect.control.CodeAnalyzer;
 import scadinspect.control.ProjectHandling;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
@@ -71,7 +73,10 @@ public class ToolbarArea extends ToolBar {
         // status of buttons
         setButtonsDisabled(true);
         // actionlisteners
-        openProjectFileButton.setOnAction(e -> projectHandler.openProjectFile());
+        openProjectFileButton.setOnAction(e -> {
+            projectHandler.openProjectFile();
+            CodeAnalyzer.refresh();
+        });
         openProjectFolderButton.setOnAction(e -> projectHandler.openProjectFolder());
         closeProjectButton.setOnAction(e -> projectHandler.closeProject());
         refreshButton.setOnAction(e -> Main.getInstance().statusArea.simulateProgress());
