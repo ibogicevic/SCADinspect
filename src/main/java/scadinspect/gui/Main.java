@@ -50,17 +50,10 @@ public class Main extends Application {
 
     // gui areas
     public ToolbarArea toolbarArea = new ToolbarArea();
-    public ToolbarArea helpToolbarArea = new ToolbarArea();
-    //public ExplorerArea explorerArea = new ExplorerArea();
     public TabArea tabArea = new TabArea();
-    public TabArea helpTabArea = new TabArea();
-    // public InspectorArea inspectorArea = new InspectorArea();
-    // public MessagesArea messagesArea = new MessagesArea();
     public StatusArea statusArea = new StatusArea();
-    public StatusArea helpStatusArea = new StatusArea();
 
     public BottomArea bottomArea = new BottomArea();
-    public BottomArea helpBottomArea = new BottomArea();
 
     /**
      * root path to current open project, null if no project open
@@ -68,7 +61,6 @@ public class Main extends Application {
     public String currentProject = null;
 
     // remember stage for subwindows
-    private BorderPane mainPane;
     private StackPane mainStack;
     public StackPane greyStack;
     public GreyPane helpPane;
