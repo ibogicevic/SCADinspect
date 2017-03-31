@@ -14,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import scadinspect.control.ProjectHandling;
 
 public class AboutDialog {
 	
@@ -21,6 +22,7 @@ public class AboutDialog {
 	 * Application startup function
 	 */
 	public static void openDialog(){
+	    ProjectHandling.showModal();
 		Dialog<Boolean> dialog = new Dialog<>();
         dialog.setTitle("About");
         dialog.setHeaderText("SCADinspect - Version x.xx");
@@ -56,6 +58,7 @@ public class AboutDialog {
         
         dialog.getDialogPane().setContent(grid);
         dialog.showAndWait();
+        ProjectHandling.hideModel();
         
         
 	}
