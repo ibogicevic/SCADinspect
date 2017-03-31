@@ -1,6 +1,6 @@
 package scadinspect.gui;
 
-import data.scaddoc.Documentation;
+import scadinspect.data.scaddoc.Documentation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;

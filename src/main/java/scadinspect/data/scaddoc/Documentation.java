@@ -1,4 +1,4 @@
-package data.scaddoc;
+package scadinspect.data.scaddoc;
 
 import javax.swing.text.Document;
 import java.util.ArrayList;
