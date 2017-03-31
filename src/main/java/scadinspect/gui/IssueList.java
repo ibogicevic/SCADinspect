@@ -7,6 +7,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import scadinspect.data.analysis.Issue;
+import scadinspect.data.analysis.Issue.issueType;
 
 /**
  * Created by halecket on 17.03.2017.
@@ -30,7 +31,7 @@ public class IssueList {
     ArrayList<Issue> issues = new ArrayList<>();
 
     for(int i = 0; i < 10; i++){
-      issues.add(i, new Issue(true, "example.scad"+i,15+(i*2), "randomIdentifier"+i, "description"+i,"console.log(\"error\")"+i
+      issues.add(i, new Issue(Issue.issueType.ERROR, "example.scad"+i,15+(i*2), "randomIdentifier"+i, "description"+i,"console.log(\"error\")"+i
       ));
     }
 

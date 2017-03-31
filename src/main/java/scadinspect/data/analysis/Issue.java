@@ -5,24 +5,29 @@ package scadinspect.data.analysis;
  * @author Tim Walter
  */
 public class Issue {
-    private boolean isError;
+
+    public enum issueType {
+        ERROR, WARNING, INFO
+    }
+
+    private issueType type;
     private String sourceFile;
     private int lineNumber;
-    private String issueIdentifier;
+    private String issueIdentifier;  // Maybe change this to enum
     private String description;
     private String codeSnippet;
 
     /**
      * Constructor for found issues
-     * @param isError Bool value if it is a error, if not -> warning
+     * @param type Type of the issue
      * @param sourceFile Path to Source File
      * @param lineNumber Number of Line of Issue in SCAD File
      * @param issueIdentifier Name or Identifier for issue
      * @param description Short Description for issue
      * @param codeSnippet Snippet of Code in Line
      */
-    public Issue (boolean isError, String sourceFile, int lineNumber, String issueIdentifier,String description, String codeSnippet) {
-        this.isError = isError;
+    public Issue (issueType type, String sourceFile, int lineNumber, String issueIdentifier,String description, String codeSnippet) {
+        this.type = type;
         this.sourceFile = sourceFile;
         this.lineNumber = lineNumber;
         this.issueIdentifier = issueIdentifier;
@@ -33,8 +38,8 @@ public class Issue {
     /*
      * Getters for the instance
      */
-    public boolean getIsError () {
-        return isError;
+    public String getType() {
+        return type.toString();
     }
 
     public String getSourceFile() {
@@ -59,5 +64,22 @@ public class Issue {
 
     public void setDescription(String description) {
       this.description = description;
+    }
+
+    /* Set code snippet after issue is instantiated */
+    public void setCodeSnippet() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Issue{" +
+            "type=" + type +
+            ", sourceFile='" + sourceFile + '\'' +
+            ", lineNumber=" + lineNumber +
+            ", issueIdentifier='" + issueIdentifier + '\'' +
+            ", description='" + description + '\'' +
+            ", codeSnippet='" + codeSnippet + '\'' +
+            '}';
     }
 }
