@@ -12,6 +12,8 @@ import scadinspect.data.scaddoc.properties.Property;
  */
 public class CsvExporter implements Exporter {
 
+  String lineSeparator = System.lineSeparator();
+
   /**
    * @param file a ScadDocuFile containing a list of modules that are supposed to be exported
    * @return returns the CSV document as String that can be written to a file or used further
@@ -24,13 +26,17 @@ public class CsvExporter implements Exporter {
 
     StringBuilder csvExport = new StringBuilder();
     csvExport.append(file.getPath().toString());
-    csvExport.append("\n");
+    csvExport.append(lineSeparator);
+    if (keys.size() == 0) {
+      return csvExport.toString();
+    }
     // Headers
     for (String key : keys) {
       csvExport.append(key);
       csvExport.append(",");
     }
-    csvExport.append("\n");
+    csvExport.setLength(csvExport.length() - 1);
+    csvExport.append(lineSeparator);
 
     for (Module module : modules) {
       Collection<Property> properties = module.getProperties();
@@ -44,13 +50,15 @@ public class CsvExporter implements Exporter {
         }
         csvExport.append(",");
       }
-      csvExport.append("\n");
+      csvExport.setLength(csvExport.length() - 1);
+      csvExport.append(lineSeparator);
     }
     return csvExport.toString();
   }
 
   /**
-   * @param files multiple ScadDocuFile containing a list of modules that are supposed to be exported
+   * @param files multiple ScadDocuFile containing a list of modules that are supposed to be
+   * exported
    * @return returns the CSV document as String that can be written to a file or used further
    * internally
    */
@@ -59,8 +67,9 @@ public class CsvExporter implements Exporter {
     StringBuilder csvExport = new StringBuilder();
     for (ScadDocuFile docuFile : files) {
       csvExport.append(getOutput(docuFile));
-      csvExport.append("\n");
+      csvExport.append(lineSeparator);
     }
+    csvExport.setLength(csvExport.length() - 2);
     return csvExport.toString();
   }
 }
