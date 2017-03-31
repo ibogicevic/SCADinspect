@@ -1,5 +1,8 @@
 package scadinspect.data.scaddoc;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,9 +36,9 @@ public class ScadDocuFile {
    *
    * @param path The path of the parsed file
    */
-  public ScadDocuFile(Path path) {
+  public ScadDocuFile(Path path) throws IOException {
     this.path = path;
-    this.modules = new ArrayList<>();
+    this.modules = new PropertyParser(new String(Files.readAllBytes(path))).parseModules();
   }
 
   /**
