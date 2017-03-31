@@ -37,7 +37,7 @@ public class Main extends Application {
     /**
      * Ratio between window height and screen height *
      */
-    private static final double WINDOW_HEIGHT = 0.25;
+    private static final double WINDOW_HEIGHT = 0.5;
 
     /**
      * Pre-configured logger that outputs to  *
@@ -131,7 +131,7 @@ public class Main extends Application {
 
         // show main pane
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        Scene scene = new Scene(mainStack, screenBounds.getWidth(), WINDOW_HEIGHT * screenBounds.getHeight(), true);
+        Scene scene = new Scene(mainStack, screenBounds.getWidth()*0.5, WINDOW_HEIGHT * screenBounds.getHeight(), true);
         primaryStage.setTitle(APPNAME);
         primaryStage.setScene(scene);
         primaryStage.setY(0.7 * screenBounds.getHeight());

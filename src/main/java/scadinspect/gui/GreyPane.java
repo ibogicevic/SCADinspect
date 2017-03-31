@@ -2,10 +2,7 @@ package scadinspect.gui;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -30,7 +27,7 @@ public class GreyPane extends BorderPane{
         //set transparency and colour for the pane
         this.setVisible(false);
         this.setStyle(
-                "-fx-background-color: rgba(105, 105, 105, 0.9);"
+                "-fx-background-color: rgba(105, 105, 105, 0.67);"
         );
 
         // if isTutorial true, display help-modal
@@ -45,28 +42,49 @@ public class GreyPane extends BorderPane{
 
             //initiate TabArea
             TabArea tabArea = new TabArea();
+            tabArea.setStyle(
+                    "-fx-background-color: rgba(105, 105, 105, 0.0);"
+            );
 
+            //initiate navigation bar
+            Pane rightSeparator = new Pane();
+            Pane leftSeparator = new Pane();
+            Pane bottomSeparator = new Pane();
+            HBox.setHgrow(rightSeparator, Priority.ALWAYS);
+            HBox.setHgrow(leftSeparator, Priority.ALWAYS);
+            HBox.setHgrow(bottomSeparator, Priority.ALWAYS);
+            HBox navBar = new HBox(leftSeparator, prev, exit,  next, rightSeparator);
+
+            //initiate Center
+
+            BorderPane centerPane = new BorderPane();
+            this.setCenter(centerPane);
             //initiate bottomArea; transparency
             bottomArea.setStyle(
                     "-fx-background-color: rgba(105, 105, 105, 0.0);"
             );
 
             // initiate Message Area
-            this.setCenter(messageLabel);
+            //this.setCenter(messageLabel);
             messageLabel.setMaxWidth(400.0);
             messageLabel.setWrapText(true);
             messageLabel.setTextAlignment(TextAlignment.CENTER);
             messageLabel.setFont(Font.loadFont(getClass().getResourceAsStream("/resources/ComicSans.ttf"), 20));
             messageLabel.setTextFill(Color.WHITE);
+            //centerPane.setTop(tabArea);
+            centerPane.setCenter(messageLabel);
+            centerPane.setBottom(navBar);
+
+
+            //initiate separator panes
+
+
 
             //initiate BottomPane
             bottomPane = new BorderPane();
-            Pane separatorPane = new Pane();
-            HBox.setHgrow(separatorPane, Priority.ALWAYS);
-            HBox switchBox = new HBox(prev, next, separatorPane, exit);
-
+            HBox bottomBar = new HBox(bottomSeparator, exit);
             bottomPane.setCenter(bottomArea);
-            bottomPane.setBottom(switchBox);
+            bottomPane.setBottom(bottomBar);
             this.setBottom(bottomPane);
 
             // set button actions
