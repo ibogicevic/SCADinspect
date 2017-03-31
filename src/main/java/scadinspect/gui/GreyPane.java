@@ -6,12 +6,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Arc;
+
 import javafx.scene.text.TextAlignment;
 
 /**
  * Created by maikbaumgartner on 30.03.17.
+ * This class supports the application by a grey pane and a help modal
  */
 public class GreyPane extends BorderPane{
 
@@ -31,7 +31,7 @@ public class GreyPane extends BorderPane{
                 "-fx-background-color: rgba(105, 105, 105, 0.9);"
         );
 
-        // if isTutorial true, display with help
+        // if isTutorial true, display help-modal
         if (isTutorial == true) {
 
             //initiate ToolbarArea; transparency
