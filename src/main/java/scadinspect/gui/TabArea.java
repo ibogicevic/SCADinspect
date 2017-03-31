@@ -12,10 +12,16 @@ import javafx.scene.control.TableView;
  */
 public class TabArea extends TabPane {
 
+
+
   public IssueList issueList = new IssueList();
   DocumentationList documentationList = new DocumentationList();
 
   public TabArea() {
+
+    // Tabs can't be closed
+    this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+
     TableView issue = generateIssueTable(issueList);
     TableView documentations = generateDocTable(documentationList);
 
@@ -46,8 +52,3 @@ public class TabArea extends TabPane {
   }
 }
 
-    // Tabs can't be closed
-    this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-
-      TableView issue = generateIssueTable(issueList);
-    TableView documentations = generateDocTable(documentationList);
