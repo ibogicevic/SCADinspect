@@ -109,8 +109,6 @@ public class ToolbarArea extends ToolBar {
         helpLink.setOnAction(e -> ProjectHandling.showModal());
         aboutLink.setOnAction(e -> AboutDialog.openDialog());
         settingsButton.setOnAction(e -> SettingsDialog.openDialog());
-        exportButton.setOnAction(e -> ExportDialog.openDialog());
-        exitButton.setOnAction(e -> Platform.exit());
 
         // add all buttons
         this.getItems().add(openProjectButton);

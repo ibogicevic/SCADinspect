@@ -56,6 +56,7 @@ public class Main extends Application {
     public ToolbarArea toolbarArea = new ToolbarArea();
     public TabArea tabArea = new TabArea();
     public StatusArea statusArea = new StatusArea();
+    public BottomArea bottomArea = new BottomArea();
 
     // list of open scad-files
     private List<File> fileList = new ArrayList<>();
@@ -70,6 +71,7 @@ public class Main extends Application {
     private StackPane mainStack;
     public GreyPane greyPane;
     private Stage primaryStage;
+
 
     public Stage getPrimaryStage() {
         return this.primaryStage;
