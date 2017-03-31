@@ -33,11 +33,10 @@ public class ToolbarArea extends ToolBar {
      *
      * @param value true if buttons shall be disabled (no open project)
      */
-    public void disableButtons(boolean value) {
+    public void setButtonsDisabled(boolean value) {
         closeProjectButton.setDisable(value);
         refreshButton.setDisable(value);
         exportButton.setDisable(value);
-        settingsButton.setDisable(value);
     }
 
     /**
@@ -58,7 +57,7 @@ public class ToolbarArea extends ToolBar {
     public ToolbarArea() {
         // instanciate classes
         ProjectHandling projectHandler = new ProjectHandling();
-      
+
         // set button icons
         openProjectFileButton.setGraphic(loadIcon("open-folder-outline"));
         openProjectFolderButton.setGraphic(loadIcon("open-folder-outline"));
@@ -70,7 +69,7 @@ public class ToolbarArea extends ToolBar {
         aboutButton.setGraphic(loadIcon("information-symbol"));
         exitButton.setGraphic(loadIcon("sign-out-option"));
         // status of buttons
-        disableButtons(true);
+        setButtonsDisabled(true);
         // actionlisteners
         openProjectFileButton.setOnAction(e -> projectHandler.openProjectFile());
         openProjectFolderButton.setOnAction(e -> projectHandler.openProjectFolder());
@@ -78,7 +77,9 @@ public class ToolbarArea extends ToolBar {
         refreshButton.setOnAction(e -> Main.getInstance().statusArea.simulateProgress());
         aboutButton.setOnAction(e -> AboutDialog.openDialog());
         settingsButton.setOnAction(e -> SettingsDialog.openDialog());
+        exportButton.setOnAction(e -> ExportDialog.openDialog());
         exitButton.setOnAction(e -> Platform.exit());
+      
         // add all buttons
         this.getItems().add(openProjectFileButton);
         this.getItems().add(openProjectFolderButton);

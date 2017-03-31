@@ -41,7 +41,7 @@ public class ProjectHandling {
    * Opens the dialog to choose a file
    */
   public void openProjectFile() {
-    File projectFile;
+	File projectFile;
     projectFile = fileChooser.showOpenDialog(Main.getInstance().getPrimaryStage());
 
     /**
@@ -59,7 +59,7 @@ public class ProjectHandling {
    * Opens the dialog to choose a directory
    */
   public void openProjectFolder() {
-    File projectDirectory;
+	File projectDirectory;
     projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
 
     /**
@@ -131,6 +131,7 @@ public class ProjectHandling {
    */
   public void closeProject() {
     Main.getInstance().toolbarArea.setButtonsDisabled(true);
+    
     if (Main.getInstance().isProjectOpen()) {
       Main.getInstance().setCurrentProject("");
       Main.getInstance().getPrimaryStage().setTitle(Main.APPNAME);
