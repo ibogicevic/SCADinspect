@@ -1,4 +1,4 @@
-package scadinspect.data.scaddoc.export.format;
+package scadinspect.data.scaddoc;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
@@ -15,14 +14,14 @@ import scadinspect.data.scaddoc.properties.SingleProperty;
 /**
  * @author simon, desyon on 3/17/17.
  */
-class JsonExporterTest {
+class JsonExportTest {
 
-  private JsonExporter exporter;
+  private JsonExport exporter;
   private List<Module> modules;
 
   @BeforeEach
   void instantiate() {
-    exporter = new JsonExporter();
+    exporter = new JsonExport();
     modules = new LinkedList<>();
   }
 
@@ -33,7 +32,7 @@ class JsonExporterTest {
    */
   @Test
   void emptyList() {
-    assertEquals("[]", exporter.getOutput(modules));
+    assertEquals("[]", exporter.getJson(modules));
   }
 
   /**
@@ -44,7 +43,7 @@ class JsonExporterTest {
     Module singleProperty = new Module();
     singleProperty.addProperty(new SingleProperty<>("key", 1));
     modules.add(singleProperty);
-    assertEquals("[{\"key\": 1}]", exporter.getOutput(modules));
+    assertEquals("[{\"key\": 1}]", exporter.getJson(modules));
   }
 
   /**
@@ -55,7 +54,7 @@ class JsonExporterTest {
     Module singleProperty = new Module();
     singleProperty.addProperty(new SingleProperty<>("key", 0.1));
     modules.add(singleProperty);
-    assertEquals("[{\"key\": 0.1}]", exporter.getOutput(modules));
+    assertEquals("[{\"key\": 0.1}]", exporter.getJson(modules));
   }
 
   /**
@@ -66,7 +65,7 @@ class JsonExporterTest {
     Module singleProperty = new Module();
     singleProperty.addProperty(new SingleProperty<>("key", "value"));
     modules.add(singleProperty);
-    assertEquals("[{\"key\": \"value\"}]", exporter.getOutput(modules));
+    assertEquals("[{\"key\": \"value\"}]", exporter.getJson(modules));
   }
 
   /**
@@ -81,7 +80,7 @@ class JsonExporterTest {
         + "  1,\n"
         + "  2,\n"
         + "  3\n"
-        + "]}]", exporter.getOutput(modules));
+        + "]}]", exporter.getJson(modules));
   }
 
   /**
@@ -97,7 +96,7 @@ class JsonExporterTest {
         + "  1.1,\n"
         + "  2,\n"
         + "  4\n"
-        + "]}]", exporter.getOutput(modules));
+        + "]}]", exporter.getJson(modules));
   }
 
   /**
@@ -112,7 +111,7 @@ class JsonExporterTest {
         + "  \"a\",\n"
         + "  \"b\",\n"
         + "  \"c\"\n"
-        + "]}]", exporter.getOutput(modules));
+        + "]}]", exporter.getJson(modules));
   }
 
   /**
@@ -126,7 +125,7 @@ class JsonExporterTest {
     assertEquals("[{\"price\": {\n"
         + "  \"metric\": \"EUR\",\n"
         + "  \"value\": 12\n"
-        + "}}]", exporter.getOutput(modules));
+        + "}}]", exporter.getJson(modules));
   }
 
   /**
@@ -140,7 +139,7 @@ class JsonExporterTest {
     assertEquals("[{\"price\": {\n"
         + "  \"metric\": \"EUR\",\n"
         + "  \"value\": 12.3\n"
-        + "}}]", exporter.getOutput(modules));
+        + "}}]", exporter.getJson(modules));
   }
 
   /**
@@ -155,7 +154,7 @@ class JsonExporterTest {
             + "  \"metric\": \"kg\",\n"
             + "  \"value\": \"1200\"\n"
             + "}}]",
-        exporter.getOutput(modules));
+        exporter.getJson(modules));
   }
 
   /**
@@ -215,6 +214,6 @@ class JsonExporterTest {
             + "    \"url\": \"https://example.com\"\n"
             + "  }\n"
             + "]",
-        exporter.getOutput(modules));
+        exporter.getJson(modules));
   }
 }

@@ -1,7 +1,3 @@
-### Log files ###
-log_*.txt
-*.log
-
 ### Open Scad ###
 
 .DS_Store

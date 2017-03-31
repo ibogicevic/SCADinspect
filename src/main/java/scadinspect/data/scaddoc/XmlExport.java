@@ -1,4 +1,4 @@
-package scadinspect.data.scaddoc.export.format;
+package scadinspect.data.scaddoc;
 
 /**
  * @author eric on 24.03.17.
@@ -17,12 +17,10 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import scadinspect.data.scaddoc.Module;
-import scadinspect.data.scaddoc.error.FileExportException;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.Property;
 
-public class XmlExporter implements Exporter {
+public class XmlExport {
 
   /**
    * @param modules Collection of Module objects, which will be recreated as XML
@@ -31,40 +29,36 @@ public class XmlExporter implements Exporter {
    * @throws TransformerException Specifies an exceptional condition that occurred during the
    * transformation process.
    */
-  @Override
-  public String getOutput(Collection<Module> modules)
-      throws FileExportException {
-    try {
-      DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-      DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+  public String getXml(Collection<Module> modules)
+      throws ParserConfigurationException, TransformerException {
 
-      // root elements
-      Document doc = docBuilder.newDocument();
-      Element rootElement = doc.createElement("modules");
-      doc.appendChild(rootElement);
+    DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
-      for (Module module : modules) {
-        // Create module node for each module present and append it
-        rootElement.appendChild(createModuleNode(module, doc));
-      }
+    // root elements
+    Document doc = docBuilder.newDocument();
+    Element rootElement = doc.createElement("modules");
+    doc.appendChild(rootElement);
 
-      // write the content into xml format
-      TransformerFactory transformerFactory = TransformerFactory.newInstance();
-      Transformer transformer = transformerFactory.newTransformer();
-      transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-      transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-      transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-      DOMSource source = new DOMSource(doc);
-      StringWriter sw = new StringWriter();
-      StreamResult result = new StreamResult(sw);
-      transformer.transform(source, result);
-
-      //return XML String + do some **magic**
-      return sw.getBuffer().toString().replaceAll("((?<=>)\\[)|(](?=<))", "");
-    } catch(TransformerException|ParserConfigurationException e) {
-      FileExportException exportException = new FileExportException(e);
-      throw exportException;
+    for (Module module : modules) {
+      // Create module node for each module present and append it
+      rootElement.appendChild(createModuleNode(module, doc));
     }
+
+    // write the content into xml format
+    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    Transformer transformer = transformerFactory.newTransformer();
+    transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+    DOMSource source = new DOMSource(doc);
+    StringWriter sw = new StringWriter();
+    StreamResult result = new StreamResult(sw);
+    transformer.transform(source, result);
+
+    //return XML String + do some **magic**
+    return sw.getBuffer().toString().replaceAll("((?<=>)\\[)|(](?=<))", "");
+
 
   }
 
