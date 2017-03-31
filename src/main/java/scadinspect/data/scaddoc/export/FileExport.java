@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.util.Collection;
 import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.error.FileExportException;
+import scadinspect.data.scaddoc.export.format.CsvExporter;
 import scadinspect.data.scaddoc.export.format.ExportFormat;
 import scadinspect.data.scaddoc.export.format.Exporter;
 import scadinspect.data.scaddoc.export.format.JsonExporter;
@@ -77,7 +78,7 @@ public class FileExport {
         exporter = null;
         break;
       case CSV:
-        exporter = null;
+        exporter = new CsvExporter();
         break;
       case HTML:
         exporter = null;

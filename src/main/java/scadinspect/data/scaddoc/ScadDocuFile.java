@@ -67,7 +67,7 @@ public class ScadDocuFile {
    * @return all keys available
    */
   public Collection<String> getAllKeys() {
-    Collection<String> keys = new HashSet<>();
+    Collection<String> keys = new ArrayList<>();
     for (Module module : modules) {
       for (Property property : module.getProperties()) {
         if (!keys.contains(property.getKey())) {

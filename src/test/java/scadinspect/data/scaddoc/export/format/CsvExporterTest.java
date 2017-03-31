@@ -68,8 +68,8 @@ class CsvExporterTest {
 
     assertEquals("Testing\n"
             + "part,price,amount,weight,materials,url,\n"
-            + "Wheel,100 EUR,4,12 kg,Rubber:Aluminium,https://example.com,\n"
-            + "Motor, 1000 USD,1,200kg,Steel,https://example.com\n",
+            + "Wheel,100 EUR,4,12 kg,Rubber: Aluminium,https://example.com,\n"
+            + "Motor,1000 USD,1,200 kg,Steel,https://example.com,\n",
         exporter.getOutput(file));
   }
 

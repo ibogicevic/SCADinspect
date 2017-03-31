@@ -2,9 +2,7 @@ package scadinspect.data.scaddoc.export.format;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.Property;
