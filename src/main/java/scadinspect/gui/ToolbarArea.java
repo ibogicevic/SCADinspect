@@ -58,7 +58,7 @@ public class ToolbarArea extends ToolBar {
     public ToolbarArea() {
         // instanciate classes
         ProjectHandling projectHandler = new ProjectHandling();
-      
+
         // set button icons
         openProjectFileButton.setGraphic(loadIcon("open-folder-outline"));
         openProjectFolderButton.setGraphic(loadIcon("open-folder-outline"));
@@ -78,7 +78,9 @@ public class ToolbarArea extends ToolBar {
         refreshButton.setOnAction(e -> Main.getInstance().statusArea.simulateProgress());
         aboutButton.setOnAction(e -> AboutDialog.openDialog());
         settingsButton.setOnAction(e -> SettingsDialog.openDialog());
+        exportButton.setOnAction(e -> ExportDialog.openDialog());
         exitButton.setOnAction(e -> Platform.exit());
+      
         // add all buttons
         this.getItems().add(openProjectFileButton);
         this.getItems().add(openProjectFolderButton);
