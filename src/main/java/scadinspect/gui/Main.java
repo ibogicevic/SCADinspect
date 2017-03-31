@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  * @author ivan
  */
 public class Main extends Application {
-  
+    
     /**
      * Name of the application *
      */

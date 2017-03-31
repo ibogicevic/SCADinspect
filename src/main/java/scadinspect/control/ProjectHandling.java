@@ -2,12 +2,25 @@ package scadinspect.control;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.function.Supplier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
+import javafx.concurrent.Task;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 
 import scadinspect.gui.Main;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import scadinspect.control.io.FileSearchRunnable;
 
 /**
  * 
@@ -24,7 +37,8 @@ public class ProjectHandling {
   // Definiton of the chooser
   private final DirectoryChooser directoryChooser = new DirectoryChooser();
   private final FileChooser fileChooser = new FileChooser();
-
+  private final long FILE_READ_TIMEOUT = 5000;
+  
   // Filter for the chooser
   private final FileChooser.ExtensionFilter extensionFilter =
       new FileChooser.ExtensionFilter("SCAD files", "*.scad");
@@ -69,7 +83,30 @@ public class ProjectHandling {
      */
     if (projectDirectory != null) {
       setProjectPath(projectDirectory);
-      addFilesToList(projectDirectory.getAbsolutePath());
+      Supplier<Boolean> confirmLongRead = () -> {
+          System.out.println("Confirming");
+          try {
+              Task<Boolean> task = new Task<Boolean>() {
+                  @Override
+                  protected Boolean call() throws Exception {
+                      System.out.println("Creating alert");
+                      Alert alert = new Alert(AlertType.CONFIRMATION);
+                      alert.setTitle("Open files");
+                      alert.setHeaderText("File loading taking longer then expected");
+                      alert.setContentText("Do you want to continue?");
+                      Optional<ButtonType> b = alert.showAndWait();
+                      return b.isPresent() && b.get() == ButtonType.OK;
+                  }
+              };
+              Thread t = new Thread(task);
+              t.start();
+              t.join();
+              return task.get();
+          } catch (InterruptedException | ExecutionException ex) {
+              return false;
+          }
+      };
+      addFiles(projectDirectory, confirmLongRead);
     }
   }
 
@@ -82,7 +119,7 @@ public class ProjectHandling {
   private void setProjectPath(File projectPath) {
     closeProject();
     if (projectPath != null) {
-      setCurrentProject(projectPath.getAbsolutePath().toString());
+      setCurrentProject(projectPath.getAbsolutePath());
       Main.getInstance().toolbarArea.setButtonsDisabled(false);
     }
   }
@@ -98,34 +135,60 @@ public class ProjectHandling {
     // remember open project
     Main.getInstance().currentProject = rootPath;
   }
-
+  
   /**
    * Gets the files in the current directory and it subfolders. Also it adds only .scad files to the
    * list
    * 
-   * @param projectDirectory
+   * @param dir
+   * @param onTimeout
    */
-  private void addFilesToList(String projectDirectory) {
-    // Set the current folder
-    File folder = new File(projectDirectory);
-
-    // Loop to add files from folder and subfolders in list
-    for (File file : folder.listFiles()) {
-
-      // If the current file is a scad file add it to the list
-      if (file.isFile() && file.toString().endsWith(".scad")) {
-        Main.getInstance().getFileList().add(file);
-      } else {
-        /**
-         * If the current selected file is a folder, go recursively call the function with the
-         * current subfolder
-         */
-        if (file.isDirectory()) {
-          addFilesToList(file.getAbsolutePath());
-        }
+    private void addFiles(File dir, Supplier<Boolean> onTimeout) {
+      try {
+          Collection<File> files = getFiles(dir, f -> f.getName().toLowerCase().endsWith(".scad"), true, FILE_READ_TIMEOUT, onTimeout);
+          Main.getInstance().getFileList().addAll(files);
+      } catch (IOException ex) {
+          Logger.getLogger(ProjectHandling.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
-  }
+  
+    private Collection<File> getFiles(File dir, FileFilter filter, boolean recursive, long timeout, Supplier<Boolean> onTimeout) throws IOException{
+        try {
+            FileSearchRunnable fsr = new FileSearchRunnable(dir, filter, recursive);
+            Thread t = new Thread(fsr);
+            t.start();
+            Thread watchdog = null;
+            if(timeout > 0) {
+                watchdog = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(timeout);
+                            if(fsr.isRunning()) {
+                                fsr.pause();
+                                boolean resume = onTimeout.get();
+                                if(resume) {
+                                    fsr.resume();
+                                }
+                                else {
+                                    fsr.terminate();
+                                }
+                            }
+                        } catch (InterruptedException ex) {}
+                    }
+                };
+                watchdog.start();
+            }
+            t.join();
+            if(watchdog != null) {
+                watchdog.interrupt();
+            }
+            if(fsr.hasEndedNaturally()) {
+                return fsr.get();
+            }
+        } catch (InterruptedException ex) {}
+        throw new IOException("Timeout exceeded during file read");
+    }
 
   /**
    * Closes the current project and removes the path from the title. Also it deletes the content of
