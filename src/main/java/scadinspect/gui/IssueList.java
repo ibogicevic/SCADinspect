@@ -30,8 +30,9 @@ public class IssueList {
     ArrayList<Issue> issues = new ArrayList<>();
 
     for(int i = 0; i < 10; i++){
-      issues.add(i, new Issue(Issue.issueType.ERROR, "example.scad"+i,15+(i*2), "randomIdentifier"+i, "description"+i,"console.log(\"error\")"+i
-      ));
+        Issue curr = new Issue(Issue.issueType.ERROR, "example.scad"+i, 1, "randomIdentifier"+i, "description"+i);
+        curr.setCodeSnippet();
+        issues.add(i, curr);
     }
 
     addDataToTable(issues);
