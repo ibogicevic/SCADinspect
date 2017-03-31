@@ -77,7 +77,7 @@ public class SettingsDialog {
                 try {
                     Level logLevel = Level.parse((String) val);
                     userPrefs.put("LOG_LEVEL", logLevel.getName());
-                    Main.getInstance().getLogHandler().setLogLevel(logLevel);
+                    Main.getInstance().getLogHandler().setLevel(logLevel);
                 } catch(Exception e) {
                     Main.logger.log(Level.WARNING, "Unable to set log level to " + val + " .", e);
                 }
