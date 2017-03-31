@@ -1,9 +1,0 @@
-** Brainstorming about the ToDos ***
-(unrevised, unreviewed, unsorted -> will be refined later on)
-
-- Only english gui, but all language string externalized
-- Quality assurance: Review between the two subteams at the end of each sprint
-- Unittesting: automated JUnit-Tests with code coverage measurement
-- Every issue should have a single test case
-- Define file format for configuration
-- Custom Rules (Format/How do other tools do this?)
