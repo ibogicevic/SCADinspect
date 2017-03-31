@@ -20,7 +20,7 @@ public class SettingsDialog {
     public static void openDialog(){
 
         Main.getInstance().greyStack.toFront();
-        Main.getInstance().greyPane.toFront();
+        Main.getInstance().greyPane.modalToFront(true);
         Main.getInstance().greyStack.setVisible(true);
 
         Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
