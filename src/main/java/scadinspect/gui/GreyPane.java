@@ -24,6 +24,7 @@ public class GreyPane extends BorderPane{
     private Hyperlink exit = new Hyperlink("exit");
     private Label messageLabel = new Label();
     private HBox navBar;
+    private Label stepLabel = new Label();
 
     public GreyPane(Boolean isTutorial) {
         //set transparency and colour for the pane
@@ -61,6 +62,10 @@ public class GreyPane extends BorderPane{
             exit.setStyle("-fx-underline: true;");
 
 
+            //step counter
+            stepLabel.setTextAlignment(TextAlignment.CENTER);
+            stepLabel.setFont(Font.loadFont(getClass().getResourceAsStream("/resources/ComicSans.ttf"), 20));
+            stepLabel.setTextFill(Color.WHITE);
 
             //initiate navigation bar
             Pane rightSeparator = new Pane();
@@ -69,7 +74,7 @@ public class GreyPane extends BorderPane{
             HBox.setHgrow(rightSeparator, Priority.ALWAYS);
             HBox.setHgrow(leftSeparator, Priority.ALWAYS);
             HBox.setHgrow(bottomSeparator, Priority.ALWAYS);
-            navBar = new HBox(leftSeparator, prev,  next, rightSeparator);
+            navBar = new HBox(leftSeparator, prev,  stepLabel, next, rightSeparator);
 
             //initiate Center
             BorderPane centerPane = new BorderPane();
@@ -142,8 +147,9 @@ public class GreyPane extends BorderPane{
                 exit.setVisible(false);
                 navBar.getChildren().remove(exit);
                 navBar.getChildren().remove(next);
-                navBar.getChildren().add(2, next);
+                navBar.getChildren().add(3, next);
                 messageLabel.setText("Press \"Open File\" to open an new ScadFile or choose \"Open Folder\" from the dropdown menu to open a folder.");
+                stepLabel.setText(step+1 + " of 5");
                 break;
             }
             case 1: {
@@ -151,12 +157,14 @@ public class GreyPane extends BorderPane{
                 prev.setVisible(true);
                 messageLabel.setText("Press \"Settings\" to access the settings. For example you can enable auto refresh or set the logging level.");
                 bottomArea.switchButtons(0);
+                stepLabel.setText(step+1 + " of 5");
                 break;
             }
             case 2: {
                 toolbarArea.switchButtons(2);
                 messageLabel.setText("Press \"Refresh\" to refresh the files.");
                 bottomArea.switchButtons(1);
+                stepLabel.setText(step+1 + " of 5");
                 break;
             }
             case 3: {
@@ -167,7 +175,8 @@ public class GreyPane extends BorderPane{
                 exit.setVisible(false);
                 navBar.getChildren().remove(next);
                 navBar.getChildren().remove(exit);
-                navBar.getChildren().add(2, next);
+                navBar.getChildren().add(3, next);
+                stepLabel.setText(step+1 + " of 5");
                 break;
             }
             case 4: {
@@ -177,7 +186,8 @@ public class GreyPane extends BorderPane{
                 exit.setVisible(true);
                 navBar.getChildren().remove(exit);
                 navBar.getChildren().remove(next);
-                navBar.getChildren().add(2, exit);
+                navBar.getChildren().add(3, exit);
+                stepLabel.setText(step+1 + " of 5");
                 break;
             }
         }
