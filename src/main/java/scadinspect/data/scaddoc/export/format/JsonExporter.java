@@ -4,6 +4,7 @@ import java.util.Collection;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import scadinspect.data.scaddoc.Module;
+import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.Property;
 import scadinspect.data.scaddoc.properties.helper.Pair;
 
@@ -14,14 +15,13 @@ import scadinspect.data.scaddoc.properties.helper.Pair;
 public class JsonExporter implements Exporter {
 
   /**
-   * @param modules a List of all modules that are supposed to be exported. This list will be
-   * converted into a JSON document as specified.
+   * @param file a ScadDocuFile containing a list of modules that are supposed to be exported
    * @return returns the JSON document as String that can be written to a file or used further
    * internally
    */
   @Override
-  public String getOutput(Collection<Module> modules) {
-    return getJsonArray(modules).toString(2);
+  public String getOutput(ScadDocuFile file) {
+    return getJsonArray(file.getModules()).toString(2);
   }
 
   /**
