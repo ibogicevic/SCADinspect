@@ -63,6 +63,12 @@ public class XmlExporter implements Exporter {
     return sw.getBuffer().toString().replaceAll("((?<=>)\\[)|(](?=<))", "");
   }
 
+  @Override
+  public String getOutput(Collection<ScadDocuFile> files) throws Exception {
+    // TODO Implement
+    return null;
+  }
+
   /**
    * @param module Module object, which needs to be recreated as a DOM node
    * @param document Document object, which creates the necessary nodes

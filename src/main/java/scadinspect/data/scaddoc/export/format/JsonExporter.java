@@ -24,6 +24,12 @@ public class JsonExporter implements Exporter {
     return getJsonArray(file.getModules()).toString(2);
   }
 
+  @Override
+  public String getOutput(Collection<ScadDocuFile> files) throws Exception {
+    // TODO Implement
+    return null;
+  }
+
   /**
    * Creates a JSON Node from a given module with all properties as sub-nodes
    *
