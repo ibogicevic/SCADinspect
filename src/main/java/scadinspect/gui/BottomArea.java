@@ -85,6 +85,14 @@ public class BottomArea extends ToolBar{
                 separator.setVisible(false);
                 exportButton.setVisible(false);
                 closeProjectButton.setVisible(false);
+
+                refreshButton.setDisable(false);
+                exportButton.setDisable(false);
+                closeProjectButton.setDisable(false);
+
+                refreshButton.setMouseTransparent(true);
+                exportButton.setMouseTransparent(true);
+                closeProjectButton.setMouseTransparent(true);
                 break;
             }
             case 1: {

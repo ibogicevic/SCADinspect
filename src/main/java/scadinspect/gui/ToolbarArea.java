@@ -146,8 +146,8 @@ public class ToolbarArea extends ToolBar {
                 openProjectButton.setVisible(true);
 
                 //disable all buttons
-                openProjectButton.setDisable(true);
-                settingsButton.setDisable(true);
+                openProjectButton.setMouseTransparent(true);
+                settingsButton.setMouseTransparent(true);
                 break;
             }
             case 1: {

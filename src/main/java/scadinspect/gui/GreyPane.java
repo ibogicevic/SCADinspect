@@ -56,7 +56,7 @@ public class GreyPane extends BorderPane{
             messageLabel.setMaxWidth(400.0);
             messageLabel.setWrapText(true);
             messageLabel.setTextAlignment(TextAlignment.CENTER);
-            messageLabel.setFont(Font.loadFont("file:resources/ComicSans.ttf", 20));
+            messageLabel.setFont(Font.loadFont(getClass().getResourceAsStream("/resources/ComicSans.ttf"), 20));
             messageLabel.setTextFill(Color.WHITE);
 
             //initiate BottomPane
