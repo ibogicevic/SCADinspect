@@ -26,8 +26,13 @@ public class JsonExporter implements Exporter {
 
   @Override
   public String getOutput(Collection<ScadDocuFile> files) throws Exception {
-    // TODO Implement
-    return null;
+    JSONArray result = new JSONArray();
+    for (ScadDocuFile docuFile : files) {
+      JSONObject file = new JSONObject();
+      file.accumulate(docuFile.getPath().toString(),getJsonArray(docuFile.getModules()));
+      result.put(file);
+    }
+    return result.toString(2);
   }
 
   /**
