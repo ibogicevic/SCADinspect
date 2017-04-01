@@ -26,6 +26,9 @@ import scadinspect.data.scaddoc.properties.Property;
 public class XmlExporter implements Exporter {
 
   /**
+   * Creates and returns a XML String from the given ScadDocuFile according to the specified
+   * example
+   *
    * @param file ScadDocuFile that the Export shall be exported for
    * @return String object, which represents the created XML
    * @throws ParserConfigurationException Indicates a serious configuration error.
@@ -49,6 +52,9 @@ public class XmlExporter implements Exporter {
   }
 
   /**
+   * Creates and returns a XML String from the given ScadDocuFiles according to the specified
+   * example
+   *
    * @param files Collection of ScadDocuFiles that the exporter shall convert
    * @return String object, which represents the created XML
    * @throws ParserConfigurationException Indicates a serious configuration error.
@@ -76,6 +82,8 @@ public class XmlExporter implements Exporter {
   }
 
   /**
+   * Creates the XML node for one module
+   *
    * @param module Module object, which needs to be recreated as a DOM node
    * @param document Document object, which creates the necessary nodes
    * @return Element object, which will be created from the module parameter
@@ -137,15 +145,22 @@ public class XmlExporter implements Exporter {
    * incorrect
    */
   private String transform(Document doc) throws TransformerException {
-    // write the content into xml format
+    // create transformer for beautifying XML
     TransformerFactory transformerFactory = TransformerFactory.newInstance();
     Transformer transformer = transformerFactory.newTransformer();
+
+    //configure the transformer
     transformer.setOutputProperty(OutputKeys.METHOD, "xml");
     transformer.setOutputProperty(OutputKeys.INDENT, "yes");
     transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+
+    //create transformer compatible source
     DOMSource source = new DOMSource(doc);
+
+    //write out beautified XML
     StringWriter sw = new StringWriter();
     StreamResult result = new StreamResult(sw);
+
     transformer.transform(source, result);
 
     //return XML String + do some **magic**
