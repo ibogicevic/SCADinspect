@@ -15,6 +15,8 @@ import scadinspect.data.scaddoc.properties.helper.Pair;
 public class JsonExporter implements Exporter {
 
   /**
+   * Overrides getOutput from Exporter
+   *
    * @param file a ScadDocuFile containing a list of modules that are supposed to be exported
    * @return returns the JSON document as String that can be written to a file or used further
    * internally
@@ -24,14 +26,23 @@ public class JsonExporter implements Exporter {
     return getJsonArray(file.getModules()).toString(2);
   }
 
+  /**
+   * Overrides getOutput from Exporter
+   *
+   * @param files a Collection of ScadDocuFiles containing a list of modules that are supposed to be
+   * exported
+   * @return returns the JSON document as String that can be written to a file or used further
+   * internally
+   */
   @Override
   public String getOutput(Collection<ScadDocuFile> files) throws Exception {
     JSONArray result = new JSONArray();
     for (ScadDocuFile docuFile : files) {
       JSONObject file = new JSONObject();
-      file.accumulate(docuFile.getPath().toString(),getJsonArray(docuFile.getModules()));
+      file.accumulate(docuFile.getPath().toString(), getJsonArray(docuFile.getModules()));
       result.put(file);
     }
+    //indent factor is 2, without the jsonString is compressed in one line
     return result.toString(2);
   }
 
