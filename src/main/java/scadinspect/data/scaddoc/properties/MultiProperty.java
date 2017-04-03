@@ -45,6 +45,11 @@ public class MultiProperty<T> implements Property<List<T>> {
     return values;
   }
 
+  /**
+   * Returns the property as String in the format <key>: <values>
+   *
+   * @return the proper as as String in the given format
+   */
   @Override
   public String toString() {
     return getKey() + ": " + getValue().toString();

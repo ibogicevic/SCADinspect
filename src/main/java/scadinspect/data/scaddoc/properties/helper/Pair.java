@@ -21,10 +21,20 @@ public class Pair<T> {
     this.metric = metric;
   }
 
+  /**
+   * Returns the value of the pair. Can be of generic type
+   *
+   * @return value of the pair.
+   */
   public T getValue() {
     return value;
   }
 
+  /**
+   * Returns the metric of the pair, e.g. a specific currency
+   *
+   * @return String of the metric of the pair
+   */
   public String getMetric() {
     return metric;
   }
