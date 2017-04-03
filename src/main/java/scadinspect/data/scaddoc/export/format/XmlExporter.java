@@ -1,7 +1,7 @@
 package scadinspect.data.scaddoc.export.format;
 
 /**
- * @author eric, desyon, tom on 24.03.17.
+ * @author eric, desyon, richteto on 24.03.17.
  */
 
 import java.io.StringWriter;
