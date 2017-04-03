@@ -1,0 +1,9 @@
+Testing
+part,price,amount,weight,materials,url
+Wheel,100 EUR,4,12 kg,Rubber: Aluminium,https://example.com
+Motor,1000 USD,1,200 kg,Steel,https://example.com
+
+2nd Comment
+part,price,amount,weight,materials,url
+Wheel,100 EUR,4,12 kg,Rubber: Aluminium,https://example.com
+Motor,1000 USD,1,200 kg,Steel,https://example.com
