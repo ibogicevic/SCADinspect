@@ -26,7 +26,7 @@ public class MultiProperty<T> implements Property<List<T>> {
   }
 
   /**
-   * Constructing a new multiple value property
+   * Constructing a new multiple value property with a variable number of value arguments
    *
    * @param key The key name to store the values
    * @param values The parameters of the collection of values to be stored
