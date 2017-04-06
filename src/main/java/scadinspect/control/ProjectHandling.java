@@ -82,7 +82,7 @@ public class ProjectHandling {
   private void setProjectPath(File projectPath) {
     closeProject();
     setCurrentProject(projectPath.getAbsolutePath().toString());
-    Main.getInstance().toolbarArea.setButtonsDisabled(false);
+    Main.getInstance().toolbarArea.disableButtons(false);
   }
 
   /**
@@ -132,8 +132,7 @@ public class ProjectHandling {
    * the fileList.
    */
   public void closeProject() {
-    Main.getInstance().toolbarArea.setButtonsDisabled(true);
-      Main.getInstance().bottomArea.setButtonsDisabled(true);
+    Main.getInstance().toolbarArea.disableButtons(true);
       if (Main.getInstance().isProjectOpen()) {
       Main.getInstance().setCurrentProject("");
       Main.getInstance().getPrimaryStage().setTitle(Main.APPNAME);
