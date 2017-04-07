@@ -34,7 +34,7 @@ public class LogHandler extends Logger {
 
   private void init() {
 
-    // Read and set log level from preferences
+    // Read and set log level from user preferences
     Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
     Level logLevel = null;
 
@@ -57,6 +57,9 @@ public class LogHandler extends Logger {
     if (handlers[0] instanceof ConsoleHandler) {
       rootLogger.removeHandler(handlers[0]);
     }
+      /**
+       * If log level is set to NONE (=0), no logfile should be created, else create handler pointing to logfile
+       */
       if(!(set_level == 0)){
         // setup file output
         fileHandler = null;
@@ -91,7 +94,9 @@ public class LogHandler extends Logger {
     return numberOfLogs;
   }
 
-
+    /**
+     * Method destroying the filehandler when main application is closed
+     */
     public static void shutdown() {
     if(fileHandler!=null)
             fileHandler.close();

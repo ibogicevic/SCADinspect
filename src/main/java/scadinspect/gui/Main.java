@@ -140,6 +140,9 @@ public class Main extends Application {
 
         logger.log(Level.INFO,"successfully started");
 
+        /**
+         * Necessary for destroying the logfilehandler before closing the application
+         */
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {
                 LogHandler.shutdown();
