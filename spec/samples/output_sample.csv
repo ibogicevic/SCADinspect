@@ -1,9 +1,4 @@
-pathTo1stFile
-part,price,amount,weight,materials,url
-Wheel,100 EUR,4,12 kg,Rubber: Aluminium,https://example.com
-Motor,1000 USD,1,200 kg,Steel,https://example.com
-
-pathTo2ndFile
-part,price,amount,weight,materials,url
-Wheel,100 EUR,4,12 kg,Rubber: Aluminium,https://example.com
-Motor,1000 USD,1,200 kg,Steel,https://example.com
+testPath
+amount,materials,price,part,weight,url
+4,Rubber: Aluminium,100 EUR,Wheel,12 kg,https://example.com
+1,Steel,1000 USD,Motor,200 kg,https://example.com

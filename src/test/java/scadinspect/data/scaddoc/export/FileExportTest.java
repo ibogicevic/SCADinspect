@@ -112,6 +112,36 @@ class FileExportTest {
         new String(exported).replaceAll("\\r?\\n", "\n"));
   }
 
+  @Test
+  void saveAsMd() throws FileExportException, IOException {
+
+    File sampleFile = new File("./spec/samples/output_sample.md");
+    File exportedFile = fExport.save(ExportFormat.MD, file, "./export.md");
+
+    byte[] sample = Files.readAllBytes(sampleFile.toPath());
+    byte[] exported = Files.readAllBytes(exportedFile.toPath());
+
+    exportedFile.delete();
+
+    assertEquals(new String(sample).replaceAll("\\r?\\n", "\n"),
+        new String(exported).replaceAll("\\r?\\n", "\n"));
+  }
+
+  @Test
+  void saveAsCsv() throws FileExportException, IOException {
+
+    File sampleFile = new File("./spec/samples/output_sample.csv");
+    File exportedFile = fExport.save(ExportFormat.CSV, file, "./export.csv");
+
+    byte[] sample = Files.readAllBytes(sampleFile.toPath());
+    byte[] exported = Files.readAllBytes(exportedFile.toPath());
+
+    exportedFile.delete();
+
+    assertEquals(new String(sample).replaceAll("\\r?\\n", "\n"),
+        new String(exported).replaceAll("\\r?\\n", "\n"));
+  }
+
   /**
    * Tests if an exception is thrown on JSONExport on wrong input
    */
