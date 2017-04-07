@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import scadinspect.data.scaddoc.ScadDocuFile;
 
 /**
  * Startup JavaFX frame
@@ -83,6 +84,16 @@ public class Main extends Application {
      */
     public List<File> getFileList() {
         return fileList;
+    }
+
+    private List<ScadDocuFile> docuFiles;
+
+    public List<ScadDocuFile> getDocuFiles() {
+        return docuFiles;
+    }
+
+    public void setDocuFiles(List<ScadDocuFile> docuFiles) {
+        this.docuFiles = docuFiles;
     }
 
     @Override
