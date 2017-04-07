@@ -17,7 +17,7 @@ public class GreyPane extends BorderPane{
 
     private ToolbarArea toolbarArea = new ToolbarArea();
     private BorderPane bottomPane = new BorderPane();
-    private Integer step = 0;
+    private Integer step = -1;
     private BottomArea bottomArea= new BottomArea();
     private Hyperlink prev = new Hyperlink("back");
     private Hyperlink next = new Hyperlink("next");
@@ -112,7 +112,7 @@ public class GreyPane extends BorderPane{
                 this.switchTour(step);
             });
             exit.setOnAction(e -> {
-                step = 0; // reset counter
+                step = -1; // reset counter
                 this.modalToFront(false);
                 Main.getInstance().greyStack.toBack();
                 Main.getInstance().greyStack.setVisible(false);
@@ -139,8 +139,8 @@ public class GreyPane extends BorderPane{
         //switch Step Area
 
         switch (step){
-            case 0: {
-                toolbarArea.switchButtons(0);
+            case -1: {
+                toolbarArea.switchButtons(-1);
                 bottomArea.switchButtons(0);
                 prev.setVisible(false);
                 next.setVisible(true);
@@ -148,8 +148,18 @@ public class GreyPane extends BorderPane{
                 navBar.getChildren().remove(exit);
                 navBar.getChildren().remove(next);
                 navBar.getChildren().add(3, next);
-                messageLabel.setText("Press \"Open File\" to open an new ScadFile or choose \"Open Folder\" from the dropdown menu to open a folder.");
-                stepLabel.setText(step+1 + " of 5");
+                stepLabel.setText(step+2 + " of 6");
+                messageLabel.setText("Welcome to the Quick tour!\nPlease use the buttons below to navigate " +
+                        "through the tour. You can leave the tour in step 6. " +
+                        "You can also view the checkers documentation.");
+                break;
+            }
+            case 0: {
+                toolbarArea.switchButtons(0);
+                bottomArea.switchButtons(0);
+                prev.setVisible(true);
+                messageLabel.setText("Press \"Open file\" to open an new ScadFile or choose \"Open folder\" from the dropdown menu to open a folder.");
+                stepLabel.setText(step+2 + " of 6");
                 break;
             }
             case 1: {
@@ -157,14 +167,14 @@ public class GreyPane extends BorderPane{
                 prev.setVisible(true);
                 messageLabel.setText("Press \"Settings\" to access the settings. For example you can enable auto refresh or set the logging level.");
                 bottomArea.switchButtons(0);
-                stepLabel.setText(step+1 + " of 5");
+                stepLabel.setText(step+2 + " of 6");
                 break;
             }
             case 2: {
                 toolbarArea.switchButtons(2);
                 messageLabel.setText("Press \"Refresh\" to refresh the files.");
                 bottomArea.switchButtons(1);
-                stepLabel.setText(step+1 + " of 5");
+                stepLabel.setText(step+2 + " of 6");
                 break;
             }
             case 3: {
@@ -176,7 +186,7 @@ public class GreyPane extends BorderPane{
                 navBar.getChildren().remove(next);
                 navBar.getChildren().remove(exit);
                 navBar.getChildren().add(3, next);
-                stepLabel.setText(step+1 + " of 5");
+                stepLabel.setText(step+2 + " of 6");
                 break;
             }
             case 4: {
@@ -187,7 +197,7 @@ public class GreyPane extends BorderPane{
                 navBar.getChildren().remove(exit);
                 navBar.getChildren().remove(next);
                 navBar.getChildren().add(3, exit);
-                stepLabel.setText(step+1 + " of 5");
+                stepLabel.setText(step+2 + " of 6");
                 break;
             }
         }

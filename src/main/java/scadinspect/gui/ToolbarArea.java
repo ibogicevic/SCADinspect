@@ -111,7 +111,7 @@ public class ToolbarArea extends ToolBar {
             Main.getInstance().greyStack.toFront();
             Main.getInstance().greyStack.setVisible(true);
             Main.getInstance().helpPane.modalToFront(true);
-            Main.getInstance().helpPane.switchTour(0);
+            Main.getInstance().helpPane.switchTour(-1);
         });
         aboutLink.setOnAction(e -> AboutDialog.openDialog());
         settingsButton.setOnAction(e -> SettingsDialog.openDialog());
@@ -137,6 +137,14 @@ public class ToolbarArea extends ToolBar {
 
 
         switch (button) {
+            case -1: {
+                settingsButton.setVisible(false);
+                separator.setVisible(false);
+                helpLink.setVisible(false);
+                aboutLink.setVisible(false);
+                openProjectButton.setVisible(false);
+                break;
+            }
             case 0: {
                 // hide all buttons except from openFile
                 settingsButton.setVisible(false);
