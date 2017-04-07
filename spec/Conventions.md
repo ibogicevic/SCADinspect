@@ -16,7 +16,7 @@ A branch must not be merged into the master branch if the TravisCI build is not 
 
 The naming conventions for the new branches are as follows:
 
-Reason | Naming
+Reason | Naming |
 ------ | ------
 Feature | `feature/<featureName>`
 Bugfix | `bugfix/<issueNumber>`

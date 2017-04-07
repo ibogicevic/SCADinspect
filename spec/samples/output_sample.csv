@@ -1,0 +1,9 @@
+pathTo1stFile
+part,price,amount,weight,materials,url
+Wheel,100 EUR,4,12 kg,Rubber: Aluminium,https://example.com
+Motor,1000 USD,1,200 kg,Steel,https://example.com
+
+pathTo2ndFile
+part,price,amount,weight,materials,url
+Wheel,100 EUR,4,12 kg,Rubber: Aluminium,https://example.com
+Motor,1000 USD,1,200 kg,Steel,https://example.com

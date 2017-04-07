@@ -6,12 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import scadinspect.data.scaddoc.Module;
+import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.error.FileExportException;
 import scadinspect.data.scaddoc.export.format.ExportFormat;
 import scadinspect.data.scaddoc.properties.MultiProperty;
@@ -24,15 +27,15 @@ import scadinspect.data.scaddoc.properties.SingleProperty;
  */
 class FileExportTest {
 
-  static private List<Module> modules;
+  static private ScadDocuFile file;
   private FileExport fExport;
 
   /**
    * Prepares the list of modules that is used to test the exporting before any tests are run.
    */
   @BeforeAll
-  static void setupModules() {
-    modules = new LinkedList<>();
+  static void setUpScadFile() {
+    List <Module> modules = new LinkedList<>();
     List<Property> wheelProps = new LinkedList<>();
     List<Property> motorProps = new LinkedList<>();
 
@@ -54,6 +57,8 @@ class FileExportTest {
 
     modules.add(wheel);
     modules.add(motor);
+
+    file = new ScadDocuFile(Paths.get("testPath"), modules);
   }
 
   /**
@@ -74,15 +79,15 @@ class FileExportTest {
   void saveAsJson() throws FileExportException, IOException {
 
     File sampleFile = new File("./spec/samples/output_sample.json");
-    File exportedFile = fExport.save(ExportFormat.JSON, modules, "./export.json");
+    File exportedFile = fExport.save(ExportFormat.JSON, file, "./export.json");
 
     byte[] sample = Files.readAllBytes(sampleFile.toPath());
     byte[] exported = Files.readAllBytes(exportedFile.toPath());
 
     exportedFile.delete();
 
-    assertEquals(new String(sample).replaceAll("\\r\\n?", "\n"),
-        new String(exported).replaceAll("\\r\\n?", "\n"));
+    assertEquals(new String(sample).replaceAll("\\r?\\n", "\n"),
+        new String(exported).replaceAll("\\r?\\n", "\n"));
   }
 
 
@@ -96,32 +101,34 @@ class FileExportTest {
   void saveAsXml() throws FileExportException, IOException {
 
     File sampleFile = new File("./spec/samples/output_sample.xml");
-    File exportedFile = fExport.save(ExportFormat.XML, modules, "./export.xml");
+    File exportedFile = fExport.save(ExportFormat.XML, file, "./export.xml");
 
     byte[] sample = Files.readAllBytes(sampleFile.toPath());
     byte[] exported = Files.readAllBytes(exportedFile.toPath());
 
     exportedFile.delete();
 
-    assertEquals(new String(sample).replaceAll("\\r\\n?", "\n"),
-        new String(exported).replaceAll("\\r\\n?", "\n"));
+    assertEquals(new String(sample).replaceAll("\\r?\\n", "\n"),
+        new String(exported).replaceAll("\\r?\\n", "\n"));
   }
 
   /**
    * Tests if an exception is thrown on JSONExport on wrong input
    */
   @Test
-  void throwFromJson() {
+  void throwSingleFile() {
     assertThrows(FileExportException.class, () ->
-        fExport.save(ExportFormat.JSON, null, null));
+        fExport.save(ExportFormat.JSON, file, null));
   }
 
   /**
    * Tests if an exception is thrown on XMLExport on wrong input
    */
   @Test
-  void throwFromXML() {
+  void throwCollection() {
+    HashSet<ScadDocuFile> set = new HashSet<>();
+    set.add(file);
     assertThrows(FileExportException.class, () ->
-        fExport.save(ExportFormat.XML, null, null));
+        fExport.save(ExportFormat.XML, set, null));
   }
 }

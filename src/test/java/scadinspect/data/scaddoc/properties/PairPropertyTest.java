@@ -14,7 +14,7 @@ class PairPropertyTest {
    */
   @Test
   void pairPropertyToString() {
-    assertEquals("key: {value: 1, metric: m}", new PairProperty("key", 1, "m").toString());
+    assertEquals("key: 1 m", new PairProperty("key", 1, "m").toString());
 
   }
 }

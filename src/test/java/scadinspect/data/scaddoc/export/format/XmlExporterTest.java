@@ -3,11 +3,13 @@ package scadinspect.data.scaddoc.export.format;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import scadinspect.data.scaddoc.Module;
+import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
@@ -32,8 +34,9 @@ class XmlExporterTest {
   @Test
   void testThrow() {
     modules = null;
+    ScadDocuFile file = new ScadDocuFile(null, modules);
     assertThrows(Exception.class, ()
-        -> exporter.getOutput(modules));
+        -> exporter.getOutput(file));
   }
 
   /**
@@ -43,9 +46,10 @@ class XmlExporterTest {
    */
   @Test
   void emptyList() throws Exception {
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
     assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-            + "<modules/>" + lineSeparator,
-        exporter.getOutput(modules));
+            + "<testPath/>" + lineSeparator,
+        exporter.getOutput(file));
   }
 
   /**
@@ -56,13 +60,14 @@ class XmlExporterTest {
     Module singleProperty = new Module();
     singleProperty.addProperty(new SingleProperty<>("key", 1));
     modules.add(singleProperty);
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
     assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-            + "<modules>" + lineSeparator
+            + "<testPath>" + lineSeparator
             + "  <module>" + lineSeparator
             + "    <key>1</key>" + lineSeparator
             + "  </module>" + lineSeparator
-            + "</modules>" + lineSeparator,
-        exporter.getOutput(modules));
+            + "</testPath>" + lineSeparator,
+        exporter.getOutput(file));
 
   }
 
@@ -74,12 +79,13 @@ class XmlExporterTest {
     Module singleProperty = new Module();
     singleProperty.addProperty(new SingleProperty<>("key", 0.1));
     modules.add(singleProperty);
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
     assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-        + "<modules>" + lineSeparator
+        + "<testPath>" + lineSeparator
         + "  <module>" + lineSeparator
         + "    <key>0.1</key>" + lineSeparator
         + "  </module>" + lineSeparator
-        + "</modules>" + lineSeparator, exporter.getOutput(modules));
+        + "</testPath>" + lineSeparator, exporter.getOutput(file));
   }
 
   /**
@@ -90,12 +96,13 @@ class XmlExporterTest {
     Module singleProperty = new Module();
     singleProperty.addProperty(new SingleProperty<>("key", "value"));
     modules.add(singleProperty);
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
     assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-        + "<modules>" + lineSeparator
+        + "<testPath>" + lineSeparator
         + "  <module>" + lineSeparator
         + "    <key>value</key>" + lineSeparator
         + "  </module>" + lineSeparator
-        + "</modules>" + lineSeparator, exporter.getOutput(modules));
+        + "</testPath>" + lineSeparator, exporter.getOutput(file));
   }
 
   /**
@@ -106,13 +113,14 @@ class XmlExporterTest {
     Module multiProperty = new Module();
     multiProperty.addProperty(new MultiProperty<>("key", 1, 2, 3));
     modules.add(multiProperty);
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
     assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-            + "<modules>" + lineSeparator
+            + "<testPath>" + lineSeparator
             + "  <module>" + lineSeparator
             + "    <key>1, 2, 3</key>" + lineSeparator
             + "  </module>" + lineSeparator
-            + "</modules>" + lineSeparator,
-        exporter.getOutput(modules));
+            + "</testPath>" + lineSeparator,
+        exporter.getOutput(file));
   }
 
   /**
@@ -123,12 +131,13 @@ class XmlExporterTest {
     Module multiProperty = new Module();
     multiProperty.addProperty(new MultiProperty<>("key", 0.1, 1.1, 2, 4));
     modules.add(multiProperty);
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
     assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-        + "<modules>" + lineSeparator
+        + "<testPath>" + lineSeparator
         + "  <module>" + lineSeparator
         + "    <key>0.1, 1.1, 2, 4</key>" + lineSeparator
         + "  </module>" + lineSeparator
-        + "</modules>" + lineSeparator, exporter.getOutput(modules));
+        + "</testPath>" + lineSeparator, exporter.getOutput(file));
   }
 
   /**
@@ -139,12 +148,13 @@ class XmlExporterTest {
     Module multiProperty = new Module();
     multiProperty.addProperty(new MultiProperty<>("key", "a", "b", "c"));
     modules.add(multiProperty);
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
     assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-        + "<modules>" + lineSeparator
+        + "<testPath>" + lineSeparator
         + "  <module>" + lineSeparator
         + "    <key>a, b, c</key>" + lineSeparator
         + "  </module>" + lineSeparator
-        + "</modules>" + lineSeparator, exporter.getOutput(modules));
+        + "</testPath>" + lineSeparator, exporter.getOutput(file));
   }
 
   /**
@@ -155,16 +165,17 @@ class XmlExporterTest {
     Module pairProperty = new Module();
     pairProperty.addProperty(new PairProperty<>("price", 12, "EUR"));
     modules.add(pairProperty);
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
     assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-            + "<modules>" + lineSeparator
+            + "<testPath>" + lineSeparator
             + "  <module>" + lineSeparator
             + "    <price>" + lineSeparator
             + "      <metric>EUR</metric>" + lineSeparator
             + "      <value>12</value>" + lineSeparator
             + "    </price>" + lineSeparator
             + "  </module>" + lineSeparator
-            + "</modules>" + lineSeparator,
-        exporter.getOutput(modules));
+            + "</testPath>" + lineSeparator,
+        exporter.getOutput(file));
   }
 
   /**
@@ -175,16 +186,17 @@ class XmlExporterTest {
     Module pairProperty = new Module();
     pairProperty.addProperty(new PairProperty<>("price", 12.3, "EUR"));
     modules.add(pairProperty);
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
     assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-            + "<modules>" + lineSeparator
+            + "<testPath>" + lineSeparator
             + "  <module>" + lineSeparator
             + "    <price>" + lineSeparator
             + "      <metric>EUR</metric>" + lineSeparator
             + "      <value>12.3</value>" + lineSeparator
             + "    </price>" + lineSeparator
             + "  </module>" + lineSeparator
-            + "</modules>" + lineSeparator,
-        exporter.getOutput(modules));
+            + "</testPath>" + lineSeparator,
+        exporter.getOutput(file));
   }
 
   /**
@@ -195,16 +207,17 @@ class XmlExporterTest {
     Module pairProperty = new Module();
     pairProperty.addProperty(new PairProperty<>("weight", "1200", "kg"));
     modules.add(pairProperty);
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
     assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-            + "<modules>" + lineSeparator
+            + "<testPath>" + lineSeparator
             + "  <module>" + lineSeparator
             + "    <weight>" + lineSeparator
             + "      <metric>kg</metric>" + lineSeparator
             + "      <value>1200</value>" + lineSeparator
             + "    </weight>" + lineSeparator
             + "  </module>" + lineSeparator
-            + "</modules>" + lineSeparator,
-        exporter.getOutput(modules));
+            + "</testPath>" + lineSeparator,
+        exporter.getOutput(file));
   }
 
   @Test
@@ -218,15 +231,56 @@ class XmlExporterTest {
     modules.add(mod1);
     modules.add(mod2);
 
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
     assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-            + "<modules>" + lineSeparator
+            + "<testPath>" + lineSeparator
             + "  <module>" + lineSeparator
             + "    <key>value</key>" + lineSeparator
             + "  </module>" + lineSeparator
             + "  <module>" + lineSeparator
             + "    <key>value</key>" + lineSeparator
             + "  </module>" + lineSeparator
-            + "</modules>" + lineSeparator,
-        exporter.getOutput(modules));
+            + "</testPath>" + lineSeparator,
+        exporter.getOutput(file));
+  }
+
+  @Test
+  void multipleFiles() throws Exception {
+    Module mod1 = new Module();
+    Module mod2 = new Module();
+
+    mod1.addProperty(new SingleProperty<>("key", "value"));
+    mod2.addProperty(new SingleProperty<>("key", "value"));
+
+    modules.add(mod1);
+    modules.add(mod2);
+
+    ScadDocuFile file1 = new ScadDocuFile(Paths.get("testPath1"), modules);
+    ScadDocuFile file2 = new ScadDocuFile(Paths.get("testPath2"), modules);
+
+    List<ScadDocuFile> files = new ArrayList<>();
+    files.add(file1);
+    files.add(file2);
+
+    assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
+            + "<files>" + lineSeparator
+            + "  <testPath1>" + lineSeparator
+            + "    <module>" + lineSeparator
+            + "      <key>value</key>" + lineSeparator
+            + "    </module>" + lineSeparator
+            + "    <module>" + lineSeparator
+            + "      <key>value</key>" + lineSeparator
+            + "    </module>" + lineSeparator
+            + "  </testPath1>" + lineSeparator
+            + "  <testPath2>" + lineSeparator
+            + "    <module>" + lineSeparator
+            + "      <key>value</key>" + lineSeparator
+            + "    </module>" + lineSeparator
+            + "    <module>" + lineSeparator
+            + "      <key>value</key>" + lineSeparator
+            + "    </module>" + lineSeparator
+            + "  </testPath2>" + lineSeparator
+            + "</files>" + lineSeparator,
+        exporter.getOutput(files));
   }
 }
