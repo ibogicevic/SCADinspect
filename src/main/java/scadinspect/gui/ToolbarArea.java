@@ -84,17 +84,17 @@ public class ToolbarArea extends ToolBar {
             openProjectButton.setText("Open file");
             openProjectButton.setOnAction(event -> projectHandler.openProjectFile());
         } else {
-            openProjectButton.setText("Open Folder");
+            openProjectButton.setText("Open folder");
             openProjectButton.setOnAction(event -> projectHandler.openProjectFolder());
         }
         openFolderButton.setOnAction(e -> {
             userPrefs.putInt("SET_OPENBUTTON", 1);
-            openProjectButton.setText("Open Folder");
+            openProjectButton.setText("Open folder");
             openProjectButton.setOnAction(event -> projectHandler.openProjectFolder());
         });
         openFileButton.setOnAction(e -> {
             userPrefs.putInt("SET_OPENBUTTON", 0);
-            openProjectButton.setText("Open File");
+            openProjectButton.setText("Open file");
             openProjectButton.setOnAction(event -> projectHandler.openProjectFile());
         });
 
