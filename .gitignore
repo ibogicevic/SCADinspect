@@ -1,6 +1,8 @@
 ### Log files ###
 log_*.txt
 *.log
+*.log.lck
+
 
 ### Open Scad ###
 
@@ -420,3 +422,4 @@ buildNumber.properties
 # !tools/packages.config
 /target/
 log*.txt
+log_*.txt.lck

@@ -1,0 +1,369 @@
+/* original grammar file: https://github.com/openscad/openscad/blob/master/src/parser.y */
+
+package scadinspect.parser.generated;
+
+import scadinspect.parser.ast.*;
+
+/* Expect 2 shift/reduce conflict for ifelse_statement - "dangling else problem", handled in CUP config */
+
+/* error reporting is overwittern in CustomErrorOpenScadParser */
+
+terminal TOK_ERROR;
+
+terminal TOK_MODULE;
+terminal TOK_FUNCTION;
+terminal TOK_IF;
+terminal TOK_ELSE;
+terminal TOK_FOR;
+terminal TOK_LET;
+terminal TOK_ASSERT;
+terminal TOK_ECHO;
+terminal TOK_EACH;
+
+terminal String TOK_ID;
+terminal String TOK_STRING;
+terminal String TOK_USE;
+terminal Double TOK_NUMBER;
+
+terminal TOK_TRUE;
+terminal TOK_FALSE;
+terminal TOK_UNDEF;
+
+terminal LE, GE, EQ, NE, AND, OR;
+
+terminal SEMICOLON, DOT, COLON, COMMA;
+terminal BRACKET_CURLY_OPEN, BRACKET_CURLY_CLOSE;
+terminal BRACKET_ROUND_OPEN, BRACKET_ROUND_CLOSE;
+terminal BRACKET_SQUARE_OPEN, BRACKET_SQUARE_CLOSE;
+terminal BRACKET_ANGLE_OPEN, BRACKET_ANGLE_CLOSE;
+terminal EQUAL;
+terminal EXCLAMATION_MARK, QUESTION_MARK, HASH, PERCENT, ASTERISK, SLASH, PLUS, MINUS;
+
+terminal LET, LOW_PRIO_LEFT, LOW_PRIO_RIGHT, HIGH_PRIO_LEFT, HIGH_PRIO_RIGHT;
+
+
+non terminal InputNode input;
+non terminal StatementNode statement;
+non terminal inner_input;
+non terminal assignment;
+non terminal module_instantiation;
+non terminal ifelse_statement;
+non terminal if_statement;
+non terminal child_statements;
+non terminal child_statement;
+non terminal module_id;
+non terminal single_module_instantiation;
+non terminal expr;
+non terminal expr_or_empty;
+non terminal list_comprehension_elements;
+non terminal list_comprehension_elements_p;
+non terminal list_comprehension_elements_or_expr;
+non terminal optional_commas;
+non terminal vector_expr;
+non terminal arguments_decl;
+non terminal argument_decl;
+non terminal arguments_call;
+non terminal argument_call;
+
+precedence right LET;
+precedence right LOW_PRIO_RIGHT;
+precedence left LOW_PRIO_LEFT;
+
+precedence right QUESTION_MARK, COLON;
+
+precedence left OR;
+precedence left AND;
+
+precedence left BRACKET_ANGLE_OPEN, LE, GE, BRACKET_ANGLE_CLOSE;
+precedence left EQ, NE;
+
+precedence left EXCLAMATION_MARK, PLUS, MINUS;
+precedence left ASTERISK, SLASH, PERCENT;
+precedence left BRACKET_SQUARE_OPEN, BRACKET_SQUARE_CLOSE;
+precedence left DOT;
+
+precedence right HIGH_PRIO_RIGHT;
+precedence left HIGH_PRIO_LEFT;
+
+
+start with input;
+
+input ::=
+          /* empty */
+        {:  /* TODO build parse tree here */
+            RESULT = new InputNode(); :}
+        | TOK_USE:u input:i
+        {:  InputNode inputNode = new InputNode(i);
+            inputNode.uses.add(u);
+            RESULT = inputNode; :}
+        | statement:s input:i
+        {:  InputNode inputNode = new InputNode(i);
+            inputNode.statements.add(s);
+            RESULT = inputNode; :}
+        ;
+
+statement ::=
+          SEMICOLON
+        {: RESULT = new StatementNode(); :}
+        | BRACKET_CURLY_OPEN inner_input BRACKET_CURLY_CLOSE
+        {: RESULT = new StatementNode(); :}
+        | module_instantiation
+        {: RESULT = new StatementNode(); :}
+        | assignment
+        {: RESULT = new StatementNode(); :}
+        | TOK_MODULE TOK_ID
+          BRACKET_ROUND_OPEN arguments_decl optional_commas BRACKET_ROUND_CLOSE
+          statement
+        {: RESULT = new StatementNode(); :}
+        | TOK_FUNCTION TOK_ID
+          BRACKET_ROUND_OPEN arguments_decl optional_commas  BRACKET_ROUND_CLOSE
+          EQUAL expr SEMICOLON
+        {: RESULT = new StatementNode(); :}
+        ;
+
+inner_input ::=
+          /* empty */
+        {:  :}
+        | statement inner_input
+        {:  :}
+        ;
+
+assignment ::=
+          TOK_ID EQUAL expr SEMICOLON
+        {: :}
+        ;
+
+
+module_instantiation ::=
+          EXCLAMATION_MARK module_instantiation
+        {:  :}
+        | HASH module_instantiation
+        {:  :}
+        | PERCENT module_instantiation
+        {:  :}
+        | ASTERISK module_instantiation
+        {:  :}
+        | single_module_instantiation
+          child_statement
+        {:  :}
+        | ifelse_statement
+        {:  :}
+        ;
+
+ifelse_statement ::=
+          if_statement
+        {:  :}
+        | if_statement TOK_ELSE
+          child_statement
+        {: :}
+        ;
+
+if_statement ::=
+          TOK_IF BRACKET_ROUND_OPEN expr BRACKET_ROUND_CLOSE
+          child_statement
+        {:  :}
+        ;
+
+child_statements ::=
+          /* empty */
+        {:  :}
+        | child_statements child_statement
+        {:  :}
+        | child_statements assignment
+        {:  :}
+        ;
+
+child_statement ::=
+          SEMICOLON
+        {: :}
+        | BRACKET_CURLY_OPEN child_statements BRACKET_CURLY_CLOSE
+        {: :}
+        | module_instantiation
+        {: :}
+        ;
+
+// "for", "let" and "each" are valid module identifiers
+module_id ::=
+          TOK_ID:i
+        {: /*System.out.println("Module ID: " +  i); */:}
+        | TOK_FOR
+        {:  :}
+        | TOK_LET
+        {:  :}
+        | TOK_ASSERT
+        {:  :}
+        | TOK_ECHO
+        {:  :}
+        | TOK_EACH
+        {:  :}
+        ;
+
+single_module_instantiation ::=
+          module_id BRACKET_ROUND_OPEN arguments_call BRACKET_ROUND_CLOSE
+        {:  :}
+        ;
+
+expr ::=
+          TOK_TRUE
+        {:  :}
+        | TOK_FALSE
+        {:  :}
+        | TOK_UNDEF
+        {:  :}
+        | TOK_ID
+        {:  :}
+        | expr DOT TOK_ID
+        {:  :}
+        | TOK_STRING:s
+        {: /* System.out.println("String: " + s); */  :}
+        | TOK_NUMBER:n
+        {:
+           /* System.out.println("Number value: " + (Double) n); */:}
+        | BRACKET_SQUARE_OPEN expr COLON expr BRACKET_SQUARE_CLOSE
+        {:  :}
+        | BRACKET_SQUARE_OPEN expr COLON expr COLON expr BRACKET_SQUARE_CLOSE
+        {:  :}
+        | BRACKET_SQUARE_OPEN optional_commas BRACKET_SQUARE_CLOSE
+        {:  :}
+        | BRACKET_SQUARE_OPEN vector_expr optional_commas BRACKET_SQUARE_CLOSE
+        {:  :}
+        | expr ASTERISK expr
+        {:  :}
+        | expr SLASH expr
+        {:  :}
+        | expr PERCENT expr
+        {:  :}
+        | expr PLUS expr
+        {:  :}
+        | expr MINUS expr
+        {:  :}
+        | expr BRACKET_ANGLE_OPEN expr
+        {:  :}
+        | expr LE expr
+        {:  :}
+        | expr EQ expr
+        {:  :}
+        | expr NE expr
+        {:  :}
+        | expr GE expr
+        {:  :}
+        | expr BRACKET_ANGLE_CLOSE expr
+        {:  :}
+        | expr AND expr
+        {:  :}
+        | expr OR expr
+        {:  :}
+        | PLUS expr
+        {:  :}
+        | MINUS expr
+        {:  :}
+        | EXCLAMATION_MARK expr
+        {:  :}
+        | BRACKET_ROUND_OPEN expr BRACKET_ROUND_CLOSE
+        {:  :}
+        | expr QUESTION_MARK expr COLON expr
+        {:  :}
+        | expr BRACKET_SQUARE_OPEN expr BRACKET_SQUARE_CLOSE
+        {:  :}
+        | TOK_ID BRACKET_ROUND_OPEN arguments_call BRACKET_ROUND_CLOSE
+        {:  :}
+        | TOK_LET BRACKET_ROUND_OPEN arguments_call BRACKET_ROUND_CLOSE expr
+        {:  :}
+        %prec LET
+        | TOK_ASSERT BRACKET_ROUND_OPEN arguments_call BRACKET_ROUND_CLOSE expr_or_empty
+        {:  :}
+        %prec LOW_PRIO_LEFT
+        | TOK_ECHO BRACKET_ROUND_OPEN arguments_call BRACKET_ROUND_CLOSE expr_or_empty
+        {:  :}
+        %prec LOW_PRIO_LEFT
+        ;
+
+expr_or_empty ::=
+          /* empty */
+        {:  :}
+        %prec LOW_PRIO_LEFT
+        | expr
+        {:  :}
+        %prec HIGH_PRIO_LEFT
+        ;
+
+list_comprehension_elements ::=
+          /* The last set element may not be a "let" (as that would instead
+             be parsed as an expression) */
+          TOK_LET BRACKET_ROUND_OPEN arguments_call BRACKET_ROUND_CLOSE list_comprehension_elements_p
+        {:  :}
+        | TOK_EACH list_comprehension_elements_or_expr
+        {:  :}
+        | TOK_FOR BRACKET_ROUND_OPEN arguments_call BRACKET_ROUND_CLOSE list_comprehension_elements_or_expr
+        {:  :}
+        | TOK_FOR BRACKET_ROUND_OPEN arguments_call SEMICOLON expr SEMICOLON arguments_call BRACKET_ROUND_CLOSE list_comprehension_elements_or_expr
+        {:  :}
+        | TOK_IF BRACKET_ROUND_OPEN expr BRACKET_ROUND_CLOSE list_comprehension_elements_or_expr
+        {:  :}
+        | TOK_IF BRACKET_ROUND_OPEN expr BRACKET_ROUND_CLOSE list_comprehension_elements_or_expr TOK_ELSE list_comprehension_elements_or_expr
+        {:  :}
+        ;
+
+/* list_comprehension_elements with optional parenthesis */
+list_comprehension_elements_p ::=
+          list_comprehension_elements
+        {:  :}
+        | BRACKET_ROUND_OPEN list_comprehension_elements BRACKET_ROUND_CLOSE
+        {:  :}
+        ;
+
+list_comprehension_elements_or_expr ::=
+          list_comprehension_elements_p
+        {:  :}
+        | expr
+        {:  :}
+        ;
+
+optional_commas ::=
+          COMMA optional_commas
+        {:  :}
+        | /* empty */
+        {:  :}
+        ;
+
+vector_expr ::=
+          expr
+        {:  :}
+        |  list_comprehension_elements
+        {:  :}
+        | vector_expr COMMA optional_commas list_comprehension_elements_or_expr
+        {:  :}
+        ;
+
+arguments_decl ::=
+          /* empty */
+        {:  :}
+        | argument_decl
+        {:  :}
+        | arguments_decl COMMA optional_commas argument_decl
+        {:  :}
+        ;
+
+argument_decl ::=
+          TOK_ID
+        {:  :}
+        | TOK_ID EQUAL expr
+        {:  :}
+        ;
+
+arguments_call ::=
+          /* empty */
+        {:  :}
+        | argument_call
+        {:  :}
+        | arguments_call COMMA optional_commas argument_call
+        {:  :}
+        ;
+
+argument_call ::=
+          expr
+        {:  :}
+        | TOK_ID EQUAL expr
+        {:  :}
+        ;
+

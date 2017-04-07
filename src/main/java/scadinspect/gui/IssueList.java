@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Screen;
 import scadinspect.data.analysis.Issue;
+import scadinspect.data.analysis.Issue.issueType;
 
 /**
  * Created by halecket on 17.03.2017.
@@ -34,7 +35,7 @@ public class IssueList {
         /* Dummy Data */
         ArrayList<Issue> issues = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            Issue curr = new Issue(Issue.issueType.WARNING, "C:\\Users\\IBM_ADMIN\\Documents\\GitHub\\SCADinspect\\TestCorpus\\Examples\\Basics\\CSG.scad", 15+i, "randomIdentifier" + i, "description" + i);
+            Issue curr = new Issue(Issue.issueType.WARNING, null, 15+i, "randomIdentifier" + i, "description" + i);
             issues.add(i, curr);
         }
         addDataToTable(issues);
