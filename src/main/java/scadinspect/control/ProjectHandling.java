@@ -71,8 +71,9 @@ public class ProjectHandling {
 
   /**
    * Opens the dialog to choose a directory
+     * @param onDone
    */
-  public void openProjectFolder() {
+  public void openProjectFolder(Consumer<Collection<File>> onDone) {
 	File projectDirectory;
     projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
 
@@ -102,13 +103,7 @@ public class ProjectHandling {
           }
               
       };
-      addFiles(projectDirectory, confirmLongRead, (files) -> {
-          if(files != null) {
-              System.out.println(files);
-              Main.getInstance().getFileList().addAll(files);
-          }
-      });
-      
+      addFiles(projectDirectory, confirmLongRead, onDone);
     }
   }
 
