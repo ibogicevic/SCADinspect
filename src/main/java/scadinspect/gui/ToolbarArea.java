@@ -80,13 +80,13 @@ public class ToolbarArea extends ToolBar {
         openProjectButton.setGraphic(loadIcon("open-folder-outline"));
         // Read settings
         if (userPrefs.getInt("SET_OPENBUTTON", 0) == 0) {
-            openProjectButton.setText("Open File");
+            openProjectButton.setText("Open file");
             openProjectButton.setOnAction(event -> {
               projectHandler.openProjectFile();
               CodeAnalyzer.refresh();
             });
         } else {
-            openProjectButton.setText("Open Folder");
+            openProjectButton.setText("Open folder");
             openProjectButton.setOnAction(event -> {
               projectHandler.openProjectFolder();
               CodeAnalyzer.refresh();
@@ -94,7 +94,7 @@ public class ToolbarArea extends ToolBar {
         }
         openFolderButton.setOnAction(e -> {
             userPrefs.putInt("SET_OPENBUTTON", 1);
-            openProjectButton.setText("Open Folder");
+            openProjectButton.setText("Open folder");
             openProjectButton.setOnAction(event -> {
               projectHandler.openProjectFolder();
               CodeAnalyzer.refresh();
@@ -102,7 +102,7 @@ public class ToolbarArea extends ToolBar {
         });
         openFileButton.setOnAction(e -> {
             userPrefs.putInt("SET_OPENBUTTON", 0);
-            openProjectButton.setText("Open File");
+            openProjectButton.setText("Open file");
             openProjectButton.setOnAction(event -> {
               projectHandler.openProjectFile();
               CodeAnalyzer.refresh();

@@ -36,10 +36,10 @@ public class CodeAnalyzer {
           + fileParserResultMap.values().stream().map(r -> r.getIssues().size())
           .reduce(Integer::sum).orElse(-1));
 
-      Main.getInstance().tabArea.issueList.clearList();
+      Main.getInstance().tabArea.getIssueList().clearList();
 
       fileList.forEach(file -> {
-        Main.getInstance().tabArea.issueList
+        Main.getInstance().tabArea.getIssueList()
             .addDataToTable(new ArrayList<>(fileParserResultMap.get(file).getIssues()));
       });
 

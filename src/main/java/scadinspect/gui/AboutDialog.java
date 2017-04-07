@@ -1,6 +1,6 @@
 /**
  * Opens the about dialog if the About-Button is clicked
- * 
+ *
  * @author: schmjuli
  */
 package scadinspect.gui;
@@ -17,33 +17,33 @@ import javafx.scene.layout.StackPane;
 import scadinspect.control.ProjectHandling;
 
 public class AboutDialog {
-	
-	/**
-	 * Application startup function
-	 */
-	public static void openDialog(){
-	    //ProjectHandling.showModal();
-	    Main.getInstance().greyPane.modalToFront(true);
-	    Main.getInstance().greyStack.toFront();
+
+    /**
+     * Application startup function
+     */
+    public static void openDialog() {
+        //ProjectHandling.showModal();
+        Main.getInstance().greyPane.modalToFront(true);
+        Main.getInstance().greyStack.toFront();
         Main.getInstance().greyStack.setVisible(true);
 
         //Main.getInstance().greyStack
-		Dialog<Boolean> dialog = new Dialog<>();
+        Dialog<Boolean> dialog = new Dialog<>();
         dialog.setTitle("About");
         dialog.setHeaderText("SCADinspect - Version x.xx");
-        
-        
+
+
         // Set the button types.
         ButtonType okButton = new ButtonType("OK", ButtonData.CANCEL_CLOSE);
-        
+
         // Display the buttons
         dialog.getDialogPane().getButtonTypes().addAll(okButton);
-        
+
         // Arrange Content
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        
+
         // Display Logo
         ImageView imageView = new ImageView(logo);
         imageView.setFitWidth(128);
@@ -51,16 +51,16 @@ public class AboutDialog {
         StackPane stackPane = new StackPane(imageView);
         stackPane.setAlignment(Pos.CENTER);
         grid.add(stackPane, 0, 0);
-        
+
         // Display Text
         Label text1 = new Label(Text1);
         text1.setWrapText(true);
         grid.add(text1, 1, 0);
-        
+
         Label text2 = new Label(Text2);
         text2.setWrapText(true);
         grid.add(text2, 1, 1);
-        
+
         dialog.getDialogPane().setContent(grid);
         dialog.showAndWait();
         Main.getInstance().greyStack.toBack();

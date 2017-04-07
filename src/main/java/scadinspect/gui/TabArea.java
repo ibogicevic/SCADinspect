@@ -12,10 +12,11 @@ import javafx.scene.control.TableView;
  */
 public class TabArea extends TabPane {
 
+  private IssueList issueList = new IssueList();
+  private DocumentationList documentationList = new DocumentationList();
 
-
-  public IssueList issueList = new IssueList();
-  DocumentationList documentationList = new DocumentationList();
+  private Tab issues;
+  private Tab documentation;
 
   public TabArea() {
 
@@ -25,30 +26,46 @@ public class TabArea extends TabPane {
     TableView issue = generateIssueTable(issueList);
     TableView documentations = generateDocTable(documentationList);
 
-      // issue tab
-      Tab issues = new Tab();
-      issues.setText("Issues");
-      issues.setContent(issue); //SET CONTENT FOR issueArea HERE
+    // issue tab
+    issues = new Tab();
+    issues.setText("Issues");
+    issues.setContent(issue); //SET CONTENT FOR issueArea HERE
 
-      // documentation tab
-      Tab documentation = new Tab();
-      documentation.setText("Documentation");
-      documentation.setContent(documentations); //SET CONTENT FOR documentationArea HERE
+    // documentation tab
+    documentation = new Tab();
+    documentation.setText("Documentation");
+    documentation.setContent(documentations); //SET CONTENT FOR documentationArea HERE
 
-
-      this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-      this.getTabs().add(issues);
-      this.getTabs().add(documentation);
+    this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+    this.getTabs().add(issues);
+    this.getTabs().add(documentation);
   }
 
   private TableView generateIssueTable(IssueList issueList) {
-      TableView table = issueList.showList();
-      return table;
+    TableView table = issueList.showList();
+    return table;
   }
 
   private TableView generateDocTable(DocumentationList documentationList) {
     TableView table = documentationList.generateList();
     return table;
+  }
+
+  /* For Help Modal get Issue and Documentation Tab */
+  public Tab getIssues() {
+    return issues;
+  }
+
+  public Tab getDocumentation() {
+    return documentation;
+  }
+
+  public IssueList getIssueList() {
+    return issueList;
+  }
+
+  public DocumentationList getDocumentationList() {
+    return documentationList;
   }
 }
 
