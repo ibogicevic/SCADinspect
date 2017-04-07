@@ -104,6 +104,7 @@ public class ProjectHandling {
       };
       addFiles(projectDirectory, confirmLongRead, (files) -> {
           if(files != null) {
+              System.out.println(files);
               Main.getInstance().getFileList().addAll(files);
           }
       });

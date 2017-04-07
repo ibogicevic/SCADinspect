@@ -2,7 +2,7 @@
 log_*.txt
 *.log
 *.log.lck
-
+*.lck
 
 ### Open Scad ###
 
