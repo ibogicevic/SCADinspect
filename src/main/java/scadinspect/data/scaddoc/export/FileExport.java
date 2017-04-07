@@ -9,6 +9,7 @@ import scadinspect.data.scaddoc.export.format.CsvExporter;
 import scadinspect.data.scaddoc.export.format.ExportFormat;
 import scadinspect.data.scaddoc.export.format.Exporter;
 import scadinspect.data.scaddoc.export.format.JsonExporter;
+import scadinspect.data.scaddoc.export.format.MdExporter;
 import scadinspect.data.scaddoc.export.format.XmlExporter;
 
 /**
@@ -75,7 +76,7 @@ public class FileExport {
         exporter = new JsonExporter();
         break;
       case MD:
-        exporter = null;
+        exporter = new MdExporter();
         break;
       case CSV:
         exporter = new CsvExporter();
