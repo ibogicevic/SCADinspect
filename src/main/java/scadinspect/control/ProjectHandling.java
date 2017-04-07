@@ -1,12 +1,9 @@
 package scadinspect.control;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import scadinspect.gui.Main;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import scadinspect.gui.Main;
 
 /**
  * Project Handler for loading and closing paths and files.
@@ -83,6 +80,7 @@ public class ProjectHandling {
     closeProject();
     setCurrentProject(projectPath.getAbsolutePath().toString());
     Main.getInstance().toolbarArea.disableButtons(false);
+    Main.getInstance().bottomArea.disableButtons(false);
   }
 
   /**

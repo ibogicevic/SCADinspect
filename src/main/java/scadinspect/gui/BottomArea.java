@@ -1,17 +1,16 @@
 package scadinspect.gui;
 
+import java.io.InputStream;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import scadinspect.control.CodeAnalyzer;
 import scadinspect.control.ProjectHandling;
-
-import java.io.InputStream;
 
 /**
  * Bottombar below the main window
@@ -62,7 +61,10 @@ public class BottomArea extends ToolBar{
         disableButtons(true);
         // action listeners
         closeProjectButton.setOnAction(e -> projectHandler.closeProject());
-        refreshButton.setOnAction(e -> Main.getInstance().statusArea.simulateProgress());
+        refreshButton.setOnAction(e -> {
+          //Main.getInstance().statusArea.simulateProgress();
+          CodeAnalyzer.refresh();
+        });
         // TODO: export Button action
 
         //Expands the separator pane

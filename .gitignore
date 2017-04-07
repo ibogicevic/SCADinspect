@@ -419,3 +419,5 @@ buildNumber.properties
 # tools/**
 # !tools/packages.config
 /target/
+
+log_*.txt.lck

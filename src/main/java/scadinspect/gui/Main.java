@@ -74,7 +74,7 @@ public class Main extends Application {
     public GreyPane greyPane;
     private Stage primaryStage;
 
-    public Stage getPrimaryStage() {
+    public Stage getPrimaryStage() {;
         return this.primaryStage;
     }
     /**
