@@ -82,29 +82,19 @@ public class ProjectHandling {
      */
     if (projectDirectory != null) {
       setProjectPath(projectDirectory);
-        System.out.println(Thread.currentThread().getName());
-            
       Supplier<Boolean> confirmLongRead = () -> {
           try {
               final FutureTask<Boolean> query = new FutureTask<>(() -> {
-                  System.out.println(Thread.currentThread().getName());
-                  System.out.println("Creating alert");
                   Alert alert = new Alert(AlertType.CONFIRMATION);
-                  System.out.println("Alert created");
                   alert.setTitle("Open files");
                   alert.setHeaderText("File loading taking longer then expected");
                   alert.setContentText("Do you want to continue?");
-                  System.out.println("Creating alert");
                   Optional<ButtonType> b = alert.showAndWait();
-                  System.out.println("Done show and wait");
                   return b.isPresent() && b.get() == ButtonType.OK;
               });
-              System.out.println("Confirming " + Thread.currentThread().getName());
               Platform.runLater(() -> {
-                  System.out.println("Running query " + Thread.currentThread().getName());
                   query.run();
               });
-              System.out.println("Waiting for query " + Thread.currentThread().getName());
               return query.get();
           } catch (InterruptedException | ExecutionException ex) {
               return false;
@@ -112,7 +102,6 @@ public class ProjectHandling {
               
       };
       addFiles(projectDirectory, confirmLongRead, (files) -> {
-          System.out.println("Parsed files: " + files);
           if(files != null) {
               Main.getInstance().getFileList().addAll(files);
           }
