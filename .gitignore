@@ -419,4 +419,5 @@ buildNumber.properties
 # tools/**
 # !tools/packages.config
 /target/
-/log_17.txt.lck
+
+log_*.txt.lck
