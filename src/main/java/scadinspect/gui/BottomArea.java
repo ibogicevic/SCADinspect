@@ -23,9 +23,9 @@ import java.io.InputStream;
 public class BottomArea extends ToolBar{
 
     //initialize buttons
-    private Button closeProjectButton = new Button("Close");
-    private Button exportButton = new Button("Export");
-    private Button refreshButton = new Button("Refresh");
+    private Button closeProjectButton = new Button(Messages.getString("BottomArea.closeProjectButton"));
+    private Button exportButton = new Button(Messages.getString("BottomArea.exportButton"));
+    private Button refreshButton = new Button(Messages.getString("BottomArea.refreshButton"));
 
     //initialize SeparatorPane to align Buttons
     private Pane separatorPane = new Pane();
@@ -56,9 +56,13 @@ public class BottomArea extends ToolBar{
         ProjectHandling projectHandler = new ProjectHandling();
 
         //set button icons
-        closeProjectButton.setGraphic(loadIcon("cross-mark-on-a-black-circle-background"));
-        exportButton.setGraphic(loadIcon("text-file"));
-        refreshButton.setGraphic(loadIcon("refresh-page-option"));
+        String closeProjectButtonIcon = "cross-mark-on-a-black-circle-background";
+        String exportButtonIcon = "text-file";
+        String refreshButtonIcon = "refresh-page-option";
+        
+        closeProjectButton.setGraphic(loadIcon(closeProjectButtonIcon));
+        exportButton.setGraphic(loadIcon(exportButtonIcon));
+        refreshButton.setGraphic(loadIcon(refreshButtonIcon));
         //status of buttons
         disableButtons(true);
         // action listeners

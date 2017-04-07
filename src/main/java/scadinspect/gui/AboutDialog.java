@@ -29,12 +29,12 @@ public class AboutDialog {
 
         //Main.getInstance().greyStack
         Dialog<Boolean> dialog = new Dialog<>();
-        dialog.setTitle("About");
-        dialog.setHeaderText("SCADinspect - Version x.xx");
+        dialog.setTitle(Messages.getString("AboutDialog.Title"));
+        dialog.setHeaderText(Messages.getString("AboutDialog.HeaderText"));
 
 
         // Set the button types.
-        ButtonType okButton = new ButtonType("OK", ButtonData.CANCEL_CLOSE);
+        ButtonType okButton = new ButtonType(Messages.getString("AboutDialog.okButton"), ButtonData.CANCEL_CLOSE);
 
         // Display the buttons
         dialog.getDialogPane().getButtonTypes().addAll(okButton);
@@ -53,13 +53,13 @@ public class AboutDialog {
         grid.add(stackPane, 0, 0);
 
         // Display Text
-        Label text1 = new Label(Text1);
-        text1.setWrapText(true);
-        grid.add(text1, 1, 0);
+        Label description = new Label(descriptionText);
+        description.setWrapText(true);
+        grid.add(description, 1, 0);
 
-        Label text2 = new Label(Text2);
-        text2.setWrapText(true);
-        grid.add(text2, 1, 1);
+        Label thirdParty = new Label(thirdPartyText);
+        thirdParty.setWrapText(true);
+        grid.add(thirdParty, 1, 1);
 
         dialog.getDialogPane().setContent(grid);
         dialog.showAndWait();
@@ -70,21 +70,11 @@ public class AboutDialog {
     }
 
     // Text content
-    final static String Text1 =
-            "Static code analysis and javadoc-like parts documentation for your OpenSCAD-Files \n" +
-                    "\n" +
-                    "© 2017 Licensed under GNU General Public License v2.0\n" +
-                    "Visit https://github.com/ibogicevic/SCADinspect for more information\n" +
-                    "\n" +
-                    "Contributors:\n" +
-                    "-Ivan Bogicevic\n" +
-                    "-Tim Walter\n";
+    final static String descriptionText =
+            Messages.getString("AboutDialog.Description");
 
-    final static String Text2 =
-            "Third Party Artefacts\n" +
-                    "SCADinspect uses Icons from the \"Font Awesome\"-Package by Dave Gandy released under the CC BY 3.0 Licence\n" +
-                    "http://www.flaticon.com/authors/dave-gandy\n" +
-                    "http://creativecommons.org/licenses/by/3.0/\n";
+    final static String thirdPartyText =
+            Messages.getString("AboutDialog.ThirdParty");
 
     // Set logo
     private static final Image logo = new Image("http://www.ghanaedudirectory.com/Images/nologo.jpg");
