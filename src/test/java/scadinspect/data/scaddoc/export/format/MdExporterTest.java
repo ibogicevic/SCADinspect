@@ -15,7 +15,7 @@ import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
- * Created by desyon on 07.04.2017.
+ * @author desyon on 07.04.2017.
  */
 class MdExporterTest {
 
@@ -119,7 +119,6 @@ class MdExporterTest {
     modules.add(mod2);
 
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
-    System.out.print(exporter.getOutput(file));
     assertEquals("# Parts Documentation" + lineSeparator
             + "" + lineSeparator
             + "## testPath" + lineSeparator
@@ -148,7 +147,6 @@ class MdExporterTest {
     files.add(file1);
     files.add(file2);
 
-    System.out.print(exporter.getOutput(files));
     assertEquals("# Parts Documentation" + lineSeparator
             + "" + lineSeparator
             + "## testPath1" + lineSeparator

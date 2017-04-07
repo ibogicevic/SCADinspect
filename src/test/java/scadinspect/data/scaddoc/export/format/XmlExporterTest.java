@@ -15,7 +15,7 @@ import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
- * Created by desyon on 3/24/17.
+ * @author desyon on 3/24/17.
  */
 class XmlExporterTest {
 
@@ -56,7 +56,7 @@ class XmlExporterTest {
    * Test against a single property containing an integer value.
    */
   @Test
-  void singlePropertyInt() throws Exception {
+  void singleProperty() throws Exception {
     Module singleProperty = new Module();
     singleProperty.addProperty(new SingleProperty<>("key", 1));
     modules.add(singleProperty);
@@ -72,44 +72,10 @@ class XmlExporterTest {
   }
 
   /**
-   * Test against a single property containing a float value.
-   */
-  @Test
-  void singlePropertyFloat() throws Exception {
-    Module singleProperty = new Module();
-    singleProperty.addProperty(new SingleProperty<>("key", 0.1));
-    modules.add(singleProperty);
-    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
-    assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-        + "<testPath>" + lineSeparator
-        + "  <module>" + lineSeparator
-        + "    <key>0.1</key>" + lineSeparator
-        + "  </module>" + lineSeparator
-        + "</testPath>" + lineSeparator, exporter.getOutput(file));
-  }
-
-  /**
-   * Test against a single property containing a string value.
-   */
-  @Test
-  void singlePropertyString() throws Exception {
-    Module singleProperty = new Module();
-    singleProperty.addProperty(new SingleProperty<>("key", "value"));
-    modules.add(singleProperty);
-    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
-    assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-        + "<testPath>" + lineSeparator
-        + "  <module>" + lineSeparator
-        + "    <key>value</key>" + lineSeparator
-        + "  </module>" + lineSeparator
-        + "</testPath>" + lineSeparator, exporter.getOutput(file));
-  }
-
-  /**
    * Test against multiple properties containing integer values.
    */
   @Test
-  void multiPropertyInt() throws Exception {
+  void multiProperty() throws Exception {
     Module multiProperty = new Module();
     multiProperty.addProperty(new MultiProperty<>("key", 1, 2, 3));
     modules.add(multiProperty);
@@ -124,44 +90,10 @@ class XmlExporterTest {
   }
 
   /**
-   * Test against multiple properties containing float values.
-   */
-  @Test
-  void multiPropertyFloat() throws Exception {
-    Module multiProperty = new Module();
-    multiProperty.addProperty(new MultiProperty<>("key", 0.1, 1.1, 2, 4));
-    modules.add(multiProperty);
-    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
-    assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-        + "<testPath>" + lineSeparator
-        + "  <module>" + lineSeparator
-        + "    <key>0.1, 1.1, 2, 4</key>" + lineSeparator
-        + "  </module>" + lineSeparator
-        + "</testPath>" + lineSeparator, exporter.getOutput(file));
-  }
-
-  /**
-   * Test against multiple properties containing string values.
-   */
-  @Test
-  void multiPropertyString() throws Exception {
-    Module multiProperty = new Module();
-    multiProperty.addProperty(new MultiProperty<>("key", "a", "b", "c"));
-    modules.add(multiProperty);
-    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
-    assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-        + "<testPath>" + lineSeparator
-        + "  <module>" + lineSeparator
-        + "    <key>a, b, c</key>" + lineSeparator
-        + "  </module>" + lineSeparator
-        + "</testPath>" + lineSeparator, exporter.getOutput(file));
-  }
-
-  /**
    * Test against a pair property containing an integer value.
    */
   @Test
-  void pairPropertyInt() throws Exception {
+  void pairProperty() throws Exception {
     Module pairProperty = new Module();
     pairProperty.addProperty(new PairProperty<>("price", 12, "EUR"));
     modules.add(pairProperty);
@@ -173,48 +105,6 @@ class XmlExporterTest {
             + "      <metric>EUR</metric>" + lineSeparator
             + "      <value>12</value>" + lineSeparator
             + "    </price>" + lineSeparator
-            + "  </module>" + lineSeparator
-            + "</testPath>" + lineSeparator,
-        exporter.getOutput(file));
-  }
-
-  /**
-   * Test against a pair property containing a float value.
-   */
-  @Test
-  void pairPropertyFloat() throws Exception {
-    Module pairProperty = new Module();
-    pairProperty.addProperty(new PairProperty<>("price", 12.3, "EUR"));
-    modules.add(pairProperty);
-    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
-    assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-            + "<testPath>" + lineSeparator
-            + "  <module>" + lineSeparator
-            + "    <price>" + lineSeparator
-            + "      <metric>EUR</metric>" + lineSeparator
-            + "      <value>12.3</value>" + lineSeparator
-            + "    </price>" + lineSeparator
-            + "  </module>" + lineSeparator
-            + "</testPath>" + lineSeparator,
-        exporter.getOutput(file));
-  }
-
-  /**
-   * Test against a pair property containing a String value.
-   */
-  @Test
-  void pairPropertyString() throws Exception {
-    Module pairProperty = new Module();
-    pairProperty.addProperty(new PairProperty<>("weight", "1200", "kg"));
-    modules.add(pairProperty);
-    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
-    assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
-            + "<testPath>" + lineSeparator
-            + "  <module>" + lineSeparator
-            + "    <weight>" + lineSeparator
-            + "      <metric>kg</metric>" + lineSeparator
-            + "      <value>1200</value>" + lineSeparator
-            + "    </weight>" + lineSeparator
             + "  </module>" + lineSeparator
             + "</testPath>" + lineSeparator,
         exporter.getOutput(file));

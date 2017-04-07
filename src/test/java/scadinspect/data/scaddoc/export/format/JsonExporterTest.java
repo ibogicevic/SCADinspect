@@ -42,7 +42,7 @@ class JsonExporterTest {
    * Test against a single property containing an integer value.
    */
   @Test
-  void singlePropertyInt() {
+  void singleProperty() {
     Module singleProperty = new Module();
     singleProperty.addProperty(new SingleProperty<>("key", 1));
     modules.add(singleProperty);
@@ -51,34 +51,10 @@ class JsonExporterTest {
   }
 
   /**
-   * Test against a single property containing a float value.
-   */
-  @Test
-  void singlePropertyFloat() {
-    Module singleProperty = new Module();
-    singleProperty.addProperty(new SingleProperty<>("key", 0.1));
-    modules.add(singleProperty);
-    ScadDocuFile file = new ScadDocuFile(null, modules);
-    assertEquals("[{\"key\": 0.1}]", exporter.getOutput(file));
-  }
-
-  /**
-   * Test against a single property containing a string value.
-   */
-  @Test
-  void singlePropertyString() {
-    Module singleProperty = new Module();
-    singleProperty.addProperty(new SingleProperty<>("key", "value"));
-    modules.add(singleProperty);
-    ScadDocuFile file = new ScadDocuFile(null, modules);
-    assertEquals("[{\"key\": \"value\"}]", exporter.getOutput(file));
-  }
-
-  /**
    * Test against multiple properties containing integer values.
    */
   @Test
-  void multiPropertyInt() {
+  void multiProperty() {
     Module multiProperty = new Module();
     multiProperty.addProperty(new MultiProperty<>("key", 1, 2, 3));
     modules.add(multiProperty);
@@ -91,43 +67,10 @@ class JsonExporterTest {
   }
 
   /**
-   * Test against multiple properties containing float values.
-   */
-  @Test
-  void multiPropertyFloat() {
-    Module multiProperty = new Module();
-    multiProperty.addProperty(new MultiProperty<>("key", 0.1, 1.1, 2, 4));
-    modules.add(multiProperty);
-    ScadDocuFile file = new ScadDocuFile(null, modules);
-    assertEquals("[{\"key\": [\n"
-        + "  0.1,\n"
-        + "  1.1,\n"
-        + "  2,\n"
-        + "  4\n"
-        + "]}]", exporter.getOutput(file));
-  }
-
-  /**
-   * Test against multiple properties containing string values.
-   */
-  @Test
-  void multiPropertyString() {
-    Module multiProperty = new Module();
-    multiProperty.addProperty(new MultiProperty<>("key", "a", "b", "c"));
-    modules.add(multiProperty);
-    ScadDocuFile file = new ScadDocuFile(null, modules);
-    assertEquals("[{\"key\": [\n"
-        + "  \"a\",\n"
-        + "  \"b\",\n"
-        + "  \"c\"\n"
-        + "]}]", exporter.getOutput(file));
-  }
-
-  /**
    * Test against a pair property containing an integer value.
    */
   @Test
-  void pairPropertyInt() {
+  void pairProperty() {
     Module pairProperty = new Module();
     pairProperty.addProperty(new PairProperty<>("price", 12, "EUR"));
     modules.add(pairProperty);
@@ -136,37 +79,6 @@ class JsonExporterTest {
         + "  \"metric\": \"EUR\",\n"
         + "  \"value\": 12\n"
         + "}}]", exporter.getOutput(file));
-  }
-
-  /**
-   * Test against a pair property containing a float value.
-   */
-  @Test
-  void pairPropertyFloat() {
-    Module pairProperty = new Module();
-    pairProperty.addProperty(new PairProperty<>("price", 12.3, "EUR"));
-    modules.add(pairProperty);
-    ScadDocuFile file = new ScadDocuFile(null, modules);
-    assertEquals("[{\"price\": {\n"
-        + "  \"metric\": \"EUR\",\n"
-        + "  \"value\": 12.3\n"
-        + "}}]", exporter.getOutput(file));
-  }
-
-  /**
-   * Test against a pair property containing a String value.
-   */
-  @Test
-  void pairPropertyString() {
-    Module pairProperty = new Module();
-    pairProperty.addProperty(new PairProperty<>("weight", "1200", "kg"));
-    modules.add(pairProperty);
-    ScadDocuFile file = new ScadDocuFile(null, modules);
-    assertEquals("[{\"weight\": {\n"
-            + "  \"metric\": \"kg\",\n"
-            + "  \"value\": \"1200\"\n"
-            + "}}]",
-        exporter.getOutput(file));
   }
 
   /**
