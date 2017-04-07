@@ -6,6 +6,7 @@ import java.io.FileReader;
 
 /**
  * Data Model for Issues
+ *
  * @author Tim Walter
  */
 public class Issue {
@@ -23,13 +24,14 @@ public class Issue {
 
     /**
      * Constructor for found issues
-     * @param type Type of the issue
-     * @param sourceFile Path to Source File
-     * @param lineNumber Number of Line of Issue in SCAD File
+     *
+     * @param type            Type of the issue
+     * @param sourceFile      Path to Source File
+     * @param lineNumber      Number of Line of Issue in SCAD File
      * @param issueIdentifier Name or Identifier for issue
-     * @param description Short Description for issue
+     * @param description     Short Description for issue
      */
-    public Issue (issueType type, String sourceFile, int lineNumber, String issueIdentifier, String description) {
+    public Issue(issueType type, String sourceFile, int lineNumber, String issueIdentifier, String description) {
         this.type = type;
         this.sourceFile = sourceFile;
         this.lineNumber = lineNumber;
@@ -37,7 +39,7 @@ public class Issue {
         this.description = description;
 
         // Set Code Snippet if File is declared
-        if(sourceFile != null) {
+        if (sourceFile != null) {
             this.setCodeSnippet();
         }
     }
@@ -70,24 +72,22 @@ public class Issue {
     }
 
     /* Set file name and code snippet after issue is instantiated */
-    public void setSourceFile (String filename) {
+    public void setSourceFile(String filename) {
         this.sourceFile = filename;
         this.setCodeSnippet();
     }
+
     private void setCodeSnippet() {
-        if(this.lineNumber != 0) {
+        if (this.lineNumber != 0) {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(this.sourceFile));
                 String line = "";
 
-
-
-                for(int i = 0; i < this.lineNumber; i++) {
+                for (int i = 0; i < this.lineNumber; i++) {
                     line = reader.readLine();
                 }
 
                 this.codeSnippet = line;
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
