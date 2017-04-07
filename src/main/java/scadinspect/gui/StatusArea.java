@@ -89,13 +89,17 @@ public class StatusArea extends BorderPane {
 
   public void setProgress(float progress, boolean visible) {
     this.progress = progress;
-    progressBar.setProgress(progress);
-    progressBar.setVisible(visible);
+    Platform.runLater(() -> {
+      progressBar.setProgress(progress);
+      progressBar.setVisible(visible);
+    });
   }
 
   public void setMessage(String text) {
-    textMessage.setText(text);
-    textMessage.setVisible(true);
+    Platform.runLater(() -> {
+      textMessage.setText(text);
+      textMessage.setVisible(true);
+    });
   }
 
 
