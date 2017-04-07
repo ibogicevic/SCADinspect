@@ -1,7 +1,15 @@
 package scadinspect.gui;
 
 import java.io.InputStream;
+import java.nio.file.attribute.PosixFilePermission;
+import java.util.prefs.Preferences;
 
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import scadinspect.control.ProjectHandling;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
@@ -18,25 +26,27 @@ import javafx.scene.image.ImageView;
 public class ToolbarArea extends ToolBar {
 
     // initialize buttons
-    private Button openProjectFileButton = new Button("Open file");
-    private Button openProjectFolderButton = new Button("Open folder");
-    private Button closeProjectButton = new Button("Close");
-    private Button refreshButton = new Button("Refresh");
-    private Button exportButton = new Button("Export");
+    VBox vbox = new VBox();
+    Pane seperatorPane = new Pane();
+
+    private MenuItem openFileButton = new MenuItem("Open file", loadIcon("open-folder-outline"));
+    private MenuItem openFolderButton = new MenuItem("Open folder", loadIcon("open-folder-outline"));
+    private SplitMenuButton openProjectButton = new SplitMenuButton(openFileButton, openFolderButton);
+    private Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
     private Button settingsButton = new Button("Settings");
-    private Button helpButton = new Button("Help");
-    private Button aboutButton = new Button("About");
-    private Button exitButton = new Button("Exit");
+    private Hyperlink helpLink = new Hyperlink("Help");
+    private Hyperlink aboutLink = new Hyperlink("About");
+    private Separator separator = new Separator();
+
 
     /**
      * Disable buttons when no project is open
      *
      * @param value true if buttons shall be disabled (no open project)
      */
-    public void setButtonsDisabled(boolean value) {
-        closeProjectButton.setDisable(value);
-        refreshButton.setDisable(value);
-        exportButton.setDisable(value);
+    public void disableButtons(boolean value) {
+
+
     }
 
     /**
@@ -50,6 +60,14 @@ public class ToolbarArea extends ToolBar {
         ImageView imageView = new ImageView(image);
         return imageView;
     }
+    private ImageView loadResizedIcon(String fileName) {
+        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
+        Image image = new Image(inputStream);
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(12);
+        imageView.setFitWidth(12);
+        return imageView;
+    }
 
     /**
      * Constructor of ToolbarArea
@@ -58,39 +76,95 @@ public class ToolbarArea extends ToolBar {
         // instanciate classes
         ProjectHandling projectHandler = new ProjectHandling();
 
+
+        // configure open button
+        openProjectButton.setGraphic(loadIcon("open-folder-outline"));
+        // Read settings
+        if (userPrefs.getInt("SET_OPENBUTTON", 0) == 0) {
+            openProjectButton.setText("Open file");
+            openProjectButton.setOnAction(event -> projectHandler.openProjectFile());
+        } else {
+            openProjectButton.setText("Open Folder");
+            openProjectButton.setOnAction(event -> projectHandler.openProjectFolder());
+        }
+        openFolderButton.setOnAction(e -> {
+            userPrefs.putInt("SET_OPENBUTTON", 1);
+            openProjectButton.setText("Open Folder");
+            openProjectButton.setOnAction(event -> projectHandler.openProjectFolder());
+        });
+        openFileButton.setOnAction(e -> {
+            userPrefs.putInt("SET_OPENBUTTON", 0);
+            openProjectButton.setText("Open File");
+            openProjectButton.setOnAction(event -> projectHandler.openProjectFile());
+        });
+
         // set button icons
-        openProjectFileButton.setGraphic(loadIcon("open-folder-outline"));
-        openProjectFolderButton.setGraphic(loadIcon("open-folder-outline"));
-        closeProjectButton.setGraphic(loadIcon("cross-mark-on-a-black-circle-background"));
-        refreshButton.setGraphic(loadIcon("refresh-page-option"));
-        exportButton.setGraphic(loadIcon("text-file"));
         settingsButton.setGraphic(loadIcon("cog-wheel-silhouette"));
-        helpButton.setGraphic(loadIcon("question-sign"));
-        aboutButton.setGraphic(loadIcon("information-symbol"));
-        exitButton.setGraphic(loadIcon("sign-out-option"));
+        helpLink.setGraphic(loadResizedIcon("help-icon"));
+        aboutLink.setGraphic(loadResizedIcon("about-icon"));
+
         // status of buttons
-        setButtonsDisabled(true);
-        // actionlisteners
-        openProjectFileButton.setOnAction(e -> projectHandler.openProjectFile());
-        openProjectFolderButton.setOnAction(e -> projectHandler.openProjectFolder());
-        closeProjectButton.setOnAction(e -> projectHandler.closeProject());
-        refreshButton.setOnAction(e -> Main.getInstance().statusArea.simulateProgress());
-        aboutButton.setOnAction(e -> AboutDialog.openDialog());
+        disableButtons(true);
+
+
+        helpLink.setOnAction(e -> {
+            Main.getInstance().greyStack.toFront();
+            Main.getInstance().greyStack.setVisible(true);
+            Main.getInstance().helpPane.modalToFront(true);
+            Main.getInstance().helpPane.switchTour(0);
+        });
+        aboutLink.setOnAction(e -> AboutDialog.openDialog());
         settingsButton.setOnAction(e -> SettingsDialog.openDialog());
-        exportButton.setOnAction(e -> ExportDialog.openDialog());
-        exitButton.setOnAction(e -> Platform.exit());
-      
+        separator = new Separator();
         // add all buttons
-        this.getItems().add(openProjectFileButton);
-        this.getItems().add(openProjectFolderButton);
-        this.getItems().add(closeProjectButton);
-        this.getItems().add(refreshButton);
-        this.getItems().add(new Separator());
-        this.getItems().add(exportButton);
+        this.getItems().add(openProjectButton);
+        this.getItems().add(separator);
         this.getItems().add(settingsButton);
-        this.getItems().add(new Separator());
-        this.getItems().add(helpButton);
-        this.getItems().add(aboutButton);
-        this.getItems().add(exitButton);
+        //this.getItems().add(separator);
+
+        HBox.setHgrow(seperatorPane, Priority.ALWAYS);
+        vbox.getChildren().add(helpLink);
+        vbox.getChildren().add(aboutLink);
+        this.getItems().add(seperatorPane);
+        this.getItems().add(vbox);
     }
+
+
+
+     // this function is necessary to highlight the specific buttons for each tutorial step
+
+    public void switchButtons(Integer button){
+
+
+        switch (button) {
+            case 0: {
+                // hide all buttons except from openFile
+                settingsButton.setVisible(false);
+                separator.setVisible(false);
+                helpLink.setVisible(false);
+                aboutLink.setVisible(false);
+                openProjectButton.setVisible(true);
+
+                //disable all buttons
+                openProjectButton.setMouseTransparent(true);
+                settingsButton.setMouseTransparent(true);
+                break;
+            }
+            case 1: {
+                openProjectButton.setVisible(false);
+                settingsButton.setVisible(true);
+                break;
+            }
+            case 2: {
+                settingsButton.setVisible(false);
+                break;
+            }
+            case 3: {
+                settingsButton.setVisible(false);
+                break;
+            }
+
+        }
+    }
+
 }
