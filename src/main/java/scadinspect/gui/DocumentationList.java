@@ -1,5 +1,8 @@
 package scadinspect.gui;
 
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.List;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -18,7 +21,7 @@ public class DocumentationList {
   //Data structure with associated data for documentation List
   private final ObservableList<String> docData = FXCollections.observableArrayList();
 
-  private static int columnCount = 1;
+  private static int columnCount = 0;
   private static int rowCount = 0;
 
   //Generate the list which is shown withing the table
@@ -41,7 +44,8 @@ public class DocumentationList {
   }
 
   private void loadDocList(){
-    List<ScadDocuFile> docList = Main.getInstance().getDocuFiles();
+   // List<ScadDocuFile> docList = Main.getInstance().getDocuFiles();
+    List<ScadDocuFile> docList = dummyData();
     for(ScadDocuFile file : docList){
       addData(file.getPath().toString());
     }
@@ -61,4 +65,14 @@ public class DocumentationList {
     }
   }
   */
+  private List<ScadDocuFile> dummyData(){
+    List <ScadDocuFile> dummy = new LinkedList<>();
+    try {
+      dummy.add(new ScadDocuFile(Paths.get("./spec/samples/sample.scad")));
+      dummy.add(new ScadDocuFile(Paths.get("./spec/samples/sample2.scad")));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return  dummy;
+  }
 }
