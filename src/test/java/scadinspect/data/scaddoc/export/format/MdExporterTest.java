@@ -1,7 +1,7 @@
-import static org.junit.jupiter.api.Assertions.*;
+package scadinspect.data.scaddoc.export.format;
 
 /**
- * Created by til on 31.03.17.
+ * Created by desyon on 07.04.2017.
  */
 class MdExporterTest {
 

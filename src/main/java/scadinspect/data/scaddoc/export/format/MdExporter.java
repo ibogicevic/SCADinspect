@@ -20,8 +20,9 @@ public class MdExporter implements Exporter {
     Collection<Module> modules = file.getModules();
 
     StringBuilder sb = new StringBuilder();
-    sb.append("# Parts Documentation");
-    sb.append(lineSeparator);
+
+    insertHeader(sb);
+
     sb.append("## ");
     sb.append(file.getPath().toString());
     sb.append(lineSeparator);
@@ -72,5 +73,10 @@ public class MdExporter implements Exporter {
   @Override
   public String getOutput(Collection<ScadDocuFile> files) throws Exception {
     return null;
+  }
+
+  private void insertHeader(StringBuilder sb) {
+    sb.append("# Parts Documentation");
+    sb.append(System.lineSeparator());
   }
 }

@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import scadinspect.control.LogHandler;
@@ -14,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import scadinspect.data.scaddoc.Module;
 
 /**
  * Startup JavaFX frame
@@ -37,7 +37,7 @@ public class Main extends Application {
     /**
      * Ratio between window height and screen height *
      */
-    private static final double WINDOW_HEIGHT = 0.25;
+    private static final double WINDOW_HEIGHT = 0.33;
 
     /**
      * Pre-configured logger that outputs to  *
@@ -57,6 +57,8 @@ public class Main extends Application {
     public TabArea tabArea = new TabArea();
     public StatusArea statusArea = new StatusArea();
 
+    public BottomArea bottomArea = new BottomArea();
+
     // list of open scad-files
     private List<File> fileList = new ArrayList<>();
 
@@ -65,33 +67,22 @@ public class Main extends Application {
      */
     public String currentProject = null;
 
-
-  /**
-   * holds the modules found by propertyParser
-   */
-  private List<Module> modules;
-
-  public List<Module> getModules() {
-    return modules;
-  }
-
-  public void setModules(List<Module> modules) {
-    this.modules = modules;
-  }
-
-  // remember stage for subwindows
-  private Stage primaryStage;
+    // remember stage for subwindows
+    private StackPane mainStack;
+    public StackPane greyStack;
+    public GreyPane helpPane;
+    public GreyPane greyPane;
+    private Stage primaryStage;
 
     public Stage getPrimaryStage() {
         return this.primaryStage;
     }
-
     /**
      * Gives the list of currently open scad-files
      * @return list of scad-files currently open
      */
     public List<File> getFileList() {
-    	return fileList;
+        return fileList;
     }
 
     @Override
@@ -118,15 +109,29 @@ public class Main extends Application {
         BorderPane tabPane = new BorderPane();
         tabPane.setCenter(tabArea);
 
+
+        // Status and BottomArea
+        BorderPane bottomPane = new BorderPane();
+        bottomPane.setCenter(bottomArea);
+        bottomPane.setBottom(statusArea);
+
         // add all areas
         BorderPane mainPane = new BorderPane();
         mainPane.setTop(toolbarArea);
         mainPane.setCenter(tabPane);
-        mainPane.setBottom(statusArea);
+        mainPane.setBottom(bottomPane);
+
+        // main stack
+        mainStack = new StackPane();
+        greyPane = new GreyPane(false);
+        helpPane = new GreyPane(true);
+        greyStack = new StackPane(greyPane, helpPane);
+        greyStack.setVisible(false);
+        mainStack.getChildren().addAll(greyStack, mainPane);
 
         // show main pane
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        Scene scene = new Scene(mainPane, screenBounds.getWidth(), WINDOW_HEIGHT * screenBounds.getHeight(), true);
+        Scene scene = new Scene(mainStack, screenBounds.getWidth(), WINDOW_HEIGHT * screenBounds.getHeight(), true);
         primaryStage.setTitle(APPNAME);
         primaryStage.setScene(scene);
         primaryStage.setY(0.7 * screenBounds.getHeight());
