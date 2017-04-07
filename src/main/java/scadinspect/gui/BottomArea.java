@@ -28,7 +28,6 @@ public class BottomArea extends ToolBar{
 
     //initialize SeparatorPane to align Buttons
     private Pane separatorPane = new Pane();
-    private Separator separator = new Separator();
 
     private ImageView loadIcon(String fileName) {
         InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
@@ -83,7 +82,6 @@ public class BottomArea extends ToolBar{
         switch (button){
             case 0: {
                 refreshButton.setVisible(false);
-                separator.setVisible(false);
                 exportButton.setVisible(false);
                 closeProjectButton.setVisible(false);
 
