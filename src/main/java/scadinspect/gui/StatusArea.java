@@ -17,9 +17,9 @@ import javafx.scene.layout.BorderPane;
 
 public class StatusArea extends BorderPane {
 
-  private static StatusArea instance = null;
-  private static Label textMessage;
-  private static ProgressBar progressBar = null;
+  private StatusArea instance = null;
+  private Label textMessage;
+  private ProgressBar progressBar = null;
   private float progress;
 
   /**
@@ -79,7 +79,7 @@ public class StatusArea extends BorderPane {
   }
 
 
-  public static String getMessage() {
+  public String getMessage() {
     return textMessage.getText();
   }
 
