@@ -12,34 +12,48 @@ import javafx.scene.control.TableView;
  */
 public class TabArea extends TabPane {
 
-  IssueList issueList = new IssueList();
-  DocumentationList documentationList = new DocumentationList();
+    IssueList issueList = new IssueList();
+    DocumentationList documentationList = new DocumentationList();
 
-  public TabArea() {
-    TableView issue = generateIssueTable(issueList);
-    TableView documentations = generateDocTable(documentationList);
+    private Tab issues;
+    private Tab documentation;
 
-    //issue tab
-    Tab issues = new Tab();
-    issues.setText("Issues");
-    issues.setContent(issue); //SET CONTENT FOR issueArea HERE
+    public TabArea() {
+        TableView issue = generateIssueTable(issueList);
+        TableView documentations = generateDocTable(documentationList);
 
-    //documentation tab
-    Tab documentation = new Tab();
-    documentation.setText("Documentation");
-    documentation.setContent(documentations); //SET CONTENT FOR documentationArea HERE
+        // issue tab
+        issues = new Tab();
+        issues.setText("Issues");
+        issues.setContent(issue); //SET CONTENT FOR issueArea HERE
 
-    this.getTabs().add(issues);
-    this.getTabs().add(documentation);
-  }
+        // documentation tab
+        documentation = new Tab();
+        documentation.setText("Documentation");
+        documentation.setContent(documentations); //SET CONTENT FOR documentationArea HERE
 
-  private TableView generateIssueTable(IssueList issueList) {
-    TableView table = issueList.showList();
-    return table;
-  }
 
-  private TableView generateDocTable(DocumentationList documentationList) {
-    TableView table = documentationList.generateList();
-    return table;
-  }
+        this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+        this.getTabs().add(issues);
+        this.getTabs().add(documentation);
+    }
+
+    private TableView generateIssueTable(IssueList issueList) {
+        TableView table = issueList.showList();
+        return table;
+    }
+
+    private TableView generateDocTable(DocumentationList documentationList) {
+        TableView table = documentationList.generateList();
+        return table;
+    }
+
+    /* For Help Modal get Issue and Documentation Tab */
+    public Tab getIssues() {
+        return issues;
+    }
+
+    public Tab getDocumentation() {
+        return documentation;
+    }
 }
