@@ -22,18 +22,19 @@ import javafx.stage.FileChooser;
 import scadinspect.control.io.FileSearchRunnable;
 
 /**
- * 
+ * Project Handler for loading and closing paths and files.
+ * Stores the loaded files in a file list.
  * @author bilir
  *
  */
 public class ProjectHandling {
 
   /**
-   * TODO: Closing of the Project when clicked on "Open folder" and a new directory is choosen else
+   * TODO: Closing of the Project when clicked on "Open folder" and a new directory is chosen else
    * the current path remains and list is still loaded
    */
 
-  // Definiton of the chooser
+  // Definition of the chooser
   private final DirectoryChooser directoryChooser = new DirectoryChooser();
   private final FileChooser fileChooser = new FileChooser();
   private final long FILE_READ_TIMEOUT = 5000;
@@ -78,7 +79,7 @@ public class ProjectHandling {
     /**
      * Checks if a directory is selected or the cancel button is clicked If cancel is clicked a null
      * is set into projectDirectory, else it sets the Path and add the files recursively with the
-     * contents of the subfolder to the fileList
+     * contents of the sub-folder to the fileList
      */
     if (projectDirectory != null) {
       setProjectPath(projectDirectory);
@@ -111,23 +112,22 @@ public class ProjectHandling {
   }
 
   /**
-   * Checks if a path for the project is set, if so it closes the last open project and then sets
-   * the pathname in the title and enables the buttons
+   * Closes the last open project and then sets
+   * the new pathname, the new project and enables the buttons
    * 
-   * @param projectPath
+   * @param projectPath The project path for the current project
    */
   private void setProjectPath(File projectPath) {
     closeProject();
-    if (projectPath != null) {
-      setCurrentProject(projectPath.getAbsolutePath());
-      Main.getInstance().toolbarArea.setButtonsDisabled(false);
-    }
+    setCurrentProject(projectPath.getAbsolutePath().toString());
+    Main.getInstance().toolbarArea.disableButtons(false);
+    Main.getInstance().bottomArea.disableButtons(false);
   }
 
   /**
-   * Sets the current project path in the Title and the App name
+   * Sets the current project path in the Title and the app name
    * 
-   * @param rootPath
+   * @param rootPath The path for the current project
    */
   private void setCurrentProject(String rootPath) {
     // update window title
@@ -137,7 +137,7 @@ public class ProjectHandling {
   }
   
   /**
-   * Gets the files in the current directory and it subfolders. Also it adds only .scad files to the
+   * Gets the files in the current directory and it sub-folders. Also it adds only .scad files to the
    * list
    * 
    * @param dir
@@ -208,8 +208,8 @@ public class ProjectHandling {
    * the fileList.
    */
   public void closeProject() {
-    Main.getInstance().toolbarArea.setButtonsDisabled(true);
-    if (Main.getInstance().isProjectOpen() == true) {
+    Main.getInstance().toolbarArea.disableButtons(true);
+      if (Main.getInstance().isProjectOpen()) {
       Main.getInstance().setCurrentProject("");
       Main.getInstance().getPrimaryStage().setTitle(Main.APPNAME);
       Main.getInstance().getFileList().clear();
