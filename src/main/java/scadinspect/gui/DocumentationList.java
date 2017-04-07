@@ -1,14 +1,15 @@
 package scadinspect.gui;
 
+import java.util.List;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.scene.control.cell.PropertyValueFactory;
-import scadinspect.data.scaddoc.Documentation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+
 import java.util.ArrayList;
+import scadinspect.data.scaddoc.ScadDocuFile;
 
 public class DocumentationList {
   //TableView of Documentation List
@@ -22,7 +23,13 @@ public class DocumentationList {
 
   //Generate the list which is shown withing the table
   public TableView generateList () {
+    
+
     docList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+    addColumn(columnCount, "Path");
+    loadDocList();
+
     return docList;
   }
 
@@ -33,6 +40,18 @@ public class DocumentationList {
     columnCount++;
   }
 
+  private void loadDocList(){
+    List<ScadDocuFile> docList = Main.getInstance().getDocuFiles();
+    for(ScadDocuFile file : docList){
+      addData(file.getPath().toString());
+    }
+  }
+
+  private void addData (String Data) {
+    docList.getItems().add(
+        FXCollections.observableArrayList(Data)
+    );
+  }
 
   //add the Data (currently as ArrayList) to the observableList
   /*
