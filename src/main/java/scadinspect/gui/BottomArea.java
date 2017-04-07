@@ -70,7 +70,6 @@ public class BottomArea extends ToolBar{
         HBox.setHgrow(separatorPane, Priority.ALWAYS);
         //adding all buttons
         this.getItems().add(refreshButton);
-        this.getItems().add(separator);
         this.getItems().add(separatorPane);
         this.getItems().add(exportButton);
         this.getItems().add(closeProjectButton);
