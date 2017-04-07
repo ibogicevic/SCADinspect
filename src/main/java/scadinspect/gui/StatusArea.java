@@ -6,13 +6,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.BorderPane;
 
-
-import java.util.logging.Level;
-
 /**
- * Area for general status messages and the progress bar (especially for 'refresh' progress).
- * Can currently be activated by clicking the "Refresh" button in the toolbar.
- * (You might need to "Open" a file first to activate the "Refresh" button.)
+ * Area for general status messages and the progress bar (especially for 'refresh' progress). Can
+ * currently be activated by clicking the "Refresh" button in the toolbar. (You might need to "Open"
+ * a file first to activate the "Refresh" button.)
+ *
  * @author David Maier
  * @author Lisa Milius
  */
@@ -42,7 +40,7 @@ public class StatusArea extends BorderPane {
   /**
    * Function for simulating progress over time, using a thread.
    */
-  public void simulateProgress(){
+  public void simulateProgress() {
     textMessage.setText("Refreshing...");
     progressBar.setVisible(true);
 
@@ -60,7 +58,7 @@ public class StatusArea extends BorderPane {
 
     public void run() {
 
-      for (int i = 0; i < 100; i++){
+      for (int i = 0; i < 100; i++) {
         progress += 0.01;
         progressBar.setProgress(progress);
         try {
@@ -74,10 +72,31 @@ public class StatusArea extends BorderPane {
       //textMessage.setVisible(false);
 
       Platform.runLater(() -> {
-          textMessage.setText("Done refreshing!");
+        textMessage.setText("Done refreshing!");
       });
 
     }
   }
+
+
+  public static String getMessage() {
+    return textMessage.getText();
+  }
+
+  public float getProgress() {
+    return progress;
+  }
+
+  public void setProgress(float progress, boolean visible) {
+    this.progress = progress;
+    progressBar.setProgress(progress);
+    progressBar.setVisible(visible);
+  }
+
+  public void setMessage(String text) {
+    textMessage.setText(text);
+    textMessage.setVisible(true);
+  }
+
 
 }

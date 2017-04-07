@@ -17,25 +17,33 @@ import scadinspect.parser.ParserResult;
  */
 public class CodeAnalyzer {
 
-  public static void refresh(){
+  public static void refresh() {
 
-    List<File> fileList = Main.getInstance().getFileList();
+    new Thread(() -> {
+      List<File> fileList = Main.getInstance().getFileList();
 
-    Map<File, ParserResult> fileParserResultMap = new HashMap<>();
+      Map<File, ParserResult> fileParserResultMap = new HashMap<>();
 
-    fileList.forEach(file -> {
-      try {
-        fileParserResultMap.put(file, Parser.parse(new BufferedReader(new FileReader(file))));
-      } catch (FileNotFoundException e) {
-        e.printStackTrace();
-      }
+      fileList.forEach(file -> {
+        try {
+          fileParserResultMap.put(file, Parser.parse(new BufferedReader(new FileReader(file))));
+        } catch (FileNotFoundException e) {
+          e.printStackTrace();
+        }
+      });
 
+      Main.getInstance().statusArea.setMessage("Issues found: "
+          + fileParserResultMap.values().stream().map(r -> r.getIssues().size())
+          .reduce(Integer::sum).orElse(-1));
 
-    });
+      Main.getInstance().tabArea.issueList.clearList();
 
-    fileList.forEach(file -> {
-      Main.getInstance().tabArea.issueList.addDataToTable(new ArrayList<>(fileParserResultMap.get(file).getIssues()));
-    });
+      fileList.forEach(file -> {
+        Main.getInstance().tabArea.issueList
+            .addDataToTable(new ArrayList<>(fileParserResultMap.get(file).getIssues()));
+      });
+
+    }).start();
 
   }
 
