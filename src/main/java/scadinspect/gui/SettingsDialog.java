@@ -65,7 +65,7 @@ public class SettingsDialog {
             autorefresh.setSelected(false);
         }
         // Logging Level
-        loggingCombo.getSelectionModel().select(userPrefs.getInt("SET_LOGGING_LEVEL", 0));
+        loggingCombo.getSelectionModel().select(userPrefs.getInt("LOG_LEVEL", 0));
 
 
         // Load contents in dialog
@@ -85,7 +85,7 @@ public class SettingsDialog {
             }
 
             // Logging
-            userPrefs.putInt("SET_LOGGING_LEVEL", loggingCombo.getSelectionModel().getSelectedIndex());
+            userPrefs.putInt("LOG_LEVEL", loggingCombo.getSelectionModel().getSelectedIndex());
 
         }
         Main.getInstance().greyStack.toBack();

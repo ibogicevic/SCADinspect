@@ -21,6 +21,7 @@ public class LogHandler extends Logger {
   private final long MAX_FILE_SIZE = 50000;     // Max file size in bytes -> 50.000 characters
   private final String logFileNameBase = "log_";
   private int logFileCount;
+  private static Handler fileHandler;
 
   private LogHandler() throws IOException, BackingStoreException {
     super(Logger.GLOBAL_LOGGER_NAME, null);
@@ -32,6 +33,16 @@ public class LogHandler extends Logger {
   }
 
   private void init() {
+
+    // Read and set log level from preferences
+    Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
+    Level logLevel = null;
+
+    Integer set_level =  userPrefs.getInt("LOG_LEVEL",0);
+    logLevel = Level.parse(set_level.toString());
+
+    this.setLevel(logLevel);
+
 
     // set number of log files
     logFileCount = getNumberOfLogFiles(new File("."));
@@ -46,29 +57,20 @@ public class LogHandler extends Logger {
     if (handlers[0] instanceof ConsoleHandler) {
       rootLogger.removeHandler(handlers[0]);
     }
+      if(!(set_level == 0)){
+        // setup file output
+        fileHandler = null;
+        try {
+          fileHandler = new FileHandler(logFileNameBase + logFileCount + ".log", true);
+        } catch (IOException e) {
+          this.warning("Could not get file handler.");
+        }
+        fileHandler.setFormatter(new SimpleFormatter());
 
-    // setup file output
-    Handler fileHandler = null;
-    try {
-      fileHandler = new FileHandler(logFileNameBase + logFileCount + ".log", true);
-    } catch (IOException e) {
-      this.warning("Could not get file handler.");
+
+          this.addHandler(fileHandler);
     }
-    fileHandler.setFormatter(new SimpleFormatter());
-    this.addHandler(fileHandler);
 
-    // Read and set log level from preferences
-    Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
-    Level logLevel = Level.SEVERE;
-
-    try {
-      if (userPrefs.nodeExists("LOG_LEVEL")) {
-        logLevel = Level.parse(userPrefs.get("LOG_LEVEL", "INFO"));
-      }
-    } catch (BackingStoreException | IllegalArgumentException e) {
-      this.warning("Could not get log level. Set level to SEVERE.");
-    }
-    this.setLevel(logLevel);
   }
 
   private int getNumberOfLogFiles(File folder) {
@@ -88,6 +90,13 @@ public class LogHandler extends Logger {
     }
     return numberOfLogs;
   }
+
+
+    public static void shutdown() {
+    if(fileHandler!=null)
+            fileHandler.close();
+
+    }
 
   private boolean lastLogTooBig() {
     long size = new File(logFileNameBase + logFileCount + ".log").length();
