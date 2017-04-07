@@ -6,15 +6,14 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
-import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 
 import scadinspect.gui.Main;
@@ -83,30 +82,42 @@ public class ProjectHandling {
      */
     if (projectDirectory != null) {
       setProjectPath(projectDirectory);
+        System.out.println(Thread.currentThread().getName());
+            
       Supplier<Boolean> confirmLongRead = () -> {
-          System.out.println("Confirming");
           try {
-              Task<Boolean> task = new Task<Boolean>() {
-                  @Override
-                  protected Boolean call() throws Exception {
-                      System.out.println("Creating alert");
-                      Alert alert = new Alert(AlertType.CONFIRMATION);
-                      alert.setTitle("Open files");
-                      alert.setHeaderText("File loading taking longer then expected");
-                      alert.setContentText("Do you want to continue?");
-                      Optional<ButtonType> b = alert.showAndWait();
-                      return b.isPresent() && b.get() == ButtonType.OK;
-                  }
-              };
-              Thread t = new Thread(task);
-              t.start();
-              t.join();
-              return task.get();
+              final FutureTask<Boolean> query = new FutureTask<>(() -> {
+                  System.out.println(Thread.currentThread().getName());
+                  System.out.println("Creating alert");
+                  Alert alert = new Alert(AlertType.CONFIRMATION);
+                  System.out.println("Alert created");
+                  alert.setTitle("Open files");
+                  alert.setHeaderText("File loading taking longer then expected");
+                  alert.setContentText("Do you want to continue?");
+                  System.out.println("Creating alert");
+                  Optional<ButtonType> b = alert.showAndWait();
+                  System.out.println("Done show and wait");
+                  return b.isPresent() && b.get() == ButtonType.OK;
+              });
+              System.out.println("Confirming " + Thread.currentThread().getName());
+              Platform.runLater(() -> {
+                  System.out.println("Running query " + Thread.currentThread().getName());
+                  query.run();
+              });
+              System.out.println("Waiting for query " + Thread.currentThread().getName());
+              return query.get();
           } catch (InterruptedException | ExecutionException ex) {
               return false;
           }
+              
       };
-      addFiles(projectDirectory, confirmLongRead);
+      addFiles(projectDirectory, confirmLongRead, (files) -> {
+          System.out.println("Parsed files: " + files);
+          if(files != null) {
+              Main.getInstance().getFileList().addAll(files);
+          }
+      });
+      
     }
   }
 
@@ -143,15 +154,28 @@ public class ProjectHandling {
    * @param dir
    * @param onTimeout
    */
-    private void addFiles(File dir, Supplier<Boolean> onTimeout) {
-      try {
-          Collection<File> files = getFiles(dir, f -> f.getName().toLowerCase().endsWith(".scad"), true, FILE_READ_TIMEOUT, onTimeout);
-          Main.getInstance().getFileList().addAll(files);
-      } catch (IOException ex) {
-          Logger.getLogger(ProjectHandling.class.getName()).log(Level.SEVERE, null, ex);
-      }
+    private void addFiles(File dir, Supplier<Boolean> onTimeout, Consumer<Collection<File>> onDone) {
+        new Thread(() -> {
+            try {
+                Collection<File> files = getFiles(dir, f -> f.getName().toLowerCase().endsWith(".scad"), true, FILE_READ_TIMEOUT, onTimeout);
+                onDone.accept(files);
+            } catch (IOException ex) {
+                Logger.getLogger(ProjectHandling.class.getName()).log(Level.SEVERE, null, ex);
+                onDone.accept(null);
+            }
+        }).start();
     }
   
+    /**
+     * Blocking call
+     * @param dir
+     * @param filter
+     * @param recursive
+     * @param timeout
+     * @param onTimeout
+     * @return
+     * @throws IOException 
+     */
     private Collection<File> getFiles(File dir, FileFilter filter, boolean recursive, long timeout, Supplier<Boolean> onTimeout) throws IOException{
         try {
             FileSearchRunnable fsr = new FileSearchRunnable(dir, filter, recursive);

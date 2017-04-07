@@ -39,14 +39,12 @@ public class FileSearchRunnable extends PausableRunnable {
     public boolean executeStep() {
         if (!check.isEmpty()) {
             File dir = check.poll().getAbsoluteFile();
-            System.out.println(dir);
             File[] discoveredFiles = dir.listFiles(filter);
             if (discoveredFiles == null) {
                 //No read permission or directory is empty
                 return false;
             }
             discovered.addAll(Arrays.asList(discoveredFiles));
-            System.out.println("Files: " + discovered.size());
             if (recursive) {
                 check.addAll(Arrays.asList(dir.listFiles(f -> f.isDirectory())));
             }

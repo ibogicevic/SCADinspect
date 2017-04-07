@@ -6,7 +6,6 @@
 package scadinspect.control.io;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import scadinspect.gui.Main;
 
 /**
@@ -23,7 +22,6 @@ public abstract class PausableRunnable implements Runnable {
         while (state <= 1) {
             checkPaused();
             if(executeStep()) {
-                System.out.println("We are done here");
                 state = 2;
             }
         }
