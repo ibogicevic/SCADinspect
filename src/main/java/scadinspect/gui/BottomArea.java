@@ -64,6 +64,8 @@ public class BottomArea extends ToolBar{
         refreshButton.setOnAction(e -> {
           //Main.getInstance().statusArea.simulateProgress();
           CodeAnalyzer.refresh();
+            //TODO make thread
+            Main.getInstance().tabArea.getDocumentationList().clearList();
         });
         // TODO: export Button action
 
