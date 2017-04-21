@@ -33,28 +33,28 @@ class JsonExporterTest {
    * @result Ensure the export is failsafe.
    */
   @Test
-  void emptyList() {
+  void emptyList() throws Exception{
     ScadDocuFile file = new ScadDocuFile(null, modules);
-    assertEquals("[]", exporter.getOutput(file));
+    assertEquals("[]", new String(exporter.getOutput(file), "UTF-8"));
   }
 
   /**
    * Test against a single property containing an integer value.
    */
   @Test
-  void singleProperty() {
+  void singleProperty() throws Exception{
     Module singleProperty = new Module();
     singleProperty.addProperty(new SingleProperty<>("key", 1));
     modules.add(singleProperty);
     ScadDocuFile file = new ScadDocuFile(null, modules);
-    assertEquals("[{\"key\": 1}]", exporter.getOutput(file));
+    assertEquals("[{\"key\": 1}]", new String(exporter.getOutput(file), "UTF-8"));
   }
 
   /**
    * Test against multiple properties containing integer values.
    */
   @Test
-  void multiProperty() {
+  void multiProperty() throws Exception{
     Module multiProperty = new Module();
     multiProperty.addProperty(new MultiProperty<>("key", 1, 2, 3));
     modules.add(multiProperty);
@@ -63,14 +63,14 @@ class JsonExporterTest {
         + "  1,\n"
         + "  2,\n"
         + "  3\n"
-        + "]}]", exporter.getOutput(file));
+        + "]}]", new String(exporter.getOutput(file), "UTF-8"));
   }
 
   /**
    * Test against a pair property containing an integer value.
    */
   @Test
-  void pairProperty() {
+  void pairProperty() throws Exception{
     Module pairProperty = new Module();
     pairProperty.addProperty(new PairProperty<>("price", 12, "EUR"));
     modules.add(pairProperty);
@@ -78,14 +78,14 @@ class JsonExporterTest {
     assertEquals("[{\"price\": {\n"
         + "  \"metric\": \"EUR\",\n"
         + "  \"value\": 12\n"
-        + "}}]", exporter.getOutput(file));
+        + "}}]", new String(exporter.getOutput(file), "UTF-8"));
   }
 
   /**
    * Test against the defined example Json
    */
   @Test
-  void sampleJSON() {
+  void sampleJSON() throws Exception{
     Module wheel = new Module();
     wheel.addProperty(new SingleProperty<>("part", "Wheel"));
     wheel.addProperty(new PairProperty<>("price", 100, "EUR"));
@@ -139,6 +139,6 @@ class JsonExporterTest {
             + "    \"url\": \"https://example.com\"\n"
             + "  }\n"
             + "]",
-        exporter.getOutput(file));
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 }
