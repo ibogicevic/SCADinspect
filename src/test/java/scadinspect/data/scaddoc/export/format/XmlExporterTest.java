@@ -15,7 +15,7 @@ import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
- * @author desyon on 3/24/17.
+ * @author Desyon on 3/24/17.
  */
 class XmlExporterTest {
 

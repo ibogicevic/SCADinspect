@@ -14,7 +14,7 @@ import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
- * @author simon, desyon on 3/17/17.
+ * @author simon, Desyon on 3/17/17.
  */
 class JsonExporterTest {
 

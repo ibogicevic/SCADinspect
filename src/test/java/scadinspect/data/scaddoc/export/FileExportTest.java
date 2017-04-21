@@ -23,7 +23,7 @@ import scadinspect.data.scaddoc.properties.Property;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
- * @author desyon, eric on 3/23/17.
+ * @author Desyon, eric on 3/23/17.
  */
 class FileExportTest {
 

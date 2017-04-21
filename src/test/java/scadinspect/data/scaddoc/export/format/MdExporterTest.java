@@ -15,7 +15,7 @@ import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
- * @author desyon on 07.04.2017.
+ * @author Desyon on 07.04.2017.
  */
 class MdExporterTest {
 
