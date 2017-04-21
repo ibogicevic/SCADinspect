@@ -73,7 +73,7 @@ public class AboutDialog {
     final static String Text1 =
             "Static code analysis and javadoc-like parts documentation for your OpenSCAD-Files \n" +
                     "\n" +
-                    "© 2017 Licensed under GNU General Public License v2.0\n" +
+                    "© 2017 Licensed under GNU General Public License v3.0\n" +
                     "Visit https://github.com/ibogicevic/SCADinspect for more information\n" +
                     "\n" +
                     "Contributors:\n" +

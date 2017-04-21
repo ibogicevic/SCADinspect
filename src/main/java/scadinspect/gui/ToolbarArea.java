@@ -1,22 +1,21 @@
 package scadinspect.gui;
 
 import java.io.InputStream;
-import java.nio.file.attribute.PosixFilePermission;
 import java.util.prefs.Preferences;
-
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Separator;
+import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.ToolBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import scadinspect.control.CodeAnalyzer;
 import scadinspect.control.ProjectHandling;
-import javafx.application.Platform;
-import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
-import javafx.scene.control.ToolBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * Toolbar at the top of the main window
@@ -82,20 +81,42 @@ public class ToolbarArea extends ToolBar {
         // Read settings
         if (userPrefs.getInt("SET_OPENBUTTON", 0) == 0) {
             openProjectButton.setText("Open file");
-            openProjectButton.setOnAction(event -> projectHandler.openProjectFile());
+            openProjectButton.setOnAction(event -> {
+              projectHandler.openProjectFile();
+              CodeAnalyzer.refresh();
+            });
         } else {
-            openProjectButton.setText("Open Folder");
-            openProjectButton.setOnAction(event -> projectHandler.openProjectFolder());
+            openProjectButton.setText("Open folder");
+            openProjectButton.setOnAction(event -> {
+              //Loading of multiple files is non blocking
+              projectHandler.openProjectFolder((files) -> {
+                if(files != null) {
+                  Main.getInstance().getFileList().addAll(files);
+                  CodeAnalyzer.refresh();
+                }
+              });
+            });
         }
         openFolderButton.setOnAction(e -> {
             userPrefs.putInt("SET_OPENBUTTON", 1);
-            openProjectButton.setText("Open Folder");
-            openProjectButton.setOnAction(event -> projectHandler.openProjectFolder());
+            openProjectButton.setText("Open folder");
+            openProjectButton.setOnAction(event -> {
+              //Loading of multiple files is non blocking
+              projectHandler.openProjectFolder((files) -> {
+                if(files != null) {
+                  Main.getInstance().getFileList().addAll(files);
+                  CodeAnalyzer.refresh();
+                }
+              });
+            });
         });
         openFileButton.setOnAction(e -> {
             userPrefs.putInt("SET_OPENBUTTON", 0);
-            openProjectButton.setText("Open File");
-            openProjectButton.setOnAction(event -> projectHandler.openProjectFile());
+            openProjectButton.setText("Open file");
+            openProjectButton.setOnAction(event -> {
+              projectHandler.openProjectFile();
+              CodeAnalyzer.refresh();
+            });
         });
 
         // set button icons

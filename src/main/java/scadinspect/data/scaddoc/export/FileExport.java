@@ -9,18 +9,21 @@ import scadinspect.data.scaddoc.export.format.CsvExporter;
 import scadinspect.data.scaddoc.export.format.ExportFormat;
 import scadinspect.data.scaddoc.export.format.Exporter;
 import scadinspect.data.scaddoc.export.format.JsonExporter;
+import scadinspect.data.scaddoc.export.format.MdExporter;
 import scadinspect.data.scaddoc.export.format.XmlExporter;
 
 /**
  * Provides all means to convert a List of Modules into multiple formats of character files.
  * This includes JSON and XML files.
  *
- * @author richteto, desyon, eric on 3/23/17.
+ * @author desyon, richterto, eric on 3/23/17.
  */
 
 public class FileExport {
 
   /**
+   * Returns a file with all data given in the file in the assigned format
+   *
    * @param format of type ExportFormat for desired output
    * @param file List of modules that are saved to a file
    * @param path Path to the location where the XML file should be saved
@@ -44,6 +47,15 @@ public class FileExport {
     }
   }
 
+  /**
+   * Returns a file with all data given in the files in the assigned format
+   *
+   * @param format of type ExportFormat for desired output
+   * @param files List of modules that are saved to a file
+   * @param path Path to the location where the XML file should be saved
+   * @throws FileExportException if some failure during the export. Further information can be in
+   * the init cause.
+   */
   public File save(ExportFormat format, Collection<ScadDocuFile> files, String path)
       throws FileExportException {
     try {
@@ -64,6 +76,12 @@ public class FileExport {
     }
   }
 
+  /**
+   * selects the right exporter for a given format
+   *
+   * @param format value of the enumerator ExportFormat
+   * @return an exporter of the given format or null if the format is invalid
+   */
   private Exporter getExporter(ExportFormat format) {
     Exporter exporter;
 
@@ -75,7 +93,7 @@ public class FileExport {
         exporter = new JsonExporter();
         break;
       case MD:
-        exporter = null;
+        exporter = new MdExporter();
         break;
       case CSV:
         exporter = new CsvExporter();

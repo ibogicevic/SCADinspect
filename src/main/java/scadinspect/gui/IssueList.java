@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Screen;
 import scadinspect.data.analysis.Issue;
+import scadinspect.data.analysis.Issue.issueType;
 
 /**
  * Created by halecket on 17.03.2017.

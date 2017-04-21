@@ -26,7 +26,7 @@ import scadinspect.data.scaddoc.properties.Property;
 public class XmlExporter implements Exporter {
 
   /**
-   * Creates and returns a XML String from the given ScadDocuFile according to the specified
+   * Creates and returns a XML String from the given ScadDocuFile analog to the specified
    * example
    *
    * @param file ScadDocuFile that the Export shall be exported for
