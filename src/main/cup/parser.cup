@@ -91,7 +91,7 @@ start with input;
 input ::=
           /* empty */
         {:  /* TODO build parse tree here */
-            RESULT = new InputNode(); :}
+            RESULT = Input :}
         | TOK_USE:u input:i
         {:  InputNode inputNode = new InputNode(i);
             inputNode.uses.add(u);
