@@ -90,9 +90,11 @@ public class DocumentationList {
           dataRow.put(property.getKey(),value);
         }
         row.addAll(dataRow.values());
-
+        for (Property property : module.getProperties()) {
+          dataRow.put(property.getKey(),null);
+        }
         addData(row);
-        //dataRow.values().clear();
+
       }
 
     }
