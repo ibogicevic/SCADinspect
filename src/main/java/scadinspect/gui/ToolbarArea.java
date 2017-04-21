@@ -88,16 +88,26 @@ public class ToolbarArea extends ToolBar {
         } else {
             openProjectButton.setText("Open folder");
             openProjectButton.setOnAction(event -> {
-              projectHandler.openProjectFolder();
-              CodeAnalyzer.refresh();
+              //Loading of multiple files is non blocking
+              projectHandler.openProjectFolder((files) -> {
+                if(files != null) {
+                  Main.getInstance().getFileList().addAll(files);
+                  CodeAnalyzer.refresh();
+                }
+              });
             });
         }
         openFolderButton.setOnAction(e -> {
             userPrefs.putInt("SET_OPENBUTTON", 1);
             openProjectButton.setText("Open folder");
             openProjectButton.setOnAction(event -> {
-              projectHandler.openProjectFolder();
-              CodeAnalyzer.refresh();
+              //Loading of multiple files is non blocking
+              projectHandler.openProjectFolder((files) -> {
+                if(files != null) {
+                  Main.getInstance().getFileList().addAll(files);
+                  CodeAnalyzer.refresh();
+                }
+              });
             });
         });
         openFileButton.setOnAction(e -> {

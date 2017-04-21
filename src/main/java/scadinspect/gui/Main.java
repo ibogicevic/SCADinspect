@@ -1,5 +1,6 @@
 package scadinspect.gui;
 
+import java.util.prefs.BackingStoreException;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 import javafx.application.Platform;
 
 /**
@@ -92,11 +94,9 @@ public class Main extends Application {
      */
     public void start(Stage primaryStage) {
         System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc] %4$s: %5$s%n");
-
         try {
-            logHandler = new LogHandler();
             logger = logHandler.getLogger();
-        } catch (IOException e) {
+        } catch (IOException|BackingStoreException e) {
             e.printStackTrace();
         }
 
@@ -139,7 +139,16 @@ public class Main extends Application {
         primaryStage.setX(0);
         primaryStage.show();
 
-        logger.log(Level.INFO, "({0}) successfully started", this.getClass().getName());
+        logger.log(Level.INFO,"successfully started");
+
+        /**
+         * Necessary for destroying the logfilehandler before closing the application
+         */
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                LogHandler.shutdown();
+            }
+        }, "Shutdown-thread"));
     }
 
     /**
@@ -150,7 +159,7 @@ public class Main extends Application {
     public boolean isProjectOpen() {
         return (currentProject != null);
     }
-    
+
     /**
      * Sets the current project path
      * @param currentProject
