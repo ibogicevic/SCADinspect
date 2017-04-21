@@ -21,9 +21,11 @@ import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.Property;
 
 /**
- * @author eric on 31.03.17.
+ * @author eric, Desyon on 31.03.17.
  */
 
+
+//TODO: Create or include stylesheet for better looks
 public class HtmlExporter implements Exporter {
 
   /**
@@ -45,7 +47,7 @@ public class HtmlExporter implements Exporter {
     Element head = doc.createElement("head");
 
     Element title = doc.createElement("title");
-    title.setNodeValue("Parts Documentation");
+    title.appendChild(doc.createTextNode("Parts Documentation"));
     head.appendChild(title);
     html.appendChild(head);
 
@@ -147,10 +149,10 @@ public class HtmlExporter implements Exporter {
   private void AppendTableHeaders(Element tableHeaderRow, Document doc, ScadDocuFile file) {
     ArrayList<String> keys = (ArrayList<String>) file.getAllKeys();
 
-    for (int i = 0; i < keys.size(); i++) {
+    for (String key : keys) {
       Element header = doc.createElement("th");
 
-      header.appendChild(doc.createTextNode(keys.get(i)));
+      header.appendChild(doc.createTextNode(key));
 
       tableHeaderRow.appendChild(header);
     }
@@ -169,18 +171,16 @@ public class HtmlExporter implements Exporter {
     NodeList headerList = headerRow.getChildNodes();
 
     for (int i = 0; i < headerList.getLength(); i++) {
-      for (int j = 0; j < modules.size(); j++) {
-        Module module = modules.get(j);
+      for (Module module : modules) {
         Element tableRow = doc.createElement("tr");
         ArrayList<Property> properties = (ArrayList<Property>) module.getProperties();
 
-        for (int k = 0; k < properties.size(); k++) {
-          Property property = properties.get(k);
+        for (Property property : properties) {
           Node node = headerList.item(i);
 
           if (node.getFirstChild().getNodeValue().equals(property.getKey())) {
             Element tableData = doc.createElement("td");
-            tableData.appendChild(doc.createTextNode(properties.get(k).getValue().toString()));
+            tableData.appendChild(doc.createTextNode(property.getValue().toString()));
 
             tableRow.appendChild(tableData);
             tableBody.appendChild(tableRow);
