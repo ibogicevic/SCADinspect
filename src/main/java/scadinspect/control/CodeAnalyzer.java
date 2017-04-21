@@ -1,9 +1,7 @@
 package scadinspect.control;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +24,7 @@ public class CodeAnalyzer {
 
       fileList.forEach(file -> {
         try {
-          fileParserResultMap.put(file, Parser.parse(new BufferedReader(new FileReader(file))));
+          fileParserResultMap.put(file, Parser.parse(file));
         } catch (FileNotFoundException e) {
           e.printStackTrace();
         }

@@ -53,8 +53,9 @@ public class ParserException extends Exception {
 
 
     public Issue toIssue() {
-        //TODO code snippet, File
-        return new Issue(Issue.issueType.ERROR, this.getFile(), this.getLine(), this.getIssueId(), this.getInfo());
+      // code snippet can be found later
+      // TODO find out how to get filename
+      return new Issue(Issue.issueType.ERROR, this.getFile(), this.getLine(), this.getIssueId(), this.getInfo());
     }
 
 }
