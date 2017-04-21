@@ -37,6 +37,11 @@ public class CheckersDialog {
         grid.setHgap(10);
         grid.setVgap(10);
 
+        dialog.getDialogPane().setContent(grid);
+        dialog.showAndWait();
+        Main.getInstance().greyStack.toBack();
+        Main.getInstance().greyStack.setVisible(false);
+
 
 
     }
