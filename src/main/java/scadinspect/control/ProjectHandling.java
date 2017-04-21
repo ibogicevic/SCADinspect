@@ -2,37 +2,46 @@ package scadinspect.control;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 import scadinspect.gui.Main;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import scadinspect.control.io.FileSearchRunnable;
 
 /**
- * 
+ * Project Handler for loading and closing paths and files.
+ * Stores the loaded files in a file list.
  * @author bilir
  *
  */
 public class ProjectHandling {
 
   /**
-   * TODO: Closing of the Project when clicked on "Open folder" and a new directory is choosen else
+   * TODO: Closing of the Project when clicked on "Open folder" and a new directory is chosen else
    * the current path remains and list is still loaded
    */
 
-  // Definiton of the chooser
+  // Definition of the chooser
   private final DirectoryChooser directoryChooser = new DirectoryChooser();
   private final FileChooser fileChooser = new FileChooser();
-
+  private final long FILE_READ_TIMEOUT = 5000;
+  
   // Filter for the chooser
   private final FileChooser.ExtensionFilter extensionFilter =
       new FileChooser.ExtensionFilter("SCAD files", "*.scad");
-
-  // Definition of the variables
-  private File projectFile;
-  private File projectDirectory;
-  private List<File> fileList = new ArrayList();
 
   /**
    * Default constructor where the extension filter for the fileChooser is set. This assures that
@@ -46,6 +55,7 @@ public class ProjectHandling {
    * Opens the dialog to choose a file
    */
   public void openProjectFile() {
+	File projectFile;
     projectFile = fileChooser.showOpenDialog(Main.getInstance().getPrimaryStage());
 
     /**
@@ -55,7 +65,7 @@ public class ProjectHandling {
 
     if (projectFile != null) {
       setProjectPath(projectFile);
-      fileList.add(projectFile);
+      Main.getInstance().getFileList().add(projectFile);
     }
   }
 
@@ -63,37 +73,61 @@ public class ProjectHandling {
    * Opens the dialog to choose a directory
    */
   public void openProjectFolder() {
+	File projectDirectory;
     projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
 
     /**
      * Checks if a directory is selected or the cancel button is clicked If cancel is clicked a null
      * is set into projectDirectory, else it sets the Path and add the files recursively with the
-     * contents of the subfolder to the fileList
+     * contents of the sub-folder to the fileList
      */
     if (projectDirectory != null) {
       setProjectPath(projectDirectory);
-      addFilesToList(projectDirectory.getAbsolutePath());
+      Supplier<Boolean> confirmLongRead = () -> {
+          try {
+              final FutureTask<Boolean> query = new FutureTask<>(() -> {
+                  Alert alert = new Alert(AlertType.CONFIRMATION);
+                  alert.setTitle("Open files");
+                  alert.setHeaderText("File loading taking longer then expected");
+                  alert.setContentText("Do you want to continue?");
+                  Optional<ButtonType> b = alert.showAndWait();
+                  return b.isPresent() && b.get() == ButtonType.OK;
+              });
+              Platform.runLater(() -> {
+                  query.run();
+              });
+              return query.get();
+          } catch (InterruptedException | ExecutionException ex) {
+              return false;
+          }
+              
+      };
+      addFiles(projectDirectory, confirmLongRead, (files) -> {
+          if(files != null) {
+              Main.getInstance().getFileList().addAll(files);
+          }
+      });
+      
     }
   }
 
   /**
-   * Checks if a path for the project is set, if so it closes the last open project and then sets
-   * the pathname in the title and enables the buttons
+   * Closes the last open project and then sets
+   * the new pathname, the new project and enables the buttons
    * 
-   * @param projectPath
+   * @param projectPath The project path for the current project
    */
   private void setProjectPath(File projectPath) {
     closeProject();
-    if (projectPath != null) {
-      setCurrentProject(projectPath.getAbsolutePath().toString());
-      Main.getInstance().toolbarArea.disableButtons(false);
-    }
+    setCurrentProject(projectPath.getAbsolutePath().toString());
+    Main.getInstance().toolbarArea.disableButtons(false);
+    Main.getInstance().bottomArea.disableButtons(false);
   }
 
   /**
-   * Sets the current project path in the Title and the App name
+   * Sets the current project path in the Title and the app name
    * 
-   * @param rootPath
+   * @param rootPath The path for the current project
    */
   private void setCurrentProject(String rootPath) {
     // update window title
@@ -101,34 +135,73 @@ public class ProjectHandling {
     // remember open project
     Main.getInstance().currentProject = rootPath;
   }
-
+  
   /**
-   * Gets the files in the current directory and it subfolders. Also it adds only .scad files to the
+   * Gets the files in the current directory and it sub-folders. Also it adds only .scad files to the
    * list
    * 
-   * @param projectDirectory
+   * @param dir
+   * @param onTimeout
    */
-  private void addFilesToList(String projectDirectory) {
-    // Set the current folder
-    File folder = new File(projectDirectory);
-
-    // Loop to add files from folder and subfolders in list
-    for (File file : folder.listFiles()) {
-
-      // If the current file is a scad file add it to the list
-      if (file.isFile() && file.toString().endsWith(".scad")) {
-        fileList.add(file);
-      } else {
-        /**
-         * If the current selected file is a folder, go recursively call the function with the
-         * current subfolder
-         */
-        if (file.isDirectory()) {
-          addFilesToList(file.getAbsolutePath());
-        }
-      }
+    private void addFiles(File dir, Supplier<Boolean> onTimeout, Consumer<Collection<File>> onDone) {
+        new Thread(() -> {
+            try {
+                Collection<File> files = getFiles(dir, f -> f.getName().toLowerCase().endsWith(".scad"), true, FILE_READ_TIMEOUT, onTimeout);
+                onDone.accept(files);
+            } catch (IOException ex) {
+                Logger.getLogger(ProjectHandling.class.getName()).log(Level.SEVERE, null, ex);
+                onDone.accept(null);
+            }
+        }).start();
     }
-  }
+  
+    /**
+     * Blocking call
+     * @param dir
+     * @param filter
+     * @param recursive
+     * @param timeout
+     * @param onTimeout
+     * @return
+     * @throws IOException 
+     */
+    private Collection<File> getFiles(File dir, FileFilter filter, boolean recursive, long timeout, Supplier<Boolean> onTimeout) throws IOException{
+        try {
+            FileSearchRunnable fsr = new FileSearchRunnable(dir, filter, recursive);
+            Thread t = new Thread(fsr);
+            t.start();
+            Thread watchdog = null;
+            if(timeout > 0) {
+                watchdog = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(timeout);
+                            if(fsr.isRunning()) {
+                                fsr.pause();
+                                boolean resume = onTimeout.get();
+                                if(resume) {
+                                    fsr.resume();
+                                }
+                                else {
+                                    fsr.terminate();
+                                }
+                            }
+                        } catch (InterruptedException ex) {}
+                    }
+                };
+                watchdog.start();
+            }
+            t.join();
+            if(watchdog != null) {
+                watchdog.interrupt();
+            }
+            if(fsr.hasEndedNaturally()) {
+                return fsr.get();
+            }
+        } catch (InterruptedException ex) {}
+        throw new IOException("Timeout exceeded during file read");
+    }
 
   /**
    * Closes the current project and removes the path from the title. Also it deletes the content of
@@ -136,10 +209,10 @@ public class ProjectHandling {
    */
   public void closeProject() {
     Main.getInstance().toolbarArea.disableButtons(true);
-    if (Main.getInstance().isProjectOpen() == true) {
+      if (Main.getInstance().isProjectOpen()) {
       Main.getInstance().setCurrentProject("");
       Main.getInstance().getPrimaryStage().setTitle(Main.APPNAME);
-      fileList.clear();
+      Main.getInstance().getFileList().clear();
     }
   }
 }
