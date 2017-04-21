@@ -13,7 +13,6 @@ import javafx.scene.control.Dialog;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
-import scadinspect.control.ProjectHandling;
 
 public class SettingsDialog {
     
@@ -65,7 +64,7 @@ public class SettingsDialog {
             autorefresh.setSelected(false);
         }
         // Logging Level
-        loggingCombo.getSelectionModel().select(userPrefs.getInt("SET_LOGGING_LEVEL", 0));
+        loggingCombo.getSelectionModel().select(userPrefs.getInt("LOG_LEVEL", 0));
 
 
         // Load contents in dialog
@@ -85,8 +84,10 @@ public class SettingsDialog {
             }
 
             // Logging
-            userPrefs.putInt("SET_LOGGING_LEVEL", loggingCombo.getSelectionModel().getSelectedIndex());
-
+            int level =  userPrefs.getInt("LOG_LEVEL",loggingCombo.getSelectionModel().getSelectedIndex());
+            userPrefs.putInt("LOG_LEVEL", level);
+            Level logLevel = Level.parse(Integer.toString(level));
+            Main.logger.setLevel(logLevel);
         }
         Main.getInstance().greyStack.toBack();
         Main.getInstance().greyStack.setVisible(false);

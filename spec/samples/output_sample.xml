@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<modules>
+<testPath>
   <module>
     <amount>4</amount>
     <materials>Rubber, Aluminium</materials>
@@ -28,4 +28,4 @@
     </weight>
     <url>https://example.com</url>
   </module>
-</modules>
+</testPath>

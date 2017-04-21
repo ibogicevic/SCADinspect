@@ -71,8 +71,9 @@ public class ProjectHandling {
 
   /**
    * Opens the dialog to choose a directory
+     * @param onDone
    */
-  public void openProjectFolder() {
+  public void openProjectFolder(Consumer<Collection<File>> onDone) {
 	File projectDirectory;
     projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
 
@@ -102,12 +103,7 @@ public class ProjectHandling {
           }
               
       };
-      addFiles(projectDirectory, confirmLongRead, (files) -> {
-          if(files != null) {
-              Main.getInstance().getFileList().addAll(files);
-          }
-      });
-      
+      addFiles(projectDirectory, confirmLongRead, onDone);
     }
   }
 
@@ -213,6 +209,9 @@ public class ProjectHandling {
       Main.getInstance().setCurrentProject("");
       Main.getInstance().getPrimaryStage().setTitle(Main.APPNAME);
       Main.getInstance().getFileList().clear();
+      Main.getInstance().tabArea.getIssueList().clearList();
+      Main.getInstance().bottomArea.disableButtons(true);
+      Main.getInstance().statusArea.setMessage("No file loaded.");
     }
   }
 }
