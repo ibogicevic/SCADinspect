@@ -4,24 +4,46 @@ import java.util.Collection;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import scadinspect.data.scaddoc.Module;
+import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.Property;
 import scadinspect.data.scaddoc.properties.helper.Pair;
 
 /**
- * @author simon on 3/17/17.
+ * @author simon, richteto on 3/17/17.
  */
 
 public class JsonExporter implements Exporter {
 
   /**
-   * @param modules a List of all modules that are supposed to be exported. This list will be
-   * converted into a JSON document as specified.
+   * Overrides getOutput from Exporter
+   *
+   * @param file a ScadDocuFile containing a list of modules that are supposed to be exported
    * @return returns the JSON document as String that can be written to a file or used further
    * internally
    */
   @Override
-  public String getOutput(Collection<Module> modules) {
-    return getJsonArray(modules).toString(2);
+  public String getOutput(ScadDocuFile file) {
+    return getJsonArray(file.getModules()).toString(2);
+  }
+
+  /**
+   * Overrides getOutput from Exporter
+   *
+   * @param files a Collection of ScadDocuFiles containing a list of modules that are supposed to be
+   * exported
+   * @return returns the JSON document as String that can be written to a file or used further
+   * internally
+   */
+  @Override
+  public String getOutput(Collection<ScadDocuFile> files) throws Exception {
+    JSONArray result = new JSONArray();
+    for (ScadDocuFile docuFile : files) {
+      JSONObject file = new JSONObject();
+      file.accumulate(docuFile.getPath().toString(), getJsonArray(docuFile.getModules()));
+      result.put(file);
+    }
+    //indent factor is 2, without the jsonString is compressed in one line
+    return result.toString(2);
   }
 
   /**

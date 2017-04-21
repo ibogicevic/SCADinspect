@@ -45,6 +45,11 @@ public class PairProperty<T> implements Property {
     return value;
   }
 
+  /**
+   * Returns the property as String in the format <key>: <value>
+   *
+   * @return the proper as as String in the given format
+   */
   @Override
   public String toString() {
     return getKey() + ": " + getValue();

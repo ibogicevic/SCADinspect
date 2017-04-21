@@ -20,9 +20,13 @@ public class PropertyParser {
 
   private Collection<String> comments;
 
+  // Parsing full comments starting with a /** and ending with a */
   private String commentRegex = "/\\*\\*(.|\\s)+?\\*/";
-  private String keyRegex = "(@~*\\w+)";
+  // Parsing the key definition starting with a @. example: @material
+  private String keyRegex = "(@\\w+)";
+  // Parsing the content of the key (anything which is not an @)
   private String contentRegex = ("([^@]*)");
+
   private Pattern commentPattern = Pattern.compile(commentRegex);
   private Pattern propertyPattern = Pattern.compile(keyRegex + contentRegex);
 
@@ -50,6 +54,8 @@ public class PropertyParser {
     Matcher commentMatcher = commentPattern.matcher(scadFile);
     comments = new HashSet<>();
     while (commentMatcher.find()) {
+      //Removing all line breaks, comment start and ending signs and all *
+      // Secondly replaces all whitespaces like tabs or spaces by a single white space
       comments.add(commentMatcher.group(0).replaceAll("\\r\\n?|\\*/|\\*|/\\*\\*", "")
           .replaceAll("\\s", " "));
     }
@@ -67,16 +73,21 @@ public class PropertyParser {
     }
     Collection<Module> modules = new ArrayList<>();
 
+    // For every found comment block
     for (String comment : comments) {
       Module module = new Module();
       Matcher propertyMatcher = propertyPattern.matcher(comment);
 
+      // For every found property
       while (propertyMatcher.find()) {
+        // Finding the key and removing the @ and unnecessary whitespaces
         String key = propertyMatcher.group(1).replaceFirst("@", "").trim();
+        // Finding the content and removing unnecessary whitespaces
         String content = propertyMatcher.group(2).trim();
-        // Check whether it is a pair property
+        // Check whether the property is a pair property (example: @cost: 200~EUR)
         String[] pair = content.split("~");
         if (pair.length == 2) {
+          // Parsing content into double, integer or string
           try {
             module.addProperty(new PairProperty<>(key, Integer.parseInt(pair[0]), pair[1]));
           } catch (NumberFormatException e) {
@@ -87,12 +98,13 @@ public class PropertyParser {
             }
           }
         } else {
-          // List Check
+          // Check whether the property is a multi property
           String[] list = content.split(";\\s*");
           if (list.length > 1) {
             List<Object> castedList = new ArrayList<>();
             for (String elem : list) {
               elem = elem.trim();
+              // Parsing content into double, integer or string
               try {
                 castedList.add(Integer.parseInt(elem));
               } catch (NumberFormatException e) {
@@ -105,6 +117,8 @@ public class PropertyParser {
             }
             module.addProperty(new MultiProperty<>(key, castedList));
           } else {
+            // the property has to be a single property
+            // Parsing content into double, integer or string
             try {
               module.addProperty(new SingleProperty<>(key, Integer.parseInt(content)));
             } catch (NumberFormatException e) {
