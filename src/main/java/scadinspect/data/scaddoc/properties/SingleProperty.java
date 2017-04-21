@@ -32,6 +32,11 @@ public class SingleProperty<T> implements Property<T> {
     return value;
   }
 
+  /**
+   * Returns the property as String in the format <key>: <value>
+   *
+   * @return the proper as as String in the given format
+   */
   @Override
   public String toString() {
     return getKey() + ": " + getValue();

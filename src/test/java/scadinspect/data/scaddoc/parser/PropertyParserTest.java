@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
+import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.export.format.JsonExporter;
 import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.properties.MultiProperty;
@@ -137,8 +138,11 @@ class PropertyParserTest {
 
     JsonExporter exporter = new JsonExporter();
 
-    assertEquals(exporter.getOutput(modules),
-        exporter.getOutput(parsed));
+    ScadDocuFile file = new ScadDocuFile(null,modules);
+    ScadDocuFile file2 = new ScadDocuFile(null,parsed);
+
+    assertEquals(exporter.getOutput(file),
+        exporter.getOutput(file2));
   }
 
   /**
@@ -214,7 +218,11 @@ class PropertyParserTest {
     Collection<Module> expected = new ArrayList<>();
     expected.add(output);
     JsonExporter exporter = new JsonExporter();
-    assertEquals(exporter.getOutput(expected), exporter.getOutput(parsed));
+
+    ScadDocuFile file = new ScadDocuFile(null,expected);
+    ScadDocuFile file2 = new ScadDocuFile(null,parsed);
+
+    assertEquals(exporter.getOutput(file), exporter.getOutput(file2));
 
   }
 
@@ -254,6 +262,10 @@ class PropertyParserTest {
     Collection<Module> expected = new ArrayList<>();
     expected.add(output);
     JsonExporter exporter = new JsonExporter();
-    assertEquals(exporter.getOutput(expected), exporter.getOutput(parsed));
+
+    ScadDocuFile file = new ScadDocuFile(null,expected);
+    ScadDocuFile file2 = new ScadDocuFile(null,parsed);
+
+    assertEquals(exporter.getOutput(file), exporter.getOutput(file2));
   }
 }
