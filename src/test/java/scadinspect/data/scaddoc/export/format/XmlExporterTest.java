@@ -111,6 +111,26 @@ class XmlExporterTest {
   }
 
   @Test
+  void multipleProperties() throws Exception {
+    Module mod = new Module();
+
+    mod.addProperty(new SingleProperty<>("key1", "value1"));
+    mod.addProperty(new SingleProperty<>("key2", "value2"));
+
+    modules.add(mod);
+
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
+    assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
+            + "<testPath>" + lineSeparator
+            + "  <module>" + lineSeparator
+            + "    <key1>value1</key1>" + lineSeparator
+            + "    <key2>value2</key2>" + lineSeparator
+            + "  </module>" + lineSeparator
+            + "</testPath>" + lineSeparator,
+        new String(exporter.getOutput(file), "UTF-8"));
+  }
+
+  @Test
   void multipleModules() throws Exception {
     Module mod1 = new Module();
     Module mod2 = new Module();

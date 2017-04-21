@@ -37,7 +37,7 @@ class CsvExporterTest {
   }
 
   @Test
-  void singlePropertyInt() throws Exception {
+  void singleProperty() throws Exception {
     Module singleProperty = new Module();
     singleProperty.addProperty(new SingleProperty<>("key", 1));
     modules.add(singleProperty);
@@ -45,6 +45,21 @@ class CsvExporterTest {
     assertEquals("Testing" + lineSeparator
         + "key" + lineSeparator
         + "1" + lineSeparator, new String(exporter.getOutput(file), "UTF-8"));
+  }
+
+  @Test
+  void multipleProperties() throws Exception {
+    Module mod = new Module();
+
+    mod.addProperty(new SingleProperty<>("key1", "value1"));
+    mod.addProperty(new SingleProperty<>("key2", "value2"));
+
+    modules.add(mod);
+
+    ScadDocuFile file = new ScadDocuFile(Paths.get("Testing"), modules);
+    assertEquals("Testing" + lineSeparator
+        + "key1,key2" + lineSeparator
+        + "value1,value2" + lineSeparator, new String(exporter.getOutput(file), "UTF-8"));
   }
 
   @Test
