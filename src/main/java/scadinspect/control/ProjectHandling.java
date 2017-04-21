@@ -1,12 +1,25 @@
 package scadinspect.control;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileFilter;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 import scadinspect.gui.Main;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import scadinspect.control.io.FileSearchRunnable;
 
 /**
  * Project Handler for loading and closing paths and files.
@@ -24,7 +37,8 @@ public class ProjectHandling {
   // Definition of the chooser
   private final DirectoryChooser directoryChooser = new DirectoryChooser();
   private final FileChooser fileChooser = new FileChooser();
-
+  private final long FILE_READ_TIMEOUT = 5000;
+  
   // Filter for the chooser
   private final FileChooser.ExtensionFilter extensionFilter =
       new FileChooser.ExtensionFilter("SCAD files", "*.scad");
@@ -69,7 +83,31 @@ public class ProjectHandling {
      */
     if (projectDirectory != null) {
       setProjectPath(projectDirectory);
-      addFilesToList(projectDirectory.getAbsolutePath());
+      Supplier<Boolean> confirmLongRead = () -> {
+          try {
+              final FutureTask<Boolean> query = new FutureTask<>(() -> {
+                  Alert alert = new Alert(AlertType.CONFIRMATION);
+                  alert.setTitle("Open files");
+                  alert.setHeaderText("File loading taking longer then expected");
+                  alert.setContentText("Do you want to continue?");
+                  Optional<ButtonType> b = alert.showAndWait();
+                  return b.isPresent() && b.get() == ButtonType.OK;
+              });
+              Platform.runLater(() -> {
+                  query.run();
+              });
+              return query.get();
+          } catch (InterruptedException | ExecutionException ex) {
+              return false;
+          }
+              
+      };
+      addFiles(projectDirectory, confirmLongRead, (files) -> {
+          if(files != null) {
+              Main.getInstance().getFileList().addAll(files);
+          }
+      });
+      
     }
   }
 
@@ -83,6 +121,7 @@ public class ProjectHandling {
     closeProject();
     setCurrentProject(projectPath.getAbsolutePath().toString());
     Main.getInstance().toolbarArea.disableButtons(false);
+    Main.getInstance().bottomArea.disableButtons(false);
   }
 
   /**
@@ -96,36 +135,73 @@ public class ProjectHandling {
     // remember open project
     Main.getInstance().currentProject = rootPath;
   }
-
+  
   /**
    * Gets the files in the current directory and it sub-folders. Also it adds only .scad files to the
    * list
    * 
-   * @param projectDirectory The path for the currently selected folder and it sub-folders
+   * @param dir
+   * @param onTimeout
    */
-  private void addFilesToList(String projectDirectory) {
-    // Set the current folder
-    File folder = new File(projectDirectory);
-
-    // Loop to add files from folder and sub-folders in list
-    for (File file : folder.listFiles()) {
-
-      // If the current file is a scad file add it to the list
-      if (file.isFile() && file.toString().endsWith(".scad")) {
-        Main.getInstance().getFileList().add(file);
-      } else {
-        /**
-         * If the current selected file is a folder, go recursively call the function with the
-         * current sub-folder
-         */
-        if (file.isDirectory()) {
-          addFilesToList(file.getAbsolutePath());
-        }
-      }
+    private void addFiles(File dir, Supplier<Boolean> onTimeout, Consumer<Collection<File>> onDone) {
+        new Thread(() -> {
+            try {
+                Collection<File> files = getFiles(dir, f -> f.getName().toLowerCase().endsWith(".scad"), true, FILE_READ_TIMEOUT, onTimeout);
+                onDone.accept(files);
+            } catch (IOException ex) {
+                Logger.getLogger(ProjectHandling.class.getName()).log(Level.SEVERE, null, ex);
+                onDone.accept(null);
+            }
+        }).start();
     }
-      Main.getInstance().toolbarArea.disableButtons(false);
-      Main.getInstance().bottomArea.disableButtons(false);
-  }
+  
+    /**
+     * Blocking call
+     * @param dir
+     * @param filter
+     * @param recursive
+     * @param timeout
+     * @param onTimeout
+     * @return
+     * @throws IOException 
+     */
+    private Collection<File> getFiles(File dir, FileFilter filter, boolean recursive, long timeout, Supplier<Boolean> onTimeout) throws IOException{
+        try {
+            FileSearchRunnable fsr = new FileSearchRunnable(dir, filter, recursive);
+            Thread t = new Thread(fsr);
+            t.start();
+            Thread watchdog = null;
+            if(timeout > 0) {
+                watchdog = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(timeout);
+                            if(fsr.isRunning()) {
+                                fsr.pause();
+                                boolean resume = onTimeout.get();
+                                if(resume) {
+                                    fsr.resume();
+                                }
+                                else {
+                                    fsr.terminate();
+                                }
+                            }
+                        } catch (InterruptedException ex) {}
+                    }
+                };
+                watchdog.start();
+            }
+            t.join();
+            if(watchdog != null) {
+                watchdog.interrupt();
+            }
+            if(fsr.hasEndedNaturally()) {
+                return fsr.get();
+            }
+        } catch (InterruptedException ex) {}
+        throw new IOException("Timeout exceeded during file read");
+    }
 
   /**
    * Closes the current project and removes the path from the title. Also it deletes the content of

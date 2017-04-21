@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 
 /**
  * Startup JavaFX frame
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
  * @author ivan
  */
 public class Main extends Application {
-
+  
     /**
      * Name of the application *
      */
@@ -74,7 +75,7 @@ public class Main extends Application {
     public GreyPane greyPane;
     private Stage primaryStage;
 
-    public Stage getPrimaryStage() {
+    public Stage getPrimaryStage() {;
         return this.primaryStage;
     }
     /**
