@@ -13,11 +13,11 @@ public class ExportDialog {
 
     public static void openDialog(){
         Dialog<Boolean> dialog = new Dialog<>();
-            dialog.setTitle("Export");
+            dialog.setTitle(Messages.getString("ExportDialog.title"));
             dialog.setHeaderText(null);
 
             // Set the button types.
-            ButtonType okButtonType = new ButtonType("OK", ButtonData.OK_DONE);
+            ButtonType okButtonType = new ButtonType(Messages.getString("ExportDialog.okButton"), ButtonData.OK_DONE);
             dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
 
             // Create the radio buttons
@@ -25,13 +25,13 @@ public class ExportDialog {
             vBox.setSpacing(10);
 
             ToggleGroup group = new ToggleGroup();
-            RadioButton excel = new RadioButton("Excel");
+            RadioButton excel = new RadioButton(Messages.getString("ExportDialog.excelButton"));
             excel.setToggleGroup(group);
-            RadioButton csv = new RadioButton("CSV");
+            RadioButton csv = new RadioButton(Messages.getString("ExportDialog.csvButton"));
             csv.setToggleGroup(group);
-            RadioButton json = new RadioButton("JSON");
+            RadioButton json = new RadioButton(Messages.getString("ExportDialog.jsonButton"));
             json.setToggleGroup(group);
-            RadioButton xml = new RadioButton("XML");
+            RadioButton xml = new RadioButton(Messages.getString("ExportDialog.xmlButton"));
             xml.setToggleGroup(group);
 
             vBox.getChildren().add(excel);

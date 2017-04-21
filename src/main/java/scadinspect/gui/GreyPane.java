@@ -19,12 +19,14 @@ public class GreyPane extends BorderPane{
     private BorderPane bottomPane = new BorderPane();
     private Integer step = 0;
     private BottomArea bottomArea= new BottomArea();
-    private Hyperlink prev = new Hyperlink("back");
-    private Hyperlink next = new Hyperlink("next");
-    private Hyperlink exit = new Hyperlink("exit");
+    private Hyperlink prev = new Hyperlink(Messages.getString("GreyPane.prevHyperlink"));
+    private Hyperlink next = new Hyperlink(Messages.getString("GreyPane.nextHyperlink"));
+    private Hyperlink exit = new Hyperlink(Messages.getString("GreyPane.extiHyperlink"));
     private Label messageLabel = new Label();
     private HBox navBar;
     private Label stepLabel = new Label();
+    private final String ofMAX = Messages.getString("GreyPane.ofMAX");
+    private final String resources = Messages.getString("GreyPane.resources");
 
     public GreyPane(Boolean isTutorial) {
         //set transparency and colour for the pane
@@ -54,9 +56,9 @@ public class GreyPane extends BorderPane{
             prev.setTextFill(Color.WHITE);
             exit.setTextFill(Color.WHITE);
             next.setTextFill(Color.WHITE);
-            prev.setFont(Font.loadFont(getClass().getResourceAsStream("/resources/ComicSans.ttf"), 20));
-            next.setFont(Font.loadFont(getClass().getResourceAsStream("/resources/ComicSans.ttf"), 20));
-            exit.setFont(Font.loadFont(getClass().getResourceAsStream("/resources/ComicSans.ttf"), 20));
+            prev.setFont(Font.loadFont(getClass().getResourceAsStream(resources), 20));
+            next.setFont(Font.loadFont(getClass().getResourceAsStream(resources), 20));
+            exit.setFont(Font.loadFont(getClass().getResourceAsStream(resources), 20));
             next.setStyle("-fx-underline: true;");
             prev.setStyle("-fx-underline: true;");
             exit.setStyle("-fx-underline: true;");
@@ -64,7 +66,7 @@ public class GreyPane extends BorderPane{
 
             //step counter
             stepLabel.setTextAlignment(TextAlignment.CENTER);
-            stepLabel.setFont(Font.loadFont(getClass().getResourceAsStream("/resources/ComicSans.ttf"), 20));
+            stepLabel.setFont(Font.loadFont(getClass().getResourceAsStream(resources), 20));
             stepLabel.setTextFill(Color.WHITE);
 
             //initiate navigation bar
@@ -89,7 +91,7 @@ public class GreyPane extends BorderPane{
             messageLabel.setMaxWidth(400.0);
             messageLabel.setWrapText(true);
             messageLabel.setTextAlignment(TextAlignment.CENTER);
-            messageLabel.setFont(Font.loadFont(getClass().getResourceAsStream("/resources/ComicSans.ttf"), 20));
+            messageLabel.setFont(Font.loadFont(getClass().getResourceAsStream(resources), 20));
             messageLabel.setTextFill(Color.WHITE);
             centerPane.setCenter(messageLabel);
             centerPane.setBottom(navBar);
@@ -148,46 +150,46 @@ public class GreyPane extends BorderPane{
                 navBar.getChildren().remove(exit);
                 navBar.getChildren().remove(next);
                 navBar.getChildren().add(3, next);
-                messageLabel.setText("Press \"Open File\" to open an new ScadFile or choose \"Open Folder\" from the dropdown menu to open a folder.");
-                stepLabel.setText(step+1 + " of 5");
+                messageLabel.setText(Messages.getString("GreyPane.fileMessage"));
+                stepLabel.setText(step+1 + ofMAX);
                 break;
             }
             case 1: {
                 toolbarArea.switchButtons(1);
                 prev.setVisible(true);
-                messageLabel.setText("Press \"Settings\" to access the settings. For example you can enable auto refresh or set the logging level.");
+                messageLabel.setText(Messages.getString("GreyPane.settingsMessage"));
                 bottomArea.switchButtons(0);
-                stepLabel.setText(step+1 + " of 5");
+                stepLabel.setText(step+1 + ofMAX);
                 break;
             }
             case 2: {
                 toolbarArea.switchButtons(2);
-                messageLabel.setText("Press \"Refresh\" to refresh the files.");
+                messageLabel.setText(Messages.getString("GreyPane.refreshMessage"));
                 bottomArea.switchButtons(1);
-                stepLabel.setText(step+1 + " of 5");
+                stepLabel.setText(step+1 + ofMAX);
                 break;
             }
             case 3: {
                 toolbarArea.switchButtons(3);
-                messageLabel.setText("Press \"Export\" to export your current work.");
+                messageLabel.setText(Messages.getString("GreyPane.exportMessage"));
                 bottomArea.switchButtons(2);
                 next.setVisible(true);
                 exit.setVisible(false);
                 navBar.getChildren().remove(next);
                 navBar.getChildren().remove(exit);
                 navBar.getChildren().add(3, next);
-                stepLabel.setText(step+1 + " of 5");
+                stepLabel.setText(step+1 + ofMAX);
                 break;
             }
             case 4: {
-                messageLabel.setText("Press \"Close\" to close the current file.");
+                messageLabel.setText(Messages.getString("GreyPane.closeMessage"));
                 bottomArea.switchButtons(3);
                 next.setVisible(false);
                 exit.setVisible(true);
                 navBar.getChildren().remove(exit);
                 navBar.getChildren().remove(next);
                 navBar.getChildren().add(3, exit);
-                stepLabel.setText(step+1 + " of 5");
+                stepLabel.setText(step+1 + ofMAX);
                 break;
             }
         }

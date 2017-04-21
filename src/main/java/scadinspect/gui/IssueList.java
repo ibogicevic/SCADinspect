@@ -22,19 +22,19 @@ public class IssueList {
 
     private final ObservableList<Issue> issueData = FXCollections.observableArrayList();
 
-    private IssueTableColumn typeCol = new IssueTableColumn("type");
-    private IssueTableColumn lineNumberCol = new IssueTableColumn("#");
-    private IssueTableColumn issueIdentifierCol = new IssueTableColumn("Identifier");
-    private IssueTableColumn descriptionCol = new IssueTableColumn("Description");
-    private IssueTableColumn codeSnippedCol = new IssueTableColumn("Preview");
-    private IssueTableColumn resourcesCol = new IssueTableColumn("Source File");
+    private IssueTableColumn typeCol = new IssueTableColumn(Messages.getString("IssueList.typeCol"));
+    private IssueTableColumn lineNumberCol = new IssueTableColumn(Messages.getString("IssueList.lineNumberCol"));
+    private IssueTableColumn issueIdentifierCol = new IssueTableColumn(Messages.getString("IssueList.issueIdentifierCol"));
+    private IssueTableColumn descriptionCol = new IssueTableColumn(Messages.getString("IssueList.descriptionCol"));
+    private IssueTableColumn codeSnippedCol = new IssueTableColumn(Messages.getString("IssueList.codeSnippedCol"));
+    private IssueTableColumn resourcesCol = new IssueTableColumn(Messages.getString("IssueList.resourcesCol"));
 
     public TableView showList() {
 
         /* Dummy Data */
         ArrayList<Issue> issues = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            Issue curr = new Issue(Issue.issueType.WARNING, null, 15+i, "randomIdentifier" + i, "description" + i);
+            Issue curr = new Issue(Issue.issueType.WARNING, null, 15+i, "randomIdentifier" + i, "description" + i); //$NON-NLS-2$
             issues.add(i, curr);
         }
         addDataToTable(issues);

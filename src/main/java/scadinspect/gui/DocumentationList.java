@@ -17,12 +17,12 @@ public class DocumentationList {
   private final ObservableList<Documentation> docData = FXCollections.observableArrayList();
 
   //Define table columns for Documentation
-  private TableColumn partCol = new TableColumn("Part");
-  private TableColumn priceCol = new TableColumn("Price");
-  private TableColumn amountCol = new TableColumn("Amount");
-  private TableColumn weightCol = new TableColumn("Weight");
-  private TableColumn materialCol = new TableColumn("Material");
-  private TableColumn urlCol = new TableColumn("URL");
+  private TableColumn partCol = new TableColumn(Messages.getString("DocumentationList.partCol"));
+  private TableColumn priceCol = new TableColumn(Messages.getString("DocumentationList.priceCol"));
+  private TableColumn amountCol = new TableColumn(Messages.getString("DocumentationList.amountCol"));
+  private TableColumn weightCol = new TableColumn(Messages.getString("DocumentationList.weightCol"));
+  private TableColumn materialCol = new TableColumn(Messages.getString("DocumentationList.materialCol"));
+  private TableColumn urlCol = new TableColumn(Messages.getString("DocumentationList.urlCol"));
 
   //Generate the list which is shown withing the table
   public TableView generateList () {
