@@ -8,7 +8,7 @@ import scadinspect.data.scaddoc.ScadDocuFile;
  */
 public interface Exporter {
 
-  String getOutput(ScadDocuFile file) throws Exception;
+  byte[] getOutput(ScadDocuFile file) throws Exception;
 
-  String getOutput(Collection<ScadDocuFile> files) throws Exception;
+  byte[] getOutput(Collection<ScadDocuFile> files) throws Exception;
 }

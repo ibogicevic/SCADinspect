@@ -49,7 +49,7 @@ class XmlExporterTest {
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
     assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
             + "<testPath/>" + lineSeparator,
-        exporter.getOutput(file));
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
   /**
@@ -67,7 +67,7 @@ class XmlExporterTest {
             + "    <key>1</key>" + lineSeparator
             + "  </module>" + lineSeparator
             + "</testPath>" + lineSeparator,
-        exporter.getOutput(file));
+        new String(exporter.getOutput(file), "UTF-8"));
 
   }
 
@@ -86,7 +86,7 @@ class XmlExporterTest {
             + "    <key>1, 2, 3</key>" + lineSeparator
             + "  </module>" + lineSeparator
             + "</testPath>" + lineSeparator,
-        exporter.getOutput(file));
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
   /**
@@ -107,7 +107,7 @@ class XmlExporterTest {
             + "    </price>" + lineSeparator
             + "  </module>" + lineSeparator
             + "</testPath>" + lineSeparator,
-        exporter.getOutput(file));
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
   @Test
@@ -131,7 +131,7 @@ class XmlExporterTest {
             + "    <key>value</key>" + lineSeparator
             + "  </module>" + lineSeparator
             + "</testPath>" + lineSeparator,
-        exporter.getOutput(file));
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
   @Test
@@ -171,6 +171,6 @@ class XmlExporterTest {
             + "    </module>" + lineSeparator
             + "  </testPath2>" + lineSeparator
             + "</files>" + lineSeparator,
-        exporter.getOutput(files));
+        new String(exporter.getOutput(files), "UTF-8"));
   }
 }
