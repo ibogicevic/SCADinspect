@@ -22,8 +22,8 @@ public class JsonExporter implements Exporter {
    * internally
    */
   @Override
-  public String getOutput(ScadDocuFile file) {
-    return getJsonArray(file.getModules()).toString(2);
+  public byte[] getOutput(ScadDocuFile file) {
+    return getJsonArray(file.getModules()).toString(2).getBytes();
   }
 
   /**
@@ -35,7 +35,7 @@ public class JsonExporter implements Exporter {
    * internally
    */
   @Override
-  public String getOutput(Collection<ScadDocuFile> files) throws Exception {
+  public byte[] getOutput(Collection<ScadDocuFile> files) throws Exception {
     JSONArray result = new JSONArray();
     for (ScadDocuFile docuFile : files) {
       JSONObject file = new JSONObject();
@@ -43,7 +43,7 @@ public class JsonExporter implements Exporter {
       result.put(file);
     }
     //indent factor is 2, without the jsonString is compressed in one line
-    return result.toString(2);
+    return result.toString(2).getBytes();
   }
 
   /**

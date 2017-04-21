@@ -36,7 +36,7 @@ public class XmlExporter implements Exporter {
    * transformation process.
    */
   @Override
-  public String getOutput(ScadDocuFile file)
+  public byte[] getOutput(ScadDocuFile file)
       throws ParserException, ParserConfigurationException, TransformerException {
     // root elements
     Document doc = getDoc();
@@ -48,7 +48,7 @@ public class XmlExporter implements Exporter {
       rootElement.appendChild(createModuleNode(module, doc));
     }
 
-    return transform(doc);
+    return transform(doc).getBytes();
   }
 
   /**
@@ -62,7 +62,7 @@ public class XmlExporter implements Exporter {
    * transformation process.
    */
   @Override
-  public String getOutput(Collection<ScadDocuFile> files)
+  public byte[] getOutput(Collection<ScadDocuFile> files)
       throws ParserConfigurationException, TransformerException {
     // root elements
     Document doc = getDoc();
@@ -78,7 +78,7 @@ public class XmlExporter implements Exporter {
       rootElement.appendChild(fileElement);
     }
 
-    return transform(doc);
+    return transform(doc).getBytes();
   }
 
   /**

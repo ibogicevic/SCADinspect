@@ -20,7 +20,7 @@ public class CsvExporter implements Exporter {
    * internally
    */
   @Override
-  public String getOutput(ScadDocuFile file) {
+  public byte[] getOutput(ScadDocuFile file) {
     List<String> keys = new ArrayList<>(file.getAllKeys());
     Collection<Module> modules = file.getModules();
 
@@ -28,7 +28,7 @@ public class CsvExporter implements Exporter {
     csvExport.append(file.getPath().toString());
     csvExport.append(lineSeparator);
     if (keys.size() == 0) {
-      return csvExport.toString();
+      return csvExport.toString().getBytes();
     }
     // Headers
     for (String key : keys) {
@@ -53,7 +53,7 @@ public class CsvExporter implements Exporter {
       csvExport.setLength(csvExport.length() - 1);
       csvExport.append(lineSeparator);
     }
-    return csvExport.toString();
+    return csvExport.toString().getBytes();
   }
 
   /**
@@ -63,13 +63,13 @@ public class CsvExporter implements Exporter {
    * internally
    */
   @Override
-  public String getOutput(Collection<ScadDocuFile> files) throws Exception {
+  public byte[] getOutput(Collection<ScadDocuFile> files) throws Exception {
     StringBuilder csvExport = new StringBuilder();
     for (ScadDocuFile docuFile : files) {
       csvExport.append(getOutput(docuFile));
       csvExport.append(lineSeparator);
     }
     csvExport.setLength(csvExport.length() - 2);
-    return csvExport.toString();
+    return csvExport.toString().getBytes();
   }
 }
