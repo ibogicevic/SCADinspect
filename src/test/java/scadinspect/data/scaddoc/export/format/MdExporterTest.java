@@ -50,7 +50,7 @@ class MdExporterTest {
     assertEquals("# Parts Documentation" + lineSeparator
             + lineSeparator
             + "## testPath" + lineSeparator,
-        exporter.getOutput(file));
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
   /**
@@ -68,7 +68,7 @@ class MdExporterTest {
             + "key" + lineSeparator
             + "---" + lineSeparator
             + "1" + lineSeparator,
-        exporter.getOutput(file));
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
   /**
@@ -86,7 +86,7 @@ class MdExporterTest {
             + "key" + lineSeparator
             + "---" + lineSeparator
             + "1, 2, 3" + lineSeparator,
-        exporter.getOutput(file));
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
   /**
@@ -104,7 +104,7 @@ class MdExporterTest {
             + "price" + lineSeparator
             + "-----" + lineSeparator
             + "12 EUR" + lineSeparator,
-        exporter.getOutput(file));
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
   @Test
@@ -126,7 +126,7 @@ class MdExporterTest {
             + "---" + lineSeparator
             + "value" + lineSeparator
             + "value" + lineSeparator,
-        exporter.getOutput(file));
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
   @Test
@@ -160,6 +160,6 @@ class MdExporterTest {
             + "----|----" + lineSeparator
             + "value1|" + lineSeparator
             + "|value2" + lineSeparator,
-        exporter.getOutput(files));
+        new String(exporter.getOutput(files), "UTF-8"));
   }
 }

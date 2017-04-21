@@ -61,7 +61,7 @@ class PropertyParserTest {
    * Test against the defined example file
    */
   @Test
-  void sampleFile() {
+  void sampleFile() throws Exception{
     Collection<Module> modules = new ArrayList<>();
     Module wheel = new Module();
     wheel.addProperty(new SingleProperty<>("part", "Wheel"));
@@ -141,8 +141,8 @@ class PropertyParserTest {
     ScadDocuFile file = new ScadDocuFile(null,modules);
     ScadDocuFile file2 = new ScadDocuFile(null,parsed);
 
-    assertEquals(exporter.getOutput(file),
-        exporter.getOutput(file2));
+    assertEquals(new String(exporter.getOutput(file), "UTF-8"),
+        new String(exporter.getOutput(file2), "UTF-8"));
   }
 
   /**
@@ -195,7 +195,7 @@ class PropertyParserTest {
    * Test parsing of Multi Property with type Int Double and String
    */
   @Test
-  void parseMultiProperty() {
+  void parseMultiProperty() throws Exception{
     content = "/**"
         + "* @float 0.1;0.2"
         + "* @int 1;2"
@@ -222,7 +222,7 @@ class PropertyParserTest {
     ScadDocuFile file = new ScadDocuFile(null,expected);
     ScadDocuFile file2 = new ScadDocuFile(null,parsed);
 
-    assertEquals(exporter.getOutput(file), exporter.getOutput(file2));
+    assertEquals(new String(exporter.getOutput(file), "UTF-8"), new String(exporter.getOutput(file2), "UTF-8"));
 
   }
 
@@ -239,7 +239,7 @@ class PropertyParserTest {
    * Test what happens with added file
    */
   @Test
-  void alternativeConstructor() {
+  void alternativeConstructor() throws Exception{
     content = "/**"
         + "* @float 0.1;0.2"
         + "* @int 1;2"
@@ -266,6 +266,6 @@ class PropertyParserTest {
     ScadDocuFile file = new ScadDocuFile(null,expected);
     ScadDocuFile file2 = new ScadDocuFile(null,parsed);
 
-    assertEquals(exporter.getOutput(file), exporter.getOutput(file2));
+    assertEquals(new String(exporter.getOutput(file), "UTF-8"), new String(exporter.getOutput(file2), "UTF-8"));
   }
 }
