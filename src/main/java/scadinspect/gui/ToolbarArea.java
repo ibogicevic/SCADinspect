@@ -2,6 +2,8 @@ package scadinspect.gui;
 
 import java.io.InputStream;
 import java.util.prefs.Preferences;
+
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuItem;
@@ -84,6 +86,7 @@ public class ToolbarArea extends ToolBar {
             openProjectButton.setOnAction(event -> {
               projectHandler.openProjectFile();
               CodeAnalyzer.refresh();
+                Main.getInstance().tabArea.getDocumentationList().refresh();
             });
         } else {
             openProjectButton.setText("Open folder");
@@ -93,6 +96,9 @@ public class ToolbarArea extends ToolBar {
                 if(files != null) {
                   Main.getInstance().getFileList().addAll(files);
                   CodeAnalyzer.refresh();
+                    Platform.runLater(() -> {
+                        Main.getInstance().tabArea.getDocumentationList().refresh();
+                    });
                 }
               });
             });
@@ -106,6 +112,9 @@ public class ToolbarArea extends ToolBar {
                 if(files != null) {
                   Main.getInstance().getFileList().addAll(files);
                   CodeAnalyzer.refresh();
+                    Platform.runLater(() -> {
+                        Main.getInstance().tabArea.getDocumentationList().refresh();
+                    });
                 }
               });
             });
@@ -116,6 +125,7 @@ public class ToolbarArea extends ToolBar {
             openProjectButton.setOnAction(event -> {
               projectHandler.openProjectFile();
               CodeAnalyzer.refresh();
+                Main.getInstance().tabArea.getDocumentationList().refresh();
             });
         });
 

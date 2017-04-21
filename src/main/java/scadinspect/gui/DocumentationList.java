@@ -1,5 +1,6 @@
 package scadinspect.gui;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -34,17 +35,15 @@ public class DocumentationList {
     //Data structure with associated data for documentation List
     private List<ScadDocuFile> docData;
 
-    private static int columnCount = 0;
-    private static int rowCount = 0;
-
+    private int columnCount = 0;
 
     //Generate the list which is shown withing the table
     public TableView generateList() {
+        columnCount = 0;
         docList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-       // docData = dummyData();//TODO
 
         Collection<String> headers = new TreeSet<>();
-        if (docData!=null) {
+        if (docData != null) {
             for (ScadDocuFile file : docData) {
                 headers.addAll(file.getAllKeys());
             }
@@ -68,8 +67,6 @@ public class DocumentationList {
     }
 
     private void loadDocList() {
-        // List<ScadDocuFile> docList = Main.getInstance().getDocuFiles();
-
         for (ScadDocuFile file : docData) {
             for (Module module : file.getModules()) {
                 List<String> row = new LinkedList<>();
@@ -89,6 +86,7 @@ public class DocumentationList {
                         value = "TODO Multi Property";
                     } else {
                         value = property.getValue().getClass().toGenericString();
+                     //   value="Error";
                     }
                     dataRow.put(property.getKey(), value);
                 }
@@ -109,32 +107,27 @@ public class DocumentationList {
         );
     }
 
-    public void clearList() {
+    public void refresh() {
         docList.getItems().clear();
         docList.getColumns().clear();
-docData=dummyData();
-        System.out.println(Main.getInstance().getDocuFiles());
+        docData = loadFiles();
+        //  System.out.println(Main.getInstance().getFileList());
         Main.getInstance().tabArea.generateDocTable(this);
     }
 
-    //add the Data (currently as ArrayList) to the observableList
-  /*
-  public void addData (ArrayList<Documentation> documentations){
-    for(int i = 0; i < documentations.size(); i++){
-      docData.add(i, documentations.get(i));
-    }
-  }
-  */
-    private List<ScadDocuFile> dummyData() {
-        List<ScadDocuFile> dummy = new LinkedList<>();
+    private List<ScadDocuFile> loadFiles() {
+        List<ScadDocuFile> docData = new LinkedList<>();
         try {
-            dummy.add(new ScadDocuFile(Paths.get("./spec/samples/sample.scad")));
-            dummy.add(new ScadDocuFile(Paths.get("./spec/samples/sample2.scad")));
+            for (File file : Main.getInstance().getFileList()) {
+
+                docData.add(new ScadDocuFile(file.toPath()));
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //return dummy;
+        return docData;
 
-        return Main.getInstance().getDocuFiles();
+
     }
 }
