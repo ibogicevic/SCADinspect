@@ -15,7 +15,7 @@ public class ArgumentDeclNode extends ASTNode {
     ID_EXPR
   }
 
-  public static ArgumentDeclNode createID(String id) {
+  public static ArgumentDeclNode createId(String id) {
     return new ArgumentDeclNode(Types.ID, Collections.emptyList(), id);
   }
 

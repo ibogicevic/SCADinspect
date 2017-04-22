@@ -1,5 +1,6 @@
 package scadinspect.parser.ast;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class InnerInputNode extends ASTNode {
     return new InnerInputNode(Types.EMPTY, Collections.emptyList());
   }
 
-  public static InnerInputNode createStatement(StatementNode statement) {
-    return new InnerInputNode(Types.STATEMENT, Collections.singletonList(statement));
+  public static InnerInputNode createStatement(StatementNode statement, InnerInputNode inner) {
+    return new InnerInputNode(Types.STATEMENT, Arrays.asList(statement, inner));
   }
 
   protected InnerInputNode(NodeType type, List<ASTNode> children) {

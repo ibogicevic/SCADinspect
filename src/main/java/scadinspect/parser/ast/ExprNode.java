@@ -59,7 +59,7 @@ public class ExprNode extends ASTNode {
   public static ExprNode createUndef() {
     return new ExprNode(Types.UNDEF, Collections.emptyList(), null, null, null);
   }
-  public static ExprNode createID(String id) {
+  public static ExprNode createId(String id) {
     return new ExprNode(Types.ID, Collections.emptyList(), null, id, null);
   }
   public static ExprNode createExprDotId(ExprNode expr, String id) {
@@ -82,7 +82,7 @@ public class ExprNode extends ASTNode {
   public static ExprNode createOptionalCommas(OptionalCommasNode commas) {
     return new ExprNode(Types.OPTIONAL_COMMAS, Collections.singletonList(commas), null, null, null);
   }
-  public static ExprNode createVextor(VectorExprNode vector, OptionalCommasNode commas) {
+  public static ExprNode createVector(VectorExprNode vector, OptionalCommasNode commas) {
     return new ExprNode(Types.VECTOR, Arrays.asList(vector, commas), null, null, null);
   }
   public static ExprNode createMultiplication(ExprNode expr1, ExprNode expr2) {
@@ -97,7 +97,7 @@ public class ExprNode extends ASTNode {
   public static ExprNode createAddition(ExprNode expr1, ExprNode expr2) {
     return new ExprNode(Types.ADDITION, Arrays.asList(expr1, expr2), null, null, null);
   }
-  public static ExprNode createSubstraction(ExprNode expr1, ExprNode expr2) {
+  public static ExprNode createSubtraction(ExprNode expr1, ExprNode expr2) {
     return new ExprNode(Types.SUBTRACTION, Arrays.asList(expr1, expr2), null, null, null);
   }
   public static ExprNode createLess(ExprNode expr1, ExprNode expr2) {
@@ -139,7 +139,8 @@ public class ExprNode extends ASTNode {
   public static ExprNode createTernary(ExprNode expr1, ExprNode expr2, ExprNode expr3) {
     return new ExprNode(Types.TERNARY, Arrays.asList(expr1, expr2, expr3), null, null, null);
   }
-  public static ExprNode createArrayaccess(ExprNode expr1, ExprNode expr2) {
+  //TODO find out if this is really array access
+  public static ExprNode createArrayAccess(ExprNode expr1, ExprNode expr2) {
     return new ExprNode(Types.ARRAY_ACCESS, Arrays.asList(expr1, expr2), null, null, null);
   }
   public static ExprNode createFunctionCall(String id, ArgumentsCallNode argumentsCall) {

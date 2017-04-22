@@ -23,7 +23,8 @@ public class VectorExprNode extends ASTNode {
     return new VectorExprNode(Types.LIST_COMPREHENSION_ELEMENTS, Collections.singletonList(list));
   }
 
-  public static VectorExprNode createWithComma(VectorExprNode vector, OptionalCommasNode commas, ListComprehensionElementsOrExprNode list) {
+  public static VectorExprNode createWithComma(VectorExprNode vector, OptionalCommasNode commas,
+      ListComprehensionElementsOrExprNode list) {
     return new VectorExprNode(Types.WITH_COMMA, Arrays.asList(vector, commas, list));
   }
 

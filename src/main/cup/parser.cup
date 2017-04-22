@@ -90,8 +90,7 @@ start with input;
 
 input ::=
           /* empty */
-        {:  /* TODO build parse tree here */
-            RESULT = InputNode.createEmpty(); :}
+        {:  RESULT = InputNode.createEmpty(); :}
         | TOK_USE:u input:i
         {:  RESULT = InputNode.createUse(u, i); :}
         | statement:s input:i
@@ -101,266 +100,267 @@ input ::=
 statement ::=
           SEMICOLON
         {: RESULT = StatementNode.createSemicolon(); :}
-        | BRACKET_CURLY_OPEN inner_input BRACKET_CURLY_CLOSE
-        {:  /* TODO use correct types */
-            RESULT = StatementNode.createSemicolon(); :}
-        | module_instantiation
-        {: RESULT = StatementNode.createSemicolon(); :}
-        | assignment
-        {: RESULT = StatementNode.createSemicolon(); :}
-        | TOK_MODULE TOK_ID
-          BRACKET_ROUND_OPEN arguments_decl optional_commas BRACKET_ROUND_CLOSE
-          statement
-        {: RESULT = StatementNode.createSemicolon(); :}
-        | TOK_FUNCTION TOK_ID
-          BRACKET_ROUND_OPEN arguments_decl optional_commas  BRACKET_ROUND_CLOSE
-          EQUAL expr SEMICOLON
-        {: RESULT = StatementNode.createSemicolon(); :}
+        | BRACKET_CURLY_OPEN inner_input:i BRACKET_CURLY_CLOSE
+        {:  RESULT = StatementNode.createInnerInput(i); :}
+        | module_instantiation:m
+        {: RESULT = StatementNode.createModuleInstantiation(m); :}
+        | assignment:a
+        {: RESULT = StatementNode.createAssignment(a); :}
+        | TOK_MODULE TOK_ID:id
+          BRACKET_ROUND_OPEN arguments_decl:ad optional_commas:oc BRACKET_ROUND_CLOSE
+          statement:s
+        {: RESULT = StatementNode.createModuleDefinition(id, ad, oc, s); :}
+        | TOK_FUNCTION TOK_ID:id
+          BRACKET_ROUND_OPEN arguments_decl:ad optional_commas:oc  BRACKET_ROUND_CLOSE
+          EQUAL expr:e SEMICOLON
+        {: RESULT = StatementNode.createFunctionDefinition(id, ad, oc, e); :}
         ;
 
 inner_input ::=
           /* empty */
-        {:  :}
-        | statement inner_input
-        {:  :}
+        {: RESULT = InnerInputNode.createEmpty(); :}
+        | statement:s inner_input:i
+        {: RESULT = InnerInputNode.createStatement(s, i); :}
         ;
 
 assignment ::=
-          TOK_ID EQUAL expr SEMICOLON
-        {: :}
+          TOK_ID:id EQUAL expr:e SEMICOLON
+        {: RESULT = AssignmentNode.createAssignment(id, e); :}
         ;
 
 
 module_instantiation ::=
-          EXCLAMATION_MARK module_instantiation
-        {:  :}
-        | HASH module_instantiation
-        {:  :}
-        | PERCENT module_instantiation
-        {:  :}
-        | ASTERISK module_instantiation
-        {:  :}
-        | single_module_instantiation
-          child_statement
-        {:  :}
-        | ifelse_statement
-        {:  :}
+          EXCLAMATION_MARK module_instantiation:m
+        {: RESULT = ModuleInstantiationNode.createWithExclamationMark(m); :}
+        | HASH module_instantiation:m
+        {: RESULT = ModuleInstantiationNode.createWithHash(m); :}
+        | PERCENT module_instantiation:m
+        {: RESULT = ModuleInstantiationNode.createWithPercent(m); :}
+        | ASTERISK module_instantiation:m
+        {: RESULT = ModuleInstantiationNode.createWithAsterisk(m); :}
+        | single_module_instantiation:sm
+          child_statement:cs
+        {: RESULT = ModuleInstantiationNode.createSingle(sm, cs); :}
+        | ifelse_statement:ies
+        {: RESULT = ModuleInstantiationNode.createIfElse(ies); :}
         ;
 
 ifelse_statement ::=
-          if_statement
-        {:  :}
-        | if_statement TOK_ELSE
-          child_statement
-        {: :}
+          if_statement:is
+        {: RESULT = IfElseStatementNode.createIf(is); :}
+        | if_statement:is TOK_ELSE
+          child_statement:cs
+        {: RESULT = IfElseStatementNode.createIfElse(is, cs); :}
         ;
 
 if_statement ::=
-          TOK_IF BRACKET_ROUND_OPEN expr BRACKET_ROUND_CLOSE
-          child_statement
-        {:  :}
+          TOK_IF BRACKET_ROUND_OPEN expr:e BRACKET_ROUND_CLOSE
+          child_statement:cs
+        {: RESULT = IfStatementNode.createIf(e, cs); :}
         ;
 
 child_statements ::=
           /* empty */
-        {:  :}
-        | child_statements child_statement
-        {:  :}
-        | child_statements assignment
-        {:  :}
+        {: RESULT = ChildStatementsNode.createEmpty(); :}
+        | child_statements:css child_statement:cs
+        {: RESULT = ChildStatementsNode.createChildStatement(css, cs); :}
+        | child_statements:css assignment:a
+        {: RESULT = ChildStatementsNode.createAssignment(css, a); :}
         ;
 
 child_statement ::=
           SEMICOLON
-        {: :}
-        | BRACKET_CURLY_OPEN child_statements BRACKET_CURLY_CLOSE
-        {: :}
-        | module_instantiation
-        {: :}
+        {: RESULT = ChildStatementNode.createSemicolon(); :}
+        | BRACKET_CURLY_OPEN child_statements:css BRACKET_CURLY_CLOSE
+        {: RESULT = ChildStatementNode.createChildStatements(css); :}
+        | module_instantiation:m
+        {: RESULT = ChildStatementNode.createModuleInstantiation(m); :}
         ;
 
 // "for", "let" and "each" are valid module identifiers
 module_id ::=
-          TOK_ID:i
-        {: /*System.out.println("Module ID: " +  i); */:}
+          TOK_ID:id
+        {: /*System.out.println("Module ID: " +  i); */
+            RESULT = ModuleIdNode.createId(id); :}
         | TOK_FOR
-        {:  :}
+        {: RESULT = ModuleIdNode.createFor(); :}
         | TOK_LET
-        {:  :}
+        {: RESULT = ModuleIdNode.createLet(); :}
         | TOK_ASSERT
-        {:  :}
+        {: RESULT = ModuleIdNode.createAssert(); :}
         | TOK_ECHO
-        {:  :}
+        {: RESULT = ModuleIdNode.createEcho(); :}
         | TOK_EACH
-        {:  :}
+        {: RESULT = ModuleIdNode.createEach(); :}
         ;
 
 single_module_instantiation ::=
-          module_id BRACKET_ROUND_OPEN arguments_call BRACKET_ROUND_CLOSE
-        {:  :}
+          module_id:mid BRACKET_ROUND_OPEN arguments_call:ac BRACKET_ROUND_CLOSE
+        {: RESULT = SingleModuleInstantiationNode.createSingle(mid, ac); :}
         ;
 
 expr ::=
           TOK_TRUE
-        {:  :}
+        {: RESULT = ExprNode.createTrue(); :}
         | TOK_FALSE
-        {:  :}
+        {: RESULT = ExprNode.createFalse(); :}
         | TOK_UNDEF
-        {:  :}
-        | TOK_ID
-        {:  :}
-        | expr DOT TOK_ID
-        {:  :}
+        {: RESULT = ExprNode.createUndef(); :}
+        | TOK_ID:id
+        {: RESULT = ExprNode.createId(id); :}
+        | expr:e DOT TOK_ID:id
+        {: RESULT = ExprNode.createExprDotId(e, id); :}
         | TOK_STRING:s
-        {: /* System.out.println("String: " + s); */  :}
+        {: /* System.out.println("String: " + s); */
+          RESULT = ExprNode.createString(s); :}
         | TOK_NUMBER:n
-        {:
-           /* System.out.println("Number value: " + (Double) n); */:}
-        | BRACKET_SQUARE_OPEN expr COLON expr BRACKET_SQUARE_CLOSE
-        {:  :}
-        | BRACKET_SQUARE_OPEN expr COLON expr COLON expr BRACKET_SQUARE_CLOSE
-        {:  :}
-        | BRACKET_SQUARE_OPEN optional_commas BRACKET_SQUARE_CLOSE
-        {:  :}
-        | BRACKET_SQUARE_OPEN vector_expr optional_commas BRACKET_SQUARE_CLOSE
-        {:  :}
-        | expr ASTERISK expr
-        {:  :}
-        | expr SLASH expr
-        {:  :}
-        | expr PERCENT expr
-        {:  :}
-        | expr PLUS expr
-        {:  :}
-        | expr MINUS expr
-        {:  :}
-        | expr BRACKET_ANGLE_OPEN expr
-        {:  :}
-        | expr LE expr
-        {:  :}
-        | expr EQ expr
-        {:  :}
-        | expr NE expr
-        {:  :}
-        | expr GE expr
-        {:  :}
-        | expr BRACKET_ANGLE_CLOSE expr
-        {:  :}
-        | expr AND expr
-        {:  :}
-        | expr OR expr
-        {:  :}
-        | PLUS expr
-        {:  :}
-        | MINUS expr
-        {:  :}
-        | EXCLAMATION_MARK expr
-        {:  :}
-        | BRACKET_ROUND_OPEN expr BRACKET_ROUND_CLOSE
-        {:  :}
-        | expr QUESTION_MARK expr COLON expr
-        {:  :}
-        | expr BRACKET_SQUARE_OPEN expr BRACKET_SQUARE_CLOSE
-        {:  :}
-        | TOK_ID BRACKET_ROUND_OPEN arguments_call BRACKET_ROUND_CLOSE
-        {:  :}
-        | TOK_LET BRACKET_ROUND_OPEN arguments_call BRACKET_ROUND_CLOSE expr
-        {:  :}
+        {: /* System.out.println("Number value: " + (Double) n); */
+           RESULT = ExprNode.createNumber(n); :}
+        | BRACKET_SQUARE_OPEN expr:e1 COLON expr:e2 BRACKET_SQUARE_CLOSE
+        {: RESULT = ExprNode.createExprColonExpr(e1, e2); :}
+        | BRACKET_SQUARE_OPEN expr:e1 COLON expr:e2 COLON expr:e3 BRACKET_SQUARE_CLOSE
+        {: RESULT = ExprNode.createExprColonExprColonExpr(e1, e2, e3); :}
+        | BRACKET_SQUARE_OPEN optional_commas:oc BRACKET_SQUARE_CLOSE
+        {: RESULT = ExprNode.createOptionalCommas(oc); :}
+        | BRACKET_SQUARE_OPEN vector_expr:ve optional_commas:oc BRACKET_SQUARE_CLOSE
+        {: RESULT = ExprNode.createVector(ve, oc); :}
+        | expr:e1 ASTERISK expr:e2
+        {: RESULT = ExprNode.createMultiplication(e1, e2); :}
+        | expr:e1 SLASH expr:e2
+        {: RESULT = ExprNode.createDivision(e1, e2); :}
+        | expr:e1 PERCENT expr:e2
+        {: RESULT = ExprNode.createModulo(e1, e2); :}
+        | expr:e1 PLUS expr:e2
+        {: RESULT = ExprNode.createAddition(e1, e2); :}
+        | expr:e1 MINUS expr:e2
+        {: RESULT = ExprNode.createSubtraction(e1, e2); :}
+        | expr:e1 BRACKET_ANGLE_OPEN expr:e2
+        {: RESULT = ExprNode.createLess(e1, e2); :}
+        | expr:e1 LE expr:e2
+        {: RESULT = ExprNode.createLessEqual(e1, e2); :}
+        | expr:e1 EQ expr:e2
+        {: RESULT = ExprNode.createEqual(e1, e2); :}
+        | expr:e1 NE expr:e2
+        {: RESULT = ExprNode.createNotEqual(e1, e2); :}
+        | expr:e1 GE expr:e2
+        {: RESULT = ExprNode.createGreaterEqual(e1, e2); :}
+        | expr:e1 BRACKET_ANGLE_CLOSE expr:e2
+        {: RESULT = ExprNode.createGreater(e1, e2); :}
+        | expr:e1 AND expr:e2
+        {: RESULT = ExprNode.createAnd(e1, e2); :}
+        | expr:e1 OR expr:e2
+        {: RESULT = ExprNode.createOr(e1, e2); :}
+        | PLUS expr:e
+        {: RESULT = ExprNode.createUnaryPlus(e); :}
+        | MINUS expr:e
+        {: RESULT = ExprNode.createUnaryMinus(e); :}
+        | EXCLAMATION_MARK expr:e
+        {: RESULT = ExprNode.createNot(e); :}
+        | BRACKET_ROUND_OPEN expr:e BRACKET_ROUND_CLOSE
+        {: RESULT = ExprNode.createParentheses(e); :}
+        | expr:e1 QUESTION_MARK expr:e2 COLON expr:e3
+        {: RESULT = ExprNode.createTernary(e1,e2, e3); :}
+        | expr:e1 BRACKET_SQUARE_OPEN expr:e2 BRACKET_SQUARE_CLOSE
+        {: RESULT = ExprNode.createArrayAccess(e1, e2); :}
+        | TOK_ID:id BRACKET_ROUND_OPEN arguments_call:ac BRACKET_ROUND_CLOSE
+        {: RESULT = ExprNode.createFunctionCall(id, ac); :}
+        | TOK_LET BRACKET_ROUND_OPEN arguments_call:ac BRACKET_ROUND_CLOSE expr:e
+        {: RESULT = ExprNode.createLet(ac, e); :}
         %prec LET
-        | TOK_ASSERT BRACKET_ROUND_OPEN arguments_call BRACKET_ROUND_CLOSE expr_or_empty
-        {:  :}
+        | TOK_ASSERT BRACKET_ROUND_OPEN arguments_call:ac BRACKET_ROUND_CLOSE expr_or_empty:e
+        {: RESULT = ExprNode.createAssert(ac, e); :}
         %prec LOW_PRIO_LEFT
-        | TOK_ECHO BRACKET_ROUND_OPEN arguments_call BRACKET_ROUND_CLOSE expr_or_empty
-        {:  :}
+        | TOK_ECHO BRACKET_ROUND_OPEN arguments_call:ac BRACKET_ROUND_CLOSE expr_or_empty:e
+        {: RESULT = ExprNode.createEcho(ac, e); :}
         %prec LOW_PRIO_LEFT
         ;
 
 expr_or_empty ::=
           /* empty */
-        {:  :}
+        {: RESULT = ExprOrEmptyNode.createEmpty(); :}
         %prec LOW_PRIO_LEFT
-        | expr
-        {:  :}
+        | expr:e
+        {: RESULT = ExprOrEmptyNode.createExpr(e); :}
         %prec HIGH_PRIO_LEFT
         ;
 
 list_comprehension_elements ::=
           /* The last set element may not be a "let" (as that would instead
              be parsed as an expression) */
-          TOK_LET BRACKET_ROUND_OPEN arguments_call BRACKET_ROUND_CLOSE list_comprehension_elements_p
-        {:  :}
-        | TOK_EACH list_comprehension_elements_or_expr
-        {:  :}
-        | TOK_FOR BRACKET_ROUND_OPEN arguments_call BRACKET_ROUND_CLOSE list_comprehension_elements_or_expr
-        {:  :}
-        | TOK_FOR BRACKET_ROUND_OPEN arguments_call SEMICOLON expr SEMICOLON arguments_call BRACKET_ROUND_CLOSE list_comprehension_elements_or_expr
-        {:  :}
-        | TOK_IF BRACKET_ROUND_OPEN expr BRACKET_ROUND_CLOSE list_comprehension_elements_or_expr
-        {:  :}
-        | TOK_IF BRACKET_ROUND_OPEN expr BRACKET_ROUND_CLOSE list_comprehension_elements_or_expr TOK_ELSE list_comprehension_elements_or_expr
-        {:  :}
+          TOK_LET BRACKET_ROUND_OPEN arguments_call:ac BRACKET_ROUND_CLOSE list_comprehension_elements_p:lcesp
+        {: RESULT = ListComprehensionElementsNode.createLet(ac, lcesp); :}
+        | TOK_EACH list_comprehension_elements_or_expr:lcese
+        {: RESULT = ListComprehensionElementsNode.createEach(lcese); :}
+        | TOK_FOR BRACKET_ROUND_OPEN arguments_call:ac BRACKET_ROUND_CLOSE list_comprehension_elements_or_expr:lcese
+        {: RESULT = ListComprehensionElementsNode.createFor(ac, lcese); :}
+        | TOK_FOR BRACKET_ROUND_OPEN arguments_call:ac1 SEMICOLON expr:e SEMICOLON arguments_call:ac2 BRACKET_ROUND_CLOSE list_comprehension_elements_or_expr:lcese
+        {: RESULT = ListComprehensionElementsNode.createForWithSemicolons(ac1, e, ac2, lcese); :}
+        | TOK_IF BRACKET_ROUND_OPEN expr:e BRACKET_ROUND_CLOSE list_comprehension_elements_or_expr:lcese
+        {: RESULT = ListComprehensionElementsNode.createIf(e, lcese); :}
+        | TOK_IF BRACKET_ROUND_OPEN expr:e BRACKET_ROUND_CLOSE list_comprehension_elements_or_expr:lcese1 TOK_ELSE list_comprehension_elements_or_expr:lcese2
+        {: RESULT = ListComprehensionElementsNode.createIfElse(e, lcese1, lcese2); :}
         ;
 
 /* list_comprehension_elements with optional parenthesis */
 list_comprehension_elements_p ::=
-          list_comprehension_elements
-        {:  :}
-        | BRACKET_ROUND_OPEN list_comprehension_elements BRACKET_ROUND_CLOSE
-        {:  :}
+          list_comprehension_elements:lces
+        {: RESULT = ListComprehensionElementsPNode.createList(lces); :}
+        | BRACKET_ROUND_OPEN list_comprehension_elements:lces BRACKET_ROUND_CLOSE
+        {: RESULT = ListComprehensionElementsPNode.createParentheses(lces); :}
         ;
 
 list_comprehension_elements_or_expr ::=
-          list_comprehension_elements_p
-        {:  :}
-        | expr
-        {:  :}
+          list_comprehension_elements_p:lcesp
+        {: RESULT = ListComprehensionElementsOrExprNode.createListP(lcesp); :}
+        | expr:e
+        {: RESULT = ListComprehensionElementsOrExprNode.createExpr(e); :}
         ;
 
 optional_commas ::=
-          COMMA optional_commas
-        {:  :}
+          COMMA optional_commas:oc
+        {: RESULT = OptionalCommasNode.createComma(oc); :}
         | /* empty */
-        {:  :}
+        {: RESULT = OptionalCommasNode.createEmpty(); :}
         ;
 
 vector_expr ::=
-          expr
-        {:  :}
-        |  list_comprehension_elements
-        {:  :}
-        | vector_expr COMMA optional_commas list_comprehension_elements_or_expr
-        {:  :}
+          expr:e
+        {: RESULT = VectorExprNode.createExpr(e); :}
+        |  list_comprehension_elements:lces
+        {: RESULT = VectorExprNode.createListComprehensionElements(lces); :}
+        | vector_expr:ve COMMA optional_commas:oc list_comprehension_elements_or_expr:lcese
+        {: RESULT = VectorExprNode.createWithComma(ve, oc, lcese); :}
         ;
 
 arguments_decl ::=
           /* empty */
-        {:  :}
-        | argument_decl
-        {:  :}
-        | arguments_decl COMMA optional_commas argument_decl
-        {:  :}
+        {: RESULT = ArgumentsDeclNode.createEmpty(); :}
+        | argument_decl:ad
+        {: RESULT = ArgumentsDeclNode.createArgumentDecl(ad); :}
+        | arguments_decl:asd COMMA optional_commas:oc argument_decl:ad
+        {: RESULT = ArgumentsDeclNode.createWithComma(asd, oc, ad); :}
         ;
 
 argument_decl ::=
-          TOK_ID
-        {:  :}
-        | TOK_ID EQUAL expr
-        {:  :}
+          TOK_ID:id
+        {: RESULT = ArgumentDeclNode.createId(id); :}
+        | TOK_ID:id EQUAL expr:e
+        {: RESULT = ArgumentDeclNode.createIdExpr(id, e); :}
         ;
 
 arguments_call ::=
           /* empty */
-        {:  :}
-        | argument_call
-        {:  :}
-        | arguments_call COMMA optional_commas argument_call
-        {:  :}
+        {: RESULT = ArgumentsCallNode.createEmpty(); :}
+        | argument_call:ac
+        {: RESULT = ArgumentsCallNode.createArgumentCall(ac); :}
+        | arguments_call:asc COMMA optional_commas:oc argument_call:ac
+        {: RESULT = ArgumentsCallNode.createWithComma(asc, oc, ac); :}
         ;
 
 argument_call ::=
-          expr
-        {:  :}
-        | TOK_ID EQUAL expr
-        {:  :}
+          expr:e
+        {: RESULT = ArgumentCallNode.createExpr(e); :}
+        | TOK_ID:id EQUAL expr:e
+        {: RESULT = ArgumentCallNode.createIdExpr(id, e); :}
         ;
 
