@@ -21,7 +21,7 @@ import scadinspect.data.scaddoc.ScadDocuFile;
 public class HtmlExporter implements Exporter {
 
   @Override
-  public String getOutput(ScadDocuFile file) throws Exception {
+  public byte[] getOutput(ScadDocuFile file) throws Exception {
     String title = "Parts Documentation";
     Collection<String> keys = file.getAllKeys();
 
@@ -34,7 +34,7 @@ public class HtmlExporter implements Exporter {
   }
 
   @Override
-  public String getOutput(Collection<ScadDocuFile> files) throws Exception {
+  public byte[] getOutput(Collection<ScadDocuFile> files) throws Exception {
     return null;
   }
 

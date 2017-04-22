@@ -33,7 +33,7 @@ class CsvExporterTest {
   void emptyList() throws Exception {
     ScadDocuFile file = new ScadDocuFile(Paths.get("Testing"), modules);
 
-    assertEquals("Testing" + lineSeparator, exporter.getOutput(file));
+    assertEquals("Testing" + lineSeparator, new String(exporter.getOutput(file), "UTF-8"));
   }
 
   @Test
@@ -44,7 +44,7 @@ class CsvExporterTest {
     ScadDocuFile file = new ScadDocuFile(Paths.get("Testing"), modules);
     assertEquals("Testing" + lineSeparator
         + "key" + lineSeparator
-        + "1" + lineSeparator, exporter.getOutput(file));
+        + "1" + lineSeparator, new String(exporter.getOutput(file), "UTF-8"));
   }
 
   @Test
@@ -73,7 +73,7 @@ class CsvExporterTest {
             + "part,price,amount,weight,materials,url" + lineSeparator
             + "Wheel,100 EUR,4,12 kg,Rubber: Aluminium,https://example.com" + lineSeparator
             + "Motor,1000 USD,1,200 kg,Steel,https://example.com" + lineSeparator,
-        exporter.getOutput(file));
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
   @Test
@@ -96,7 +96,7 @@ class CsvExporterTest {
 
     modules.add(wheel);
     modules.add(motor);
-    ScadDocuFile file = new ScadDocuFile(Paths.get("Testing"), modules);
+    ScadDocuFile file  = new ScadDocuFile(Paths.get("Testing"), modules);
     Collection<ScadDocuFile> files = new ArrayList<>();
     files.add(file);
     files.add(file);
@@ -109,7 +109,7 @@ class CsvExporterTest {
             + "Testing" + lineSeparator
             + "part,price,amount,weight,materials,url" + lineSeparator
             + "Wheel,100 EUR,4,12 kg,Rubber: Aluminium,https://example.com" + lineSeparator
-            + "Motor,1000 USD,1,200 kg,Steel,https://example.com" + lineSeparator,
-        exporter.getOutput(files));
+            + "Motor,1000 USD,1,200 kg,Steel,https://example.com" + lineSeparator + lineSeparator,
+        new String(exporter.getOutput(files), "UTF-8"));
   }
 }
