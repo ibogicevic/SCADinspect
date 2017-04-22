@@ -1,5 +1,6 @@
 package scadinspect.parser.ast;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,16 +17,16 @@ public class InputNode extends ASTNode {
     STATEMENT
   }
 
-  public static InputNode createEmptyInput() {
+  public static InputNode createEmpty() {
     return new InputNode(Types.EMPTY, Collections.emptyList(), null);
   }
 
-  public static InputNode createUseInput(String use) {
-    return new InputNode(Types.USE, Collections.emptyList(), use);
+  public static InputNode createUse(String use, InputNode input) {
+    return new InputNode(Types.USE, Collections.singletonList(input), use);
   }
 
-  public static InputNode createStatementInput(List<ASTNode> children) {
-    return new InputNode(Types.STATEMENT, children, null);
+  public static InputNode createStatement(StatementNode statementNode, InputNode input) {
+    return new InputNode(Types.STATEMENT, Arrays.asList(statementNode, input), null);
   }
 
   protected InputNode(NodeType type, List<ASTNode> children, String use) {

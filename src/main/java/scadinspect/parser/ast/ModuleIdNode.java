@@ -1,9 +1,7 @@
-package scadinspect.parser.ast.checkers;
+package scadinspect.parser.ast;
 
 import java.util.Collections;
 import java.util.List;
-import scadinspect.parser.ast.ASTNode;
-import scadinspect.parser.ast.NodeType;
 
 /**
  * Created by felix on 22.04.17.

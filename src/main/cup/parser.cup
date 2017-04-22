@@ -44,26 +44,26 @@ terminal LET, LOW_PRIO_LEFT, LOW_PRIO_RIGHT, HIGH_PRIO_LEFT, HIGH_PRIO_RIGHT;
 
 non terminal InputNode input;
 non terminal StatementNode statement;
-non terminal inner_input;
-non terminal assignment;
-non terminal module_instantiation;
-non terminal ifelse_statement;
-non terminal if_statement;
-non terminal child_statements;
-non terminal child_statement;
-non terminal module_id;
-non terminal single_module_instantiation;
-non terminal expr;
-non terminal expr_or_empty;
-non terminal list_comprehension_elements;
-non terminal list_comprehension_elements_p;
-non terminal list_comprehension_elements_or_expr;
-non terminal optional_commas;
-non terminal vector_expr;
-non terminal arguments_decl;
-non terminal argument_decl;
-non terminal arguments_call;
-non terminal argument_call;
+non terminal InnerInputNode inner_input;
+non terminal AssignmentNode assignment;
+non terminal ModuleInstantiationNode module_instantiation;
+non terminal IfElseStatementNode ifelse_statement;
+non terminal IfStatementNode if_statement;
+non terminal ChildStatementsNode child_statements;
+non terminal ChildStatementNode child_statement;
+non terminal ModuleIdNode module_id;
+non terminal SingleModuleInstantiationNode single_module_instantiation;
+non terminal ExprNode expr;
+non terminal ExprOrEmptyNode expr_or_empty;
+non terminal ListComprehensionElementsNode list_comprehension_elements;
+non terminal ListComprehensionElementsPNode list_comprehension_elements_p;
+non terminal ListComprehensionElementsOrExprNode list_comprehension_elements_or_expr;
+non terminal OptionalCommasNode optional_commas;
+non terminal VectorExprNode vector_expr;
+non terminal ArgumentsDeclNode arguments_decl;
+non terminal ArgumentDeclNode argument_decl;
+non terminal ArgumentsCallNode arguments_call;
+non terminal ArgumentCallNode argument_call;
 
 precedence right LET;
 precedence right LOW_PRIO_RIGHT;
@@ -91,34 +91,31 @@ start with input;
 input ::=
           /* empty */
         {:  /* TODO build parse tree here */
-            RESULT = Input :}
+            RESULT = InputNode.createEmpty(); :}
         | TOK_USE:u input:i
-        {:  InputNode inputNode = new InputNode(i);
-            inputNode.uses.add(u);
-            RESULT = inputNode; :}
+        {:  RESULT = InputNode.createUse(u, i); :}
         | statement:s input:i
-        {:  InputNode inputNode = new InputNode(i);
-            inputNode.statements.add(s);
-            RESULT = inputNode; :}
+        {:  RESULT = InputNode.createStatement(s, i); :}
         ;
 
 statement ::=
           SEMICOLON
-        {: RESULT = new StatementNode(); :}
+        {: RESULT = StatementNode.createSemicolon(); :}
         | BRACKET_CURLY_OPEN inner_input BRACKET_CURLY_CLOSE
-        {: RESULT = new StatementNode(); :}
+        {:  /* TODO use correct types */
+            RESULT = StatementNode.createSemicolon(); :}
         | module_instantiation
-        {: RESULT = new StatementNode(); :}
+        {: RESULT = StatementNode.createSemicolon(); :}
         | assignment
-        {: RESULT = new StatementNode(); :}
+        {: RESULT = StatementNode.createSemicolon(); :}
         | TOK_MODULE TOK_ID
           BRACKET_ROUND_OPEN arguments_decl optional_commas BRACKET_ROUND_CLOSE
           statement
-        {: RESULT = new StatementNode(); :}
+        {: RESULT = StatementNode.createSemicolon(); :}
         | TOK_FUNCTION TOK_ID
           BRACKET_ROUND_OPEN arguments_decl optional_commas  BRACKET_ROUND_CLOSE
           EQUAL expr SEMICOLON
-        {: RESULT = new StatementNode(); :}
+        {: RESULT = StatementNode.createSemicolon(); :}
         ;
 
 inner_input ::=

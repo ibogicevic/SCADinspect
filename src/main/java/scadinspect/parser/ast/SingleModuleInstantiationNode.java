@@ -2,7 +2,6 @@ package scadinspect.parser.ast;
 
 import java.util.Arrays;
 import java.util.List;
-import scadinspect.parser.ast.checkers.ModuleIdNode;
 
 /**
  * Created by felix on 22.04.17.
