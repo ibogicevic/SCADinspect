@@ -24,7 +24,6 @@ import scadinspect.data.scaddoc.properties.Property;
  * @author eric, Desyon on 31.03.17.
  */
 
-
 //TODO: Create or include stylesheet for better looks
 public class HtmlExporter implements Exporter {
 
@@ -170,23 +169,28 @@ public class HtmlExporter implements Exporter {
     ArrayList<Module> modules = (ArrayList<Module>) file.getModules();
     NodeList headerList = headerRow.getChildNodes();
 
-    for (int i = 0; i < headerList.getLength(); i++) {
-      for (Module module : modules) {
-        Element tableRow = doc.createElement("tr");
-        ArrayList<Property> properties = (ArrayList<Property>) module.getProperties();
+    for (Module module : modules) {
+      Element tableRow = doc.createElement("tr");
+      for (int i = 0; i < headerList.getLength(); i++) {
+        Node header = headerList.item(i);
+        boolean foundHeader = false;
+        for (Property property : module.getProperties()) {
+          if (header.getFirstChild().getNodeValue().equals(property.getKey())) {
+            foundHeader = true;
 
-        for (Property property : properties) {
-          Node node = headerList.item(i);
-
-          if (node.getFirstChild().getNodeValue().equals(property.getKey())) {
             Element tableData = doc.createElement("td");
             tableData.appendChild(doc.createTextNode(property.getValue().toString()));
 
             tableRow.appendChild(tableData);
-            tableBody.appendChild(tableRow);
+            break;
           }
         }
+        if (!foundHeader) {
+          tableRow.appendChild(doc.createElement("td"));
+        }
       }
+
+      tableBody.appendChild(tableRow);
     }
   }
 

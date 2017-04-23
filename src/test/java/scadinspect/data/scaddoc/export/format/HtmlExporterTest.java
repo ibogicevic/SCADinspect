@@ -1,3 +1,6 @@
+package scadinspect.data.scaddoc.export.format;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.file.Paths;
@@ -7,13 +10,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.ScadDocuFile;
-import scadinspect.data.scaddoc.export.format.HtmlExporter;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
- * Created by Desyon on 21.04.2017.
+ * @author Desyon on 21.04.2017.
  */
 class HtmlExporterTest {
 
@@ -45,7 +47,22 @@ class HtmlExporterTest {
   @Test
   void emptyList() throws Exception {
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
-    System.out.print(new String(exporter.getOutput(file), "UTF-8"));
+
+    assertEquals("<html>" + lineSeparator
+            + "  <head>" + lineSeparator
+            + "    <META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">" + lineSeparator
+            + "    <title>Parts Documentation</title>" + lineSeparator
+            + "  </head>" + lineSeparator
+            + "  <body>" + lineSeparator
+            + "    <table>" + lineSeparator
+            + "      <thead>" + lineSeparator
+            + "        <tr></tr>" + lineSeparator
+            + "      </thead>" + lineSeparator
+            + "      <tbody></tbody>" + lineSeparator
+            + "    </table>" + lineSeparator
+            + "  </body>" + lineSeparator
+            + "</html>" + lineSeparator,
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
   /**
@@ -57,7 +74,28 @@ class HtmlExporterTest {
     singleProperty.addProperty(new SingleProperty<>("key", 1));
     modules.add(singleProperty);
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
-    System.out.print(new String(exporter.getOutput(file), "UTF-8"));
+
+    assertEquals("<html>" + lineSeparator
+            + "  <head>" + lineSeparator
+            + "    <META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">" + lineSeparator
+            + "    <title>Parts Documentation</title>" + lineSeparator
+            + "  </head>" + lineSeparator
+            + "  <body>" + lineSeparator
+            + "    <table>" + lineSeparator
+            + "      <thead>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <th>key</th>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </thead>" + lineSeparator
+            + "      <tbody>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <td>1</td>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </tbody>" + lineSeparator
+            + "    </table>" + lineSeparator
+            + "  </body>" + lineSeparator
+            + "</html>" + lineSeparator,
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
   /**
@@ -69,11 +107,32 @@ class HtmlExporterTest {
     multiProperty.addProperty(new MultiProperty<>("key", 1, 2, 3));
     modules.add(multiProperty);
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
-    System.out.print(new String(exporter.getOutput(file), "UTF-8"));
+
+    assertEquals("<html>" + lineSeparator
+            + "  <head>" + lineSeparator
+            + "    <META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">" + lineSeparator
+            + "    <title>Parts Documentation</title>" + lineSeparator
+            + "  </head>" + lineSeparator
+            + "  <body>" + lineSeparator
+            + "    <table>" + lineSeparator
+            + "      <thead>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <th>key</th>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </thead>" + lineSeparator
+            + "      <tbody>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <td>1, 2, 3</td>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </tbody>" + lineSeparator
+            + "    </table>" + lineSeparator
+            + "  </body>" + lineSeparator
+            + "</html>" + lineSeparator,
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
   /**
-   * Test against a pair property containing an integer value.
+   * Test against a pair property.
    */
   @Test
   void pairProperty() throws Exception {
@@ -81,9 +140,33 @@ class HtmlExporterTest {
     pairProperty.addProperty(new PairProperty<>("price", 12, "EUR"));
     modules.add(pairProperty);
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
-    System.out.print(new String(exporter.getOutput(file), "UTF-8"));
+
+    assertEquals("<html>" + lineSeparator
+            + "  <head>" + lineSeparator
+            + "    <META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">" + lineSeparator
+            + "    <title>Parts Documentation</title>" + lineSeparator
+            + "  </head>" + lineSeparator
+            + "  <body>" + lineSeparator
+            + "    <table>" + lineSeparator
+            + "      <thead>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <th>price</th>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </thead>" + lineSeparator
+            + "      <tbody>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <td>12 EUR</td>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </tbody>" + lineSeparator
+            + "    </table>" + lineSeparator
+            + "  </body>" + lineSeparator
+            + "</html>" + lineSeparator,
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
+  /**
+   * Test against a module with multiple properties.
+   */
   @Test
   void multipleProperties() throws Exception {
     Module mod = new Module();
@@ -94,24 +177,75 @@ class HtmlExporterTest {
     modules.add(mod);
 
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
-    System.out.print(new String(exporter.getOutput(file), "UTF-8"));
+
+    assertEquals("<html>" + lineSeparator
+            + "  <head>" + lineSeparator
+            + "    <META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">" + lineSeparator
+            + "    <title>Parts Documentation</title>" + lineSeparator
+            + "  </head>" + lineSeparator
+            + "  <body>" + lineSeparator
+            + "    <table>" + lineSeparator
+            + "      <thead>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <th>key1</th><th>key2</th>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </thead>" + lineSeparator
+            + "      <tbody>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <td>value1</td><td>value2</td>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </tbody>" + lineSeparator
+            + "    </table>" + lineSeparator
+            + "  </body>" + lineSeparator
+            + "</html>" + lineSeparator,
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
+  /**
+   * Test against a file with multiple modules
+   */
   @Test
   void multipleModules() throws Exception {
     Module mod1 = new Module();
     Module mod2 = new Module();
 
-    mod1.addProperty(new SingleProperty<>("key", "value"));
-    mod2.addProperty(new SingleProperty<>("key", "value"));
+    mod1.addProperty(new SingleProperty<>("key1", "value1"));
+    mod2.addProperty(new SingleProperty<>("key2", "value2"));
 
     modules.add(mod1);
     modules.add(mod2);
 
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
-    System.out.print(new String(exporter.getOutput(file), "UTF-8"));
+
+    assertEquals("<html>" + lineSeparator
+            + "  <head>" + lineSeparator
+            + "    <META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">" + lineSeparator
+            + "    <title>Parts Documentation</title>" + lineSeparator
+            + "  </head>" + lineSeparator
+            + "  <body>" + lineSeparator
+            + "    <table>" + lineSeparator
+            + "      <thead>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <th>key1</th><th>key2</th>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </thead>" + lineSeparator
+            + "      <tbody>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <td>value1</td><td></td>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <td></td><td>value2</td>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </tbody>" + lineSeparator
+            + "    </table>" + lineSeparator
+            + "  </body>" + lineSeparator
+            + "</html>" + lineSeparator,
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 
+  /**
+   * Test against a collection of multiple files
+   */
   @Test
   void multipleFiles() throws Exception {
     Module mod1 = new Module();
@@ -130,6 +264,44 @@ class HtmlExporterTest {
     files.add(file1);
     files.add(file2);
 
-    System.out.print(new String(exporter.getOutput(files), "UTF-8"));
+    assertEquals("<html>" + lineSeparator
+            + "  <head>" + lineSeparator
+            + "    <META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">" + lineSeparator
+            + "    <title>Parts Documentation</title>" + lineSeparator
+            + "  </head>" + lineSeparator
+            + "  <body>" + lineSeparator
+            + "    <table>" + lineSeparator
+            + "      <thead>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <th>key</th>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </thead>" + lineSeparator
+            + "      <tbody>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <td>value</td>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <td>value</td>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </tbody>" + lineSeparator
+            + "    </table>" + lineSeparator
+            + "    <table>" + lineSeparator
+            + "      <thead>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <th>key</th>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </thead>" + lineSeparator
+            + "      <tbody>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <td>value</td>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <td>value</td>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </tbody>" + lineSeparator
+            + "    </table>" + lineSeparator
+            + "  </body>" + lineSeparator
+            + "</html>" + lineSeparator,
+        new String(exporter.getOutput(files), "UTF-8"));
   }
 }

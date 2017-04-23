@@ -9,6 +9,7 @@ import scadinspect.data.scaddoc.error.FileExportException;
 import scadinspect.data.scaddoc.export.format.CsvExporter;
 import scadinspect.data.scaddoc.export.format.ExportFormat;
 import scadinspect.data.scaddoc.export.format.Exporter;
+import scadinspect.data.scaddoc.export.format.HtmlExporter;
 import scadinspect.data.scaddoc.export.format.JsonExporter;
 import scadinspect.data.scaddoc.export.format.MdExporter;
 import scadinspect.data.scaddoc.export.format.XmlExporter;
@@ -101,7 +102,7 @@ public class FileExport {
         exporter = new CsvExporter();
         break;
       case HTML:
-        exporter = null;
+        exporter = new HtmlExporter();
         break;
       default:
         exporter = null;
