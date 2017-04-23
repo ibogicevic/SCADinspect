@@ -110,6 +110,9 @@ class XmlExporterTest {
         new String(exporter.getOutput(file), "UTF-8"));
   }
 
+  /**
+   * Test against a module with multiple properties.
+   */
   @Test
   void multipleProperties() throws Exception {
     Module mod = new Module();
@@ -130,6 +133,9 @@ class XmlExporterTest {
         new String(exporter.getOutput(file), "UTF-8"));
   }
 
+  /**
+   * Test against a file with multiple modules
+   */
   @Test
   void multipleModules() throws Exception {
     Module mod1 = new Module();
@@ -154,6 +160,9 @@ class XmlExporterTest {
         new String(exporter.getOutput(file), "UTF-8"));
   }
 
+  /**
+   * Test against a collection of multiple files
+   */
   @Test
   void multipleFiles() throws Exception {
     Module mod1 = new Module();

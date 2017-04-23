@@ -112,6 +112,12 @@ class FileExportTest {
         new String(exported).replaceAll("\\r?\\n", "\n"));
   }
 
+  /**
+   * Tests the export to Markdown format
+   *
+   * @throws FileExportException if something went wrong during the export
+   * @throws IOException if the creation of the test file failed
+   */
   @Test
   void saveAsMd() throws FileExportException, IOException {
 
@@ -127,6 +133,12 @@ class FileExportTest {
         new String(exported).replaceAll("\\r?\\n", "\n"));
   }
 
+  /**
+   * Tests the export to CSV format
+   *
+   * @throws FileExportException if something went wrong during the export
+   * @throws IOException if the creation of the test file failed
+   */
   @Test
   void saveAsCsv() throws FileExportException, IOException {
 
