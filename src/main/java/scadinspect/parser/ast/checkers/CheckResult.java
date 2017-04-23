@@ -1,6 +1,10 @@
 package scadinspect.parser.ast.checkers;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import scadinspect.data.analysis.Issue;
 
 /**
@@ -14,8 +18,22 @@ public class CheckResult {
     this.issues = issues;
   }
 
-  public boolean hasIssues() {
-    return issues != null && !issues.isEmpty();
+  public Collection<Issue> getIssues() {
+    return issues;
+  }
+
+  public CheckResult mergeWith(Collection<CheckResult> others) {
+    return new CheckResult(
+        Stream.concat(this.getIssues().stream(), others.stream().flatMap(o -> o.getIssues().stream()))
+            .collect(Collectors.toList())
+    );
+  }
+
+  public static CheckResult mergeAll(Stream<CheckResult> all) {
+    return new CheckResult(
+        all.flatMap(o -> o.getIssues().stream())
+           .collect(Collectors.toList())
+    );
   }
 
 }
