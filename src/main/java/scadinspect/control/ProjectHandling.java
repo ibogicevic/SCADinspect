@@ -55,7 +55,7 @@ public class ProjectHandling {
    * Opens the dialog to choose a file
    */
   public void openProjectFile() {
-	File projectFile;
+    File projectFile;
     projectFile = fileChooser.showOpenDialog(Main.getInstance().getPrimaryStage());
 
     /**

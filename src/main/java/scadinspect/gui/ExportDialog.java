@@ -1,11 +1,13 @@
 package scadinspect.gui;
 
+import java.io.File;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import java.util.Optional;
 import scadinspect.data.scaddoc.error.FileExportException;
@@ -54,34 +56,47 @@ public class ExportDialog {
     dialog.initModality(Modality.APPLICATION_MODAL);
 
     Optional<Boolean> result = dialog.showAndWait();
-    String pathWithoutExtension="export";
-    FileExport exporter = new FileExport();
-    try {
-      if (excel.isSelected()) {
-        exporter.save(ExportFormat.XSXL, Main.getInstance().getDocuFiles(), pathWithoutExtension+".xsxl");
-      }
-      if (csv.isSelected()) {
-        exporter.save(ExportFormat.CSV, Main.getInstance().getDocuFiles(), pathWithoutExtension+".csv");
-      }
-      if (json.isSelected()) {
-        exporter.save(ExportFormat.JSON, Main.getInstance().getDocuFiles(), pathWithoutExtension+".json");
-      }
-      if (xml.isSelected()) {
-        System.out.println(Main.getInstance().getDocuFiles());
-        exporter.save(ExportFormat.XML, Main.getInstance().getDocuFiles(), pathWithoutExtension+".xml");
-      }
-      if (pdf.isSelected()) {
-        System.out.println(Main.getInstance().getDocuFiles());
-        exporter.save(ExportFormat.PDF, Main.getInstance().getDocuFiles(), pathWithoutExtension+".pdf");
-      }
-      if (md.isSelected()) {
-        System.out.println(Main.getInstance().getDocuFiles());
-        exporter.save(ExportFormat.MD, Main.getInstance().getDocuFiles(), pathWithoutExtension+".md");
-      }
-    } catch (FileExportException e) {
-      e.printStackTrace();
-      System.out.println(e.getCause());
 
+    FileChooser fileChooser = new FileChooser();
+    File exportFile = fileChooser.showSaveDialog(Main.getInstance().getPrimaryStage());
+
+    if (exportFile != null) {
+
+      String pathWithoutExtension = exportFile.getAbsolutePath();
+      FileExport exporter = new FileExport();
+      try {
+        if (excel.isSelected()) {
+          exporter.save(ExportFormat.XSXL, Main.getInstance().getDocuFiles(),
+              pathWithoutExtension + ".xsxl");
+        }
+        if (csv.isSelected()) {
+          exporter.save(ExportFormat.CSV, Main.getInstance().getDocuFiles(),
+              pathWithoutExtension + ".csv");
+        }
+        if (json.isSelected()) {
+          exporter.save(ExportFormat.JSON, Main.getInstance().getDocuFiles(),
+              pathWithoutExtension + ".json");
+        }
+        if (xml.isSelected()) {
+          System.out.println(Main.getInstance().getDocuFiles());
+          exporter.save(ExportFormat.XML, Main.getInstance().getDocuFiles(),
+              pathWithoutExtension + ".xml");
+        }
+        if (pdf.isSelected()) {
+          System.out.println(Main.getInstance().getDocuFiles());
+          exporter.save(ExportFormat.PDF, Main.getInstance().getDocuFiles(),
+              pathWithoutExtension + ".pdf");
+        }
+        if (md.isSelected()) {
+          System.out.println(Main.getInstance().getDocuFiles());
+          exporter.save(ExportFormat.MD, Main.getInstance().getDocuFiles(),
+              pathWithoutExtension + ".md");
+        }
+      } catch (FileExportException e) {
+        e.printStackTrace();
+        System.out.println(e.getCause());
+
+      }
     }
 
   }
