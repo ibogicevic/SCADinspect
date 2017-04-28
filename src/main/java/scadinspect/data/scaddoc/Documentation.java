@@ -1,9 +1,5 @@
 package scadinspect.data.scaddoc;
 
-import com.sun.javafx.image.IntPixelGetter;
-import javax.swing.text.Document;
-import java.util.ArrayList;
-
 /**
  * Created by Großkreutz on 30.03.2017.
  */

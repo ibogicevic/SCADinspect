@@ -7,8 +7,8 @@ package scadinspect.data.scaddoc.properties.helper;
  */
 public class Pair<T> {
 
-  private T value;
-  private String metric;
+  private final T value;
+  private final String metric;
 
   /**
    * Constructing a new pair value

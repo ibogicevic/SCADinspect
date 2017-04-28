@@ -17,7 +17,8 @@ public class ExportDialog {
             dialog.setHeaderText(null);
 
             // Set the button types.
-            ButtonType okButtonType = new ButtonType("OK", ButtonData.OK_DONE);
+            ButtonType o
+                    kButtonType = new ButtonType("OK", ButtonData.OK_DONE);
             dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
 
             // Create the radio buttons

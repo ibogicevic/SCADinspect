@@ -2,7 +2,6 @@ package scadinspect.parser.ast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java_cup.runtime.Symbol;
 
 /**
  * Created by Felix Stegmaier on 30.03.2017.
