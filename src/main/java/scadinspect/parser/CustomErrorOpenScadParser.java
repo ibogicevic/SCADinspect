@@ -17,6 +17,12 @@ import scadinspect.parser.generated.OpenScadParser;
 
 /**
  * Created by Felix Stegmaier on 24.03.2017.
+ *
+ * OpenScadParser that is adopted to report Issues and throw ParserExceptions.
+ * Please don't ask me why this works, it is mainly copied from the Superclass.
+ * For more information see
+ * @link http://www2.cs.tum.edu/projects/cup/
+ *
  */
 public class CustomErrorOpenScadParser extends OpenScadParser {
 
