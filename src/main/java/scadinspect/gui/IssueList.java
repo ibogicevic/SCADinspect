@@ -32,13 +32,7 @@ public class IssueList {
 
     public TableView showList() {
 
-        /* Dummy Data */
-        ArrayList<Issue> issues = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Issue curr = new Issue(Issue.issueType.WARNING, null, 15+i, "randomIdentifier" + i, "description" + i);
-            issues.add(i, curr);
-        }
-        addDataToTable(issues);
+        addDataToTable(dummyData());
 
 
         /* Table Configuration */
@@ -107,6 +101,30 @@ public class IssueList {
 
     public void clearList() {
         issueList.getItems().clear();
+    }
+
+    public void filterList(String file, ArrayList<Issue> issues) {
+        final ObservableList<Issue> filteredIssueData = FXCollections.observableArrayList();
+
+        for(Issue i : issues) {
+            if(i.getSourceFile().equals(file)){
+                filteredIssueData.add(i);
+            }
+        }
+    }
+
+    public ArrayList<Issue> dummyData (){
+        /* Dummy Data */
+        ArrayList<Issue> issues = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Issue curr = new Issue(Issue.issueType.WARNING, "i bims 1 file lol "+i, 15+i, "randomIdentifier" + i, "description" + i);
+            issues.add(i, curr);
+        }
+        return issues;
+    }
+
+    public ObservableList<Issue> getIssues() {
+        return issueData;
     }
 }
 

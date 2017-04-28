@@ -17,7 +17,7 @@ import scadinspect.parser.ParserResult;
  */
 public class CodeAnalyzer {
 
-  public static void refresh() {
+  public static void refresh(boolean filterOn, String fileName) {
 
     new Thread(() -> {
       List<File> fileList = Main.getInstance().getFileList();
@@ -38,11 +38,17 @@ public class CodeAnalyzer {
 
       Main.getInstance().tabArea.getIssueList().clearList();
 
-      fileList.forEach(file -> {
-        Main.getInstance().tabArea.getIssueList()
-            .addDataToTable(new ArrayList<>(fileParserResultMap.get(file).getIssues()));
-      });
-
+      if(filterOn){
+        fileList.forEach(file -> {
+          Main.getInstance().tabArea.getIssueList()
+              .filterList(fileName, new ArrayList<>(fileParserResultMap.get(file).getIssues()));
+        });
+      } else {
+        fileList.forEach(file -> {
+          Main.getInstance().tabArea.getIssueList()
+              .addDataToTable(new ArrayList<>(fileParserResultMap.get(file).getIssues()));
+        });
+      }
     }).start();
 
   }

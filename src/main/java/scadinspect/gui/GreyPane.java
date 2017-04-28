@@ -18,7 +18,7 @@ public class GreyPane extends BorderPane{
     private ToolbarArea toolbarArea = new ToolbarArea();
     private BorderPane bottomPane = new BorderPane();
     private Integer step = -1;
-    private BottomArea bottomArea= new BottomArea();
+    private BottomArea bottomArea= new BottomArea(false, "");
     private Hyperlink checkers = new Hyperlink("Open checker docs");
     private Hyperlink prev = new Hyperlink("back");
     private Hyperlink next = new Hyperlink("next");

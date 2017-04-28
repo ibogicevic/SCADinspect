@@ -2,8 +2,11 @@ package scadinspect.gui;
 
 import java.util.prefs.BackingStoreException;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import scadinspect.data.analysis.Issue;
 import scadinspect.data.scaddoc.ScadDocuFile;
 import java.util.prefs.Preferences;
 import javafx.application.Platform;
@@ -61,7 +65,7 @@ public class Main extends Application {
     public TabArea tabArea = new TabArea();
     public StatusArea statusArea = new StatusArea();
 
-    public BottomArea bottomArea = new BottomArea();
+    public BottomArea bottomArea = new BottomArea(false, "");
 
     // list of open scad-files
     private List<File> fileList = new ArrayList<>();
@@ -118,7 +122,16 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
 
         // Documentation and Issues Tabulators
+        Main.getInstance().tabArea.getIssueList().addDataToTable(Main.getInstance().tabArea.getIssueList().dummyData());
+        ObservableList<String> options =  FXCollections.observableArrayList();
+        final ComboBox dropdownFilter = new ComboBox();
+        for (Issue i : Main.getInstance().tabArea.getIssueList().getIssues()){
+            System.out.println(i.getSourceFile());
+            options.add(i.getSourceFile());
+        }
+        dropdownFilter.setItems(options);
         BorderPane tabPane = new BorderPane();
+        tabPane.setTop(dropdownFilter);
         tabPane.setCenter(tabArea);
 
 

@@ -85,7 +85,7 @@ public class ToolbarArea extends ToolBar {
             openProjectButton.setText("Open file");
             openProjectButton.setOnAction(event -> {
               projectHandler.openProjectFile();
-              CodeAnalyzer.refresh();
+              CodeAnalyzer.refresh(false, "");
                 Main.getInstance().tabArea.getDocumentationList().refresh();
             });
         } else {
@@ -95,7 +95,7 @@ public class ToolbarArea extends ToolBar {
               projectHandler.openProjectFolder((files) -> {
                 if(files != null) {
                   Main.getInstance().getFileList().addAll(files);
-                  CodeAnalyzer.refresh();
+                  CodeAnalyzer.refresh(false, "");
                     Platform.runLater(() -> {
                         Main.getInstance().tabArea.getDocumentationList().refresh();
                     });
@@ -111,7 +111,7 @@ public class ToolbarArea extends ToolBar {
               projectHandler.openProjectFolder((files) -> {
                 if(files != null) {
                   Main.getInstance().getFileList().addAll(files);
-                  CodeAnalyzer.refresh();
+                  CodeAnalyzer.refresh(false, "");
                     Platform.runLater(() -> {
                         Main.getInstance().tabArea.getDocumentationList().refresh();
                     });
@@ -124,7 +124,7 @@ public class ToolbarArea extends ToolBar {
             openProjectButton.setText("Open file");
             openProjectButton.setOnAction(event -> {
               projectHandler.openProjectFile();
-              CodeAnalyzer.refresh();
+              CodeAnalyzer.refresh(false, "");
                 Main.getInstance().tabArea.getDocumentationList().refresh();
             });
         });

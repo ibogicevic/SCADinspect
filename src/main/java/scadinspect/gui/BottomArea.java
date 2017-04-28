@@ -50,7 +50,7 @@ public class BottomArea extends ToolBar{
     /**
      * Constructor of BottomArea
      */
-    public BottomArea() {
+    public BottomArea(boolean filterOn, String fileName) {
         ProjectHandling projectHandler = new ProjectHandling();
 
         //set button icons
@@ -63,9 +63,9 @@ public class BottomArea extends ToolBar{
         closeProjectButton.setOnAction(e -> projectHandler.closeProject());
         refreshButton.setOnAction(e -> {
           //Main.getInstance().statusArea.simulateProgress();
-          CodeAnalyzer.refresh();
+          CodeAnalyzer.refresh(filterOn, fileName);
             //TODO make thread
-            Main.getInstance().tabArea.getDocumentationList().refresh();
+             Main.getInstance().tabArea.getDocumentationList().refresh();
         });
         // TODO: export Button action
 
