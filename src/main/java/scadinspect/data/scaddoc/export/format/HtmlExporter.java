@@ -25,7 +25,7 @@ import scadinspect.data.scaddoc.properties.Property;
  * @author eric, Desyon on 31.03.17.
  */
 
-//TODO: Create or include stylesheet for better looks
+//TODO Make it XHTML-valid, Fix all tests
 public class HtmlExporter implements Exporter {
 
   /**
@@ -231,36 +231,37 @@ public class HtmlExporter implements Exporter {
    * Inserts Style tag for CSS into the HTML
    *
    * @param doc Document to create the HTML from
+   * @param head Head element from HTML, where the style will be appended to
    */
   private void insertCss(Document doc, Element head) {
     Element style = doc.createElement("style");
     Text content = doc.createTextNode("");
 
-    String lineSeperator = System.lineSeparator();
+    String lineSeparator = System.lineSeparator();
 
-    content.appendData(lineSeperator
-        + "\t\t\ttable {\n"
-        + "\t\t\t\tfont-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeperator
-        + "\t\t\t\tborder-collapse: collapse;" + lineSeperator
-        + "\t\t\t\tmargin-bottom: 15px;" + lineSeperator
-        + "\t\t\t}" + lineSeperator
-        + lineSeperator
-        + "\t\t\ttd, th {" + lineSeperator
-        + "\t\t\t\tborder: 1px solid #ddd;" + lineSeperator
-        + "\t\t\t\tpadding: 8px;" + lineSeperator
-        + "\t\t\t}" + lineSeperator
-        + lineSeperator
-        + "\t\t\ttr:nth-child(even){background-color: #f2f2f2;}" + lineSeperator
-        + "\t\t\ttr:hover {background-color: #ddd;}" + lineSeperator
-        + lineSeperator
-        + "\t\t\tth {" + lineSeperator
-        + "\t\t\t\tpadding-top: 12px;" + lineSeperator
-        + "\t\t\t\tpadding-bottom: 12px;" + lineSeperator
-        + "\t\t\t\ttext-align: center;" + lineSeperator
-        + "\t\t\t\tbackground-color: #4CAF50;" + lineSeperator
-        + "\t\t\t\tcolor: white;" + lineSeperator
-        + "\t\t\t}"
-        + lineSeperator + "\t\t");
+    content.appendData(lineSeparator
+        + "      table {\n"
+        + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
+        + "        border-collapse: collapse;" + lineSeparator
+        + "        margin-bottom: 15px;" + lineSeparator
+        + "      }" + lineSeparator
+        + lineSeparator
+        + "      td, th {" + lineSeparator
+        + "        border: 1px solid #ddd;" + lineSeparator
+        + "        padding: 8px;" + lineSeparator
+        + "      }" + lineSeparator
+        + lineSeparator
+        + "      tr:nth-child(even){background-color: #f2f2f2;}" + lineSeparator
+        + "      tr:hover {background-color: #ddd;}" + lineSeparator
+        + lineSeparator
+        + "      th {" + lineSeparator
+        + "        padding-top: 12px;" + lineSeparator
+        + "        padding-bottom: 12px;" + lineSeparator
+        + "        text-align: center;" + lineSeparator
+        + "        background-color: #4CAF50;" + lineSeparator
+        + "        color: white;" + lineSeparator
+        + "      }"
+        + lineSeparator + "    ");
 
     style.appendChild(content);
     head.appendChild(style);
