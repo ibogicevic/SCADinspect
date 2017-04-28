@@ -2,7 +2,6 @@ package scadinspect.gui;
 
 import java.io.InputStream;
 import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
