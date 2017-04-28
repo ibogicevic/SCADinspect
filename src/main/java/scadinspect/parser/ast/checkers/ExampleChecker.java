@@ -1,7 +1,6 @@
 package scadinspect.parser.ast.checkers;
 
 import java.util.Collections;
-import java.util.stream.Collectors;
 import scadinspect.data.analysis.Issue;
 import scadinspect.data.analysis.Issue.issueType;
 import scadinspect.parser.ast.ASTNode;
@@ -19,7 +18,7 @@ public class ExampleChecker implements Checker {
       return new CheckResult(Collections.singletonList(new Issue(issueType.WARNING, null, 0, "W-000-test", "Nesting > 5")));
     } else {
       CheckState nextState = state.increaseNestLevelBy(1);
-      return CheckResult.mergeAll(astNode.children.stream().map(n -> n.check(this, nextState)));
+      return CheckResult.mergeAll(astNode.children.stream().map(n -> this.check(n, nextState)));
     }
   }
 }

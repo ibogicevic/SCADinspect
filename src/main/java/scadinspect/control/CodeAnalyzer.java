@@ -48,7 +48,8 @@ public class CodeAnalyzer {
               Entry::getKey,
               e -> Optional.ofNullable(e.getValue().getParseTree())
                   .map(ParseTree::getRootNode)
-                  .map(n -> n.check(new ExampleChecker(), new CheckState())) //TODO this only uses one example, support generic
+                  //.map(n -> n.check(new ExampleChecker(), new CheckState())) //TODO this only uses one example, support generic
+                  .map(n -> new ExampleChecker().check(n, new CheckState()))
                   .orElse(new CheckResult(Collections.emptyList()))
               )
           );
