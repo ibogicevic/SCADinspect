@@ -25,7 +25,7 @@ import scadinspect.data.scaddoc.properties.Property;
  * @author eric, Desyon on 31.03.17.
  */
 
-//TODO Make it XHTML-valid, Fix all tests
+//TODO Make it XHTML-valid
 public class HtmlExporter implements Exporter {
 
   /**

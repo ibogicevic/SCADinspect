@@ -98,10 +98,32 @@ class HtmlExporterTest {
     modules.add(singleProperty);
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
 
-    assertEquals("<html>" + lineSeparator
+    assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
             + "  <head>" + lineSeparator
-            + "    <META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">"
+            + "    <style>" + lineSeparator
+            + "      table {\n"
+            + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
+            + "        border-collapse: collapse;" + lineSeparator
+            + "        margin-bottom: 15px;" + lineSeparator
+            + "      }" + lineSeparator
             + lineSeparator
+            + "      td, th {" + lineSeparator
+            + "        border: 1px solid #ddd;" + lineSeparator
+            + "        padding: 8px;" + lineSeparator
+            + "      }" + lineSeparator
+            + lineSeparator
+            + "      tr:nth-child(even){background-color: #f2f2f2;}" + lineSeparator
+            + "      tr:hover {background-color: #ddd;}" + lineSeparator
+            + lineSeparator
+            + "      th {" + lineSeparator
+            + "        padding-top: 12px;" + lineSeparator
+            + "        padding-bottom: 12px;" + lineSeparator
+            + "        text-align: center;" + lineSeparator
+            + "        background-color: #4CAF50;" + lineSeparator
+            + "        color: white;" + lineSeparator
+            + "      }"
+            + lineSeparator
+            + "    </style>" + lineSeparator
             + "    <title>Parts Documentation</title>" + lineSeparator
             + "  </head>" + lineSeparator
             + "  <body>" + lineSeparator
@@ -132,10 +154,31 @@ class HtmlExporterTest {
     modules.add(multiProperty);
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
 
-    assertEquals("<html>" + lineSeparator
-            + "  <head>" + lineSeparator
-            + "    <META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">"
+    assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
+            + "  <head>" + lineSeparator + "    <style>" + lineSeparator
+            + "      table {\n"
+            + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
+            + "        border-collapse: collapse;" + lineSeparator
+            + "        margin-bottom: 15px;" + lineSeparator
+            + "      }" + lineSeparator
             + lineSeparator
+            + "      td, th {" + lineSeparator
+            + "        border: 1px solid #ddd;" + lineSeparator
+            + "        padding: 8px;" + lineSeparator
+            + "      }" + lineSeparator
+            + lineSeparator
+            + "      tr:nth-child(even){background-color: #f2f2f2;}" + lineSeparator
+            + "      tr:hover {background-color: #ddd;}" + lineSeparator
+            + lineSeparator
+            + "      th {" + lineSeparator
+            + "        padding-top: 12px;" + lineSeparator
+            + "        padding-bottom: 12px;" + lineSeparator
+            + "        text-align: center;" + lineSeparator
+            + "        background-color: #4CAF50;" + lineSeparator
+            + "        color: white;" + lineSeparator
+            + "      }"
+            + lineSeparator
+            + "    </style>" + lineSeparator
             + "    <title>Parts Documentation</title>" + lineSeparator
             + "  </head>" + lineSeparator
             + "  <body>" + lineSeparator
@@ -166,10 +209,31 @@ class HtmlExporterTest {
     modules.add(pairProperty);
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
 
-    assertEquals("<html>" + lineSeparator
-            + "  <head>" + lineSeparator
-            + "    <META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">"
+    assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
+            + "  <head>" + lineSeparator + "    <style>" + lineSeparator
+            + "      table {\n"
+            + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
+            + "        border-collapse: collapse;" + lineSeparator
+            + "        margin-bottom: 15px;" + lineSeparator
+            + "      }" + lineSeparator
             + lineSeparator
+            + "      td, th {" + lineSeparator
+            + "        border: 1px solid #ddd;" + lineSeparator
+            + "        padding: 8px;" + lineSeparator
+            + "      }" + lineSeparator
+            + lineSeparator
+            + "      tr:nth-child(even){background-color: #f2f2f2;}" + lineSeparator
+            + "      tr:hover {background-color: #ddd;}" + lineSeparator
+            + lineSeparator
+            + "      th {" + lineSeparator
+            + "        padding-top: 12px;" + lineSeparator
+            + "        padding-bottom: 12px;" + lineSeparator
+            + "        text-align: center;" + lineSeparator
+            + "        background-color: #4CAF50;" + lineSeparator
+            + "        color: white;" + lineSeparator
+            + "      }"
+            + lineSeparator
+            + "    </style>" + lineSeparator
             + "    <title>Parts Documentation</title>" + lineSeparator
             + "  </head>" + lineSeparator
             + "  <body>" + lineSeparator
@@ -204,22 +268,45 @@ class HtmlExporterTest {
 
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
 
-    assertEquals("<html>" + lineSeparator
-            + "  <head>" + lineSeparator
-            + "    <META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">"
+    assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
+            + "  <head>" + lineSeparator + "    <style>" + lineSeparator
+            + "      table {\n"
+            + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
+            + "        border-collapse: collapse;" + lineSeparator
+            + "        margin-bottom: 15px;" + lineSeparator
+            + "      }" + lineSeparator
             + lineSeparator
+            + "      td, th {" + lineSeparator
+            + "        border: 1px solid #ddd;" + lineSeparator
+            + "        padding: 8px;" + lineSeparator
+            + "      }" + lineSeparator
+            + lineSeparator
+            + "      tr:nth-child(even){background-color: #f2f2f2;}" + lineSeparator
+            + "      tr:hover {background-color: #ddd;}" + lineSeparator
+            + lineSeparator
+            + "      th {" + lineSeparator
+            + "        padding-top: 12px;" + lineSeparator
+            + "        padding-bottom: 12px;" + lineSeparator
+            + "        text-align: center;" + lineSeparator
+            + "        background-color: #4CAF50;" + lineSeparator
+            + "        color: white;" + lineSeparator
+            + "      }"
+            + lineSeparator
+            + "    </style>" + lineSeparator
             + "    <title>Parts Documentation</title>" + lineSeparator
             + "  </head>" + lineSeparator
             + "  <body>" + lineSeparator
             + "    <table>" + lineSeparator
             + "      <thead>" + lineSeparator
             + "        <tr>" + lineSeparator
-            + "          <th>key1</th><th>key2</th>" + lineSeparator
+            + "          <th>key1</th>" + lineSeparator
+            + "          <th>key2</th>" + lineSeparator
             + "        </tr>" + lineSeparator
             + "      </thead>" + lineSeparator
             + "      <tbody>" + lineSeparator
             + "        <tr>" + lineSeparator
-            + "          <td>value1</td><td>value2</td>" + lineSeparator
+            + "          <td>value1</td>" + lineSeparator
+            + "          <td>value2</td>" + lineSeparator
             + "        </tr>" + lineSeparator
             + "      </tbody>" + lineSeparator
             + "    </table>" + lineSeparator
@@ -244,25 +331,49 @@ class HtmlExporterTest {
 
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
 
-    assertEquals("<html>" + lineSeparator
-            + "  <head>" + lineSeparator
-            + "    <META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">"
+    assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
+            + "  <head>" + lineSeparator + "    <style>" + lineSeparator
+            + "      table {\n"
+            + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
+            + "        border-collapse: collapse;" + lineSeparator
+            + "        margin-bottom: 15px;" + lineSeparator
+            + "      }" + lineSeparator
             + lineSeparator
+            + "      td, th {" + lineSeparator
+            + "        border: 1px solid #ddd;" + lineSeparator
+            + "        padding: 8px;" + lineSeparator
+            + "      }" + lineSeparator
+            + lineSeparator
+            + "      tr:nth-child(even){background-color: #f2f2f2;}" + lineSeparator
+            + "      tr:hover {background-color: #ddd;}" + lineSeparator
+            + lineSeparator
+            + "      th {" + lineSeparator
+            + "        padding-top: 12px;" + lineSeparator
+            + "        padding-bottom: 12px;" + lineSeparator
+            + "        text-align: center;" + lineSeparator
+            + "        background-color: #4CAF50;" + lineSeparator
+            + "        color: white;" + lineSeparator
+            + "      }"
+            + lineSeparator
+            + "    </style>" + lineSeparator
             + "    <title>Parts Documentation</title>" + lineSeparator
             + "  </head>" + lineSeparator
             + "  <body>" + lineSeparator
             + "    <table>" + lineSeparator
             + "      <thead>" + lineSeparator
             + "        <tr>" + lineSeparator
-            + "          <th>key1</th><th>key2</th>" + lineSeparator
+            + "          <th>key1</th>" + lineSeparator
+            + "          <th>key2</th>" + lineSeparator
             + "        </tr>" + lineSeparator
             + "      </thead>" + lineSeparator
             + "      <tbody>" + lineSeparator
             + "        <tr>" + lineSeparator
-            + "          <td>value1</td><td></td>" + lineSeparator
+            + "          <td>value1</td>" + lineSeparator
+            + "          <td/>" + lineSeparator
             + "        </tr>" + lineSeparator
             + "        <tr>" + lineSeparator
-            + "          <td></td><td>value2</td>" + lineSeparator
+            + "          <td/>" + lineSeparator
+            + "          <td>value2</td>" + lineSeparator
             + "        </tr>" + lineSeparator
             + "      </tbody>" + lineSeparator
             + "    </table>" + lineSeparator
@@ -292,10 +403,31 @@ class HtmlExporterTest {
     files.add(file1);
     files.add(file2);
 
-    assertEquals("<html>" + lineSeparator
-            + "  <head>" + lineSeparator
-            + "    <META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">"
+    assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
+            + "  <head>" + lineSeparator + "    <style>" + lineSeparator
+            + "      table {\n"
+            + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
+            + "        border-collapse: collapse;" + lineSeparator
+            + "        margin-bottom: 15px;" + lineSeparator
+            + "      }" + lineSeparator
             + lineSeparator
+            + "      td, th {" + lineSeparator
+            + "        border: 1px solid #ddd;" + lineSeparator
+            + "        padding: 8px;" + lineSeparator
+            + "      }" + lineSeparator
+            + lineSeparator
+            + "      tr:nth-child(even){background-color: #f2f2f2;}" + lineSeparator
+            + "      tr:hover {background-color: #ddd;}" + lineSeparator
+            + lineSeparator
+            + "      th {" + lineSeparator
+            + "        padding-top: 12px;" + lineSeparator
+            + "        padding-bottom: 12px;" + lineSeparator
+            + "        text-align: center;" + lineSeparator
+            + "        background-color: #4CAF50;" + lineSeparator
+            + "        color: white;" + lineSeparator
+            + "      }"
+            + lineSeparator
+            + "    </style>" + lineSeparator
             + "    <title>Parts Documentation</title>" + lineSeparator
             + "  </head>" + lineSeparator
             + "  <body>" + lineSeparator
