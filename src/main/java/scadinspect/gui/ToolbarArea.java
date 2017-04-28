@@ -28,13 +28,13 @@ public class ToolbarArea extends ToolBar {
     VBox vbox = new VBox();
     Pane seperatorPane = new Pane();
 
-    private MenuItem openFileButton = new MenuItem(Messages.getString("ToolbarArea.openFileButtonText"), loadIcon(Messages.getString("ToolbarArea.openFileIcon"))); //$NON-NLS-1$ //$NON-NLS-2$
-    private MenuItem openFolderButton = new MenuItem(Messages.getString("ToolbarArea.openFolderButtonText"), loadIcon(Messages.getString("ToolbarArea.openFolderIcon"))); //$NON-NLS-1$ //$NON-NLS-2$
+    private MenuItem openFileButton = new MenuItem(Messages.getString("ToolbarArea.openFileButtonText"), loadIcon(Messages.getString("ToolbarArea.openFileIcon")));  //$NON-NLS-2$
+    private MenuItem openFolderButton = new MenuItem(Messages.getString("ToolbarArea.openFolderButtonText"), loadIcon(Messages.getString("ToolbarArea.openFolderIcon")));  //$NON-NLS-2$
     private SplitMenuButton openProjectButton = new SplitMenuButton(openFileButton, openFolderButton);
-    private Preferences userPrefs = Preferences.userRoot().node(Messages.getString("ToolbarArea.userPrefs")); //$NON-NLS-1$
-    private Button settingsButton = new Button(Messages.getString("ToolbarArea.settingsButton")); //$NON-NLS-1$
-    private Hyperlink helpLink = new Hyperlink(Messages.getString("ToolbarArea.helpLink")); //$NON-NLS-1$
-    private Hyperlink aboutLink = new Hyperlink(Messages.getString("ToolbarArea.aboutLink")); //$NON-NLS-1$
+    private Preferences userPrefs = Preferences.userRoot().node(Messages.getString("ToolbarArea.userPrefs")); 
+    private Button settingsButton = new Button(Messages.getString("ToolbarArea.settingsButton")); 
+    private Hyperlink helpLink = new Hyperlink(Messages.getString("ToolbarArea.helpLink")); 
+    private Hyperlink aboutLink = new Hyperlink(Messages.getString("ToolbarArea.aboutLink")); 
     private Separator separator = new Separator();
 
 
@@ -54,13 +54,13 @@ public class ToolbarArea extends ToolBar {
      * @return the icon as ImageView
      */
     private ImageView loadIcon(String fileName) {
-        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png"); //$NON-NLS-1$
+        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png"); 
         Image image = new Image(inputStream);
         ImageView imageView = new ImageView(image);
         return imageView;
     }
     private ImageView loadResizedIcon(String fileName) {
-        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png"); //$NON-NLS-1$
+        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png"); 
         Image image = new Image(inputStream);
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(12);
@@ -77,16 +77,16 @@ public class ToolbarArea extends ToolBar {
 
 
         // configure open button
-        openProjectButton.setGraphic(loadIcon(Messages.getString("ToolbarArea.openProjectButtonIcon"))); //$NON-NLS-1$
+        openProjectButton.setGraphic(loadIcon(Messages.getString("ToolbarArea.openProjectButtonIcon"))); 
         // Read settings
-        if (userPrefs.getInt("SET_OPENBUTTON", 0) == 0) { //$NON-NLS-1$
-            openProjectButton.setText(Messages.getString("ToolbarArea.openProjectButtonText")); //$NON-NLS-1$
+        if (userPrefs.getInt("SET_OPENBUTTON", 0) == 0) { 
+            openProjectButton.setText(Messages.getString("ToolbarArea.openProjectButtonText")); 
             openProjectButton.setOnAction(event -> {
               projectHandler.openProjectFile();
               CodeAnalyzer.refresh();
             });
         } else {
-            openProjectButton.setText("Open folder"); //$NON-NLS-1$
+            openProjectButton.setText("ToolbarArea.openFolderButtonText"); 
             openProjectButton.setOnAction(event -> {
               //Loading of multiple files is non blocking
               projectHandler.openProjectFolder((files) -> {
@@ -98,8 +98,8 @@ public class ToolbarArea extends ToolBar {
             });
         }
         openFolderButton.setOnAction(e -> {
-            userPrefs.putInt("SET_OPENBUTTON", 1); //$NON-NLS-1$
-            openProjectButton.setText("Open folder"); //$NON-NLS-1$
+            userPrefs.putInt("SET_OPENBUTTON", 1); 
+            openProjectButton.setText("ToolbarArea.openFolderButtonText"); 
             openProjectButton.setOnAction(event -> {
               //Loading of multiple files is non blocking
               projectHandler.openProjectFolder((files) -> {
@@ -111,8 +111,8 @@ public class ToolbarArea extends ToolBar {
             });
         });
         openFileButton.setOnAction(e -> {
-            userPrefs.putInt("SET_OPENBUTTON", 0); //$NON-NLS-1$
-            openProjectButton.setText(Messages.getString("ToolbarArea.openProjectButton")); //$NON-NLS-1$
+            userPrefs.putInt("SET_OPENBUTTON", 0); 
+            openProjectButton.setText(Messages.getString("ToolbarArea.openProjectButton")); 
             openProjectButton.setOnAction(event -> {
               projectHandler.openProjectFile();
               CodeAnalyzer.refresh();
@@ -120,9 +120,9 @@ public class ToolbarArea extends ToolBar {
         });
 
         // set button icons
-        settingsButton.setGraphic(loadIcon(Messages.getString("ToolbarArea.settingsButtonIcon"))); //$NON-NLS-1$
-        helpLink.setGraphic(loadResizedIcon(Messages.getString("ToolbarArea.helpLinkIcon"))); //$NON-NLS-1$
-        aboutLink.setGraphic(loadResizedIcon(Messages.getString("ToolbarArea.aboutLinkIcon"))); //$NON-NLS-1$
+        settingsButton.setGraphic(loadIcon(Messages.getString("ToolbarArea.settingsButtonIcon"))); 
+        helpLink.setGraphic(loadResizedIcon(Messages.getString("ToolbarArea.helpLinkIcon"))); 
+        aboutLink.setGraphic(loadResizedIcon(Messages.getString("ToolbarArea.aboutLinkIcon"))); 
 
         // status of buttons
         disableButtons(true);
