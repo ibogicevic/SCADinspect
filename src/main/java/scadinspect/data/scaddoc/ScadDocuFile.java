@@ -38,7 +38,7 @@ public class ScadDocuFile {
    */
   public ScadDocuFile(Path path) throws IOException {
     this.path = path;
-    this.modules = new PropertyParser(new String(Files.readAllBytes(path))).parseModules();
+    this.modules = new PropertyParser(new String(Files.readAllBytes(path),"UTF-8")).parseModules();
   }
 
   /**

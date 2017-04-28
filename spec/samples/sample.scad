@@ -25,7 +25,21 @@ module Logo(size=50, $fn=100) {
         rotate([0, 90, 0]) cylinder(d=hole, h=cylinderHeight, center=true);
     }
 }
+/**
+ * @title Module_f
+ *
+ * @author John Doe
+ * @material wood; metal
+ * @comment So könnte das Ganze funktionieren...
+ */
 
+ /**
+  * @title Module_r
+  * @prices 100~EUR
+  * @author John Doe
+  * @material wood; metal
+  * @comment So könnte das Ganze funktionieren...
+  */
 echo(version=version());
 // Written by Clifford Wolf <clifford@clifford.at> and Marius
 // Kintel <marius@kintel.net>

@@ -1,82 +1,133 @@
 package scadinspect.gui;
 
-import javafx.scene.control.cell.PropertyValueFactory;
-import scadinspect.data.scaddoc.Documentation;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+
 import java.util.ArrayList;
 
+import scadinspect.data.scaddoc.Module;
+import scadinspect.data.scaddoc.ScadDocuFile;
+import scadinspect.data.scaddoc.properties.Property;
+import scadinspect.data.scaddoc.properties.helper.Pair;
+
 public class DocumentationList {
-  //TableView of Documentation List
-  private TableView docList = new TableView();
 
-  //Data structure with associated data for documentation List
-  private final ObservableList<Documentation> docData = FXCollections.observableArrayList();
+    //TableView of Documentation List
+    private TableView<ObservableList<String>> docList = new TableView<ObservableList<String>>();
+    Map<String, String> dataRow = new TreeMap<>();
 
-  //Define table columns for Documentation
-  private TableColumn partCol = new TableColumn("Part");
-  private TableColumn priceCol = new TableColumn("Price");
-  private TableColumn amountCol = new TableColumn("Amount");
-  private TableColumn weightCol = new TableColumn("Weight");
-  private TableColumn materialCol = new TableColumn("Material");
-  private TableColumn urlCol = new TableColumn("URL");
+    //Data structure with associated data for documentation List
+    private List<ScadDocuFile> docData;
 
-  //Generate the list which is shown withing the table
-  public TableView generateList () {
-    addData(generateDummyData());
+    private int columnCount = 0;
 
-    //add Data to columns
-    partCol.setCellValueFactory(
-        new PropertyValueFactory<Documentation, Integer>("part")
-    );
+    //Generate the list which is shown withing the table
+    public TableView generateList() {
+        columnCount = 0;
+        docList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-    priceCol.setCellValueFactory(
-        new PropertyValueFactory<Documentation,String>("price")
-    );
-
-    amountCol.setCellValueFactory(
-        new PropertyValueFactory<Documentation, String>("amount")
-    );
-
-    weightCol.setCellValueFactory(
-        new PropertyValueFactory<Documentation, String>("weight")
-    );
-
-    materialCol.setCellValueFactory(
-        new PropertyValueFactory<Documentation, String>("material")
-    );
-
-    urlCol.setCellValueFactory(
-        new PropertyValueFactory<Documentation, String>("url")
-    );
-
-    docList.setItems(docData);
-
-
-
-    docList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-    docList.setItems(docData);
-    docList.getColumns().addAll(partCol, priceCol, amountCol, weightCol, materialCol, urlCol);
-    return docList;
-  }
-
-  //add the Data (currently as ArrayList) to the observableList
-  public void addData (ArrayList<Documentation> documentations){
-    for(int i = 0; i < documentations.size(); i++){
-      docData.add(i, documentations.get(i));
+        Collection<String> headers = new TreeSet<>();
+        if (docData != null) {
+            for (ScadDocuFile file : docData) {
+                headers.addAll(file.getAllKeys());
+            }
+            addColumn(columnCount, "Path");
+            addColumn(columnCount, "Module");
+            for (String header : headers) {
+                addColumn(columnCount, header);
+                dataRow.put(header, null);
+            }
+            loadDocList();
+        }
+        return docList;
     }
-  }
 
-  //generate Dummy Data. This function will later on be replaced with the actual data.
-  public ArrayList<Documentation> generateDummyData () {
-    ArrayList<Documentation> documentations = new ArrayList<>();
-
-    for(int i = 0; i < 10; i++){
-      documentations.add(i, new Documentation("Engine " + i, "Metal " + i, "www.coole-teile"+i+".com", 200*(i+1)^i, i+2, i+20));
+    private void addColumn(int colIndex, String columnName) {
+        TableColumn<ObservableList<String>, String> column = new TableColumn<>(columnName);
+        column
+                .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().get(colIndex)));
+        docList.getColumns().add(column);
+        columnCount++;
     }
-    return documentations;
-  }
+
+    private void loadDocList() {
+        for (ScadDocuFile file : docData) {
+            for (Module module : file.getModules()) {
+                List<String> row = new LinkedList<>();
+                row.add(file.getPath().toString());
+                row.add("TODO ModuleName");
+
+
+                for (Property property : module.getProperties()) {
+
+                    String value = "";
+                    if (property.getValue() instanceof Pair) {
+                        value = ((Pair) property.getValue()).getValue() + " " + ((Pair) property.getValue())
+                                .getMetric();
+                    } else if (property.getValue() instanceof String) {
+                        value = (String) property.getValue();
+                    } else if (property.getValue() instanceof Collection) {
+                        value = "TODO Multi Property";
+                    } else {
+                        value = property.getValue().getClass().toGenericString();
+                     //   value="Error";
+                    }
+                    dataRow.put(property.getKey(), value);
+                }
+                row.addAll(dataRow.values());
+                for (Property property : module.getProperties()) {
+                    dataRow.put(property.getKey(), null);
+                }
+                addData(row);
+
+            }
+
+        }
+    }
+
+    private void addData(List<String> Data) {
+        docList.getItems().add(
+                FXCollections.observableArrayList(Data)
+        );
+    }
+
+    public void refresh() {
+        docList.getItems().clear();
+        docList.getColumns().clear();
+        docData = loadFiles();
+        //  System.out.println(Main.getInstance().getFileList());
+        Main.getInstance().tabArea.generateDocTable(this);
+    }
+
+    private List<ScadDocuFile> loadFiles() {
+        List<ScadDocuFile> docData = new LinkedList<>();
+        try {
+            for (File file : Main.getInstance().getFileList()) {
+
+                docData.add(new ScadDocuFile(file.toPath()));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return docData;
+
+
+    }
 }
