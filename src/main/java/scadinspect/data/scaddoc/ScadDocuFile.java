@@ -1,12 +1,10 @@
 package scadinspect.data.scaddoc;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import scadinspect.data.scaddoc.parser.PropertyParser;
 import scadinspect.data.scaddoc.properties.Property;
 

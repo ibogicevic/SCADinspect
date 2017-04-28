@@ -8,7 +8,6 @@ package scadinspect.gui;
 
         import javafx.scene.control.ButtonType;
         import javafx.scene.control.Dialog;
-        import javafx.scene.control.Label;
         import javafx.scene.control.ButtonBar.ButtonData;
         import javafx.scene.layout.GridPane;
 
