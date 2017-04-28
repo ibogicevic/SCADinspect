@@ -16,6 +16,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.Property;
@@ -43,7 +44,11 @@ public class HtmlExporter implements Exporter {
     Document doc = getDoc();
 
     Element html = doc.createElement("html");
+    html.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
+
     Element head = doc.createElement("head");
+
+    insertCss(doc, head);
 
     Element title = doc.createElement("title");
     title.appendChild(doc.createTextNode("Parts Documentation"));
@@ -77,7 +82,11 @@ public class HtmlExporter implements Exporter {
     Document doc = getDoc();
 
     Element html = doc.createElement("html");
+    html.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
+
     Element head = doc.createElement("head");
+
+    insertCss(doc, head);
 
     Element title = doc.createElement("title");
     title.appendChild(doc.createTextNode("Parts Documentation"));
@@ -205,7 +214,7 @@ public class HtmlExporter implements Exporter {
   private String transform(Document doc) throws TransformerException {
     TransformerFactory transformerFactory = TransformerFactory.newInstance();
     Transformer transformer = transformerFactory.newTransformer();
-    transformer.setOutputProperty(OutputKeys.METHOD, "html");
+    transformer.setOutputProperty(OutputKeys.METHOD, "xml");
     transformer.setOutputProperty(OutputKeys.INDENT, "yes");
     transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
     transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
@@ -216,6 +225,45 @@ public class HtmlExporter implements Exporter {
 
     //return HTML String + do some **magic**
     return sw.getBuffer().toString().replaceAll("((?<=>)\\[)|(](?=<))", "");
+  }
+
+  /**
+   * Inserts Style tag for CSS into the HTML
+   *
+   * @param doc Document to create the HTML from
+   */
+  private void insertCss(Document doc, Element head) {
+    Element style = doc.createElement("style");
+    Text content = doc.createTextNode("");
+
+    String lineSeperator = System.lineSeparator();
+
+    content.appendData(lineSeperator
+        + "\t\t\ttable {\n"
+        + "\t\t\t\tfont-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeperator
+        + "\t\t\t\tborder-collapse: collapse;" + lineSeperator
+        + "\t\t\t\tmargin-bottom: 15px;" + lineSeperator
+        + "\t\t\t}" + lineSeperator
+        + lineSeperator
+        + "\t\t\ttd, th {" + lineSeperator
+        + "\t\t\t\tborder: 1px solid #ddd;" + lineSeperator
+        + "\t\t\t\tpadding: 8px;" + lineSeperator
+        + "\t\t\t}" + lineSeperator
+        + lineSeperator
+        + "\t\t\ttr:nth-child(even){background-color: #f2f2f2;}" + lineSeperator
+        + "\t\t\ttr:hover {background-color: #ddd;}" + lineSeperator
+        + lineSeperator
+        + "\t\t\tth {" + lineSeperator
+        + "\t\t\t\tpadding-top: 12px;" + lineSeperator
+        + "\t\t\t\tpadding-bottom: 12px;" + lineSeperator
+        + "\t\t\t\ttext-align: center;" + lineSeperator
+        + "\t\t\t\tbackground-color: #4CAF50;" + lineSeperator
+        + "\t\t\t\tcolor: white;" + lineSeperator
+        + "\t\t\t}"
+        + lineSeperator + "\t\t");
+
+    style.appendChild(content);
+    head.appendChild(style);
   }
 
 }
