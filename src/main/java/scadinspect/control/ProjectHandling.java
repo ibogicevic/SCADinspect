@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -55,8 +56,16 @@ public class ProjectHandling {
    * Opens the dialog to choose a file
    */
   public void openProjectFile() {
-	File projectFile;
-    projectFile = fileChooser.showOpenDialog(Main.getInstance().getPrimaryStage());
+    Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Project");
+    String defFile = userPrefs.get("DefaultDir", null);
+    if(defFile != null) {
+        File file = new File(defFile);
+        if(file.exists()) {
+            fileChooser.setInitialDirectory(file);
+        }
+    }
+    File projectFile = fileChooser.showOpenDialog(Main.getInstance().getPrimaryStage());
+    
 
     /**
      * Checks if a file is selected or the cancel button is clicked If cancel is clicked a null is
@@ -64,6 +73,7 @@ public class ProjectHandling {
      */
 
     if (projectFile != null) {
+      userPrefs.put("DefaultDir", projectFile.getParent());
       setProjectPath(projectFile);
       Main.getInstance().getFileList().add(projectFile);
     }
@@ -74,8 +84,16 @@ public class ProjectHandling {
      * @param onDone
    */
   public void openProjectFolder(Consumer<Collection<File>> onDone) {
-	File projectDirectory;
-    projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
+      Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Project");
+      String defFile = userPrefs.get("DefaultDir", null);
+      if(defFile != null) {
+          File file = new File(defFile);
+          if(file.exists()) {
+              directoryChooser.setInitialDirectory(file);
+          }
+      }
+    
+      File projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
 
     /**
      * Checks if a directory is selected or the cancel button is clicked If cancel is clicked a null
@@ -83,6 +101,8 @@ public class ProjectHandling {
      * contents of the sub-folder to the fileList
      */
     if (projectDirectory != null) {
+        
+      userPrefs.put("DefaultDir", projectDirectory.getAbsolutePath());
       setProjectPath(projectDirectory);
       Supplier<Boolean> confirmLongRead = () -> {
           try {
