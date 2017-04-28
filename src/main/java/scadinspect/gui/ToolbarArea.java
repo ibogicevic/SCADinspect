@@ -1,22 +1,21 @@
 package scadinspect.gui;
 
 import java.io.InputStream;
-import java.nio.file.attribute.PosixFilePermission;
 import java.util.prefs.Preferences;
-
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Separator;
+import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.ToolBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import scadinspect.control.CodeAnalyzer;
 import scadinspect.control.ProjectHandling;
-import javafx.application.Platform;
-import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
-import javafx.scene.control.ToolBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * Toolbar at the top of the main window
@@ -29,13 +28,13 @@ public class ToolbarArea extends ToolBar {
     VBox vbox = new VBox();
     Pane seperatorPane = new Pane();
 
-    private MenuItem openFileButton = new MenuItem("Open file", loadIcon("open-folder-outline"));
-    private MenuItem openFolderButton = new MenuItem("Open folder", loadIcon("open-folder-outline"));
+    private MenuItem openFileButton = new MenuItem(Messages.getString("ToolbarArea.openFileButtonText"), loadIcon(Messages.getString("ToolbarArea.openFileIcon"))); //$NON-NLS-1$ //$NON-NLS-2$
+    private MenuItem openFolderButton = new MenuItem(Messages.getString("ToolbarArea.openFolderButtonText"), loadIcon(Messages.getString("ToolbarArea.openFolderIcon"))); //$NON-NLS-1$ //$NON-NLS-2$
     private SplitMenuButton openProjectButton = new SplitMenuButton(openFileButton, openFolderButton);
-    private Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
-    private Button settingsButton = new Button("Settings");
-    private Hyperlink helpLink = new Hyperlink("Help");
-    private Hyperlink aboutLink = new Hyperlink("About");
+    private Preferences userPrefs = Preferences.userRoot().node(Messages.getString("ToolbarArea.userPrefs")); //$NON-NLS-1$
+    private Button settingsButton = new Button(Messages.getString("ToolbarArea.settingsButton")); //$NON-NLS-1$
+    private Hyperlink helpLink = new Hyperlink(Messages.getString("ToolbarArea.helpLink")); //$NON-NLS-1$
+    private Hyperlink aboutLink = new Hyperlink(Messages.getString("ToolbarArea.aboutLink")); //$NON-NLS-1$
     private Separator separator = new Separator();
 
 
@@ -55,13 +54,13 @@ public class ToolbarArea extends ToolBar {
      * @return the icon as ImageView
      */
     private ImageView loadIcon(String fileName) {
-        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
+        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png"); //$NON-NLS-1$
         Image image = new Image(inputStream);
         ImageView imageView = new ImageView(image);
         return imageView;
     }
     private ImageView loadResizedIcon(String fileName) {
-        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
+        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png"); //$NON-NLS-1$
         Image image = new Image(inputStream);
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(12);
@@ -78,30 +77,52 @@ public class ToolbarArea extends ToolBar {
 
 
         // configure open button
-        openProjectButton.setGraphic(loadIcon("open-folder-outline"));
+        openProjectButton.setGraphic(loadIcon(Messages.getString("ToolbarArea.openProjectButtonIcon"))); //$NON-NLS-1$
         // Read settings
-        if (userPrefs.getInt("SET_OPENBUTTON", 0) == 0) {
-            openProjectButton.setText("Open file");
-            openProjectButton.setOnAction(event -> projectHandler.openProjectFile());
+        if (userPrefs.getInt("SET_OPENBUTTON", 0) == 0) { //$NON-NLS-1$
+            openProjectButton.setText(Messages.getString("ToolbarArea.openProjectButtonText")); //$NON-NLS-1$
+            openProjectButton.setOnAction(event -> {
+              projectHandler.openProjectFile();
+              CodeAnalyzer.refresh();
+            });
         } else {
-            openProjectButton.setText("Open folder");
-            openProjectButton.setOnAction(event -> projectHandler.openProjectFolder());
+            openProjectButton.setText("Open folder"); //$NON-NLS-1$
+            openProjectButton.setOnAction(event -> {
+              //Loading of multiple files is non blocking
+              projectHandler.openProjectFolder((files) -> {
+                if(files != null) {
+                  Main.getInstance().getFileList().addAll(files);
+                  CodeAnalyzer.refresh();
+                }
+              });
+            });
         }
         openFolderButton.setOnAction(e -> {
-            userPrefs.putInt("SET_OPENBUTTON", 1);
-            openProjectButton.setText("Open folder");
-            openProjectButton.setOnAction(event -> projectHandler.openProjectFolder());
+            userPrefs.putInt("SET_OPENBUTTON", 1); //$NON-NLS-1$
+            openProjectButton.setText("Open folder"); //$NON-NLS-1$
+            openProjectButton.setOnAction(event -> {
+              //Loading of multiple files is non blocking
+              projectHandler.openProjectFolder((files) -> {
+                if(files != null) {
+                  Main.getInstance().getFileList().addAll(files);
+                  CodeAnalyzer.refresh();
+                }
+              });
+            });
         });
         openFileButton.setOnAction(e -> {
-            userPrefs.putInt("SET_OPENBUTTON", 0);
-            openProjectButton.setText("Open file");
-            openProjectButton.setOnAction(event -> projectHandler.openProjectFile());
+            userPrefs.putInt("SET_OPENBUTTON", 0); //$NON-NLS-1$
+            openProjectButton.setText(Messages.getString("ToolbarArea.openProjectButton")); //$NON-NLS-1$
+            openProjectButton.setOnAction(event -> {
+              projectHandler.openProjectFile();
+              CodeAnalyzer.refresh();
+            });
         });
 
         // set button icons
-        settingsButton.setGraphic(loadIcon("cog-wheel-silhouette"));
-        helpLink.setGraphic(loadResizedIcon("help-icon"));
-        aboutLink.setGraphic(loadResizedIcon("about-icon"));
+        settingsButton.setGraphic(loadIcon(Messages.getString("ToolbarArea.settingsButtonIcon"))); //$NON-NLS-1$
+        helpLink.setGraphic(loadResizedIcon(Messages.getString("ToolbarArea.helpLinkIcon"))); //$NON-NLS-1$
+        aboutLink.setGraphic(loadResizedIcon(Messages.getString("ToolbarArea.aboutLinkIcon"))); //$NON-NLS-1$
 
         // status of buttons
         disableButtons(true);

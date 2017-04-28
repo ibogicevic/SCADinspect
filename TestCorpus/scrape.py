@@ -77,7 +77,7 @@ class TestCorpusSpider(Spider):
 
     def parse_files(self, response):
         item = TestCorpusItem()
-        file_url_xpath = ".//*[@id='code_search_results']/div[1]/div/p/a[2]/@href"
+        file_url_xpath = ".//*[@id='code_search_results']/div[1]/div[*]/div[1]/a[2]/@href"
 
         if "You have triggered an abuse detection mechanism." in response.body:
             print("The crawler was too fast for GitHub (abuse detection).")

@@ -1,5 +1,6 @@
 package scadinspect.gui;
 
+import java.util.prefs.BackingStoreException;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -15,23 +16,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
+import javafx.application.Platform;
 
 /**
  * Startup JavaFX frame
  *
  * @author ivan
  */
-public class Main extends Application {
 
+
+
+public class Main extends Application {
+	
+	private final String LOGGING_KEY = "java.util.logging.SimpleFormatter.format"; 
+	private final String LOGGING_VALUE = "[%1$tc] %4$s: %5$s%n"; 
+  
     /**
      * Name of the application *
      */
-    public static final String APPNAME = "SCADinspect";
+    public static final String APPNAME = Messages.getString("Main.appname"); 
 
     /**
      * Location of the resource files *
      */
-    public static final String RESOURCES_DIR = "/resources/";
+    public static final String RESOURCES_DIR = Messages.getString("Main.resourcesDir"); 
     public static Logger logger = null;
 
     /**
@@ -74,7 +83,7 @@ public class Main extends Application {
     public GreyPane greyPane;
     private Stage primaryStage;
 
-    public Stage getPrimaryStage() {
+    public Stage getPrimaryStage() {;
         return this.primaryStage;
     }
     /**
@@ -90,12 +99,10 @@ public class Main extends Application {
      * Application startup function
      */
     public void start(Stage primaryStage) {
-        System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc] %4$s: %5$s%n");
-
+        System.setProperty(LOGGING_KEY, LOGGING_VALUE);
         try {
-            logHandler = new LogHandler();
             logger = logHandler.getLogger();
-        } catch (IOException e) {
+        } catch (IOException|BackingStoreException e) {
             e.printStackTrace();
         }
 
@@ -138,7 +145,16 @@ public class Main extends Application {
         primaryStage.setX(0);
         primaryStage.show();
 
-        logger.log(Level.INFO, "({0}) successfully started", this.getClass().getName());
+        logger.log(Level.INFO,"successfully started"); 
+
+        /**
+         * Necessary for destroying the logfilehandler before closing the application
+         */
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                LogHandler.shutdown();
+            }
+        }, "Shutdown-thread")); 
     }
 
     /**
@@ -149,7 +165,7 @@ public class Main extends Application {
     public boolean isProjectOpen() {
         return (currentProject != null);
     }
-    
+
     /**
      * Sets the current project path
      * @param currentProject
