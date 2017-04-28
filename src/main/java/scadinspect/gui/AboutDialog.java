@@ -28,6 +28,7 @@ public class AboutDialog {
           "-Ivan Bogicevic\n" +
           "-Jonas Bernsdorff\n" +
           "-Malcolm Malam\n" +
+          "-Maik Baumgartner\n" +
           "-Desyon";
 
 
