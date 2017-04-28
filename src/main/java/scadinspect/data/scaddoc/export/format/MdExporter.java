@@ -21,7 +21,7 @@ public class MdExporter implements Exporter {
    * @return String object, which represents the created XML
    */
   @Override
-  public String getOutput(ScadDocuFile file) {
+  public byte[] getOutput(ScadDocuFile file) {
     StringBuilder sb = new StringBuilder();
 
     sb.append("# Parts Documentation");
@@ -30,7 +30,7 @@ public class MdExporter implements Exporter {
     sb.append(System.lineSeparator());
     sb.append(insertFile(file));
 
-    return sb.toString();
+    return sb.toString().getBytes();
   }
 
   /**
@@ -41,7 +41,7 @@ public class MdExporter implements Exporter {
    * @return String object, which represents the created XML
    */
   @Override
-  public String getOutput(Collection<ScadDocuFile> files) {
+  public byte[] getOutput(Collection<ScadDocuFile> files) {
     StringBuilder sb = new StringBuilder();
 
     sb.append("# Parts Documentation");
@@ -52,7 +52,7 @@ public class MdExporter implements Exporter {
       sb.append(insertFile(file));
     }
 
-    return sb.toString();
+    return sb.toString().getBytes();
   }
 
   /**

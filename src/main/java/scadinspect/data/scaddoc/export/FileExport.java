@@ -1,6 +1,7 @@
 package scadinspect.data.scaddoc.export;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.util.Collection;
 import scadinspect.data.scaddoc.ScadDocuFile;
@@ -34,12 +35,12 @@ public class FileExport {
       throws FileExportException {
     try {
       File outputFile = new File(path);
-      FileWriter fw = new FileWriter(outputFile);
+      FileOutputStream fos = new FileOutputStream(path);
 
       Exporter exporter = getExporter(format);
 
-      fw.write(exporter.getOutput(file));
-      fw.close();
+      fos.write(exporter.getOutput(file));
+      fos.close();
 
       return outputFile;
     } catch (Exception e) {
@@ -60,14 +61,15 @@ public class FileExport {
       throws FileExportException {
     try {
       File outputFile = new File(path);
-      FileWriter fw = new FileWriter(outputFile);
+      FileOutputStream fos = new FileOutputStream(path);
 
       Exporter exporter = getExporter(format);
 
       for(ScadDocuFile file : files) {
-        fw.write(exporter.getOutput(file));
-        fw.close();
+        fos.write(exporter.getOutput(file));
       }
+
+      fos.close();
 
       return outputFile;
 
