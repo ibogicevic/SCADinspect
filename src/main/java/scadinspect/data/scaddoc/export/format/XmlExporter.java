@@ -40,7 +40,7 @@ public class XmlExporter implements Exporter {
       throws ParserException, ParserConfigurationException, TransformerException {
     // root elements
     Document doc = getDoc();
-    Element rootElement = doc.createElement(file.getPath().toString());
+    Element rootElement = doc.createElement(file.getPath().toString().replaceAll("\\|:|/","."));
     doc.appendChild(rootElement);
 
     for (Module module : file.getModules()) {
