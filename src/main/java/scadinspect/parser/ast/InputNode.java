@@ -1,26 +1,38 @@
 package scadinspect.parser.ast;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Felix Stegmaier on 30.03.2017.
  */
 public class InputNode extends ASTNode {
-  public List<String> uses;
-  public List<StatementNode> statements;
 
-  public InputNode() {
-    this.uses = new ArrayList<>();
-    this.statements = new ArrayList<>();
+  public final String use;
+
+  public enum Types implements NodeType {
+    EMPTY,
+    USE,
+    STATEMENT
   }
 
-  public InputNode(InputNode inputNode) {
-    this();
-    if (inputNode!=null) {
-      this.uses.addAll(inputNode.uses);
-      this.statements.addAll(inputNode.statements);
-    }
+  public static InputNode createEmpty() {
+    return new InputNode(Types.EMPTY, Collections.emptyList(), null);
   }
+
+  public static InputNode createUse(String use, InputNode input) {
+    return new InputNode(Types.USE, Collections.singletonList(input), use);
+  }
+
+  public static InputNode createStatement(StatementNode statementNode, InputNode input) {
+    return new InputNode(Types.STATEMENT, Arrays.asList(statementNode, input), null);
+  }
+
+  protected InputNode(NodeType type, List<ASTNode> children, String use) {
+    super(type, children);
+    this.use = use;
+  }
+
 
 }
