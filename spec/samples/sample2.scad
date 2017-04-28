@@ -25,7 +25,13 @@ module Logo(size=50, $fn=100) {
         rotate([0, 90, 0]) cylinder(d=hole, h=cylinderHeight, center=true);
     }
 }
-
+/**
+ * @title Another Module2
+ * @price 1145~USD
+ * @author
+ * @material test; def
+ *
+ */
 echo(version=version());
 // Written by Clifford Wolf <clifford@clifford.at> and Marius
 // Kintel <marius@kintel.net>

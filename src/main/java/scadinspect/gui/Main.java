@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import scadinspect.data.scaddoc.ScadDocuFile;
 import java.util.prefs.Preferences;
 import javafx.application.Platform;
 
@@ -25,7 +26,7 @@ import javafx.application.Platform;
  * @author ivan
  */
 public class Main extends Application {
-  
+
     /**
      * Name of the application *
      */
@@ -77,7 +78,7 @@ public class Main extends Application {
     public GreyPane greyPane;
     private Stage primaryStage;
 
-    public Stage getPrimaryStage() {;
+    public Stage getPrimaryStage() {
         return this.primaryStage;
     }
     /**
@@ -86,6 +87,16 @@ public class Main extends Application {
      */
     public List<File> getFileList() {
         return fileList;
+    }
+
+    private List<ScadDocuFile> docuFiles;
+
+    public List<ScadDocuFile> getDocuFiles() {
+        return docuFiles;
+    }
+
+    public void setDocuFiles(List<ScadDocuFile> docuFiles) {
+        this.docuFiles = docuFiles;
     }
 
     @Override
