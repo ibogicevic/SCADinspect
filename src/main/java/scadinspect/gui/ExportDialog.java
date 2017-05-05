@@ -66,7 +66,7 @@ public class ExportDialog {
       FileExport exporter = new FileExport();
       try {
         if (excel.isSelected()) {
-          exporter.save(ExportFormat.XSXL, Main.getInstance().getDocuFiles(),
+          exporter.save(ExportFormat.EXCEL, Main.getInstance().getDocuFiles(),
               pathWithoutExtension + ".xsxl");
         }
         if (csv.isSelected()) {

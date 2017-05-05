@@ -18,6 +18,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Created by Orhan Bilir on 28.04.2017
+ */
 public class ExcelExporterTest {
   
   String lineSeparator = System.lineSeparator();
@@ -50,7 +53,7 @@ public class ExcelExporterTest {
 
     modules.add(wheel);
     modules.add(motor);
-    ScadDocuFile file = new ScadDocuFile(Paths.get("Testing"), modules);
+    ScadDocuFile file = new ScadDocuFile(Paths.get("MyDummy"), modules);
     FileExport fileOut = new FileExport();
     fileOut.save(ExportFormat.EXCEL, file, "./export.xls");
 

@@ -5,12 +5,7 @@ import java.io.FileOutputStream;
 import java.util.Collection;
 import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.error.FileExportException;
-import scadinspect.data.scaddoc.export.format.CsvExporter;
-import scadinspect.data.scaddoc.export.format.ExportFormat;
-import scadinspect.data.scaddoc.export.format.Exporter;
-import scadinspect.data.scaddoc.export.format.JsonExporter;
-import scadinspect.data.scaddoc.export.format.MdExporter;
-import scadinspect.data.scaddoc.export.format.XmlExporter;
+import scadinspect.data.scaddoc.export.format.*;
 
 /**
  * Provides all means to convert a List of Modules into multiple formats of character files.
@@ -101,6 +96,9 @@ public class FileExport {
         break;
       case HTML:
         exporter = null;
+        break;
+      case EXCEL:
+        exporter = new ExcelExporter();
         break;
       default:
         exporter = null;
