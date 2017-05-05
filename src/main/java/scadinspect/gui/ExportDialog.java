@@ -1,6 +1,11 @@
 package scadinspect.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Dialog;
@@ -17,13 +22,16 @@ import scadinspect.data.scaddoc.export.format.ExportFormat;
 public class ExportDialog {
 
   public static void openDialog() {
-    Dialog<Boolean> dialog = new Dialog<>();
+    Dialog<ButtonType> dialog;
+    dialog = new Dialog<>();
     dialog.setTitle("Export");
     dialog.setHeaderText(null);
 
     // Set the button types.
-    ButtonType okButtonType = new ButtonType("OK", ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
+   // ButtonType okButtonType = new ButtonType("OK", ButtonData.OK_DONE);
+
+    dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+    dialog.getDialogPane().lookupButton(ButtonType.OK).setDisable(true);
 
     // Create the radio buttons
     VBox vBox = new VBox();
@@ -44,6 +52,18 @@ public class ExportDialog {
     RadioButton md = new RadioButton("Markdown");
     md.setToggleGroup(group);
 
+    group.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+      public void changed(ObservableValue<? extends Toggle> ov,
+          Toggle old_toggle, Toggle new_toggle) {
+        if (group.getSelectedToggle() != null) {
+          dialog.getDialogPane().lookupButton(ButtonType.OK).setDisable(false);
+        }
+        else{//shouldn't be necessary, for safety implemented
+          dialog.getDialogPane().lookupButton(ButtonType.OK).setDisable(true);
+        }
+      }
+    });
+
     vBox.getChildren().add(excel);
     vBox.getChildren().add(csv);
     vBox.getChildren().add(json);
@@ -55,50 +75,50 @@ public class ExportDialog {
 
     dialog.initModality(Modality.APPLICATION_MODAL);
 
-    Optional<Boolean> result = dialog.showAndWait();
+    Optional<ButtonType> result = dialog.showAndWait();
+   // if(result.isPresent()) {
+      if (result.get()==ButtonType.OK) {
+        FileChooser fileChooser = new FileChooser();
+        File exportFile = fileChooser.showSaveDialog(Main.getInstance().getPrimaryStage());
 
-    FileChooser fileChooser = new FileChooser();
-    File exportFile = fileChooser.showSaveDialog(Main.getInstance().getPrimaryStage());
+        if (exportFile != null) {
 
-    if (exportFile != null) {
-
-      String pathWithoutExtension = exportFile.getAbsolutePath();
-      FileExport exporter = new FileExport();
-      try {
-        if (excel.isSelected()) {
-          exporter.save(ExportFormat.XSXL, Main.getInstance().getDocuFiles(),
-              pathWithoutExtension + ".xsxl");
+          String pathWithoutExtension = exportFile.getAbsolutePath();
+          FileExport exporter = new FileExport();
+          try {
+            if (excel.isSelected()) {
+              exporter.save(ExportFormat.XSXL, Main.getInstance().getDocuFiles(),
+                  pathWithoutExtension + ".xsxl");
+            }
+            if (csv.isSelected()) {
+              exporter.save(ExportFormat.CSV, Main.getInstance().getDocuFiles(),
+                  pathWithoutExtension + ".csv");
+            }
+            if (json.isSelected()) {
+              exporter.save(ExportFormat.JSON, Main.getInstance().getDocuFiles(),
+                  pathWithoutExtension + ".json");
+            }
+            if (xml.isSelected()) {
+              System.out.println(Main.getInstance().getDocuFiles());
+              exporter.save(ExportFormat.XML, Main.getInstance().getDocuFiles(),
+                  pathWithoutExtension + ".xml");
+            }
+            if (pdf.isSelected()) {
+              System.out.println(Main.getInstance().getDocuFiles());
+              exporter.save(ExportFormat.PDF, Main.getInstance().getDocuFiles(),
+                  pathWithoutExtension + ".pdf");
+            }
+            if (md.isSelected()) {
+              System.out.println(Main.getInstance().getDocuFiles());
+              exporter.save(ExportFormat.MD, Main.getInstance().getDocuFiles(),
+                  pathWithoutExtension + ".md");
+            }
+          } catch (FileExportException e) {
+            e.printStackTrace();
+          }
         }
-        if (csv.isSelected()) {
-          exporter.save(ExportFormat.CSV, Main.getInstance().getDocuFiles(),
-              pathWithoutExtension + ".csv");
-        }
-        if (json.isSelected()) {
-          exporter.save(ExportFormat.JSON, Main.getInstance().getDocuFiles(),
-              pathWithoutExtension + ".json");
-        }
-        if (xml.isSelected()) {
-          System.out.println(Main.getInstance().getDocuFiles());
-          exporter.save(ExportFormat.XML, Main.getInstance().getDocuFiles(),
-              pathWithoutExtension + ".xml");
-        }
-        if (pdf.isSelected()) {
-          System.out.println(Main.getInstance().getDocuFiles());
-          exporter.save(ExportFormat.PDF, Main.getInstance().getDocuFiles(),
-              pathWithoutExtension + ".pdf");
-        }
-        if (md.isSelected()) {
-          System.out.println(Main.getInstance().getDocuFiles());
-          exporter.save(ExportFormat.MD, Main.getInstance().getDocuFiles(),
-              pathWithoutExtension + ".md");
-        }
-      } catch (FileExportException e) {
-        e.printStackTrace();
-        System.out.println(e.getCause());
-
       }
-    }
+   // }
 
   }
-
 }
