@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class MultiProperty<T> implements Property<List<T>> {
 
-  private String key;
-  private List<T> values;
+  private final String key;
+  private final List<T> values;
 
   /**
    * Constructing a new multiple value property
