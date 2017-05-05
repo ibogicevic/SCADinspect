@@ -1,4 +1,4 @@
-package scadinspect.parser.ast.checkers;
+package scadinspect.checkers;
 
 import java.util.Collections;
 import scadinspect.data.analysis.Issue;

@@ -1,4 +1,4 @@
-package scadinspect.parser.ast.checkers;
+package scadinspect.checkers;
 
 /**
  * Created by Felix Stegmaier on 23.04.2017.

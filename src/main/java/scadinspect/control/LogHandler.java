@@ -2,7 +2,6 @@ package scadinspect.control;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -75,7 +74,7 @@ public class LogHandler extends Logger {
     }
     //If log level is set to NONE (=0), no logfile should be created, else create handler pointing to logfile
 
-      if(set_level != 0)){
+      if(set_level != 0){
         // setup file output
         fileHandler = null;
         try {

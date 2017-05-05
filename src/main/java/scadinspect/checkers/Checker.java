@@ -1,4 +1,4 @@
-package scadinspect.parser.ast.checkers;
+package scadinspect.checkers;
 
 import scadinspect.parser.ast.ASTNode;
 

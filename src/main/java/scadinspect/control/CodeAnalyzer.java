@@ -12,14 +12,14 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import scadinspect.checkers.CheckResult;
+import scadinspect.checkers.CheckState;
+import scadinspect.checkers.SpecialVariablesChecker;
 import scadinspect.data.analysis.Issue;
 import scadinspect.gui.Main;
 import scadinspect.parser.ParseTree;
 import scadinspect.parser.Parser;
 import scadinspect.parser.ParserResult;
-import scadinspect.parser.ast.checkers.CheckResult;
-import scadinspect.parser.ast.checkers.CheckState;
-import scadinspect.parser.ast.checkers.ExampleChecker;
 
 /**
  * Created by david on 31/03/2017.
@@ -48,8 +48,9 @@ public class CodeAnalyzer {
               Entry::getKey,
               e -> Optional.ofNullable(e.getValue().getParseTree())
                   .map(ParseTree::getRootNode)
-                  //.map(n -> n.check(new ExampleChecker(), new CheckState())) //TODO this only uses one example, support generic
-                  .map(n -> new ExampleChecker().check(n, new CheckState()))
+                  //TODO this only uses one example, support generic
+                  //.map(n -> new ExampleChecker().check(n, new CheckState()))
+                  .map(n -> new SpecialVariablesChecker().check(n, new CheckState()))
                   .orElse(new CheckResult(Collections.emptyList()))
               )
           );
