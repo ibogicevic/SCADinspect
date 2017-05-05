@@ -84,7 +84,7 @@ public class SettingsDialog {
             }
 
             // Logging
-            int level =  userPrefs.getInt("LOG_LEVEL",loggingCombo.getSelectionModel().getSelectedIndex());
+            int level =  loggingCombo.getSelectionModel().getSelectedIndex();
             userPrefs.putInt("LOG_LEVEL", level);
             Level logLevel = Level.parse(Integer.toString(level));
             Main.logger.setLevel(logLevel);
