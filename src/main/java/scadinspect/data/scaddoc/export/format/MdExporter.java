@@ -87,13 +87,13 @@ public class MdExporter implements Exporter {
 
     //separate header
     sj = new StringJoiner("|");
-    String hSeparator;
+    StringBuilder hSeparator;
     for (String key : keys) {
-      hSeparator = "";
+      hSeparator = new StringBuilder();
       for (int i = 0; i < key.length(); i++) {
-        hSeparator += "-";
+        hSeparator.append("-");
       }
-      sj.add(hSeparator);
+      sj.add(hSeparator.toString());
     }
 
     sb.append(sj.toString());
