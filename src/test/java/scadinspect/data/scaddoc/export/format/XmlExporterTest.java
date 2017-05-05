@@ -13,6 +13,7 @@ import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
+import scadinspect.data.scaddoc.properties.helper.Pair;
 
 /**
  * @author Desyon on 3/24/17.
@@ -201,5 +202,32 @@ class XmlExporterTest {
             + "  </testPath2>" + lineSeparator
             + "</files>" + lineSeparator,
         new String(exporter.getOutput(files), "UTF-8"));
+  }
+  @Test
+  void tormentModule() throws Exception {
+    Module torment = new Module();
+
+    torment.addProperty(new SingleProperty<>("Key#__;", "v4|u3"));
+    torment.addProperty(new SingleProperty<>("Key/%§§", "{[]}\\"));
+    torment.addProperty(new PairProperty<>("Pair", new Pair<>("100", "CND/AUD")));
+    torment.addProperty(new MultiProperty<>("Multi", "<>|!§$%&/\"()=?", "*'+#~;:,."));
+
+    modules.add(torment);
+
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
+
+    assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"+lineSeparator
+            + "<testPath>"+lineSeparator
+            + "  <module>"+lineSeparator
+            + "    <Key__>v4u3</Key__>"+lineSeparator
+            + "    <Key>{}</Key>"+lineSeparator
+            + "    <Pair>"+lineSeparator
+            + "      <metric>CNDAUD</metric>"+lineSeparator
+            + "      <value>100</value>"+lineSeparator
+            + "    </Pair>"+lineSeparator
+            + "    <Multi>$=, *+~:,.</Multi>"+lineSeparator
+            + "  </module>"+lineSeparator
+            + "</testPath>"+lineSeparator,
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 }

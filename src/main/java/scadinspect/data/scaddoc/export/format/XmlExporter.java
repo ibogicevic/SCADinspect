@@ -5,6 +5,8 @@ package scadinspect.data.scaddoc.export.format;
  */
 
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Collection;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -107,8 +109,10 @@ public class XmlExporter implements Exporter {
         nodeMetric = document.createElement("metric");
         nodeValue = document.createElement("value");
 
-        nodeMetric.appendChild(document.createTextNode(escapeSpecialCharacters(temp.getValue().getMetric())));
-        nodeValue.appendChild(document.createTextNode(escapeSpecialCharacters(temp.getValue().getValue().toString())));
+        nodeMetric.appendChild(
+            document.createTextNode(escapeSpecialCharacters(temp.getValue().getMetric())));
+        nodeValue.appendChild(document
+            .createTextNode(escapeSpecialCharacters(temp.getValue().getValue().toString())));
 
         key.appendChild(nodeMetric);
         key.appendChild(nodeValue);
@@ -164,7 +168,7 @@ public class XmlExporter implements Exporter {
     transformer.transform(source, result);
 
     //return XML String + do some **magic**
-    return sw.getBuffer().toString().replaceAll("((?<=>)\\[)|(](?=<))", "");
+    return sw.getBuffer().toString();
   }
 
   /**
@@ -175,135 +179,17 @@ public class XmlExporter implements Exporter {
    */
   private static String escapeSpecialCharacters(String string) {
     return string
-        .replaceAll("&", "&amp;")
-        .replaceAll("\"", "&quot;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll(" ", "&nbsp;")
-        .replaceAll("¡", "&iexcl;")
-        .replaceAll("¢", "&cent;")
-        .replaceAll("£", "&pound;")
-        .replaceAll("¤", "&curren;")
-        .replaceAll("¥", "&yen;")
-        .replaceAll("¦", "&brvbar;")
-        .replaceAll("§", "&sect;")
-        .replaceAll("¨", "&uml;")
-        .replaceAll("©", "&copy;")
-        .replaceAll("ª", "&ordf;")
-        .replaceAll("«", "&laquo;")
-        .replaceAll("»", "&raquo;")
-        .replaceAll("¬", "&not;")
-        .replaceAll("®", "&reg;")
-        .replaceAll("¯", "&macr;")
-        .replaceAll("°", "&deg;")
-        .replaceAll("±", "&plusmn;")
-        .replaceAll("²", "&sub2;")
-        .replaceAll("³", "&sub3;")
-        .replaceAll("´", "&acute;")
-        .replaceAll("µ", "&micro;")
-        .replaceAll("¶", "&para;")
-        .replaceAll("·", "&middot;")
-        .replaceAll("¸", "&cedil;")
-        .replaceAll("¹", "&sub1;")
-        .replaceAll("º", "&ordm;")
-        .replaceAll("¼", "&frac14;")
-        .replaceAll("½", "&frac12;")
-        .replaceAll("¾", "&frac34;")
-        .replaceAll("¿", "&iquest;")
-        .replaceAll("À", "&Agrave;")
-        .replaceAll("Á", "&Aacute;")
-        .replaceAll("Â", "&Acirc;")
-        .replaceAll("Ã", "&Atilde;")
-        .replaceAll("Ä", "&Auml;")
-        .replaceAll("Å", "&Aring;")
-        .replaceAll("Æ", "&AElig;")
-        .replaceAll("Ç", "&Ccedil;")
-        .replaceAll("È", "&Egrave;")
-        .replaceAll("É", "&Eacute;")
-        .replaceAll("Ê", "&Ecirc;")
-        .replaceAll("Ë", "&Euml;")
-        .replaceAll("Ì", "&Igrave;")
-        .replaceAll("Í", "&Iacute;")
-        .replaceAll("Î", "&Icirc;")
-        .replaceAll("Ï", "&Iuml;")
-        .replaceAll("Ò", "&Ograve;")
-        .replaceAll("Ó", "&Oacute;")
-        .replaceAll("Ô", "&Ocirc;")
-        .replaceAll("Õ", "&Otilde;")
-        .replaceAll("Ö", "&Ouml;")
-        .replaceAll("Ø", "&Oslash;")
-        .replaceAll("Ù", "&Ugrave;")
-        .replaceAll("Ú", "&Uacute;")
-        .replaceAll("Û", "&Ucirc;")
-        .replaceAll("Ü", "&Uuml;")
-        .replaceAll("Ð", "&ETH;")
-        .replaceAll("Ñ", "&Ntilde;")
-        .replaceAll("×", "&times;")
-        .replaceAll("Ý", "&Yacute;")
-        .replaceAll("Þ", "&THORN;")
-        .replaceAll("ß", "&szlig;")
-        .replaceAll("à", "&agrave;")
-        .replaceAll("á", "&aacute;")
-        .replaceAll("â", "&acirc;")
-        .replaceAll("ã", "&atilde;")
-        .replaceAll("ä", "&auml;")
-        .replaceAll("å", "&aring;")
-        .replaceAll("æ", "&aelig;")
-        .replaceAll("ç", "&ccedil;")
-        .replaceAll("è", "&egrave;")
-        .replaceAll("é", "&eacute;")
-        .replaceAll("ê", "&ecirc;")
-        .replaceAll("ë", "&euml;")
-        .replaceAll("ì", "&igrave;")
-        .replaceAll("í", "&iacute;")
-        .replaceAll("î", "&icirc;")
-        .replaceAll("ï", "&iuml;")
-        .replaceAll("ð", "&eth;")
-        .replaceAll("ñ", "&ntilde;")
-        .replaceAll("ò", "&ograve;")
-        .replaceAll("ó", "&oacute;")
-        .replaceAll("ô", "&ocirc;")
-        .replaceAll("õ", "&otilde;")
-        .replaceAll("ö", "&ouml;")
-        .replaceAll("÷", "&divide;")
-        .replaceAll("ø", "&oslash;")
-        .replaceAll("ù", "&ugrave;")
-        .replaceAll("ú", "&uacute;")
-        .replaceAll("û", "&ucirc;")
-        .replaceAll("ü", "&uuml;")
-        .replaceAll("ý", "&yacute;")
-        .replaceAll("þ", "&thorn;")
-        .replaceAll("ÿ", "&yuml;")
-        .replaceAll("Œ", "&#338;")
-        .replaceAll("œ", "&#339;")
-        .replaceAll("Š", "&#352;")
-        .replaceAll("š", "&#353;")
-        .replaceAll("Ÿ", "&#376;")
-        .replaceAll("ƒ", "&#402;")
-        .replaceAll("–", "&#8211;")
-        .replaceAll("—", "&#8212;")
-        .replaceAll("‘", "&#8216;")
-        .replaceAll("’", "&#8217;")
-        .replaceAll("‚", "&#8218;")
-        .replaceAll("“", "&#8220;")
-        .replaceAll("”", "&#8221;")
-        .replaceAll("„", "&#8222;")
-        .replaceAll("†", "&#8224;")
-        .replaceAll("‡", "&#8225;")
-        .replaceAll("•", "&#8226;")
-        .replaceAll("…", "&#8230;")
-        .replaceAll("‰", "&#8240;")
-        .replaceAll("€", "&euro;")
-        .replaceAll("™", "&#8482;")
-        .replaceAll("\\{", "&#123;")
-        .replaceAll("\\|", "&#124;")
-        .replaceAll("}", "&#125;")
-        .replaceAll("~", "&#126;")
-        .replaceAll("`", "&#96;")
-        .replaceAll("\\[", "&#91;")
-        .replaceAll("\\\\", "&#92;")
-        .replaceAll("]", "&#93;")
-        .replaceAll("\\^", "&#94;")
-        .replaceAll("_", "&#95;");
+        .replaceAll("[ÄÀÁÂÃÅ]","A")
+        .replaceAll("[àáâãä]","a")
+        .replaceAll("[ÈÉÊË]","E")
+        .replaceAll("[èéêë]","e")
+        .replaceAll("[ÌÍÎÏ]","I")
+        .replaceAll("[ìíîï]","i")
+        .replaceAll("[ÒÓÔÕÖØ]","O")
+        .replaceAll("[ðòóôõöø]","o")
+        .replaceAll("[ÙÚÛÜ]","U")
+        .replaceAll("[ùúûü]","u")
+        .replaceAll("ß","ss")
+        .replaceAll("&|\\[|<|>|]|\\|\"|\\||!|\"|\'|§|$|%|\\(|\\)|;|\\?|\\^|°|#|\\\\|/","");
   }
 }
