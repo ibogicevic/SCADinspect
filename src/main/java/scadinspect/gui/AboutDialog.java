@@ -67,7 +67,9 @@ public class AboutDialog {
           "Contributors:\n" +
           "-Ivan Bogicevic\n"
           + "-Tim Walter\n"
-          + "-Tom RIchter\n"
+          + "-Tom Richter\n"
+          + "-Maik Baumgartner\n"
+          + "-Lisa Milius\n"
           + "-Simon Steinrücken";
 
   final static String Text2 =
