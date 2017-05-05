@@ -45,6 +45,7 @@ public class ExcelExporter implements Exporter{
     
     for(Module module:modules){
       rowNum++;
+      row[rowNum] = sheet.createRow(rowNum);
       Collection<scadinspect.data.scaddoc.properties.Property> properties = module.getProperties();
       for(scadinspect.data.scaddoc.properties.Property property:properties){
         if(columnNum>properties.size()-1){
@@ -52,8 +53,6 @@ public class ExcelExporter implements Exporter{
         }else {
           columnNum++;
         }
-          row[columnNum] = sheet.createRow(columnNum);
-          System.out.println("column:"+columnNum+"\nrow:"+rowNum);
           cell[rowNum] = new Cell[properties.size()+1];
           cell[rowNum][columnNum]=row[rowNum].createCell(columnNum);
           //cell[rowNum+1][columnNum]=row[columnNum].createCell(rowNum+1);
@@ -61,6 +60,7 @@ public class ExcelExporter implements Exporter{
           if(property.getKey().equals(key)){
             System.out.println("Key:" + property.getKey());
             System.out.println("Value:" + property.getValue());
+            System.out.println("column:"+columnNum+"\nrow:"+rowNum);
               cell[rowNum][columnNum].setCellValue(property.getKey());
               //cell[rowNum+1][columnNum].setCellValue(property.getValue().toString());
           }
