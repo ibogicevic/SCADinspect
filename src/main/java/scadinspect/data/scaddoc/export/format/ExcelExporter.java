@@ -33,35 +33,41 @@ public class ExcelExporter implements Exporter{
   public byte[] getOutput(ScadDocuFile file) throws Exception {
     List<String> keys = new ArrayList<>(file.getAllKeys());
     Collection<Module> modules = file.getModules();
-    Row[] row = new Row[keys.size()+1];
+    Row[] row = new Row[keys.size()*3];
     Cell[][] cell = new Cell[row.length][];
     
     if(keys.size() ==0){
       return null;
     }
     
-    int rowNum = 0;
+    int rowKeyNum = 0;
+    int rowValueNum = 1;
     int columnNum = 0;
     
     for(Module module:modules){
-      rowNum++;
-      row[rowNum] = sheet.createRow(rowNum);
+      rowKeyNum+=3;
+      rowValueNum+=3;
+      row[rowKeyNum] = sheet.createRow(rowKeyNum);
+      row[rowValueNum] = sheet.createRow(rowValueNum);
       Collection<scadinspect.data.scaddoc.properties.Property> properties = module.getProperties();
+      cell[rowKeyNum] = new Cell[properties.size()+1];
+      cell[rowValueNum] = new Cell[properties.size()+1];
       for(scadinspect.data.scaddoc.properties.Property property:properties){
         if(columnNum>properties.size()-1){
           columnNum=0;
         }else {
           columnNum++;
         }
-          cell[rowNum] = new Cell[properties.size()+1];
-          cell[rowNum][columnNum]=row[rowNum].createCell(columnNum);
-          //cell[rowNum+1][columnNum]=row[columnNum].createCell(rowNum+1);
+        cell[rowKeyNum][columnNum]=row[rowKeyNum].createCell(columnNum);
+        cell[rowValueNum][columnNum]=row[rowValueNum].createCell(columnNum);
+        //cell[rowNum+1][columnNum]=row[columnNum].createCell(rowNum+1);
         for(String key : keys){
           if(property.getKey().equals(key)){
             System.out.println("Key:" + property.getKey());
             System.out.println("Value:" + property.getValue());
-            System.out.println("column:"+columnNum+"\nrow:"+rowNum);
-              cell[rowNum][columnNum].setCellValue(property.getKey());
+            System.out.println("column:"+columnNum+"\nrow:"+rowKeyNum);
+              cell[rowKeyNum][columnNum].setCellValue(property.getKey());
+              cell[rowValueNum][columnNum].setCellValue(property.getValue().toString());
               //cell[rowNum+1][columnNum].setCellValue(property.getValue().toString());
           }
         }
