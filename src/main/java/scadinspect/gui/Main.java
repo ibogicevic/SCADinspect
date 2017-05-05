@@ -21,8 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import scadinspect.data.analysis.Issue;
 import scadinspect.data.scaddoc.ScadDocuFile;
-import java.util.prefs.Preferences;
-import javafx.application.Platform;
 
 /**
  * Startup JavaFX frame

@@ -6,7 +6,6 @@
 package scadinspect.gui;
 
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ButtonType;
@@ -20,7 +19,6 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import scadinspect.control.ProjectHandling;
 
 import java.util.ArrayList;
 import java.util.List;

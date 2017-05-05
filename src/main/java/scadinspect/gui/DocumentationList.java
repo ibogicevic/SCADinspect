@@ -2,10 +2,7 @@ package scadinspect.gui;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +16,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 
-import java.util.ArrayList;
 
 import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.ScadDocuFile;
