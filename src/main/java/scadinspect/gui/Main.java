@@ -59,13 +59,15 @@ public class Main extends Application {
         return instance;
     }
 
-
     // gui areas
     public ToolbarArea toolbarArea = new ToolbarArea();
     public TabArea tabArea = new TabArea();
     public StatusArea statusArea = new StatusArea();
 
     public BottomArea bottomArea = new BottomArea(false, "");
+
+    // TabArea filtering
+    public IssueListFilter issueListFilter;
 
     // list of open scad-files
     private List<File> fileList = new ArrayList<>();
@@ -122,16 +124,9 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
 
         // Documentation and Issues Tabulators
-        Main.getInstance().tabArea.getIssueList().addDataToTable(Main.getInstance().tabArea.getIssueList().dummyData());
-        ObservableList<String> options =  FXCollections.observableArrayList();
-        final ComboBox dropdownFilter = new ComboBox();
-        for (Issue i : Main.getInstance().tabArea.getIssueList().getIssues()){
-            System.out.println(i.getSourceFile());
-            options.add(i.getSourceFile());
-        }
-        dropdownFilter.setItems(options);
         BorderPane tabPane = new BorderPane();
-        tabPane.setTop(dropdownFilter);
+        issueListFilter = new IssueListFilter();
+        tabPane.setTop(issueListFilter);
         tabPane.setCenter(tabArea);
 
 

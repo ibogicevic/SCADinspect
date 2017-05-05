@@ -94,6 +94,7 @@ public class IssueList {
     }
 
     public void addDataToTable(ArrayList<Issue> issues) {
+        issueData.clear();
         for (int i = 0; i < issues.size(); i++) {
             issueData.add(i, issues.get(i));
         }
@@ -117,7 +118,7 @@ public class IssueList {
         /* Dummy Data */
         ArrayList<Issue> issues = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            Issue curr = new Issue(Issue.issueType.WARNING, "i bims 1 file lol "+i, 15+i, "randomIdentifier" + i, "description" + i);
+            Issue curr = new Issue(Issue.issueType.WARNING, "file test identifier "+i, 15+i, "randomIdentifier" + i, "description" + i);
             issues.add(i, curr);
         }
         return issues;

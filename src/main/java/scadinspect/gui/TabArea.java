@@ -39,6 +39,19 @@ public class TabArea extends TabPane {
     this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
     this.getTabs().add(issues);
     this.getTabs().add(documentation);
+
+    this.getSelectionModel().selectedItemProperty().addListener(e -> {
+      Main.getInstance().issueListFilter.getItems().clear();
+      if(this.getSelectionModel().getSelectedItem().getText().equals("Documentation")){
+        Main.getInstance().issueListFilter.getItems().clear();
+        Main.getInstance().issueListFilter.setItems(Main.getInstance().issueListFilter.getDocumentOptions());
+        Main.getInstance().issueListFilter.setValue("Show all");
+      } else {
+        Main.getInstance().issueListFilter.getItems().clear();
+        Main.getInstance().issueListFilter.setItems(Main.getInstance().issueListFilter.getIssueOptions());
+        Main.getInstance().issueListFilter.setValue("Show all");
+      }
+    });
   }
 
   private TableView generateIssueTable(IssueList issueList) {
