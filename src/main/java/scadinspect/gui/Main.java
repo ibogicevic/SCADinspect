@@ -91,10 +91,17 @@ public class Main extends Application {
 
     private List<ScadDocuFile> docuFiles;
 
+    /**
+     * Gives the list of documentation data files
+     * @return list of documentation data files
+     */
     public List<ScadDocuFile> getDocuFiles() {
         return docuFiles;
     }
 
+    /**
+     * Sets the list of documentation data files
+     */
     public void setDocuFiles(List<ScadDocuFile> docuFiles) {
         this.docuFiles = docuFiles;
     }
