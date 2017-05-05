@@ -16,31 +16,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.prefs.Preferences;
-import javafx.application.Platform;
+import scadinspect.data.scaddoc.ScadDocuFile;
 
 /**
  * Startup JavaFX frame
  *
  * @author ivan
  */
-
-
-
 public class Main extends Application {
-	
-	private final String LOGGING_KEY = "java.util.logging.SimpleFormatter.format"; 
-	private final String LOGGING_VALUE = "[%1$tc] %4$s: %5$s%n"; 
-  
+
     /**
      * Name of the application *
      */
-    public static final String APPNAME = Messages.getString("Main.appname"); 
+    private final String LOGGING_KEY = "java.util.logging.SimpleFormatter.format";
+    private final String LOGGING_VALUE = "[%1$tc] %4$s: %5$s%n";
+
+
+    public static final String APPNAME = Messages.getString("Main.appname");
 
     /**
      * Location of the resource files *
      */
-    public static final String RESOURCES_DIR = Messages.getString("Main.resourcesDir"); 
+    public static final String RESOURCES_DIR = Messages.getString("Main.resourcesDir");
     public static Logger logger = null;
 
     /**
@@ -83,7 +80,7 @@ public class Main extends Application {
     public GreyPane greyPane;
     private Stage primaryStage;
 
-    public Stage getPrimaryStage() {;
+    public Stage getPrimaryStage() {
         return this.primaryStage;
     }
     /**
@@ -92,6 +89,16 @@ public class Main extends Application {
      */
     public List<File> getFileList() {
         return fileList;
+    }
+
+    private List<ScadDocuFile> docuFiles;
+
+    public List<ScadDocuFile> getDocuFiles() {
+        return docuFiles;
+    }
+
+    public void setDocuFiles(List<ScadDocuFile> docuFiles) {
+        this.docuFiles = docuFiles;
     }
 
     @Override
@@ -145,7 +152,7 @@ public class Main extends Application {
         primaryStage.setX(0);
         primaryStage.show();
 
-        logger.log(Level.INFO,"successfully started"); 
+        logger.log(Level.INFO,"successfully started");
 
         /**
          * Necessary for destroying the logfilehandler before closing the application
@@ -154,7 +161,7 @@ public class Main extends Application {
             public void run() {
                 LogHandler.shutdown();
             }
-        }, "Shutdown-thread")); 
+        }, "Shutdown-thread"));
     }
 
     /**

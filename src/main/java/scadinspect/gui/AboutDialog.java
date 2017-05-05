@@ -5,6 +5,9 @@
  */
 package scadinspect.gui;
 
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -15,6 +18,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import scadinspect.control.ProjectHandling;
+import javafx.scene.layout.VBox;
 
 public class AboutDialog {
 

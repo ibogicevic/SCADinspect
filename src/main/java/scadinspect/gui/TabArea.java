@@ -28,12 +28,12 @@ public class TabArea extends TabPane {
 
     // issue tab
     issues = new Tab();
-    issues.setText(Messages.getString("TabArea.issueText")); 
+    issues.setText(Messages.getString("TabArea.issueText"));
     issues.setContent(issue); //SET CONTENT FOR issueArea HERE
 
     // documentation tab
     documentation = new Tab();
-    documentation.setText(Messages.getString("TabArea.docuText")); 
+    documentation.setText(Messages.getString("TabArea.docuText"));
     documentation.setContent(documentations); //SET CONTENT FOR documentationArea HERE
 
     this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
@@ -46,7 +46,7 @@ public class TabArea extends TabPane {
     return table;
   }
 
-  private TableView generateDocTable(DocumentationList documentationList) {
+  public TableView generateDocTable(DocumentationList documentationList) {
     TableView table = documentationList.generateList();
     return table;
   }
