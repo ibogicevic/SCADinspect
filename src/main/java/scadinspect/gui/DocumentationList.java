@@ -51,6 +51,7 @@ public class DocumentationList {
       }
       loadDocList();
     }
+    docList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     return docList;
   }
 
@@ -106,10 +107,12 @@ public class DocumentationList {
   public void refresh() {
     docList.getItems().clear();
     docList.getColumns().clear();
+
     docData = loadFiles();
     //  System.out.println(Main.getInstance().getFileList());
     Main.getInstance().tabArea.generateDocTable(this);
   }
+
 
   private List<ScadDocuFile> loadFiles() {
     List<ScadDocuFile> docData = new LinkedList<>();
