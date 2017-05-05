@@ -29,7 +29,8 @@ public class AboutDialog {
           "-Jonas Bernsdorff\n" +
           "-Malcolm Malam\n" +
           "-Maik Baumgartner\n" +
-          "-Desyon";
+          "-Desyon\n" +
+          "-Romy Römke";
 
 
   final static String Text2 =
