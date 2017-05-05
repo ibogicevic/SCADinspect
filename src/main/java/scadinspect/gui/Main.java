@@ -12,12 +12,14 @@ import scadinspect.control.LogHandler;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
-import javafx.application.Platform;
+import scadinspect.data.scaddoc.ScadDocuFile;
 
 /**
  * Startup JavaFX frame
@@ -25,7 +27,7 @@ import javafx.application.Platform;
  * @author ivan
  */
 public class Main extends Application {
-  
+
     /**
      * Name of the application *
      */
@@ -77,7 +79,7 @@ public class Main extends Application {
     public GreyPane greyPane;
     private Stage primaryStage;
 
-    public Stage getPrimaryStage() {;
+    public Stage getPrimaryStage() {
         return this.primaryStage;
     }
     /**
@@ -86,6 +88,16 @@ public class Main extends Application {
      */
     public List<File> getFileList() {
         return fileList;
+    }
+
+    private List<ScadDocuFile> docuFiles;
+
+    public List<ScadDocuFile> getDocuFiles() {
+        return docuFiles;
+    }
+
+    public void setDocuFiles(List<ScadDocuFile> docuFiles) {
+        this.docuFiles = docuFiles;
     }
 
     @Override
@@ -178,6 +190,6 @@ public class Main extends Application {
      * @param args unused
      */
     public static void main(String[] args) {
-        launch(args);
+            launch(args);
     }
 }

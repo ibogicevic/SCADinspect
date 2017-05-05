@@ -79,12 +79,14 @@ public class Module {
     }
     for (String stringProperty : stringThis) {
       if (!stringOther.contains(stringProperty)) {
+        //TODO: Replace System.out with proper logging
         System.out.println("Error In This: " + stringProperty.toString());
         return false;
       }
     }
     for (String stringProperty : stringOther) {
       if (!stringThis.contains(stringProperty)) {
+        //TODO: Replace System.out with proper logging
         System.out.println("Error In Other: " + stringProperty.toString());
         return false;
       }

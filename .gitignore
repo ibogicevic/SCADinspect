@@ -421,5 +421,11 @@ buildNumber.properties
 # tools/**
 # !tools/packages.config
 /target/
-
+log*.txt
 log_*.txt.lck
+
+export\.json
+
+export\.md
+
+export\.xml

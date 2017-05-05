@@ -11,7 +11,7 @@ import scadinspect.data.scaddoc.properties.helper.Pair;
 public class PairProperty<T> implements Property {
 
   private String key;
-  private Pair value;
+  private Pair<T> value;
 
   /**
    * Constructing a new pair property
@@ -19,7 +19,7 @@ public class PairProperty<T> implements Property {
    * @param key The key name to store the pair
    * @param value The pair to be stored
    */
-  public PairProperty(String key, Pair value) {
+  public PairProperty(String key, Pair<T> value) {
     this.key = key;
     this.value = value;
   }
@@ -41,10 +41,15 @@ public class PairProperty<T> implements Property {
   }
 
   @Override
-  public Pair getValue() {
+  public Pair<T> getValue() {
     return value;
   }
 
+  /**
+   * Returns the property as String in the format <key>: <value>
+   *
+   * @return the proper as as String in the given format
+   */
   @Override
   public String toString() {
     return getKey() + ": " + getValue();

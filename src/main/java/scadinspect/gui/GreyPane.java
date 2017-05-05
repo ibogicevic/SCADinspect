@@ -17,11 +17,13 @@ public class GreyPane extends BorderPane{
 
     private ToolbarArea toolbarArea = new ToolbarArea();
     private BorderPane bottomPane = new BorderPane();
-    private Integer step = 0;
+    private Integer step = -1;
     private BottomArea bottomArea= new BottomArea();
+    private Hyperlink checkers = new Hyperlink("Open checker docs");
     private Hyperlink prev = new Hyperlink("back");
     private Hyperlink next = new Hyperlink("next");
     private Hyperlink exit = new Hyperlink("exit");
+    private Hyperlink cornerExit = new Hyperlink("Exit Tour");
     private Label messageLabel = new Label();
     private HBox navBar;
     private Label stepLabel = new Label();
@@ -34,7 +36,7 @@ public class GreyPane extends BorderPane{
         );
 
         // if isTutorial true, display help-modal
-        if (isTutorial == true) {
+        if (isTutorial) {
 
             //initiate ToolbarArea; transparency
             toolbarArea = new ToolbarArea();
@@ -51,16 +53,21 @@ public class GreyPane extends BorderPane{
 
 
             //modify Hyperlinks
+            checkers.setTextFill(Color.WHITE);
             prev.setTextFill(Color.WHITE);
             exit.setTextFill(Color.WHITE);
             next.setTextFill(Color.WHITE);
+            checkers.setFont(Font.loadFont(getClass().getResourceAsStream("/resources/ComicSans.ttf"), 20));
             prev.setFont(Font.loadFont(getClass().getResourceAsStream("/resources/ComicSans.ttf"), 20));
             next.setFont(Font.loadFont(getClass().getResourceAsStream("/resources/ComicSans.ttf"), 20));
             exit.setFont(Font.loadFont(getClass().getResourceAsStream("/resources/ComicSans.ttf"), 20));
+            checkers.setStyle("-fx-underline: true;");
             next.setStyle("-fx-underline: true;");
             prev.setStyle("-fx-underline: true;");
             exit.setStyle("-fx-underline: true;");
-
+            cornerExit.setStyle("-fx-underline: true;");
+            cornerExit.setTextFill(Color.WHITE);
+            cornerExit.setFont(Font.loadFont(getClass().getResourceAsStream("/resources/ComicSans.ttf"), 17));
 
             //step counter
             stepLabel.setTextAlignment(TextAlignment.CENTER);
@@ -74,7 +81,7 @@ public class GreyPane extends BorderPane{
             HBox.setHgrow(rightSeparator, Priority.ALWAYS);
             HBox.setHgrow(leftSeparator, Priority.ALWAYS);
             HBox.setHgrow(bottomSeparator, Priority.ALWAYS);
-            navBar = new HBox(leftSeparator, prev,  stepLabel, next, rightSeparator);
+            navBar = new HBox(leftSeparator, checkers,  stepLabel, next, rightSeparator);
 
             //initiate Center
             BorderPane centerPane = new BorderPane();
@@ -96,13 +103,21 @@ public class GreyPane extends BorderPane{
 
             //initiate BottomPane
             bottomPane = new BorderPane();
-            StatusArea statusArea = new StatusArea();
-            statusArea.setVisible(false);
+            BorderPane statusArea = new StatusArea();
+            bottomArea.setStyle(
+                    "-fx-background-color: rgba(105, 105, 105, 0.0);"
+            );
+            HBox statusHBox = new HBox(bottomSeparator, cornerExit);
+            statusArea.getChildren().add(statusHBox);
             bottomPane.setCenter(bottomArea);
-            bottomPane.setBottom(statusArea);
+            bottomPane.setBottom(statusHBox);
             this.setBottom(bottomPane);
 
             // set button actions
+            checkers.setOnAction(e -> {
+                exitTour();
+                CheckersDialog.openDialog();
+            });
             prev.setOnAction(e -> {
                 step  -= 1; //decrease step counter
                 this.switchTour(step);
@@ -111,16 +126,19 @@ public class GreyPane extends BorderPane{
                 step += 1; //increase step counter
                 this.switchTour(step);
             });
-            exit.setOnAction(e -> {
-                step = 0; // reset counter
-                this.modalToFront(false);
-                Main.getInstance().greyStack.toBack();
-                Main.getInstance().greyStack.setVisible(false);
-            });
+            exit.setOnAction(e -> {exitTour();});
+            cornerExit.setOnAction(e -> {exitTour();});
 
         }
 
 
+    }
+
+    private void exitTour() {
+        step = -1; // reset counter
+        this.modalToFront(false);
+        Main.getInstance().greyStack.toBack();
+        Main.getInstance().greyStack.setVisible(false);
     }
 
 
@@ -134,22 +152,40 @@ public class GreyPane extends BorderPane{
         }
     }
 
+
     public void switchTour(Integer step) {
 
         //switch Step Area
 
         switch (step){
-            case 0: {
-                toolbarArea.switchButtons(0);
+            case -1: {
+                toolbarArea.switchButtons(-1);
                 bottomArea.switchButtons(0);
+                checkers.setVisible(true);
                 prev.setVisible(false);
                 next.setVisible(true);
                 exit.setVisible(false);
-                navBar.getChildren().remove(exit);
+                navBar.getChildren().remove(prev);
+                navBar.getChildren().remove(checkers);
                 navBar.getChildren().remove(next);
+                navBar.getChildren().add(1, checkers);
                 navBar.getChildren().add(3, next);
-                messageLabel.setText("Press \"Open File\" to open an new ScadFile or choose \"Open Folder\" from the dropdown menu to open a folder.");
-                stepLabel.setText(step+1 + " of 5");
+                stepLabel.setText(step+2 + " of 6");
+                messageLabel.setText("Welcome to the QuickTour!\nPlease use the buttons below to navigate " +
+                        "through the tour. You can leave the tour in step 6. " +
+                        "You can also view the checkers documentation.");
+                break;
+            }
+            case 0: {
+                toolbarArea.switchButtons(0);
+                bottomArea.switchButtons(0);
+                checkers.setVisible(false);
+                prev.setVisible(true);
+                navBar.getChildren().remove(checkers);
+                navBar.getChildren().remove(prev);
+                navBar.getChildren().add(1, prev);
+                messageLabel.setText("Press \"Open file\" to open an new ScadFile or choose \"Open folder\" from the dropdown menu to open a folder.");
+                stepLabel.setText(step+2 + " of 6");
                 break;
             }
             case 1: {
@@ -157,14 +193,14 @@ public class GreyPane extends BorderPane{
                 prev.setVisible(true);
                 messageLabel.setText("Press \"Settings\" to access the settings. For example you can enable auto refresh or set the logging level.");
                 bottomArea.switchButtons(0);
-                stepLabel.setText(step+1 + " of 5");
+                stepLabel.setText(step+2 + " of 6");
                 break;
             }
             case 2: {
                 toolbarArea.switchButtons(2);
                 messageLabel.setText("Press \"Refresh\" to refresh the files.");
                 bottomArea.switchButtons(1);
-                stepLabel.setText(step+1 + " of 5");
+                stepLabel.setText(step+2 + " of 6");
                 break;
             }
             case 3: {
@@ -176,7 +212,7 @@ public class GreyPane extends BorderPane{
                 navBar.getChildren().remove(next);
                 navBar.getChildren().remove(exit);
                 navBar.getChildren().add(3, next);
-                stepLabel.setText(step+1 + " of 5");
+                stepLabel.setText(step+2 + " of 6");
                 break;
             }
             case 4: {
@@ -187,7 +223,7 @@ public class GreyPane extends BorderPane{
                 navBar.getChildren().remove(exit);
                 navBar.getChildren().remove(next);
                 navBar.getChildren().add(3, exit);
-                stepLabel.setText(step+1 + " of 5");
+                stepLabel.setText(step+2 + " of 6");
                 break;
             }
         }

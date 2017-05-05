@@ -7,12 +7,12 @@ import java.util.List;
  * Multiple value property definition like [1, 2, 3, 4]
  * as property with a named key and a list as value
  *
- * @author desyon on 3/17/17.
+ * @author Desyon on 3/17/17.
  */
 public class MultiProperty<T> implements Property<List<T>> {
 
-  private String key;
-  private List<T> values;
+  private final String key;
+  private final List<T> values;
 
   /**
    * Constructing a new multiple value property
@@ -26,7 +26,7 @@ public class MultiProperty<T> implements Property<List<T>> {
   }
 
   /**
-   * Constructing a new multiple value property
+   * Constructing a new multiple value property with a variable number of value arguments
    *
    * @param key The key name to store the values
    * @param values The parameters of the collection of values to be stored
@@ -45,6 +45,11 @@ public class MultiProperty<T> implements Property<List<T>> {
     return values;
   }
 
+  /**
+   * Returns the property as String in the format <key>: <values>
+   *
+   * @return the proper as as String in the given format
+   */
   @Override
   public String toString() {
     return getKey() + ": " + getValue().toString();

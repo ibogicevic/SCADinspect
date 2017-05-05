@@ -4,12 +4,12 @@ package scadinspect.data.scaddoc.properties;
  * Single value property definition
  * as property with a named key and a single value
  *
- * @author desyon on 3/17/17.
+ * @author Desyon on 3/17/17.
  */
 public class SingleProperty<T> implements Property<T> {
 
-  private String key;
-  private T value;
+  private final String key;
+  private final T value;
 
   /**
    * Constructing a new single value property
@@ -32,6 +32,11 @@ public class SingleProperty<T> implements Property<T> {
     return value;
   }
 
+  /**
+   * Returns the property as String in the format <key>: <value>
+   *
+   * @return the proper as as String in the given format
+   */
   @Override
   public String toString() {
     return getKey() + ": " + getValue();
