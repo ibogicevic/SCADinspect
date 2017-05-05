@@ -86,33 +86,37 @@ public class ExportDialog {
           String pathWithoutExtension = exportFile.getAbsolutePath();
           FileExport exporter = new FileExport();
           try {
+            File exported;
             if (excel.isSelected()) {
-              exporter.save(ExportFormat.XSXL, Main.getInstance().getDocuFiles(),
+              exported=exporter.save(ExportFormat.XSXL, Main.getInstance().getDocuFiles(),
                   pathWithoutExtension + ".xsxl");
             }
-            if (csv.isSelected()) {
-              exporter.save(ExportFormat.CSV, Main.getInstance().getDocuFiles(),
+            else if (csv.isSelected()) {
+              exported=exporter.save(ExportFormat.CSV, Main.getInstance().getDocuFiles(),
                   pathWithoutExtension + ".csv");
             }
-            if (json.isSelected()) {
-              exporter.save(ExportFormat.JSON, Main.getInstance().getDocuFiles(),
+            else if (json.isSelected()) {
+              exported=exporter.save(ExportFormat.JSON, Main.getInstance().getDocuFiles(),
                   pathWithoutExtension + ".json");
             }
-            if (xml.isSelected()) {
-              System.out.println(Main.getInstance().getDocuFiles());
-              exporter.save(ExportFormat.XML, Main.getInstance().getDocuFiles(),
+            else if (xml.isSelected()) {
+              exported=exporter.save(ExportFormat.XML, Main.getInstance().getDocuFiles(),
                   pathWithoutExtension + ".xml");
             }
-            if (pdf.isSelected()) {
-              System.out.println(Main.getInstance().getDocuFiles());
-              exporter.save(ExportFormat.PDF, Main.getInstance().getDocuFiles(),
+            else if (pdf.isSelected()) {
+              exported=exporter.save(ExportFormat.PDF, Main.getInstance().getDocuFiles(),
                   pathWithoutExtension + ".pdf");
             }
-            if (md.isSelected()) {
-              System.out.println(Main.getInstance().getDocuFiles());
-              exporter.save(ExportFormat.MD, Main.getInstance().getDocuFiles(),
+            else if (md.isSelected()) {
+              exported=exporter.save(ExportFormat.MD, Main.getInstance().getDocuFiles(),
                   pathWithoutExtension + ".md");
             }
+
+            else  {   //shouldn't happen, but default is pdf
+              exported=exporter.save(ExportFormat.PDF, Main.getInstance().getDocuFiles(),
+                  pathWithoutExtension + ".pdf");
+            }
+            Main.getInstance().statusArea.setMessage("Saved as "+exported.getAbsolutePath());
           } catch (FileExportException e) {
             e.printStackTrace();
           }
