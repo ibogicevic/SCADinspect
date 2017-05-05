@@ -28,6 +28,11 @@ public class ToolbarArea extends ToolBar {
 
     // initialize buttons
     VBox vbox = new VBox();
+
+    public ProjectHandling getProjectHandler() {
+        return projectHandler;
+    }
+
     Pane seperatorPane = new Pane();
 
     private MenuItem openFileButton = new MenuItem("Open file", loadIcon("open-folder-outline"));
@@ -38,6 +43,7 @@ public class ToolbarArea extends ToolBar {
     private Hyperlink helpLink = new Hyperlink("Help");
     private Hyperlink aboutLink = new Hyperlink("About");
     private Separator separator = new Separator();
+    private ProjectHandling projectHandler = new ProjectHandling();
 
 
     /**
@@ -74,9 +80,6 @@ public class ToolbarArea extends ToolBar {
      * Constructor of ToolbarArea
      */
     public ToolbarArea() {
-        // instanciate classes
-        ProjectHandling projectHandler = new ProjectHandling();
-
 
         // configure open button
         openProjectButton.setGraphic(loadIcon("open-folder-outline"));
