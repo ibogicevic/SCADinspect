@@ -20,8 +20,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /*
  * Edited by Tim Walter on 05.04.2017 (Sprint1 Review Fix)
@@ -58,6 +61,14 @@ public class AboutDialog {
      * Application startup function
      */
     public static void openDialog() {
+        /* final Properties properties = new Properties();
+        try {
+            properties.load(dialog.getClass().getResourceAsStream("project.properties"));
+        } catch (IOException e) {
+            //TODO: Log
+        } */
+
+
         //ProjectHandling.showModal();
         Main.getInstance().greyPane.modalToFront(true);
         Main.getInstance().greyStack.toFront();
