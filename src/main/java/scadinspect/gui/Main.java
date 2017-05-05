@@ -56,7 +56,6 @@ public class Main extends Application {
         return instance;
     }
 
-
     // gui areas
     public ToolbarArea toolbarArea = new ToolbarArea();
     public TabArea tabArea = new TabArea();
