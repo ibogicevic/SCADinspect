@@ -12,13 +12,10 @@ import scadinspect.control.LogHandler;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.prefs.Preferences;
 import scadinspect.data.scaddoc.ScadDocuFile;
 
 /**
