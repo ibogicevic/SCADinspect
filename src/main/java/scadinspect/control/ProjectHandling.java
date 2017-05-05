@@ -65,7 +65,6 @@ public class ProjectHandling {
         }
     }
     File projectFile = fileChooser.showOpenDialog(Main.getInstance().getPrimaryStage());
-    
 
     /**
      * Checks if a file is selected or the cancel button is clicked If cancel is clicked a null is
