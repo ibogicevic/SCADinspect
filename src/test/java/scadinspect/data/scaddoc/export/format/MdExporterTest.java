@@ -15,7 +15,7 @@ import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
- * @author desyon on 07.04.2017.
+ * @author Desyon on 07.04.2017.
  */
 class MdExporterTest {
 
@@ -90,7 +90,7 @@ class MdExporterTest {
   }
 
   /**
-   * Test against a pair property containing an integer value.
+   * Test against a pair property.
    */
   @Test
   void pairPropertyInt() throws Exception {
@@ -107,6 +107,31 @@ class MdExporterTest {
         new String(exporter.getOutput(file), "UTF-8"));
   }
 
+  /**
+   * Test against a module with multiple properties.
+   */
+  @Test
+  void multipleProperties() throws Exception {
+    Module mod = new Module();
+
+    mod.addProperty(new SingleProperty<>("key1", "value1"));
+    mod.addProperty(new SingleProperty<>("key2", "value2"));
+
+    modules.add(mod);
+
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
+    assertEquals("# Parts Documentation" + lineSeparator
+            + "" + lineSeparator
+            + "## testPath" + lineSeparator
+            + "key1|key2" + lineSeparator
+            + "----|----" + lineSeparator
+            + "value1|value2" + lineSeparator,
+        new String(exporter.getOutput(file), "UTF-8"));
+  }
+
+  /**
+   * Test against a file with multiple modules
+   */
   @Test
   void multipleModules() throws Exception {
     Module mod1 = new Module();
@@ -129,6 +154,9 @@ class MdExporterTest {
         new String(exporter.getOutput(file), "UTF-8"));
   }
 
+  /**
+   * Test against a collection of multiple files
+   */
   @Test
   void multipleFiles() throws Exception {
     Module mod1 = new Module();
