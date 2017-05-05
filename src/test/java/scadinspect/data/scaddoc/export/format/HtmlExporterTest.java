@@ -54,7 +54,7 @@ class HtmlExporterTest {
             + "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
             + "  <head>" + lineSeparator
             + "    <style type=\"text/css\">" + lineSeparator
-            + "      table {\n"
+            + "      table {" + lineSeparator
             + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
             + "        border-collapse: collapse;" + lineSeparator
             + "        margin-bottom: 15px;" + lineSeparator
@@ -112,7 +112,7 @@ class HtmlExporterTest {
             + "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
             + "  <head>" + lineSeparator
             + "    <style type=\"text/css\">" + lineSeparator
-            + "      table {\n"
+            + "      table {" + lineSeparator
             + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
             + "        border-collapse: collapse;" + lineSeparator
             + "        margin-bottom: 15px;" + lineSeparator
@@ -170,7 +170,7 @@ class HtmlExporterTest {
             + "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
             + "  <head>" + lineSeparator
             + "    <style type=\"text/css\">" + lineSeparator
-            + "      table {\n"
+            + "      table {" + lineSeparator
             + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
             + "        border-collapse: collapse;" + lineSeparator
             + "        margin-bottom: 15px;" + lineSeparator
@@ -228,7 +228,7 @@ class HtmlExporterTest {
             + "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
             + "  <head>" + lineSeparator
             + "    <style type=\"text/css\">" + lineSeparator
-            + "      table {\n"
+            + "      table {" + lineSeparator
             + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
             + "        border-collapse: collapse;" + lineSeparator
             + "        margin-bottom: 15px;" + lineSeparator
@@ -290,7 +290,7 @@ class HtmlExporterTest {
             + "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
             + "  <head>" + lineSeparator
             + "    <style type=\"text/css\">" + lineSeparator
-            + "      table {\n"
+            + "      table {" + lineSeparator
             + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
             + "        border-collapse: collapse;" + lineSeparator
             + "        margin-bottom: 15px;" + lineSeparator
@@ -356,7 +356,7 @@ class HtmlExporterTest {
             + "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
             + "  <head>" + lineSeparator
             + "    <style type=\"text/css\">" + lineSeparator
-            + "      table {\n"
+            + "      table {" + lineSeparator
             + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
             + "        border-collapse: collapse;" + lineSeparator
             + "        margin-bottom: 15px;" + lineSeparator
@@ -431,7 +431,7 @@ class HtmlExporterTest {
             + "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
             + "  <head>" + lineSeparator
             + "    <style type=\"text/css\">" + lineSeparator
-            + "      table {\n"
+            + "      table {" + lineSeparator
             + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
             + "        border-collapse: collapse;" + lineSeparator
             + "        margin-bottom: 15px;" + lineSeparator

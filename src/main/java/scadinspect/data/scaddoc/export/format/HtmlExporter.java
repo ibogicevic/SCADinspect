@@ -257,31 +257,29 @@ public class HtmlExporter implements Exporter {
     style.setAttribute("type", "text/css");
     Text content = doc.createTextNode("");
 
-    String lineSeparator = System.lineSeparator();
-
-    content.appendData(lineSeparator
+    content.appendData("\n"
         + "      table {\n"
-        + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
-        + "        border-collapse: collapse;" + lineSeparator
-        + "        margin-bottom: 15px;" + lineSeparator
-        + "      }" + lineSeparator
-        + lineSeparator
-        + "      td, th {" + lineSeparator
-        + "        border: 1px solid #ddd;" + lineSeparator
-        + "        padding: 8px;" + lineSeparator
-        + "      }" + lineSeparator
-        + lineSeparator
-        + "      tr:nth-child(even){background-color: #f2f2f2;}" + lineSeparator
-        + "      tr:hover {background-color: #ddd;}" + lineSeparator
-        + lineSeparator
-        + "      th {" + lineSeparator
-        + "        padding-top: 12px;" + lineSeparator
-        + "        padding-bottom: 12px;" + lineSeparator
-        + "        text-align: center;" + lineSeparator
-        + "        background-color: #4CAF50;" + lineSeparator
-        + "        color: white;" + lineSeparator
+        + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;\n"
+        + "        border-collapse: collapse;\n"
+        + "        margin-bottom: 15px;\n"
+        + "      }\n"
+        + "\n"
+        + "      td, th {\n"
+        + "        border: 1px solid #ddd;\n"
+        + "        padding: 8px;\n"
+        + "      }\n"
+        + "\n"
+        + "      tr:nth-child(even){background-color: #f2f2f2;}\n"
+        + "      tr:hover {background-color: #ddd;}\n"
+        + "\n"
+        + "      th {\n"
+        + "        padding-top: 12px;\n"
+        + "        padding-bottom: 12px;\n"
+        + "        text-align: center;\n"
+        + "        background-color: #4CAF50;\n"
+        + "        color: white;\n"
         + "      }"
-        + lineSeparator + "    ");
+        + "\n" + "    ");
 
     style.appendChild(content);
     head.appendChild(style);
