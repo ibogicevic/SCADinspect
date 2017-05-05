@@ -16,7 +16,13 @@ A branch must not be merged into the master branch if the TravisCI build is not 
 
 The naming conventions for the new branches are as follows:
 
-Reason | Naming
+Reason | Naming |
 ------ | ------
 Feature | `feature/<featureName>`
 Bugfix | `bugfix/<issueNumber>`
+
+## Testing
+
+All unit testing is supposed to be done with JUnit5. All written code is to be tested aiming for a code coverage of 100 % for all classes.
+
+Unit testing will be an integral part of the automated build process and each build with failing unit tests will be considered a failed build. Therefore it should be avoided to push non working unit tests.

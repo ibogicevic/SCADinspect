@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testPath>
+  <module>
+    <amount>4</amount>
+    <materials>Rubber, Aluminium</materials>
+    <price>
+      <metric>EUR</metric>
+      <value>100</value>
+    </price>
+    <part>Wheel</part>
+    <weight>
+      <metric>kg</metric>
+      <value>12</value>
+    </weight>
+    <url>https://example.com</url>
+  </module>
+  <module>
+    <amount>1</amount>
+    <materials>Steel</materials>
+    <price>
+      <metric>USD</metric>
+      <value>1000</value>
+    </price>
+    <part>Motor</part>
+    <weight>
+      <metric>kg</metric>
+      <value>200</value>
+    </weight>
+    <url>https://example.com</url>
+  </module>
+</testPath>

@@ -1,3 +1,9 @@
+### Log files ###
+log_*.txt
+*.log
+*.log.lck
+*.lck
+
 ### Open Scad ###
 
 .DS_Store
@@ -415,3 +421,11 @@ buildNumber.properties
 # tools/**
 # !tools/packages.config
 /target/
+log*.txt
+log_*.txt.lck
+
+export\.json
+
+export\.md
+
+export\.xml
