@@ -25,7 +25,6 @@ import scadinspect.data.scaddoc.properties.Property;
  * @author eric, Desyon on 31.03.17.
  */
 
-//TODO Make it XHTML-valid
 public class HtmlExporter implements Exporter {
 
   /**
@@ -157,6 +156,13 @@ public class HtmlExporter implements Exporter {
   private void AppendTableHeaders(Element tableHeaderRow, Document doc, ScadDocuFile file) {
     ArrayList<String> keys = (ArrayList<String>) file.getAllKeys();
 
+    if (keys.isEmpty()) {
+      Element header = doc.createElement("th");
+      tableHeaderRow.appendChild(header);
+
+      return;
+    }
+
     for (String key : keys) {
       Element header = doc.createElement("th");
 
@@ -177,6 +183,13 @@ public class HtmlExporter implements Exporter {
       ScadDocuFile file) {
     ArrayList<Module> modules = (ArrayList<Module>) file.getModules();
     NodeList headerList = headerRow.getChildNodes();
+
+    if (modules.isEmpty()) {
+      Element tableRow = doc.createElement("tr");
+      Element tableData = doc.createElement("td");
+      tableRow.appendChild(tableData);
+      tableBody.appendChild(tableRow);
+    }
 
     for (Module module : modules) {
       Element tableRow = doc.createElement("tr");
@@ -220,6 +233,12 @@ public class HtmlExporter implements Exporter {
     transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
     DOMSource source = new DOMSource(doc);
     StringWriter sw = new StringWriter();
+
+    sw.write(
+        "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"" + System.lineSeparator()
+            + "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" + System
+            .lineSeparator());
+
     StreamResult result = new StreamResult(sw);
     transformer.transform(source, result);
 
@@ -235,6 +254,7 @@ public class HtmlExporter implements Exporter {
    */
   private void insertCss(Document doc, Element head) {
     Element style = doc.createElement("style");
+    style.setAttribute("type", "text/css");
     Text content = doc.createTextNode("");
 
     String lineSeparator = System.lineSeparator();
