@@ -48,9 +48,12 @@ class HtmlExporterTest {
   void emptyList() throws Exception {
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
 
-    assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
+    assertEquals(
+        "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"" + lineSeparator
+            + "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" + lineSeparator
+            + "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
             + "  <head>" + lineSeparator
-            + "    <style>" + lineSeparator
+            + "    <style type=\"text/css\">" + lineSeparator
             + "      table {\n"
             + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
             + "        border-collapse: collapse;" + lineSeparator
@@ -79,9 +82,15 @@ class HtmlExporterTest {
             + "  <body>" + lineSeparator
             + "    <table>" + lineSeparator
             + "      <thead>" + lineSeparator
-            + "        <tr/>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <th/>" + lineSeparator
+            + "        </tr>" + lineSeparator
             + "      </thead>" + lineSeparator
-            + "      <tbody/>" + lineSeparator
+            + "      <tbody>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <td/>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </tbody>" + lineSeparator
             + "    </table>" + lineSeparator
             + "  </body>" + lineSeparator
             + "</html>" + lineSeparator,
@@ -98,9 +107,11 @@ class HtmlExporterTest {
     modules.add(singleProperty);
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
 
-    assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
+    assertEquals("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"" + lineSeparator
+            + "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" + lineSeparator
+            + "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
             + "  <head>" + lineSeparator
-            + "    <style>" + lineSeparator
+            + "    <style type=\"text/css\">" + lineSeparator
             + "      table {\n"
             + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
             + "        border-collapse: collapse;" + lineSeparator
@@ -154,8 +165,11 @@ class HtmlExporterTest {
     modules.add(multiProperty);
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
 
-    assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
-            + "  <head>" + lineSeparator + "    <style>" + lineSeparator
+    assertEquals("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"" + lineSeparator
+            + "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" + lineSeparator
+            + "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
+            + "  <head>" + lineSeparator
+            + "    <style type=\"text/css\">" + lineSeparator
             + "      table {\n"
             + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
             + "        border-collapse: collapse;" + lineSeparator
@@ -209,8 +223,11 @@ class HtmlExporterTest {
     modules.add(pairProperty);
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
 
-    assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
-            + "  <head>" + lineSeparator + "    <style>" + lineSeparator
+    assertEquals("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"" + lineSeparator
+            + "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" + lineSeparator
+            + "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
+            + "  <head>" + lineSeparator
+            + "    <style type=\"text/css\">" + lineSeparator
             + "      table {\n"
             + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
             + "        border-collapse: collapse;" + lineSeparator
@@ -268,8 +285,11 @@ class HtmlExporterTest {
 
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
 
-    assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
-            + "  <head>" + lineSeparator + "    <style>" + lineSeparator
+    assertEquals("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"" + lineSeparator
+            + "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" + lineSeparator
+            + "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
+            + "  <head>" + lineSeparator
+            + "    <style type=\"text/css\">" + lineSeparator
             + "      table {\n"
             + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
             + "        border-collapse: collapse;" + lineSeparator
@@ -331,8 +351,11 @@ class HtmlExporterTest {
 
     ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
 
-    assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
-            + "  <head>" + lineSeparator + "    <style>" + lineSeparator
+    assertEquals("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"" + lineSeparator
+            + "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" + lineSeparator
+            + "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
+            + "  <head>" + lineSeparator
+            + "    <style type=\"text/css\">" + lineSeparator
             + "      table {\n"
             + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
             + "        border-collapse: collapse;" + lineSeparator
@@ -403,8 +426,11 @@ class HtmlExporterTest {
     files.add(file1);
     files.add(file2);
 
-    assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
-            + "  <head>" + lineSeparator + "    <style>" + lineSeparator
+    assertEquals("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"" + lineSeparator
+            + "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" + lineSeparator
+            + "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
+            + "  <head>" + lineSeparator
+            + "    <style type=\"text/css\">" + lineSeparator
             + "      table {\n"
             + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
             + "        border-collapse: collapse;" + lineSeparator
