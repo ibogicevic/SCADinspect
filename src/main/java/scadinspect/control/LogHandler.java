@@ -36,7 +36,7 @@ public class LogHandler extends Logger {
 
     // Read and set log level from user preferences
     Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
-    int level =  userPrefs.getInt("LOG_LEVEL",0);
+    int level =  userPrefs.getInt("LOG_LEVEL", 0);
     Level logLevel = Level.parse(Integer.toString(level));
 
     this.setLevel(logLevel);
