@@ -5,16 +5,24 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
 import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
 import java_cup.runtime.Scanner;
 import java_cup.runtime.Symbol;
 import java_cup.runtime.SymbolFactory;
 import scadinspect.data.analysis.Issue;
+import scadinspect.gui.Main;
 import scadinspect.parser.error.ParserException;
 import scadinspect.parser.generated.OpenScadParser;
 
 /**
  * Created by Felix Stegmaier on 24.03.2017.
+ *
+ * OpenScadParser that is adopted to report Issues and throw ParserExceptions.
+ * Please don't ask me why this works, it is mainly copied from the Superclass.
+ * For more information see
+ * @link http://www2.cs.tum.edu/projects/cup/
+ *
  */
 public class CustomErrorOpenScadParser extends OpenScadParser {
 
@@ -36,6 +44,7 @@ public class CustomErrorOpenScadParser extends OpenScadParser {
   public void report_fatal_error(String message, Object info) throws Exception {
     this.done_parsing();
     this.report_error(message, info);
+    Main.logger.log(Level.WARNING, "Can\'t recover from parser error(s)");
     throw new ParserException("Can\'t recover from parser error(s)", null, 0, 0);
   }
 
@@ -43,9 +52,8 @@ public class CustomErrorOpenScadParser extends OpenScadParser {
   public void report_error(String message, Object info) {
     if(info instanceof ComplexSymbol) {
       ComplexSymbol cs = (ComplexSymbol)info;
-      //TODO get filename, code snippet?
-      //TODO really, we need to get that filename somehow
-      errors.add(new Issue(Issue.issueType.ERROR, null, cs.getLeft().getLine() , this.errorID, message + " for input symbol \"" + cs.getName() + "\" spanning from " + cs.getLeft() + " to " + cs.getRight()));
+      //get filename, code snippet is handled by parser function and the issue itself
+      errors.add(new Issue(Issue.issueType.ERROR, null, cs.getLeft().getLine() , this.errorID, message + " for input symbol \"" + cs.getName() /* + "\" spanning from " + cs.getLeft() + " to " + cs.getRight()*/));
     } else if(info instanceof Symbol) {
         if(((Symbol)info).left != -1) {
             errors.add(new Issue(Issue.issueType.ERROR, null, 0, this.errorID, message +  " at character " + ((Symbol)info).left + " of input"));
@@ -59,6 +67,7 @@ public class CustomErrorOpenScadParser extends OpenScadParser {
 
   @Override
   public void syntax_error(Symbol cur_token) {
+    Main.logger.log(Level.INFO, "Syntax error");
     this.report_error("Syntax error", cur_token);
     this.report_expected_token_ids();
   }
@@ -77,6 +86,7 @@ public class CustomErrorOpenScadParser extends OpenScadParser {
       //TODO get this into the respective issue
       //and log it
     //System.out.println("instead expected token classes are " + list);
+    Main.logger.log(Level.INFO, "instead expected token classes are " + list);
   }
 
 }

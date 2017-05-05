@@ -8,8 +8,8 @@ package scadinspect.data.scaddoc.properties;
  */
 public class SingleProperty<T> implements Property<T> {
 
-  private String key;
-  private T value;
+  private final String key;
+  private final T value;
 
   /**
    * Constructing a new single value property

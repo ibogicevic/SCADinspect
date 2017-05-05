@@ -2,7 +2,6 @@ package scadinspect.gui;
 
 import java.io.InputStream;
 import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -64,8 +63,10 @@ public class BottomArea extends ToolBar{
         refreshButton.setOnAction(e -> {
           //Main.getInstance().statusArea.simulateProgress();
           CodeAnalyzer.refresh();
+            //TODO make thread
+            Main.getInstance().tabArea.getDocumentationList().refresh();
         });
-        // TODO: export Button action
+        exportButton.setOnAction(e -> ExportDialog.openDialog());
 
         //Expands the separator pane
         HBox.setHgrow(separatorPane, Priority.ALWAYS);

@@ -5,6 +5,10 @@ import scadinspect.parser.ast.ASTNode;
 
 /**
  * Created by felix on 23.03.17.
+ *
+ * Wrapper class to enclose a Syntax tree by holding its root Node
+ * and the original root parse symbol.
+ *
  */
 public class ParseTree {
 
