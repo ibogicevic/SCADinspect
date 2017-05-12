@@ -24,7 +24,7 @@ public class SettingsDialog {
 
         Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
 
-        Dialog<Boolean> dialog = new Dialog<>();
+        final Dialog<Boolean> dialog = new Dialog<>();
         dialog.setTitle("Settings");
         dialog.setHeaderText(null);
            
