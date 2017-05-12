@@ -8,6 +8,7 @@ import scadinspect.data.scaddoc.error.FileExportException;
 import scadinspect.data.scaddoc.export.format.CsvExporter;
 import scadinspect.data.scaddoc.export.format.ExportFormat;
 import scadinspect.data.scaddoc.export.format.Exporter;
+import scadinspect.data.scaddoc.export.format.HtmlExporter;
 import scadinspect.data.scaddoc.export.format.JsonExporter;
 import scadinspect.data.scaddoc.export.format.MdExporter;
 import scadinspect.data.scaddoc.export.format.XmlExporter;
@@ -16,7 +17,7 @@ import scadinspect.data.scaddoc.export.format.XmlExporter;
  * Provides all means to convert a List of Modules into multiple formats of character files.
  * This includes JSON and XML files.
  *
- * @author desyon, richterto, eric on 3/23/17.
+ * @author Desyon, richterto, eric on 3/23/17.
  */
 
 public class FileExport {
@@ -100,7 +101,7 @@ public class FileExport {
         exporter = new CsvExporter();
         break;
       case HTML:
-        exporter = null;
+        exporter = new HtmlExporter();
         break;
       default:
         exporter = null;

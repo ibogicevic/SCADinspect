@@ -3,6 +3,7 @@ package scadinspect.data.scaddoc.export.format;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,7 @@ import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
- * @author simon, desyon on 3/17/17.
+ * @author simon, Desyon on 3/17/17.
  */
 class JsonExporterTest {
 
@@ -79,6 +80,22 @@ class JsonExporterTest {
         + "  \"metric\": \"EUR\",\n"
         + "  \"value\": 12\n"
         + "}}]", new String(exporter.getOutput(file), "UTF-8"));
+  }
+
+  @Test
+  void multipleProperties() throws Exception {
+    Module mod = new Module();
+
+    mod.addProperty(new SingleProperty<>("key1", "value1"));
+    mod.addProperty(new SingleProperty<>("key2", "value2"));
+
+    modules.add(mod);
+
+    ScadDocuFile file = new ScadDocuFile(null, modules);
+    assertEquals("[{\n"
+        + "  \"key1\": \"value1\",\n"
+        + "  \"key2\": \"value2\"\n"
+        + "}]", new String(exporter.getOutput(file), "UTF-8"));
   }
 
   /**
