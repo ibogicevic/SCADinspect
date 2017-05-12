@@ -6,8 +6,7 @@
 package scadinspect.gui;
 
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -17,8 +16,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import scadinspect.control.ProjectHandling;
-import javafx.scene.layout.VBox;
+
 
 public class AboutDialog {
 
@@ -81,5 +79,5 @@ public class AboutDialog {
             Messages.getString("AboutDialog.ThirdParty");
 
     // Set logo
-    private static final Image logo = new Image("http://www.ghanaedudirectory.com/Images/nologo.jpg");
+    private static final Image logo = new Image("AboutDialog.Logo");
 }

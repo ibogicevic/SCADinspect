@@ -21,12 +21,12 @@ public class CheckersDialog {
         Main.getInstance().greyStack.setVisible(true);
 
         Dialog<Boolean> dialog = new Dialog<>();
-        dialog.setTitle("Checkers");
-        dialog.setHeaderText("View checkers");
+        dialog.setTitle("CheckersDialog.Title");
+        dialog.setHeaderText("CheckersDialog.HeaderText");
 
 
         // Set the button types.
-        ButtonType okButton = new ButtonType("OK", ButtonData.CANCEL_CLOSE);
+        ButtonType okButton = new ButtonType("CheckersDialog.okButton", ButtonData.CANCEL_CLOSE);
 
         // Display the buttons
         dialog.getDialogPane().getButtonTypes().addAll(okButton);

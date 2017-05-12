@@ -74,7 +74,7 @@ public class DocumentationList {
             for (Module module : file.getModules()) {
                 List<String> row = new LinkedList<>();
                 row.add(file.getPath().toString());
-                row.add("TODO ModuleName");
+                row.add("DocumentationList.moduleRow");
 
 
                 for (Property property : module.getProperties()) {
@@ -86,7 +86,7 @@ public class DocumentationList {
                     } else if (property.getValue() instanceof String) {
                         value = (String) property.getValue();
                     } else if (property.getValue() instanceof Collection) {
-                        value = "TODO Multi Property";
+                        value = "DocumentationList.mpropertyVal";
                     } else {
                         value = property.getValue().getClass().toGenericString();
                      //   value="Error";

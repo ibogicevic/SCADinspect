@@ -22,10 +22,7 @@ public class GreyPane extends BorderPane{
     private Hyperlink prev = new Hyperlink(Messages.getString("GreyPane.prevHyperlink"));
     private Hyperlink next = new Hyperlink(Messages.getString("GreyPane.nextHyperlink"));
     private Hyperlink exit = new Hyperlink(Messages.getString("GreyPane.extiHyperlink"));
-    private Hyperlink checkers = new Hyperlink("Open checker docs");
-    private Hyperlink prev = new Hyperlink("back");
-    private Hyperlink next = new Hyperlink("next");
-    private Hyperlink exit = new Hyperlink("exit");
+    private Hyperlink checkers = new Hyperlink("GreyPane.checkersHyperlink");
     private Label messageLabel = new Label();
     private HBox navBar;
     private Label stepLabel = new Label();
@@ -170,11 +167,8 @@ public class GreyPane extends BorderPane{
                 navBar.getChildren().add(1, checkers);
                 navBar.getChildren().add(3, next);
                 messageLabel.setText(Messages.getString("GreyPane.fileMessage"));
-                stepLabel.setText(step+1 + ofMAX);
-                stepLabel.setText(step+2 + " of 6");
-                messageLabel.setText("Welcome to the QuickTour!\nPlease use the buttons below to navigate " +
-                        "through the tour. You can leave the tour in step 6. " +
-                        "You can also view the checkers documentation.");
+                stepLabel.setText(step+2 + ofMAX);
+                messageLabel.setText("GreyPane.WelcomeText");
                 break;
             }
             case 0: {
@@ -185,8 +179,8 @@ public class GreyPane extends BorderPane{
                 navBar.getChildren().remove(checkers);
                 navBar.getChildren().remove(prev);
                 navBar.getChildren().add(1, prev);
-                messageLabel.setText("Press \"Open file\" to open an new ScadFile or choose \"Open folder\" from the dropdown menu to open a folder.");
-                stepLabel.setText(step+2 + " of 6");
+                messageLabel.setText("GreyPane.openFileText");
+                stepLabel.setText(step+2 + ofMAX);
                 break;
             }
             case 1: {
@@ -194,16 +188,14 @@ public class GreyPane extends BorderPane{
                 prev.setVisible(true);
                 messageLabel.setText(Messages.getString("GreyPane.settingsMessage"));
                 bottomArea.switchButtons(0);
-                stepLabel.setText(step+1 + ofMAX);
-                stepLabel.setText(step+2 + " of 6");
+                stepLabel.setText(step+2 + ofMAX);
                 break;
             }
             case 2: {
                 toolbarArea.switchButtons(2);
                 messageLabel.setText(Messages.getString("GreyPane.refreshMessage"));
                 bottomArea.switchButtons(1);
-                stepLabel.setText(step+1 + ofMAX);
-                stepLabel.setText(step+2 + " of 6");
+                stepLabel.setText(step+2 + ofMAX);
                 break;
             }
             case 3: {
@@ -215,8 +207,7 @@ public class GreyPane extends BorderPane{
                 navBar.getChildren().remove(next);
                 navBar.getChildren().remove(exit);
                 navBar.getChildren().add(3, next);
-                stepLabel.setText(step+1 + ofMAX);
-                stepLabel.setText(step+2 + " of 6");
+                stepLabel.setText(step+2 + ofMAX);
                 break;
             }
             case 4: {
@@ -227,8 +218,7 @@ public class GreyPane extends BorderPane{
                 navBar.getChildren().remove(exit);
                 navBar.getChildren().remove(next);
                 navBar.getChildren().add(3, exit);
-                stepLabel.setText(step+1 + ofMAX);
-                stepLabel.setText(step+2 + " of 6");
+                stepLabel.setText(step+2 + ofMAX);
                 break;
             }
         }
