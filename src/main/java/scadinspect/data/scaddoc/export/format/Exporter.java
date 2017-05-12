@@ -4,7 +4,7 @@ import java.util.Collection;
 import scadinspect.data.scaddoc.ScadDocuFile;
 
 /**
- * @author desyon, richteto on 30.03.17.
+ * @author Desyon, richteto on 30.03.17.
  */
 public interface Exporter {
 
