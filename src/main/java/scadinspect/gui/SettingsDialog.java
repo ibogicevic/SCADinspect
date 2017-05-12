@@ -16,6 +16,12 @@ import javafx.stage.Modality;
 
 public class SettingsDialog {
     
+    public static final String SETTING_STATIC_ANALYSIS = "SET_STATICANALYSIS";
+    public static final String SETTING_LOG_LEVEL = "LOG_LEVEL";
+    public static final String SETTING_DOCUMENTATION = "SET_DOCUMENTATION";
+    public static final String SETTING_AUTOREFRESH = "SET_AUTOREFRESH";
+    
+    
     public static void openDialog(){
 
         Main.getInstance().greyStack.toFront();
@@ -24,7 +30,7 @@ public class SettingsDialog {
 
         Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
 
-        final Dialog<Boolean> dialog = new Dialog<>();
+        final Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Settings");
         dialog.setHeaderText(null);
            
@@ -41,30 +47,9 @@ public class SettingsDialog {
         grid.add(autorefresh, 0, 0);
 
         CheckBox codeAnalysis = new CheckBox("Static Code Analysis");
-        codeAnalysis.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                Main.getInstance().tabArea.getTabs().add(0,Main.getInstance().tabArea.getIssues());
-                Main.getInstance().tabArea.getSelectionModel().select(0);
-            } else {
-                Main.getInstance().tabArea.getTabs().remove(Main.getInstance().tabArea.getIssues());
-                Main.getInstance().tabArea.getSelectionModel().select(0);
-            }
-        });
         grid.add(codeAnalysis, 0,1);
 
         CheckBox documentation = new CheckBox("Documentation");
-        documentation.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                if(codeAnalysis.isSelected())
-                    Main.getInstance().tabArea.getTabs().add( 1, Main.getInstance().tabArea.getDocumentation());
-                else
-                    Main.getInstance().tabArea.getTabs().add( 0, Main.getInstance().tabArea.getDocumentation());
-                Main.getInstance().tabArea.getSelectionModel().select(0);
-            } else {
-                Main.getInstance().tabArea.getTabs().remove(Main.getInstance().tabArea.getDocumentation());
-                Main.getInstance().tabArea.getSelectionModel().select(0);
-            }
-        });
         grid.add(documentation,0,2);
 
         //Create ComboBox for Logging Level
@@ -84,64 +69,50 @@ public class SettingsDialog {
 
 
         // Get previously saved settings, default to false
-        // Autorefresh
-        if (userPrefs.getBoolean("SET_AUTOREFRESH", false)) {
-            autorefresh.setSelected(true);
-        } else {
-            autorefresh.setSelected(false);
-        }
-
-        // Documentation
-        if (userPrefs.getBoolean("SET_DOCUMENTATION", true)) {
-            documentation.setSelected(true);
-        } else {
-            documentation.setSelected(false);
-        }
-
-        // Static Code Analysis
-        if (userPrefs.getBoolean("SET_STATICANALYSIS", true)) {
-            codeAnalysis.setSelected(true);
-        } else {
-            codeAnalysis.setSelected(false);
-        }
-
-        // Logging Level
-        loggingCombo.getSelectionModel().select(userPrefs.getInt("LOG_LEVEL", 0));
+        autorefresh.setSelected(userPrefs.getBoolean(SettingsDialog.SETTING_AUTOREFRESH, false));
+        documentation.setSelected(userPrefs.getBoolean(SettingsDialog.SETTING_DOCUMENTATION, true));
+        codeAnalysis.setSelected(userPrefs.getBoolean(SettingsDialog.SETTING_STATIC_ANALYSIS, true));
+        loggingCombo.getSelectionModel().select(userPrefs.getInt(SettingsDialog.SETTING_LOG_LEVEL, 0));
 
 
         // Load contents in dialog
         dialog.getDialogPane().setContent(grid);
         dialog.initModality(Modality.APPLICATION_MODAL);
             
-        Optional<Boolean> result = dialog.showAndWait();
-
-        if (result.isPresent()){
-            // ... user clicks "ok", save settings
-
-            // Autorefresh
-            if (autorefresh.isSelected()) {
-                userPrefs.putBoolean("SET_AUTOREFRESH", true);
-            } else {
-                userPrefs.putBoolean("SET_AUTOREFRESH", false);
+        Optional<ButtonType> result = dialog.showAndWait();
+                
+        // ... user clicks "ok", save settings
+        
+        if (result.orElse(ButtonType.CANCEL) == okButtonType) {
+            boolean staticAnalysisOld = userPrefs.getBoolean(SettingsDialog.SETTING_STATIC_ANALYSIS, false);
+            boolean documentationOld = userPrefs.getBoolean(SettingsDialog.SETTING_DOCUMENTATION, true);
+            
+            if(codeAnalysis.isSelected() != staticAnalysisOld) {
+                if(codeAnalysis.isSelected()) {
+                    Main.getInstance().tabArea.getTabs().add(0,Main.getInstance().tabArea.getIssues());
+                }
+                else {
+                    Main.getInstance().tabArea.getTabs().remove(Main.getInstance().tabArea.getIssues());
+                }
+                Main.getInstance().tabArea.getSelectionModel().select(0);
+                userPrefs.putBoolean(SettingsDialog.SETTING_STATIC_ANALYSIS, codeAnalysis.isSelected());
             }
-
-            // Documentation
-            if (documentation.isSelected()) {
-                userPrefs.putBoolean("SET_DOCUMENTATION", true);
-            } else {
-                userPrefs.putBoolean("SET_DOCUMENTATION", false);
+            
+            if(documentation.isSelected() != documentationOld) {
+                if(documentation.isSelected()) {
+                    Main.getInstance().tabArea.getTabs().add(Main.getInstance().tabArea.getDocumentation());
+                }
+                else {
+                    Main.getInstance().tabArea.getTabs().remove(Main.getInstance().tabArea.getDocumentation());
+                }
+                userPrefs.putBoolean(SettingsDialog.SETTING_DOCUMENTATION, documentation.isSelected());
             }
-
-            // Static Code Analysis
-            if (codeAnalysis.isSelected()) {
-                userPrefs.putBoolean("SET_STATICANALYSIS", true);
-            } else {
-                userPrefs.putBoolean("SET_STATICANALYSIS", false);
-            }
+            
+            userPrefs.putBoolean(SettingsDialog.SETTING_STATIC_ANALYSIS, codeAnalysis.isSelected());
 
             // Logging
             int level =  loggingCombo.getSelectionModel().getSelectedIndex();
-            userPrefs.putInt("LOG_LEVEL", level);
+            userPrefs.putInt(SettingsDialog.SETTING_LOG_LEVEL, level);
             Level logLevel = Level.parse(Integer.toString(level));
             Main.logger.setLevel(logLevel);
         }
