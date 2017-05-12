@@ -23,10 +23,25 @@ import scadinspect.parser.Parser;
 import scadinspect.parser.ParserResult;
 
 /**
- * Created by david on 31/03/2017.
+ * Created by David B. Maier on 31/03/2017.
+ *
+ * The Code Analyzer manages parsing and checking the given file(s).
+ * This is done using a thread to ensure parsing and checking does not block the UI.
+ * Only contains one static method (which can be called when using both manual and auto-refresh).
  */
 public class CodeAnalyzer {
 
+  /**
+   * Executes parser and performs checkers on all given files.
+   * This method follows these steps to manage execution of parser and checker(s):
+   * - start a new thread
+   * - parse each file and store the results in a map
+   * - collect all checkers and perform them on the successfully parsed files
+   * - merge issues created by parser and checkers into one map
+   * - assign source files to issues
+   * - display number of issues in statusArea
+   * - display issues in UI's issue table
+   */
   public static void refresh() {
 
     new Thread(() -> {
@@ -36,6 +51,7 @@ public class CodeAnalyzer {
       Map<File, Collection<CheckResult>> fileCheckResultMap;
       Map<File, Collection<Issue>> fileIssueMap;
 
+      // parse all files and collect the results
       fileList.forEach(file -> {
         try {
           fileParserResultMap.put(file, Parser.parse(file));
@@ -61,7 +77,7 @@ public class CodeAnalyzer {
                   .orElse(Collections.emptyList())
           ));
 
-      //merge the entries of the two maps that contain issues (parse result and check result) here
+      // merge the entries of the two maps that contain issues (parse result and check result) here
       // and use the issues of all results
       fileIssueMap = fileParserResultMap.entrySet().stream()
           .collect(Collectors.toMap(
@@ -74,17 +90,20 @@ public class CodeAnalyzer {
                   .collect(Collectors.toList())
           ));
 
-      //Assign source file to issues
+      // assign source file to issues
       fileIssueMap.forEach((file, issues) ->
           issues.forEach(issue -> issue.setSourceFile(file.getPath()))
       );
 
+      // display number of issues in statusArea
       Main.getInstance().statusArea.setMessage("Issues found: "
           + fileIssueMap.values().stream().map(Collection::size)
           .reduce(Integer::sum).orElse(-1));
 
+      // clear issue list
       Main.getInstance().tabArea.getIssueList().clearList();
 
+      // fill issue list with generated issues
       fileList.forEach(file -> {
         Main.getInstance().tabArea.getIssueList()
             .addDataToTable(new ArrayList<>(fileIssueMap.get(file)));
