@@ -69,7 +69,6 @@ public class StatusArea extends BorderPane {
       }
 
       progressBar.setVisible(false);
-      //textMessage.setVisible(false);
 
       Platform.runLater(() -> {
         textMessage.setText("Done refreshing!");

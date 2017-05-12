@@ -2,7 +2,6 @@ package scadinspect.data.scaddoc.export;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.util.Collection;
 import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.error.FileExportException;

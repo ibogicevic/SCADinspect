@@ -2,6 +2,8 @@ package scadinspect.gui;
 
 import java.io.InputStream;
 import java.util.prefs.Preferences;
+
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuItem;
@@ -26,6 +28,11 @@ public class ToolbarArea extends ToolBar {
 
     // initialize buttons
     VBox vbox = new VBox();
+
+    public ProjectHandling getProjectHandler() {
+        return projectHandler;
+    }
+
     Pane seperatorPane = new Pane();
 
     private MenuItem openFileButton = new MenuItem("Open file", loadIcon("open-folder-outline"));
@@ -36,6 +43,7 @@ public class ToolbarArea extends ToolBar {
     private Hyperlink helpLink = new Hyperlink("Help");
     private Hyperlink aboutLink = new Hyperlink("About");
     private Separator separator = new Separator();
+    private ProjectHandling projectHandler = new ProjectHandling();
 
 
     /**
@@ -72,9 +80,6 @@ public class ToolbarArea extends ToolBar {
      * Constructor of ToolbarArea
      */
     public ToolbarArea() {
-        // instanciate classes
-        ProjectHandling projectHandler = new ProjectHandling();
-
 
         // configure open button
         openProjectButton.setGraphic(loadIcon("open-folder-outline"));
@@ -84,6 +89,7 @@ public class ToolbarArea extends ToolBar {
             openProjectButton.setOnAction(event -> {
               projectHandler.openProjectFile();
               CodeAnalyzer.refresh();
+                Main.getInstance().tabArea.getDocumentationList().refresh();
             });
         } else {
             openProjectButton.setText("Open folder");
@@ -93,6 +99,9 @@ public class ToolbarArea extends ToolBar {
                 if(files != null) {
                   Main.getInstance().getFileList().addAll(files);
                   CodeAnalyzer.refresh();
+                    Platform.runLater(() -> {
+                        Main.getInstance().tabArea.getDocumentationList().refresh();
+                    });
                 }
               });
             });
@@ -106,6 +115,9 @@ public class ToolbarArea extends ToolBar {
                 if(files != null) {
                   Main.getInstance().getFileList().addAll(files);
                   CodeAnalyzer.refresh();
+                    Platform.runLater(() -> {
+                        Main.getInstance().tabArea.getDocumentationList().refresh();
+                    });
                 }
               });
             });
@@ -116,6 +128,7 @@ public class ToolbarArea extends ToolBar {
             openProjectButton.setOnAction(event -> {
               projectHandler.openProjectFile();
               CodeAnalyzer.refresh();
+                Main.getInstance().tabArea.getDocumentationList().refresh();
             });
         });
 
@@ -132,7 +145,7 @@ public class ToolbarArea extends ToolBar {
             Main.getInstance().greyStack.toFront();
             Main.getInstance().greyStack.setVisible(true);
             Main.getInstance().helpPane.modalToFront(true);
-            Main.getInstance().helpPane.switchTour(0);
+            Main.getInstance().helpPane.switchTour(-1);
         });
         aboutLink.setOnAction(e -> AboutDialog.openDialog());
         settingsButton.setOnAction(e -> SettingsDialog.openDialog());
@@ -158,6 +171,14 @@ public class ToolbarArea extends ToolBar {
 
 
         switch (button) {
+            case -1: {
+                settingsButton.setVisible(false);
+                separator.setVisible(false);
+                helpLink.setVisible(false);
+                aboutLink.setVisible(false);
+                openProjectButton.setVisible(false);
+                break;
+            }
             case 0: {
                 // hide all buttons except from openFile
                 settingsButton.setVisible(false);
