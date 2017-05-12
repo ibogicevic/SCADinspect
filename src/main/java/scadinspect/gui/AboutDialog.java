@@ -91,23 +91,23 @@ public class AboutDialog {
         grid.setVgap(10);
 
         // Display Logo
-        ImageView imageView = new ImageView(logo);
-        imageView.setFitWidth(128);
-        imageView.setFitHeight(128);
-        StackPane stackPane = new StackPane(imageView);
+        ImageView logoView = new ImageView(logo);
+        logoView.setFitWidth(128);
+        logoView.setFitHeight(128);
+        StackPane stackPane = new StackPane(logoView);
         stackPane.setAlignment(Pos.CENTER);
         grid.add(stackPane, 0, 0);
 
         // Display Text
-        Label about = new Label(aboutContent);
-        about.setWrapText(true);
+        Label aboutLabel = new Label(aboutContent);
+        aboutLabel.setWrapText(true);
 
-        Label contributors = new Label(contributorsContent);
-        contributors.setWrapText(true);
-        grid.add(contributors, 1, 1);
+        Label contributorsLabel = new Label(contributorsContent);
+        contributorsLabel.setWrapText(true);
+        grid.add(contributorsLabel, 1, 1);
 
-        Label thirdParty = new Label(thirdPartyContent);
-        thirdParty.setWrapText(true);
+        Label thirdPartyLabel = new Label(thirdPartyContent);
+        thirdPartyLabel.setWrapText(true);
 
         //Links for text content
         List<Hyperlink> links = new ArrayList<>();
@@ -131,16 +131,16 @@ public class AboutDialog {
             });
         }
 
-        VBox Box1 = new VBox();
-        Box1.getChildren().add(about);
-        Box1.getChildren().add(scadinspect);
-        grid.add(Box1, 1,0);
+        VBox upperBox = new VBox();
+        upperBox.getChildren().add(aboutLabel);
+        upperBox.getChildren().add(scadinspect);
+        grid.add(upperBox, 1,0);
 
-        VBox Box2 = new VBox();
-        Box2.getChildren().add(thirdParty);
-        Box2.getChildren().add(flaticon);
-        Box2.getChildren().add(creativeCommons);
-        grid.add(Box2, 1,2);
+        VBox lowerBox = new VBox();
+        lowerBox.getChildren().add(thirdPartyLabel);
+        lowerBox.getChildren().add(flaticon);
+        lowerBox.getChildren().add(creativeCommons);
+        grid.add(lowerBox, 1,2);
 
         dialog.getDialogPane().setContent(grid);
         dialog.showAndWait();
