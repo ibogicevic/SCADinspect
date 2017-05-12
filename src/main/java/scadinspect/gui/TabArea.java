@@ -60,7 +60,7 @@ public class TabArea extends TabPane {
   }
 
   public TableView generateDocTable(DocumentationList documentationList) {
-    TableView table = documentationList.generateList();
+    TableView table = documentationList.generateTableView();
     return table;
   }
 

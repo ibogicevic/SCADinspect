@@ -66,7 +66,7 @@ public class BottomArea extends ToolBar{
             //TODO make thread
              Main.getInstance().tabArea.getDocumentationList().refresh();
         });
-        // TODO: export Button action
+        exportButton.setOnAction(e -> ExportDialog.openDialog());
 
         //Expands the separator pane
         HBox.setHgrow(separatorPane, Priority.ALWAYS);

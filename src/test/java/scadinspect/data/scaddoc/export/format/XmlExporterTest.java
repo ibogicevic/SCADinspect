@@ -15,7 +15,7 @@ import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
- * @author desyon on 3/24/17.
+ * @author Desyon on 3/24/17.
  */
 class XmlExporterTest {
 
@@ -110,6 +110,32 @@ class XmlExporterTest {
         new String(exporter.getOutput(file), "UTF-8"));
   }
 
+  /**
+   * Test against a module with multiple properties.
+   */
+  @Test
+  void multipleProperties() throws Exception {
+    Module mod = new Module();
+
+    mod.addProperty(new SingleProperty<>("key1", "value1"));
+    mod.addProperty(new SingleProperty<>("key2", "value2"));
+
+    modules.add(mod);
+
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
+    assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + lineSeparator
+            + "<testPath>" + lineSeparator
+            + "  <module>" + lineSeparator
+            + "    <key1>value1</key1>" + lineSeparator
+            + "    <key2>value2</key2>" + lineSeparator
+            + "  </module>" + lineSeparator
+            + "</testPath>" + lineSeparator,
+        new String(exporter.getOutput(file), "UTF-8"));
+  }
+
+  /**
+   * Test against a file with multiple modules
+   */
   @Test
   void multipleModules() throws Exception {
     Module mod1 = new Module();
@@ -134,6 +160,9 @@ class XmlExporterTest {
         new String(exporter.getOutput(file), "UTF-8"));
   }
 
+  /**
+   * Test against a collection of multiple files
+   */
   @Test
   void multipleFiles() throws Exception {
     Module mod1 = new Module();

@@ -1,7 +1,7 @@
 package scadinspect.data.scaddoc.export.format;
 
 /**
- * @author eric, desyon, richteto on 24.03.17.
+ * @author eric, Desyon, richteto on 24.03.17.
  */
 
 import java.io.StringWriter;
@@ -40,7 +40,7 @@ public class XmlExporter implements Exporter {
       throws ParserException, ParserConfigurationException, TransformerException {
     // root elements
     Document doc = getDoc();
-    Element rootElement = doc.createElement(file.getPath().toString());
+    Element rootElement = doc.createElement(file.getPath().toString().replaceAll("\\|:|/","."));
     doc.appendChild(rootElement);
 
     for (Module module : file.getModules()) {

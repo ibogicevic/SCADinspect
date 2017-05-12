@@ -4,10 +4,9 @@
 Logo(50);
 
 /**
- * @title Another Module
- * @price 1123445~USD
- * @author
- * @material test; abc
+ * @title Ano![]\{}{|':"~,./<>?~#$%^&*()ther Module
+ * @price 1123445~EUR
+ * @material test; abcd
  *
  */
 module Logo(size=50, $fn=100) {
