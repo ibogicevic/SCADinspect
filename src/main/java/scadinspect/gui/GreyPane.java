@@ -23,6 +23,7 @@ public class GreyPane extends BorderPane{
     private Hyperlink prev = new Hyperlink("back");
     private Hyperlink next = new Hyperlink("next");
     private Hyperlink exit = new Hyperlink("exit");
+    private Hyperlink cornerExit = new Hyperlink("Exit Tour");
     private Label messageLabel = new Label();
     private HBox navBar;
     private Label stepLabel = new Label();
@@ -35,7 +36,7 @@ public class GreyPane extends BorderPane{
         );
 
         // if isTutorial true, display help-modal
-        if (isTutorial == true) {
+        if (isTutorial) {
 
             //initiate ToolbarArea; transparency
             toolbarArea = new ToolbarArea();
@@ -64,7 +65,9 @@ public class GreyPane extends BorderPane{
             next.setStyle("-fx-underline: true;");
             prev.setStyle("-fx-underline: true;");
             exit.setStyle("-fx-underline: true;");
-
+            cornerExit.setStyle("-fx-underline: true;");
+            cornerExit.setTextFill(Color.WHITE);
+            cornerExit.setFont(Font.loadFont(getClass().getResourceAsStream("/resources/ComicSans.ttf"), 17));
 
             //step counter
             stepLabel.setTextAlignment(TextAlignment.CENTER);
@@ -100,10 +103,14 @@ public class GreyPane extends BorderPane{
 
             //initiate BottomPane
             bottomPane = new BorderPane();
-            StatusArea statusArea = new StatusArea();
-            statusArea.setVisible(false);
+            BorderPane statusArea = new StatusArea();
+            bottomArea.setStyle(
+                    "-fx-background-color: rgba(105, 105, 105, 0.0);"
+            );
+            HBox statusHBox = new HBox(bottomSeparator, cornerExit);
+            statusArea.getChildren().add(statusHBox);
             bottomPane.setCenter(bottomArea);
-            bottomPane.setBottom(statusArea);
+            bottomPane.setBottom(statusHBox);
             this.setBottom(bottomPane);
 
             // set button actions
@@ -120,6 +127,7 @@ public class GreyPane extends BorderPane{
                 this.switchTour(step);
             });
             exit.setOnAction(e -> {exitTour();});
+            cornerExit.setOnAction(e -> {exitTour();});
 
         }
 
@@ -143,6 +151,7 @@ public class GreyPane extends BorderPane{
             this.toBack();
         }
     }
+
 
     public void switchTour(Integer step) {
 
