@@ -54,9 +54,9 @@ public class ExcelExporterTest {
     modules.add(wheel);
     modules.add(motor);
     ScadDocuFile file = new ScadDocuFile(Paths.get("MyDummy"), modules);
-    FileExport fileOut = new FileExport();
-    fileOut.save(ExportFormat.EXCEL, file, "./export.xls");
-
+    //FileExport fileOut = new FileExport();
+    //fileOut.save(ExportFormat.EXCEL, file, "./export.xls");
+    exporter.getOutput(file);
     /*
     assertEquals("Testing" + lineSeparator
             + "part,price,amount,weight,materials,url" + lineSeparator

@@ -89,7 +89,7 @@ public class ExportDialog {
           File exported;  //save exported file for later reference
           //switch for radio buttons
           if (excel.isSelected()) {
-            exported = exporter.save(ExportFormat.XSXL, Main.getInstance().getDocuFiles(),
+            exported = exporter.save(ExportFormat.EXCEL, Main.getInstance().getDocuFiles(),
                 pathWithoutExtension + ".xsxl");
           } else if (csv.isSelected()) {
             exported = exporter.save(ExportFormat.CSV, Main.getInstance().getDocuFiles(),

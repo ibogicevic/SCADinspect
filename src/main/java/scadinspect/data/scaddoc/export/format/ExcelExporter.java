@@ -20,13 +20,11 @@ import scadinspect.data.scaddoc.ScadDocuFile;
 
 
 public class ExcelExporter implements Exporter{
-  
-  
-  //private String fileName = "report.xls";
+
+  private String fileName = "excelExport.xls";
   String lineSeparator = System.lineSeparator();
   
   Workbook workbook = new HSSFWorkbook();
-  //FileOutputStream fileOut;
   Sheet sheet = workbook.createSheet();
 
   @Override
@@ -45,22 +43,14 @@ public class ExcelExporter implements Exporter{
     int columnNum = 0;
     
     for(Module module:modules){
-      rowKeyNum+=3;
-      rowValueNum+=3;
       row[rowKeyNum] = sheet.createRow(rowKeyNum);
       row[rowValueNum] = sheet.createRow(rowValueNum);
       Collection<scadinspect.data.scaddoc.properties.Property> properties = module.getProperties();
       cell[rowKeyNum] = new Cell[properties.size()+1];
       cell[rowValueNum] = new Cell[properties.size()+1];
       for(scadinspect.data.scaddoc.properties.Property property:properties){
-        if(columnNum>properties.size()-1){
-          columnNum=0;
-        }else {
-          columnNum++;
-        }
         cell[rowKeyNum][columnNum]=row[rowKeyNum].createCell(columnNum);
         cell[rowValueNum][columnNum]=row[rowValueNum].createCell(columnNum);
-        //cell[rowNum+1][columnNum]=row[columnNum].createCell(rowNum+1);
         for(String key : keys){
           if(property.getKey().equals(key)){
             System.out.println("Key:" + property.getKey());
@@ -68,15 +58,18 @@ public class ExcelExporter implements Exporter{
             System.out.println("column:"+columnNum+"\nrow:"+rowKeyNum);
               cell[rowKeyNum][columnNum].setCellValue(property.getKey());
               cell[rowValueNum][columnNum].setCellValue(property.getValue().toString());
-              //cell[rowNum+1][columnNum].setCellValue(property.getValue().toString());
           }
         }
+          columnNum++;
       }
+      columnNum=0;
+      rowKeyNum+=3;
+      rowValueNum+=3;
     }
 
-    FileOutputStream fo = new FileOutputStream("directExport.xls");
-    workbook.write(fo);
-    fo.close();
+    FileOutputStream fileOut = new FileOutputStream(fileName);
+    workbook.write(fileOut);
+    fileOut.close();
 
     return workbook.toString().getBytes();
   }
@@ -84,15 +77,9 @@ public class ExcelExporter implements Exporter{
   @Override
   public byte[] getOutput(Collection<ScadDocuFile> files) throws Exception {
     
-    //fileOut = new FileOutputStream(fileName);
-    
     for (ScadDocuFile docuFile : files) {
       getOutput(docuFile);
     }
-
-    FileOutputStream fileOut = new FileOutputStream("directExport.xls");
-    workbook.write(fileOut);
-    fileOut.close();
 
     return workbook.toString().getBytes();
   }
