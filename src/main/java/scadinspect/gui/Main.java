@@ -12,13 +12,10 @@ import scadinspect.control.LogHandler;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.prefs.Preferences;
 import scadinspect.data.scaddoc.ScadDocuFile;
 
 /**
@@ -56,7 +53,6 @@ public class Main extends Application {
         return instance;
     }
 
-
     // gui areas
     public ToolbarArea toolbarArea = new ToolbarArea();
     public TabArea tabArea = new TabArea();
@@ -92,10 +88,17 @@ public class Main extends Application {
 
     private List<ScadDocuFile> docuFiles;
 
+    /**
+     * Gives the list of documentation data files
+     * @return list of documentation data files
+     */
     public List<ScadDocuFile> getDocuFiles() {
         return docuFiles;
     }
 
+    /**
+     * Sets the list of documentation data files
+     */
     public void setDocuFiles(List<ScadDocuFile> docuFiles) {
         this.docuFiles = docuFiles;
     }

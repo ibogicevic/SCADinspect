@@ -19,11 +19,12 @@ import java.util.prefs.Preferences;
 
 
 public class LogHandler extends Logger {
+
+  private static Handler fileHandler;
   // Max file size in bytes -> 50.000 characters
   private final long MAX_FILE_SIZE = 50000;
   private final String logFileNameBase = "log_";
   private int logFileCount;
-  private static Handler fileHandler;
 
 
   private LogHandler() throws IOException, BackingStoreException {
@@ -31,19 +32,28 @@ public class LogHandler extends Logger {
     init();
   }
 
-    /**method called from other classes to get Handler to access Logger
-     *
-     * @return instance of LogHandler
-     * @throws IOException
-     * @throws BackingStoreException
-     */
+  /**
+   * method called from other classes to get Handler to access Logger
+   *
+   * @return instance of LogHandler
+   */
   public static Logger getLogger() throws IOException, BackingStoreException {
     return new LogHandler();
   }
 
-    /**
-     * Mehtod to initialize the LogHandler
-     */
+  /**
+   * Method destroying the filehandler when main application is closed
+   */
+  public static void shutdown() {
+    if (fileHandler != null) {
+      fileHandler.close();
+    }
+
+  }
+
+  /**
+   * Mehtod to initialize the LogHandler
+   */
   private void init() {
 
     // Read and set log level from user preferences
@@ -51,11 +61,10 @@ public class LogHandler extends Logger {
     Level logLevel = null;
 
     //if not existing in preferences, default 0 = none
-    Integer set_level =  userPrefs.getInt("LOG_LEVEL",0);
+    Integer set_level = userPrefs.getInt("LOG_LEVEL", 0);
     logLevel = Level.parse(set_level.toString());
 
     this.setLevel(logLevel);
-
 
     // set number of log files, in case of creating a new file this is incremented and used for naming
     logFileCount = getNumberOfLogFiles(new File("."));
@@ -69,38 +78,37 @@ public class LogHandler extends Logger {
     Logger rootLogger = Logger.getLogger("");
     Handler[] handlers = rootLogger.getHandlers();
     for (Handler handler : handlers) {
-        //remove existing default handlers
-        rootLogger.removeHandler(handler);
+      //remove existing default handlers
+      rootLogger.removeHandler(handler);
     }
     //If log level is set to NONE (=0), no logfile should be created, else create handler pointing to logfile
 
-      if(set_level != 0){
-        // setup file output
-        fileHandler = null;
-        try {
-          // filename is combination of log_ + nr of next logfile + .log
-          fileHandler = new FileHandler(logFileNameBase + logFileCount + ".log", true);
-        } catch (IOException e) {
-          this.warning("Could not get file handler.");
-        }
-        fileHandler.setFormatter(new SimpleFormatter());
+    if (set_level != 0){
+      // setup file output
+      fileHandler = null;
+      try {
+        // filename is combination of log_ + nr of next logfile + .log
+        fileHandler = new FileHandler(logFileNameBase + logFileCount + ".log", true);
+      } catch (IOException e) {
+        this.warning("Could not get file handler.");
+      }
+      fileHandler.setFormatter(new SimpleFormatter());
 
-        // add filehandler to current logger
-        this.addHandler(fileHandler);
+      // add filehandler to current logger
+      this.addHandler(fileHandler);
     }
 
   }
 
-    /**
-     * method used to create name for new logfile, counts all existing logfiles in current folder
-     *
-     * @param folder
-     * @return nr of currently existing logfiles
-     */
+  /**
+   * method used to create name for new logfile, counts all existing logfiles in current folder
+   *
+   * @return nr of currently existing logfiles
+   */
   private int getNumberOfLogFiles(File folder) {
     int numberOfLogs = 0;
-    if(folder==null){
-        return 0;
+    if (folder == null) {
+      return 0;
     }
     for (File fileEntry : folder.listFiles()) {
       String fileName = fileEntry.getName();
@@ -118,19 +126,11 @@ public class LogHandler extends Logger {
     return numberOfLogs;
   }
 
-    /**
-     * Method destroying the filehandler when main application is closed
-     */
-    public static void shutdown() {
-    if(fileHandler!=null)
-            fileHandler.close();
-
-    }
-
-    /**
-     * method used to check if new logfile should be created
-     * @return true if last logfile reached maximum size, else false
-     */
+  /**
+   * method used to check if new logfile should be created
+   *
+   * @return true if last logfile reached maximum size, else false
+   */
   private boolean lastLogTooBig() {
     //get file size in bytes
     long size = new File(logFileNameBase + logFileCount + ".log").length();
