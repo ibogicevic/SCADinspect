@@ -41,6 +41,7 @@ public class SpecialVariablesChecker implements Checker {
       if ( node.id.startsWith("$")
           && !ALLOWED.contains(node.id) ) {
         //TODO find out line number from ast node
+        //TODO therefore insert line number in ast node in parser
         result = new CheckResult(Collections.singletonList(
             new Issue(ISSUE_TYPE, null, 0, ISSUE_ID, ISSUE_DESCRIPTION + " <" + node.id + ">")));
       }
