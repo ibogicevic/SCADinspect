@@ -20,22 +20,61 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
+/*
+ * Edited by Tim Walter on 05.04.2017 (Sprint1 Review Fix)
+ */
 public class AboutDialog {
+
+    private final static Dialog<Boolean> dialog = new Dialog<>();
+
+    // Text content
+    private final static String aboutContent =
+            "Static code analysis and javadoc-like parts documentation for your OpenSCAD-Files \n" +
+                    "\n" +
+                    "© 2017 Licensed under GNU General Public License v3.0\n" +
+                    "For more information visit:";
+
+    private final static String contributorsContent =
+            "Contributors:\n" +
+                    "-Ivan Bogicevic\n" +
+                    "-Tim Walter\n" +
+                    "-Jonas Bernsdorff\n" +
+                    "-Malcolm Malam\n" +
+                    "-Maik Baumgartner\n" +
+                    "-Desyon\n" +
+                    "-Romy Römke";
+
+    private final static String thirdPartyContent =
+            "Third Party Artefacts\n" +
+                    "SCADinspect uses Icons from the \"Font Awesome\"-Package by Dave Gandy released under the CC BY 3.0 Licence\n";
+
+    // Set logo
+    private static final Image logo = new Image("http://www.ghanaedudirectory.com/Images/nologo.jpg");
 
     /**
      * Application startup function
      */
     public static void openDialog() {
+        /* final Properties properties = new Properties();
+        try {
+            properties.load(dialog.getClass().getResourceAsStream("project.properties"));
+        } catch (IOException e) {
+            //TODO: Log
+        } */
+
+
         //ProjectHandling.showModal();
         Main.getInstance().greyPane.modalToFront(true);
         Main.getInstance().greyStack.toFront();
         Main.getInstance().greyStack.setVisible(true);
 
         //Main.getInstance().greyStack
-        Dialog<Boolean> dialog = new Dialog<>();
         dialog.setTitle("About");
         dialog.setHeaderText("SCADinspect - Version x.xx");
 
@@ -60,18 +99,17 @@ public class AboutDialog {
         grid.add(stackPane, 0, 0);
 
         // Display Text
-        Label text1 = new Label(Text1);
-        text1.setWrapText(true);
+        Label about = new Label(aboutContent);
+        about.setWrapText(true);
 
-        Label text2 = new Label(Text2);
-        text2.setWrapText(true);
-        grid.add(text2, 1, 1);
+        Label contributors = new Label(contributorsContent);
+        contributors.setWrapText(true);
+        grid.add(contributors, 1, 1);
 
-        Label text3 = new Label(Text3);
-        text3.setWrapText(true);
+        Label thirdParty = new Label(thirdPartyContent);
+        thirdParty.setWrapText(true);
 
         //Links for text content
-
         List<Hyperlink> links = new ArrayList<>();
 
         Hyperlink scadinspect = new Hyperlink("https://github.com/ibogicevic/SCADinspect");
@@ -93,14 +131,13 @@ public class AboutDialog {
             });
         }
 
-
         VBox Box1 = new VBox();
-        Box1.getChildren().add(text1);
+        Box1.getChildren().add(about);
         Box1.getChildren().add(scadinspect);
         grid.add(Box1, 1,0);
 
         VBox Box2 = new VBox();
-        Box2.getChildren().add(text3);
+        Box2.getChildren().add(thirdParty);
         Box2.getChildren().add(flaticon);
         Box2.getChildren().add(creativeCommons);
         grid.add(Box2, 1,2);
@@ -109,26 +146,5 @@ public class AboutDialog {
         dialog.showAndWait();
         Main.getInstance().greyStack.toBack();
         Main.getInstance().greyStack.setVisible(false);
-
-
     }
-
-    // Text content
-    final static String Text1 =
-            "Static code analysis and javadoc-like parts documentation for your OpenSCAD-Files \n" +
-                    "\n" +
-                    "© 2017 Licensed under GNU General Public License v3.0\n" +
-                    "For more information visit:";
-
-    final static String Text2 =
-            "Contributors:\n" +
-                    "-Ivan Bogicevic\n" +
-                    "-Tim Walter\n";
-
-    final static String Text3 =
-            "Third Party Artefacts\n" +
-                    "SCADinspect uses Icons from the \"Font Awesome\"-Package by Dave Gandy released under the CC BY 3.0 Licence\n";
-
-    // Set logo
-    private static final Image logo = new Image("http://www.ghanaedudirectory.com/Images/nologo.jpg");
 }
