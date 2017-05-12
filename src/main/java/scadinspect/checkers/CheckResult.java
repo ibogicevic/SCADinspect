@@ -7,6 +7,15 @@ import scadinspect.data.analysis.Issue;
 
 /**
  * Created by felix on 22.04.17.
+ *
+ * Result of checking an ASTNode with a Checker.
+ * Mainly includes the Issues that were found.
+ * Is merged with other results of child ast nodes,
+ * see SpecialVariable checker for more info.
+ * @see scadinspect.checkers.SpecialVariablesChecker
+ *
+ * This might be changed or subclassed to adopt to checkers, that require more state info.
+ *
  */
 public class CheckResult {
 
@@ -20,17 +29,10 @@ public class CheckResult {
     return issues;
   }
 
-  public CheckResult mergeWith(Collection<CheckResult> others) {
-    return new CheckResult(
-        Stream.concat(this.getIssues().stream(), others.stream().flatMap(o -> o.getIssues().stream()))
-            .collect(Collectors.toList())
-    );
-  }
-
   public static CheckResult mergeAll(Stream<CheckResult> all) {
     return new CheckResult(
-        all.flatMap(o -> o.getIssues().stream())
-           .collect(Collectors.toList())
+      all.flatMap(o -> o.getIssues().stream())
+          .collect(Collectors.toList())
     );
   }
 
