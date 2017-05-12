@@ -53,7 +53,7 @@ public class DocumentationList {
       }
 
       //first column should be Path
-      addColumn(columnCount, "Path");
+      addColumn(columnCount, "DocumentationList.firstCol");
 
       //add all other headers (sorted by treeset)
       for (String header : headerList) {

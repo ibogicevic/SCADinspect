@@ -24,7 +24,7 @@ public class ExportDialog {
   public static void openDialog() {
     Dialog<ButtonType> dialog;
     dialog = new Dialog<>();
-    dialog.setTitle("Export");
+    dialog.setTitle("ExportDialog.title");
     dialog.setHeaderText(null);
 
     //add disabled OK and Cancel button
@@ -37,17 +37,17 @@ public class ExportDialog {
 
     ToggleGroup group = new ToggleGroup();
 
-    RadioButton excel = new RadioButton("Excel");
+    RadioButton excel = new RadioButton("ExportDialog.excelButton");
     excel.setToggleGroup(group);
-    RadioButton csv = new RadioButton("CSV");
+    RadioButton csv = new RadioButton("ExportDialog.csvButton");
     csv.setToggleGroup(group);
-    RadioButton json = new RadioButton("JSON");
+    RadioButton json = new RadioButton("ExportDialog.jsonButton");
     json.setToggleGroup(group);
-    RadioButton xml = new RadioButton("XML");
+    RadioButton xml = new RadioButton("ExportDialog.xmlButton");
     xml.setToggleGroup(group);
-    RadioButton pdf = new RadioButton("PDF");
+    RadioButton pdf = new RadioButton("ExportDialog.pdfButton");
     pdf.setToggleGroup(group);
-    RadioButton md = new RadioButton("Markdown");
+    RadioButton md = new RadioButton("ExportDialog.markdownButton");
     md.setToggleGroup(group);
 
     //listen for changes in selection of radioButtons
@@ -110,9 +110,9 @@ public class ExportDialog {
             exported = exporter.save(ExportFormat.PDF, Main.getInstance().getDocuFiles(),
                 pathWithoutExtension + ".pdf");
           }
-          Main.getInstance().statusArea.setMessage("Saved as " + exported.getAbsolutePath());
+          Main.getInstance().statusArea.setMessage("ExportDialog.saved" + exported.getAbsolutePath());
         } catch (FileExportException e) {
-          Main.getInstance().statusArea.setMessage("Error in Export: "+e.getCause());
+          Main.getInstance().statusArea.setMessage("ExportDialog.error"+e.getCause());
           e.printStackTrace();
           //TODO use Logger
         }

@@ -25,11 +25,11 @@ public class SettingsDialog {
         Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
 
         Dialog<Boolean> dialog = new Dialog<>();
-        dialog.setTitle("Settings");
+        dialog.setTitle("SettingsDialog.title");
         dialog.setHeaderText(null);
            
         // Set the button types.
-        ButtonType okButtonType = new ButtonType("OK", ButtonData.OK_DONE);
+        ButtonType okButtonType = new ButtonType("SettingsDialog.okButton", ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
             
         // Create the checkbox fields.
@@ -37,10 +37,10 @@ public class SettingsDialog {
         grid.setHgap(10);
         grid.setVgap(10);
             
-        CheckBox autorefresh = new CheckBox("Autorefresh On/Off");
+        CheckBox autorefresh = new CheckBox("SettingsDialog.autorefresh");
         grid.add(autorefresh, 0, 0);
 
-        CheckBox codeAnalysis = new CheckBox("Static Code Analysis");
+        CheckBox codeAnalysis = new CheckBox("SettingsDialog.codeAnalysis");
         codeAnalysis.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 Main.getInstance().tabArea.getTabs().add(0,Main.getInstance().tabArea.getIssues());
@@ -52,7 +52,7 @@ public class SettingsDialog {
         });
         grid.add(codeAnalysis, 0,1);
 
-        CheckBox documentation = new CheckBox("Documentation");
+        CheckBox documentation = new CheckBox("SettingsDialog.documentation");
         documentation.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 if(codeAnalysis.isSelected())

@@ -41,7 +41,7 @@ public class StatusArea extends BorderPane {
    * Function for simulating progress over time, using a thread.
    */
   public void simulateProgress() {
-    textMessage.setText(Messages.getString("StatusArea.progressText")); 
+    textMessage.setText("StatusArea.progressText");
     progressBar.setVisible(true);
 
     progress = 0;
@@ -69,10 +69,9 @@ public class StatusArea extends BorderPane {
       }
 
       progressBar.setVisible(false);
-      //textMessage.setVisible(false);
 
       Platform.runLater(() -> {
-        textMessage.setText(Messages.getString("StatusArea.progressDone")); 
+        textMessage.setText("StatusArea.progressDone");
       });
 
     }

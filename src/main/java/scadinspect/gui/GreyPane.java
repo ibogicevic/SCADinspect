@@ -19,11 +19,11 @@ public class GreyPane extends BorderPane{
     private BorderPane bottomPane = new BorderPane();
     private Integer step = -1;
     private BottomArea bottomArea= new BottomArea();
-    private Hyperlink checkers = new Hyperlink("Open checker docs");
-    private Hyperlink prev = new Hyperlink("back");
-    private Hyperlink next = new Hyperlink("next");
-    private Hyperlink exit = new Hyperlink("exit");
-    private Hyperlink cornerExit = new Hyperlink("Exit Tour");
+    private Hyperlink checkers = new Hyperlink("GreyPane.checkersHyperlink");
+    private Hyperlink prev = new Hyperlink("GreyPane.prevHyperlink");
+    private Hyperlink next = new Hyperlink("GreyPane.nextHyperlink");
+    private Hyperlink exit = new Hyperlink("GreyPane.extitHyperlink");
+    private Hyperlink cornerExit = new Hyperlink("GreyPane.extitTourHyperlink");
     private Label messageLabel = new Label();
     private HBox navBar;
     private Label stepLabel = new Label();
@@ -96,7 +96,7 @@ public class GreyPane extends BorderPane{
             messageLabel.setMaxWidth(400.0);
             messageLabel.setWrapText(true);
             messageLabel.setTextAlignment(TextAlignment.CENTER);
-            messageLabel.setFont(Font.loadFont(getClass().getResourceAsStream("/resources/ComicSans.ttf"), 20));
+            messageLabel.setFont(Font.loadFont(getClass().getResourceAsStream("GreyPane.resources"), 20));
             messageLabel.setTextFill(Color.WHITE);
             centerPane.setCenter(messageLabel);
             centerPane.setBottom(navBar);
@@ -170,10 +170,8 @@ public class GreyPane extends BorderPane{
                 navBar.getChildren().remove(next);
                 navBar.getChildren().add(1, checkers);
                 navBar.getChildren().add(3, next);
-                stepLabel.setText(step+2 + " of 6");
-                messageLabel.setText("Welcome to the QuickTour!\nPlease use the buttons below to navigate " +
-                        "through the tour. You can leave the tour in step 6. " +
-                        "You can also view the checkers documentation.");
+                stepLabel.setText(step+2 + "GreyPane.ofMAX");
+                messageLabel.setText("GreyPane.WelcomeText");
                 break;
             }
             case 0: {
@@ -184,46 +182,46 @@ public class GreyPane extends BorderPane{
                 navBar.getChildren().remove(checkers);
                 navBar.getChildren().remove(prev);
                 navBar.getChildren().add(1, prev);
-                messageLabel.setText("Press \"Open file\" to open an new ScadFile or choose \"Open folder\" from the dropdown menu to open a folder.");
-                stepLabel.setText(step+2 + " of 6");
+                messageLabel.setText("GreyPane.openFileText");
+                stepLabel.setText(step+2 + "GreyPane.ofMAX");
                 break;
             }
             case 1: {
                 toolbarArea.switchButtons(1);
                 prev.setVisible(true);
-                messageLabel.setText("Press \"Settings\" to access the settings. For example you can enable auto refresh or set the logging level.");
+                messageLabel.setText("GreyPane.settingsMessage");
                 bottomArea.switchButtons(0);
-                stepLabel.setText(step+2 + " of 6");
+                stepLabel.setText(step+2 + "GreyPane.ofMAX");
                 break;
             }
             case 2: {
                 toolbarArea.switchButtons(2);
-                messageLabel.setText("Press \"Refresh\" to refresh the files.");
+                messageLabel.setText("GreyPane.refreshMessage");
                 bottomArea.switchButtons(1);
-                stepLabel.setText(step+2 + " of 6");
+                stepLabel.setText(step+2 + "GreyPane.ofMAX");
                 break;
             }
             case 3: {
                 toolbarArea.switchButtons(3);
-                messageLabel.setText("Press \"Export\" to export your current work.");
+                messageLabel.setText("GreyPane.exportMessage");
                 bottomArea.switchButtons(2);
                 next.setVisible(true);
                 exit.setVisible(false);
                 navBar.getChildren().remove(next);
                 navBar.getChildren().remove(exit);
                 navBar.getChildren().add(3, next);
-                stepLabel.setText(step+2 + " of 6");
+                stepLabel.setText(step+2 + "GreyPane.ofMAX");
                 break;
             }
             case 4: {
-                messageLabel.setText("Press \"Close\" to close the current file.");
+                messageLabel.setText("GreyPane.closeMessage");
                 bottomArea.switchButtons(3);
                 next.setVisible(false);
                 exit.setVisible(true);
                 navBar.getChildren().remove(exit);
                 navBar.getChildren().remove(next);
                 navBar.getChildren().add(3, exit);
-                stepLabel.setText(step+2 + " of 6");
+                stepLabel.setText(step+2 + "GreyPane.ofMAX");
                 break;
             }
         }
