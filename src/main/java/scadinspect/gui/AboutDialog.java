@@ -42,13 +42,24 @@ public class AboutDialog {
 
     private final static String contributorsContent =
             "Contributors:\n" +
-                    "-Ivan Bogicevic\n" +
-                    "-Tim Walter\n" +
-                    "-Jonas Bernsdorff\n" +
-                    "-Malcolm Malam\n" +
-                    "-Maik Baumgartner\n" +
-                    "-Desyon\n" +
-                    "-Romy Römke";
+                    "-Ivan Bogicevic\n"
+                    + "-Tim Walter\n"
+                    + "-Tom Richter\n"
+                    + "-Maik Baumgartner\n"
+                    + "-Lisa Milius\n"
+                    + "-Simon Steinrücken"
+                    + "-Jonas Bernsdorff\n"
+                    + "-Malcolm Malam\n"
+                    + "-Desyon\n"
+                    + "-Romy Römke\n"
+                    + "-Jonas Balsfulland\n"
+                    + "-Romy Römke\n"
+                    + "-Felix Stegmaier\n"
+                    + "-Julian Schmidt\n"
+                    + "-Orhan Bilir\n"
+                    + "-Jokke Jansen\n"
+                    + "-Romy Römke\n"
+                    + "-Christoph Auf der Landwehr";
 
     private final static String thirdPartyContent =
             "Third Party Artefacts\n" +
