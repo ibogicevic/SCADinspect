@@ -21,14 +21,13 @@ import scadinspect.parser.generated.OpenScadParser;
  * OpenScadParser that is adopted to report Issues and throw ParserExceptions.
  * Please don't ask me why this works, it is mainly copied from the Superclass.
  * For more information see
- * @link http://www2.cs.tum.edu/projects/cup/
  *
+ * @link http://www2.cs.tum.edu/projects/cup/
  */
 public class CustomErrorOpenScadParser extends OpenScadParser {
 
-  Collection<Issue> errors = new ArrayList<>();
-
   public static final String errorID = "E-002";
+  Collection<Issue> errors = new ArrayList<>();
 
   //TODO use logger everywhere
 
@@ -50,18 +49,20 @@ public class CustomErrorOpenScadParser extends OpenScadParser {
 
   @Override
   public void report_error(String message, Object info) {
-    if(info instanceof ComplexSymbol) {
-      ComplexSymbol cs = (ComplexSymbol)info;
+    if (info instanceof ComplexSymbol) {
+      ComplexSymbol cs = (ComplexSymbol) info;
       //get filename, code snippet is handled by parser function and the issue itself
-      errors.add(new Issue(Issue.issueType.ERROR, null, cs.getLeft().getLine() , this.errorID, message + " for input symbol \"" + cs.getName() /* + "\" spanning from " + cs.getLeft() + " to " + cs.getRight()*/));
-    } else if(info instanceof Symbol) {
-        if(((Symbol)info).left != -1) {
-            errors.add(new Issue(Issue.issueType.ERROR, null, 0, this.errorID, message +  " at character " + ((Symbol)info).left + " of input"));
-        } else {
-           errors.add(new Issue(Issue.issueType.ERROR, null, 0, this.errorID, message));
-        }
-    } else {
+      errors.add(new Issue(Issue.issueType.ERROR, null, cs.getLeft().getLine(), this.errorID,
+          message + " for input symbol \"" + cs.getName() /* + "\" spanning from " + cs.getLeft() + " to " + cs.getRight()*/));
+    } else if (info instanceof Symbol) {
+      if (((Symbol) info).left != -1) {
+        errors.add(new Issue(Issue.issueType.ERROR, null, 0, this.errorID,
+            message + " at character " + ((Symbol) info).left + " of input"));
+      } else {
         errors.add(new Issue(Issue.issueType.ERROR, null, 0, this.errorID, message));
+      }
+    } else {
+      errors.add(new Issue(Issue.issueType.ERROR, null, 0, this.errorID, message));
     }
   }
 
@@ -78,13 +79,13 @@ public class CustomErrorOpenScadParser extends OpenScadParser {
     LinkedList list = new LinkedList();
     Iterator var3 = ids.iterator();
 
-    while(var3.hasNext()) {
-      Integer expected = (Integer)var3.next();
+    while (var3.hasNext()) {
+      Integer expected = (Integer) var3.next();
       list.add(this.symbl_name_from_id(expected.intValue()));
     }
 
-      //TODO get this into the respective issue
-      //and log it
+    //TODO get this into the respective issue
+    //and log it
     //System.out.println("instead expected token classes are " + list);
     Main.logger.log(Level.INFO, "instead expected token classes are " + list);
   }

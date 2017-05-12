@@ -65,7 +65,7 @@ public class FileExport {
 
       Exporter exporter = getExporter(format);
 
-      for(ScadDocuFile file : files) {
+      for (ScadDocuFile file : files) {
         fos.write(exporter.getOutput(file));
       }
 

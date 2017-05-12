@@ -13,7 +13,6 @@ package scadinspect.checkers;
  *
  * @see scadinspect.checkers.CheckResult
  * @see scadinspect.checkers.Checker
- *
  */
 public class CheckState {
 

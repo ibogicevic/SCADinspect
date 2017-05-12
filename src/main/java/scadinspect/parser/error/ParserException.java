@@ -26,8 +26,6 @@ public class ParserException extends Exception {
 
 
   /**
-
-   *
    * @param info the info for the Issue
    * @param file the file associated
    * @param line line of the issue

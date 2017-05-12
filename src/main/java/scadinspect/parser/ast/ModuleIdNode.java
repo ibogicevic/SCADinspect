@@ -10,13 +10,11 @@ public class ModuleIdNode extends ASTNode {
 
   public final String id;
 
-  public enum Types implements NodeType {
-    ID,
-    FOR,
-    LET,
-    ASSERT,
-    ECHO,
-    EACH
+  protected ModuleIdNode(NodeType type,
+      List<ASTNode> children, String id) {
+    super(type, children);
+    this.id = id;
+
   }
 
   public static ModuleIdNode createId(String id) {
@@ -43,10 +41,12 @@ public class ModuleIdNode extends ASTNode {
     return new ModuleIdNode(Types.EACH, Collections.emptyList(), null);
   }
 
-  protected ModuleIdNode(NodeType type,
-      List<ASTNode> children, String id) {
-    super(type, children);
-    this.id = id;
-
+  public enum Types implements NodeType {
+    ID,
+    FOR,
+    LET,
+    ASSERT,
+    ECHO,
+    EACH
   }
 }

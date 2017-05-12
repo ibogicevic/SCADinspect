@@ -39,8 +39,6 @@ import scadinspect.parser.ast.StatementNode;
  * It must return a CheckResult containing the union of found Issues of the current node
  * and all the Issues returned be the checks of the child nodes.
  * It should have a unique ISSUE_ID
- *
- *
  */
 public class SpecialVariablesChecker implements Checker {
 
@@ -60,8 +58,8 @@ public class SpecialVariablesChecker implements Checker {
     if (astNode instanceof ArgumentCallNode
         && astNode.type == ArgumentCallNode.Types.ID_EXPR) {
       ArgumentCallNode node = (ArgumentCallNode) astNode;
-      if ( node.id.startsWith("$")
-          && !ALLOWED.contains(node.id) ) {
+      if (node.id.startsWith("$")
+          && !ALLOWED.contains(node.id)) {
         //TODO find out line number from ast node, 0 is used here
         //TODO therefore insert line number in ast node in parser
         result = new CheckResult(Collections.singletonList(
@@ -69,42 +67,42 @@ public class SpecialVariablesChecker implements Checker {
       }
     } else if (astNode instanceof ArgumentDeclNode) {
       ArgumentDeclNode node = (ArgumentDeclNode) astNode;
-      if ( node.id.startsWith("$")
-          && !ALLOWED.contains(node.id) ) {
+      if (node.id.startsWith("$")
+          && !ALLOWED.contains(node.id)) {
         result = new CheckResult(Collections.singletonList(
             new Issue(ISSUE_TYPE, null, 0, ISSUE_ID, ISSUE_DESCRIPTION + " <" + node.id + ">")));
       }
     } else if (astNode instanceof AssignmentNode) {
       AssignmentNode node = (AssignmentNode) astNode;
-      if ( node.id.startsWith("$")
-          && !ALLOWED.contains(node.id) ) {
+      if (node.id.startsWith("$")
+          && !ALLOWED.contains(node.id)) {
         result = new CheckResult(Collections.singletonList(
             new Issue(ISSUE_TYPE, null, 0, ISSUE_ID, ISSUE_DESCRIPTION + " <" + node.id + ">")));
       }
     } else if (astNode instanceof ExprNode
-                && (astNode.type == ExprNode.Types.ID
-                    || astNode.type == ExprNode.Types.EXPR_DOT_ID
-                    || astNode.type == ExprNode.Types.FUNCTION_CALL)) {
+        && (astNode.type == ExprNode.Types.ID
+        || astNode.type == ExprNode.Types.EXPR_DOT_ID
+        || astNode.type == ExprNode.Types.FUNCTION_CALL)) {
       ExprNode node = (ExprNode) astNode;
-      if ( node.id.startsWith("$")
-          && !ALLOWED.contains(node.id) ) {
+      if (node.id.startsWith("$")
+          && !ALLOWED.contains(node.id)) {
         result = new CheckResult(Collections.singletonList(
             new Issue(ISSUE_TYPE, null, 0, ISSUE_ID, ISSUE_DESCRIPTION + " <" + node.id + ">")));
       }
     } else if (astNode instanceof ModuleIdNode
-              && astNode.type == ModuleIdNode.Types.ID) {
+        && astNode.type == ModuleIdNode.Types.ID) {
       ModuleIdNode node = (ModuleIdNode) astNode;
-      if ( node.id.startsWith("$")
-          && !ALLOWED.contains(node.id) ) {
+      if (node.id.startsWith("$")
+          && !ALLOWED.contains(node.id)) {
         result = new CheckResult(Collections.singletonList(
             new Issue(ISSUE_TYPE, null, 0, ISSUE_ID, ISSUE_DESCRIPTION + " <" + node.id + ">")));
       }
     } else if (astNode instanceof StatementNode
-                && (astNode.type == StatementNode.Types.MODULE_DEFINITION
-                    || astNode.type == StatementNode.Types.FUNCTION_DEFINITION)) {
+        && (astNode.type == StatementNode.Types.MODULE_DEFINITION
+        || astNode.type == StatementNode.Types.FUNCTION_DEFINITION)) {
       StatementNode node = (StatementNode) astNode;
-      if ( node.id.startsWith("$")
-          && !ALLOWED.contains(node.id) ) {
+      if (node.id.startsWith("$")
+          && !ALLOWED.contains(node.id)) {
         result = new CheckResult(Collections.singletonList(
             new Issue(ISSUE_TYPE, null, 0, ISSUE_ID, ISSUE_DESCRIPTION + " <" + node.id + ">")));
       }
@@ -116,7 +114,6 @@ public class SpecialVariablesChecker implements Checker {
     } else {
       return CheckResult.mergeAll(astNode.children.stream().map(n -> this.check(n, null)));
     }
-
 
 
   }

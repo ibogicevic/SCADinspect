@@ -9,10 +9,8 @@ import java.util.List;
  */
 public class VectorExprNode extends ASTNode {
 
-  public enum Types implements NodeType {
-    EXPR,
-    LIST_COMPREHENSION_ELEMENTS,
-    WITH_COMMA
+  protected VectorExprNode(NodeType type, List<ASTNode> children) {
+    super(type, children);
   }
 
   public static VectorExprNode createExpr(ExprNode expr) {
@@ -28,7 +26,9 @@ public class VectorExprNode extends ASTNode {
     return new VectorExprNode(Types.WITH_COMMA, Arrays.asList(vector, commas, list));
   }
 
-  protected VectorExprNode(NodeType type, List<ASTNode> children) {
-    super(type, children);
+  public enum Types implements NodeType {
+    EXPR,
+    LIST_COMPREHENSION_ELEMENTS,
+    WITH_COMMA
   }
 }

@@ -8,13 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
-
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
 import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.Property;
@@ -25,10 +23,9 @@ import scadinspect.data.scaddoc.properties.helper.Pair;
  */
 public class DocumentationList {
 
+  Map<String, String> headerValueMap = new TreeMap<>();
   //TableView of Documentation List
   private TableView<ObservableList<String>> docTableView = new TableView<ObservableList<String>>();
-  Map<String, String> headerValueMap = new TreeMap<>();
-
   //Data structure with associated data for documentation List
   private List<ScadDocuFile> parsedDocFiles;
 

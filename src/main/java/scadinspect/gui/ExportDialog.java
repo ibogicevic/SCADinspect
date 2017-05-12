@@ -112,7 +112,7 @@ public class ExportDialog {
           }
           Main.getInstance().statusArea.setMessage("Saved as " + exported.getAbsolutePath());
         } catch (FileExportException e) {
-          Main.getInstance().statusArea.setMessage("Error in Export: "+e.getCause());
+          Main.getInstance().statusArea.setMessage("Error in Export: " + e.getCause());
           e.printStackTrace();
           //TODO use Logger
         }

@@ -6,11 +6,10 @@ import java.util.List;
 /**
  * Created by felix on 22.04.17.
  */
-public class ExprOrEmptyNode extends ASTNode{
+public class ExprOrEmptyNode extends ASTNode {
 
-  public enum Types implements NodeType {
-    EMPTY,
-    EXPR
+  protected ExprOrEmptyNode(NodeType type, List<ASTNode> children) {
+    super(type, children);
   }
 
   public static ExprOrEmptyNode createEmpty() {
@@ -21,7 +20,8 @@ public class ExprOrEmptyNode extends ASTNode{
     return new ExprOrEmptyNode(Types.EXPR, Collections.singletonList(expr));
   }
 
-  protected ExprOrEmptyNode(NodeType type, List<ASTNode> children) {
-    super(type, children);
+  public enum Types implements NodeType {
+    EMPTY,
+    EXPR
   }
 }

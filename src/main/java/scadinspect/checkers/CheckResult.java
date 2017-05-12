@@ -12,10 +12,10 @@ import scadinspect.data.analysis.Issue;
  * Mainly includes the Issues that were found.
  * Is merged with other results of child ast nodes,
  * see SpecialVariable checker for more info.
+ *
  * @see scadinspect.checkers.SpecialVariablesChecker
  *
  * This might be changed or subclassed to adopt to checkers, that require more state info.
- *
  */
 public class CheckResult {
 
@@ -25,15 +25,15 @@ public class CheckResult {
     this.issues = issues;
   }
 
-  public Collection<Issue> getIssues() {
-    return issues;
-  }
-
   public static CheckResult mergeAll(Stream<CheckResult> all) {
     return new CheckResult(
-      all.flatMap(o -> o.getIssues().stream())
-          .collect(Collectors.toList())
+        all.flatMap(o -> o.getIssues().stream())
+            .collect(Collectors.toList())
     );
+  }
+
+  public Collection<Issue> getIssues() {
+    return issues;
   }
 
 }

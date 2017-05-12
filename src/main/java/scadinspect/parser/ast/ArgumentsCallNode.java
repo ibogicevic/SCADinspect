@@ -7,12 +7,10 @@ import java.util.List;
 /**
  * Created by felix on 22.04.17.
  */
-public class ArgumentsCallNode extends ASTNode{
+public class ArgumentsCallNode extends ASTNode {
 
-  public enum Types implements NodeType {
-    EMPTY,
-    ARGUMENT_CALL,
-    WITH_COMMA
+  protected ArgumentsCallNode(NodeType type, List<ASTNode> children) {
+    super(type, children);
   }
 
   public static ArgumentsCallNode createEmpty() {
@@ -28,7 +26,9 @@ public class ArgumentsCallNode extends ASTNode{
     return new ArgumentsCallNode(Types.WITH_COMMA, Arrays.asList(args, commas, arg));
   }
 
-  protected ArgumentsCallNode(NodeType type, List<ASTNode> children) {
-    super(type, children);
+  public enum Types implements NodeType {
+    EMPTY,
+    ARGUMENT_CALL,
+    WITH_COMMA
   }
 }

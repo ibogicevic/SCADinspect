@@ -8,7 +8,6 @@ import scadinspect.parser.ast.ASTNode;
  *
  * Wrapper class to enclose a Syntax tree by holding its root Node
  * and the original root parse symbol.
- *
  */
 public class ParseTree {
 

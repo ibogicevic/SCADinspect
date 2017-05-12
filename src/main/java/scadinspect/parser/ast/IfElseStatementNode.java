@@ -7,11 +7,10 @@ import java.util.List;
 /**
  * Created by felix on 22.04.17.
  */
-public class IfElseStatementNode extends ASTNode{
+public class IfElseStatementNode extends ASTNode {
 
-  public enum Types implements NodeType {
-    IF,
-    IF_ELSE
+  protected IfElseStatementNode(NodeType type, List<ASTNode> children) {
+    super(type, children);
   }
 
   public static IfElseStatementNode createIf(IfStatementNode ifStatement) {
@@ -23,7 +22,8 @@ public class IfElseStatementNode extends ASTNode{
     return new IfElseStatementNode(Types.IF_ELSE, Arrays.asList(ifStatement, childStatement));
   }
 
-  protected IfElseStatementNode(NodeType type, List<ASTNode> children) {
-    super(type, children);
+  public enum Types implements NodeType {
+    IF,
+    IF_ELSE
   }
 }

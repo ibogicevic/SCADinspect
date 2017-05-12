@@ -11,10 +11,9 @@ public class InputNode extends ASTNode {
 
   public final String use;
 
-  public enum Types implements NodeType {
-    EMPTY,
-    USE,
-    STATEMENT
+  protected InputNode(NodeType type, List<ASTNode> children, String use) {
+    super(type, children);
+    this.use = use;
   }
 
   public static InputNode createEmpty() {
@@ -29,9 +28,10 @@ public class InputNode extends ASTNode {
     return new InputNode(Types.STATEMENT, Arrays.asList(statementNode, input), null);
   }
 
-  protected InputNode(NodeType type, List<ASTNode> children, String use) {
-    super(type, children);
-    this.use = use;
+  public enum Types implements NodeType {
+    EMPTY,
+    USE,
+    STATEMENT
   }
 
 

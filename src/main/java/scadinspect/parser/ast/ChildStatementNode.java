@@ -8,10 +8,8 @@ import java.util.List;
  */
 public class ChildStatementNode extends ASTNode {
 
-  public enum Types implements NodeType {
-    SEMICOLON,
-    CHILD_STATEMENTS,
-    MODULE_INSTANTIATION
+  protected ChildStatementNode(NodeType type, List<ASTNode> children) {
+    super(type, children);
   }
 
   public static ChildStatementNode createSemicolon() {
@@ -27,7 +25,9 @@ public class ChildStatementNode extends ASTNode {
     return new ChildStatementNode(Types.MODULE_INSTANTIATION, Collections.singletonList(module));
   }
 
-  protected ChildStatementNode(NodeType type, List<ASTNode> children) {
-    super(type, children);
+  public enum Types implements NodeType {
+    SEMICOLON,
+    CHILD_STATEMENTS,
+    MODULE_INSTANTIATION
   }
 }

@@ -10,9 +10,9 @@ public class ArgumentDeclNode extends ASTNode {
 
   public final String id;
 
-  public enum Types implements NodeType {
-    ID,
-    ID_EXPR
+  protected ArgumentDeclNode(NodeType type, List<ASTNode> children, String id) {
+    super(type, children);
+    this.id = id;
   }
 
   public static ArgumentDeclNode createId(String id) {
@@ -23,8 +23,8 @@ public class ArgumentDeclNode extends ASTNode {
     return new ArgumentDeclNode(Types.ID_EXPR, Collections.singletonList(expr), id);
   }
 
-  protected ArgumentDeclNode(NodeType type, List<ASTNode> children, String id) {
-    super(type, children);
-    this.id = id;
+  public enum Types implements NodeType {
+    ID,
+    ID_EXPR
   }
 }

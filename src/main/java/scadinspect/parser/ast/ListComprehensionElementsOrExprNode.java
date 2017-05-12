@@ -6,11 +6,10 @@ import java.util.List;
 /**
  * Created by felix on 22.04.17.
  */
-public class ListComprehensionElementsOrExprNode extends ASTNode{
+public class ListComprehensionElementsOrExprNode extends ASTNode {
 
-  public enum Types implements NodeType {
-    LIST_COMPREHENSION_ELEMENTS_P,
-    EXPR
+  protected ListComprehensionElementsOrExprNode(NodeType type, List<ASTNode> children) {
+    super(type, children);
   }
 
   public static ListComprehensionElementsOrExprNode createListP(
@@ -23,7 +22,8 @@ public class ListComprehensionElementsOrExprNode extends ASTNode{
     return new ListComprehensionElementsOrExprNode(Types.EXPR, Collections.singletonList(expr));
   }
 
-  protected ListComprehensionElementsOrExprNode(NodeType type, List<ASTNode> children) {
-    super(type, children);
+  public enum Types implements NodeType {
+    LIST_COMPREHENSION_ELEMENTS_P,
+    EXPR
   }
 }

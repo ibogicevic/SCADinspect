@@ -8,8 +8,8 @@ import java.util.List;
  */
 public class SingleModuleInstantiationNode extends ASTNode {
 
-  public enum Types implements NodeType {
-    SINGLE
+  protected SingleModuleInstantiationNode(NodeType type, List<ASTNode> children) {
+    super(type, children);
   }
 
   public static SingleModuleInstantiationNode createSingle(ModuleIdNode moduleId,
@@ -17,7 +17,7 @@ public class SingleModuleInstantiationNode extends ASTNode {
     return new SingleModuleInstantiationNode(Types.SINGLE, Arrays.asList(moduleId, argsCall));
   }
 
-  protected SingleModuleInstantiationNode(NodeType type, List<ASTNode> children) {
-    super(type, children);
+  public enum Types implements NodeType {
+    SINGLE
   }
 }
