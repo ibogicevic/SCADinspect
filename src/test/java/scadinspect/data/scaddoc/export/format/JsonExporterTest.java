@@ -13,6 +13,7 @@ import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
+import scadinspect.data.scaddoc.properties.helper.Pair;
 
 /**
  * @author simon, Desyon on 3/17/17.
@@ -34,7 +35,7 @@ class JsonExporterTest {
    * @result Ensure the export is failsafe.
    */
   @Test
-  void emptyList() throws Exception{
+  void emptyList() throws Exception {
     ScadDocuFile file = new ScadDocuFile(null, modules);
     assertEquals("[]", new String(exporter.getOutput(file), "UTF-8"));
   }
@@ -43,7 +44,7 @@ class JsonExporterTest {
    * Test against a single property containing an integer value.
    */
   @Test
-  void singleProperty() throws Exception{
+  void singleProperty() throws Exception {
     Module singleProperty = new Module();
     singleProperty.addProperty(new SingleProperty<>("key", 1));
     modules.add(singleProperty);
@@ -55,7 +56,7 @@ class JsonExporterTest {
    * Test against multiple properties containing integer values.
    */
   @Test
-  void multiProperty() throws Exception{
+  void multiProperty() throws Exception {
     Module multiProperty = new Module();
     multiProperty.addProperty(new MultiProperty<>("key", 1, 2, 3));
     modules.add(multiProperty);
@@ -71,7 +72,7 @@ class JsonExporterTest {
    * Test against a pair property containing an integer value.
    */
   @Test
-  void pairProperty() throws Exception{
+  void pairProperty() throws Exception {
     Module pairProperty = new Module();
     pairProperty.addProperty(new PairProperty<>("price", 12, "EUR"));
     modules.add(pairProperty);
@@ -102,7 +103,7 @@ class JsonExporterTest {
    * Test against the defined example Json
    */
   @Test
-  void sampleJSON() throws Exception{
+  void sampleJSON() throws Exception {
     Module wheel = new Module();
     wheel.addProperty(new SingleProperty<>("part", "Wheel"));
     wheel.addProperty(new PairProperty<>("price", 100, "EUR"));
@@ -156,6 +157,34 @@ class JsonExporterTest {
             + "    \"url\": \"https://example.com\"\n"
             + "  }\n"
             + "]",
+        new String(exporter.getOutput(file), "UTF-8"));
+  }
+
+  @Test
+  void tormentModule() throws Exception {
+    Module torment = new Module();
+
+    torment.addProperty(new SingleProperty<>("Key#__;", "v4|u3"));
+    torment.addProperty(new SingleProperty<>("Key/%§§", "{[]}\\"));
+    torment.addProperty(new PairProperty<>("Pair", new Pair<>("100", "CND/AUD")));
+    torment.addProperty(new MultiProperty<>("Multi", "<>|!§$%&/\"()=?", "*'+#~;:,."));
+
+    modules.add(torment);
+
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
+
+    assertEquals("[{\n"
+            + "  \"Key#__;\": \"v4|u3\",\n"
+            + "  \"Multi\": [\n"
+            + "    \"<>|!§$%&/\\\"()=?\",\n"
+            + "    \"*'+#~;:,.\"\n"
+            + "  ],\n"
+            + "  \"Key/%§§\": \"{[]}\\\\\",\n"
+            + "  \"Pair\": {\n"
+            + "    \"metric\": \"CND/AUD\",\n"
+            + "    \"value\": \"100\"\n"
+            + "  }\n"
+            + "}]",
         new String(exporter.getOutput(file), "UTF-8"));
   }
 }

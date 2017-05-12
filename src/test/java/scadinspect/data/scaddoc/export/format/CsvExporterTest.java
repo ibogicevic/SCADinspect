@@ -1,6 +1,6 @@
 package scadinspect.data.scaddoc.export.format;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -13,6 +13,7 @@ import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
+import scadinspect.data.scaddoc.properties.helper.Pair;
 
 /**
  * Created by richteto on 31.03.2017.
@@ -111,7 +112,7 @@ class CsvExporterTest {
 
     modules.add(wheel);
     modules.add(motor);
-    ScadDocuFile file  = new ScadDocuFile(Paths.get("Testing"), modules);
+    ScadDocuFile file = new ScadDocuFile(Paths.get("Testing"), modules);
     Collection<ScadDocuFile> files = new ArrayList<>();
     files.add(file);
     files.add(file);
@@ -126,5 +127,24 @@ class CsvExporterTest {
             + "Wheel,100 EUR,4,12 kg,Rubber: Aluminium,https://example.com" + lineSeparator
             + "Motor,1000 USD,1,200 kg,Steel,https://example.com" + lineSeparator + lineSeparator,
         new String(exporter.getOutput(files), "UTF-8"));
+  }
+
+  @Test
+  void tormentModule() throws Exception {
+    Module torment = new Module();
+
+    torment.addProperty(new SingleProperty<>("Key#__;", "v4|u3"));
+    torment.addProperty(new SingleProperty<>("Key/%§§", "{[]}\\"));
+    torment.addProperty(new PairProperty<>("Pair", new Pair<>("100", "CND/AUD")));
+    torment.addProperty(new MultiProperty<>("Multi", "<>|!§$%&/\"()=?", "*'+#~;:,."));
+
+    modules.add(torment);
+
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
+
+    assertEquals("testPath" + lineSeparator
+            + "Key#__;,Key/%§§,Pair,Multi" + lineSeparator
+            + "v4|u3,{}\\,100 CND/AUD,<>|!§$%&/\"()=?: *'+#~;::." + lineSeparator,
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 }

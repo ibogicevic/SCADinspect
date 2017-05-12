@@ -12,7 +12,7 @@
       <metric>kg</metric>
       <value>12</value>
     </weight>
-    <url>https://example.com</url>
+    <url>https:example.com</url>
   </module>
   <module>
     <amount>1</amount>
@@ -26,6 +26,6 @@
       <metric>kg</metric>
       <value>200</value>
     </weight>
-    <url>https://example.com</url>
+    <url>https:example.com</url>
   </module>
 </testPath>
