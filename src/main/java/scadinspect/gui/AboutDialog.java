@@ -51,14 +51,14 @@ public class AboutDialog {
                     + "-Jonas Bernsdorff\n"
                     + "-Malcolm Malam\n"
                     + "-Desyon\n"
-                    + "-Romy Römke"
-                    + "-Jonas Balsfulland"
-                    + "-Romy Römke"
-                    + "-Felix Stegmaier"
-                    + "-Julian Schmidt"
-                    + "-Orhan Bilir"
-                    + "-Jokke Jansen"
-                    + "-Romy Römke"
+                    + "-Romy Römke\n"
+                    + "-Jonas Balsfulland\n"
+                    + "-Romy Römke\n"
+                    + "-Felix Stegmaier\n"
+                    + "-Julian Schmidt\n"
+                    + "-Orhan Bilir\n"
+                    + "-Jokke Jansen\n"
+                    + "-Romy Römke\n"
                     + "-Christoph Auf der Landwehr";
 
     private final static String thirdPartyContent =
