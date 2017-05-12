@@ -2,11 +2,8 @@ package scadinspect.gui;
 
 import java.util.prefs.BackingStoreException;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
@@ -15,14 +12,10 @@ import scadinspect.control.LogHandler;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import scadinspect.data.analysis.Issue;
-import java.util.prefs.Preferences;
 import scadinspect.data.scaddoc.ScadDocuFile;
 
 /**

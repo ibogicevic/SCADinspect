@@ -88,7 +88,5 @@ public class CodeAnalyzer {
         });
       }
     }).start();
-
   }
-
 }

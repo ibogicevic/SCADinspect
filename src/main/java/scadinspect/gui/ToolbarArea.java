@@ -127,6 +127,14 @@ public class ToolbarArea extends ToolBar {
               CodeAnalyzer.refresh(false, "");
                 Main.getInstance().tabArea.getDocumentationList().refresh();
             });
+
+            Main.getInstance().issueListFilter.getItems().clear();
+            if(Main.getInstance().tabArea.getSelectionModel().getSelectedItem().getText().equals("Documentation")){
+                Main.getInstance().issueListFilter.setItems(Main.getInstance().issueListFilter.getDocumentOptions());
+            } else {
+                Main.getInstance().issueListFilter.setItems(Main.getInstance().issueListFilter.getIssueOptions());
+            }
+            Main.getInstance().issueListFilter.setValue("Show all");
         });
 
         // set button icons
