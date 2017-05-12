@@ -6,11 +6,10 @@
  */
 package scadinspect.gui;
 
-        import javafx.scene.control.ButtonType;
-        import javafx.scene.control.Dialog;
-        import javafx.scene.control.ButtonBar.ButtonData;
-        import javafx.scene.layout.GridPane;
-
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.layout.GridPane;
 
 public class CheckersDialog {
 
@@ -23,7 +22,6 @@ public class CheckersDialog {
         Dialog<Boolean> dialog = new Dialog<>();
         dialog.setTitle("Checkers");
         dialog.setHeaderText("View checkers");
-
 
         // Set the button types.
         ButtonType okButton = new ButtonType("OK", ButtonData.CANCEL_CLOSE);
@@ -40,8 +38,5 @@ public class CheckersDialog {
         dialog.showAndWait();
         Main.getInstance().greyStack.toBack();
         Main.getInstance().greyStack.setVisible(false);
-
-
-
     }
 }

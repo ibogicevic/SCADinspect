@@ -26,8 +26,7 @@ import scadinspect.parser.generated.OpenScadParser;
  */
 public class CustomErrorOpenScadParser extends OpenScadParser {
 
-  Collection<Issue> errors = new ArrayList<>();
-
+  private final Collection<Issue> errors = new ArrayList<>();
   public static final String errorID = "E-002";
 
   //TODO use logger everywhere
@@ -53,15 +52,15 @@ public class CustomErrorOpenScadParser extends OpenScadParser {
     if(info instanceof ComplexSymbol) {
       ComplexSymbol cs = (ComplexSymbol)info;
       //get filename, code snippet is handled by parser function and the issue itself
-      errors.add(new Issue(Issue.issueType.ERROR, null, cs.getLeft().getLine() , this.errorID, message + " for input symbol \"" + cs.getName() /* + "\" spanning from " + cs.getLeft() + " to " + cs.getRight()*/));
+      errors.add(new Issue(Issue.IssueType.ERROR, null, cs.getLeft().getLine() , this.errorID, message + " for input symbol \"" + cs.getName() /* + "\" spanning from " + cs.getLeft() + " to " + cs.getRight()*/));
     } else if(info instanceof Symbol) {
         if(((Symbol)info).left != -1) {
-            errors.add(new Issue(Issue.issueType.ERROR, null, 0, this.errorID, message +  " at character " + ((Symbol)info).left + " of input"));
+            errors.add(new Issue(Issue.IssueType.ERROR, null, 0, this.errorID, message +  " at character " + ((Symbol)info).left + " of input"));
         } else {
-           errors.add(new Issue(Issue.issueType.ERROR, null, 0, this.errorID, message));
+           errors.add(new Issue(Issue.IssueType.ERROR, null, 0, this.errorID, message));
         }
     } else {
-        errors.add(new Issue(Issue.issueType.ERROR, null, 0, this.errorID, message));
+        errors.add(new Issue(Issue.IssueType.ERROR, null, 0, this.errorID, message));
     }
   }
 

@@ -27,23 +27,22 @@ import scadinspect.control.ProjectHandling;
 public class ToolbarArea extends ToolBar {
 
     // initialize buttons
-    VBox vbox = new VBox();
+    private final VBox vbox = new VBox();
+    private final Pane seperatorPane = new Pane();
+    private final MenuItem openFileButton = new MenuItem("Open file", loadIcon("open-folder-outline"));
+    private final MenuItem openFolderButton = new MenuItem("Open folder", loadIcon("open-folder-outline"));
+    private final SplitMenuButton openProjectButton = new SplitMenuButton(openFileButton, openFolderButton);
+    private final Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
+    private final Button settingsButton = new Button("Settings");
+    private final Hyperlink helpLink = new Hyperlink("Help");
+    private final Hyperlink aboutLink = new Hyperlink("About");
+    private final ProjectHandling projectHandler = new ProjectHandling();
+    private final Separator separator;
 
     public ProjectHandling getProjectHandler() {
         return projectHandler;
     }
 
-    Pane seperatorPane = new Pane();
-
-    private MenuItem openFileButton = new MenuItem("Open file", loadIcon("open-folder-outline"));
-    private MenuItem openFolderButton = new MenuItem("Open folder", loadIcon("open-folder-outline"));
-    private SplitMenuButton openProjectButton = new SplitMenuButton(openFileButton, openFolderButton);
-    private Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
-    private Button settingsButton = new Button("Settings");
-    private Hyperlink helpLink = new Hyperlink("Help");
-    private Hyperlink aboutLink = new Hyperlink("About");
-    private Separator separator = new Separator();
-    private ProjectHandling projectHandler = new ProjectHandling();
 
 
     /**
@@ -208,5 +207,4 @@ public class ToolbarArea extends ToolBar {
 
         }
     }
-
 }

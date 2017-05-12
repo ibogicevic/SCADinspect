@@ -9,10 +9,11 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import scadinspect.gui.SettingsDialog;
 
 /**
  * Created by nik, eric, lisa on 23.03.17.
- * CLass used to create new Logger Instance, initialize it and turn it off by default.
+ * Class used to create new Logger Instance, initialize it and turn it off by default.
  * If Logging level has already been set, restore this information from Preferences.
  * If Log-File size exceeds 50 000 bytes, create new file
  */
@@ -20,7 +21,7 @@ import java.util.prefs.Preferences;
 
 public class LogHandler extends Logger {
 
-  private static Handler fileHandler;
+  private Handler fileHandler;
   // Max file size in bytes -> 50.000 characters
   private final long MAX_FILE_SIZE = 50000;
   private final String logFileNameBase = "log_";
@@ -44,7 +45,7 @@ public class LogHandler extends Logger {
   /**
    * Method destroying the filehandler when main application is closed
    */
-  public static void shutdown() {
+  public void shutdown() {
     if (fileHandler != null) {
       fileHandler.close();
     }
@@ -52,17 +53,16 @@ public class LogHandler extends Logger {
   }
 
   /**
-   * Mehtod to initialize the LogHandler
+   * Method to initialize the LogHandler
    */
   private void init() {
 
     // Read and set log level from user preferences
     Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
-    Level logLevel = null;
 
     //if not existing in preferences, default 0 = none
-    Integer set_level = userPrefs.getInt("LOG_LEVEL", 0);
-    logLevel = Level.parse(set_level.toString());
+    Integer setLevel = userPrefs.getInt(SettingsDialog.SETTING_LOG_LEVEL, 0);
+    Level logLevel = Level.parse(setLevel.toString());
 
     this.setLevel(logLevel);
 
@@ -83,21 +83,17 @@ public class LogHandler extends Logger {
     }
     //If log level is set to NONE (=0), no logfile should be created, else create handler pointing to logfile
 
-    if (set_level != 0){
-      // setup file output
-      fileHandler = null;
+    if (setLevel != 0){
       try {
         // filename is combination of log_ + nr of next logfile + .log
         fileHandler = new FileHandler(logFileNameBase + logFileCount + ".log", true);
+        fileHandler.setFormatter(new SimpleFormatter());
+        // add filehandler to current logger
+        this.addHandler(fileHandler);
       } catch (IOException e) {
         this.warning("Could not get file handler.");
       }
-      fileHandler.setFormatter(new SimpleFormatter());
-
-      // add filehandler to current logger
-      this.addHandler(fileHandler);
     }
-
   }
 
   /**
@@ -113,14 +109,12 @@ public class LogHandler extends Logger {
     for (File fileEntry : folder.listFiles()) {
       String fileName = fileEntry.getName();
 
-      if (fileName.startsWith("log_")) {
+      if (fileName.startsWith(logFileNameBase)) {
         // extract nr of logfile from its name
-        String str1 = (fileName.split("_")[1]).split("\\.")[0];
-        int currentNumber = Integer.parseInt(str1);
-        //search for largest number
-        if (currentNumber > numberOfLogs) {
-          numberOfLogs = currentNumber;
-        }
+        String str1 = fileName.substring(logFileNameBase.length() + 1).split("\\.")[0];
+        try {  
+          numberOfLogs = Math.max(numberOfLogs, Integer.parseInt(str1));
+        } catch(NumberFormatException e) {}//Not conforming to our log format, probably not our file
       }
     }
     return numberOfLogs;

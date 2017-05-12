@@ -24,10 +24,21 @@ public class FileSearchRunnable extends PausableRunnable {
     private final Queue<File> check = new LinkedList<>();
     private final boolean recursive;
 
+    /**
+     * 
+     * @param dir The root directory where the FileSearchRunnable starts searching
+     * @param filter FileFilter specifying which Files get collected
+     */
     public FileSearchRunnable(File dir, FileFilter filter) {
         this(dir, filter, true);
     }
 
+    /**
+     * 
+     * @param dir The root directory where the FileSearchRunnable starts searching
+     * @param filter FileFilter specifying which Files get collected
+     * @param recursive default true
+     */
     public FileSearchRunnable(File dir, FileFilter filter, boolean recursive) {
         this.check.offer(dir);
         this.filter = filter;

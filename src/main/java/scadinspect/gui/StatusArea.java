@@ -17,9 +17,8 @@ import javafx.scene.layout.BorderPane;
 
 public class StatusArea extends BorderPane {
 
-  private StatusArea instance = null;
-  private Label textMessage;
-  private ProgressBar progressBar = null;
+  private final Label textMessage;
+  private final ProgressBar progressBar;
   private float progress;
 
   /**
@@ -27,56 +26,12 @@ public class StatusArea extends BorderPane {
    */
   public StatusArea() {
     textMessage = new Label();
-
     progressBar = new ProgressBar(0);
     progressBar.setVisible(false);
-
     setLeft(textMessage);
     setRight(progressBar);
-
     setPadding(new Insets(5f, 30f, 5f, 30f));
   }
-
-  /**
-   * Function for simulating progress over time, using a thread.
-   */
-  public void simulateProgress() {
-    textMessage.setText("Refreshing...");
-    progressBar.setVisible(true);
-
-    progress = 0;
-
-    Thread t = new Thread(new ProgressThread());
-
-    t.start();
-  }
-
-  /**
-   * Thread for progress simulation.
-   */
-  private class ProgressThread implements Runnable {
-
-    public void run() {
-
-      for (int i = 0; i < 100; i++) {
-        progress += 0.01;
-        progressBar.setProgress(progress);
-        try {
-          Thread.sleep(50);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-      }
-
-      progressBar.setVisible(false);
-
-      Platform.runLater(() -> {
-        textMessage.setText("Done refreshing!");
-      });
-
-    }
-  }
-
 
   public String getMessage() {
     return textMessage.getText();
@@ -100,6 +55,4 @@ public class StatusArea extends BorderPane {
       textMessage.setVisible(true);
     });
   }
-
-
 }

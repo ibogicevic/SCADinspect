@@ -21,7 +21,6 @@ public class SettingsDialog {
     public static final String SETTING_DOCUMENTATION = "SET_DOCUMENTATION";
     public static final String SETTING_AUTOREFRESH = "SET_AUTOREFRESH";
     
-    
     public static void openDialog(){
 
         Main.getInstance().greyStack.toFront();
@@ -30,7 +29,7 @@ public class SettingsDialog {
 
         Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
 
-        final Dialog<ButtonType> dialog = new Dialog<>();
+        Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Settings");
         dialog.setHeaderText(null);
            
@@ -73,7 +72,6 @@ public class SettingsDialog {
         documentation.setSelected(userPrefs.getBoolean(SettingsDialog.SETTING_DOCUMENTATION, true));
         codeAnalysis.setSelected(userPrefs.getBoolean(SettingsDialog.SETTING_STATIC_ANALYSIS, true));
         loggingCombo.getSelectionModel().select(userPrefs.getInt(SettingsDialog.SETTING_LOG_LEVEL, 0));
-
 
         // Load contents in dialog
         dialog.getDialogPane().setContent(grid);

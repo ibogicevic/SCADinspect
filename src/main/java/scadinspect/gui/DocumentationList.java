@@ -26,12 +26,10 @@ import scadinspect.data.scaddoc.properties.helper.Pair;
 public class DocumentationList {
 
   //TableView of Documentation List
-  private TableView<ObservableList<String>> docTableView = new TableView<ObservableList<String>>();
-  Map<String, String> headerValueMap = new TreeMap<>();
-
+  private final TableView<ObservableList<String>> docTableView = new TableView<>();
+  private final Map<String, String> headerValueMap = new TreeMap<>();
   //Data structure with associated data for documentation List
   private List<ScadDocuFile> parsedDocFiles;
-
   private int columnCount = 0;
 
   /**
@@ -58,15 +56,11 @@ public class DocumentationList {
       //add all other headers (sorted by treeset)
       for (String header : headerList) {
         addColumn(columnCount, header);
-
         //initialize map with headers mapped to nothing
         headerValueMap.put(header, null);
       }
-
-      //
       generateRows();
     }
-
     //resize columns, has to be called after all columns have been added
     docTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     return docTableView;
@@ -83,8 +77,8 @@ public class DocumentationList {
     // create new column
     TableColumn<ObservableList<String>, String> column = new TableColumn<>(columnName);
     //set cell value factory to allow dynamic additions
-    column
-        .setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().get(colIndex)));
+    column.setCellValueFactory(param -> 
+            new ReadOnlyObjectWrapper<>(param.getValue().get(colIndex)));
 
     //add the creted colum to the list of existing columns
     docTableView.getColumns().add(column);
