@@ -13,6 +13,7 @@ import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
+import scadinspect.data.scaddoc.properties.helper.Pair;
 
 /**
  * @author Desyon on 21.04.2017.
@@ -490,5 +491,109 @@ class HtmlExporterTest {
             + "  </body>" + lineSeparator
             + "</html>" + lineSeparator,
         new String(exporter.getOutput(files), "UTF-8"));
+  }
+
+  @Test
+  void tormentModule() throws Exception {
+    Module torment = new Module();
+
+    torment.addProperty(new SingleProperty<>("Key#__;", "v4|u3"));
+    torment.addProperty(new SingleProperty<>("Key/%§§", "{[]}\\"));
+    torment.addProperty(new PairProperty<>("Pair", new Pair<>("100", "CND/AUD")));
+    torment.addProperty(new MultiProperty<>("Multi", "<>|!§$%&/\"()=?", "*'+#~;:,."));
+
+    Module tormentSquared = torment;
+    modules.add(torment);
+    modules.add(tormentSquared);
+
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
+    ScadDocuFile fileSquared = file;
+
+    List<ScadDocuFile> files = new ArrayList<>();
+    files.add(file);
+    files.add(fileSquared);
+
+    assertEquals("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"" + lineSeparator
+            + "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" + lineSeparator
+            + "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + lineSeparator
+            + "  <head>" + lineSeparator
+            + "    <style type=\"text/css\">" + lineSeparator
+            + "      table {" + lineSeparator
+            + "        font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;" + lineSeparator
+            + "        border-collapse: collapse;" + lineSeparator
+            + "        margin-bottom: 15px;" + lineSeparator
+            + "      }" + lineSeparator
+            + lineSeparator
+            + "      td, th {" + lineSeparator
+            + "        border: 1px solid #ddd;" + lineSeparator
+            + "        padding: 8px;" + lineSeparator
+            + "      }" + lineSeparator
+            + lineSeparator
+            + "      tr:nth-child(even){background-color: #f2f2f2;}" + lineSeparator
+            + "      tr:hover {background-color: #ddd;}" + lineSeparator
+            + lineSeparator
+            + "      th {" + lineSeparator
+            + "        padding-top: 12px;" + lineSeparator
+            + "        padding-bottom: 12px;" + lineSeparator
+            + "        text-align: center;" + lineSeparator
+            + "        background-color: #4CAF50;" + lineSeparator
+            + "        color: white;" + lineSeparator
+            + "      }"
+            + lineSeparator
+            + "    </style>" + lineSeparator
+            + "    <title>Parts Documentation</title>" + lineSeparator
+            + "  </head>" + lineSeparator
+            + "  <body>" + lineSeparator
+            + "    <table>" + lineSeparator
+            + "      <thead>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <th>Key#__;</th>" + lineSeparator
+            + "          <th>Key/%§§</th>" + lineSeparator
+            + "          <th>Pair</th>" + lineSeparator
+            + "          <th>Multi</th>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </thead>" + lineSeparator
+            + "      <tbody>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <td>v4|u3</td>" + lineSeparator
+            + "          <td>{[]}\\</td>" + lineSeparator
+            + "          <td>100 CND/AUD</td>" + lineSeparator
+            + "          <td>&lt;&gt;|!§$%&amp;/\"()=?, *'+#~;:,.</td>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <td>v4|u3</td>" + lineSeparator
+            + "          <td>{[]}\\</td>" + lineSeparator
+            + "          <td>100 CND/AUD</td>" + lineSeparator
+            + "          <td>&lt;&gt;|!§$%&amp;/\"()=?, *'+#~;:,.</td>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </tbody>" + lineSeparator
+            + "    </table>" + lineSeparator
+            + "    <table>" + lineSeparator
+            + "      <thead>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <th>Key#__;</th>" + lineSeparator
+            + "          <th>Key/%§§</th>" + lineSeparator
+            + "          <th>Pair</th>" + lineSeparator
+            + "          <th>Multi</th>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </thead>" + lineSeparator
+            + "      <tbody>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <td>v4|u3</td>" + lineSeparator
+            + "          <td>{[]}\\</td>" + lineSeparator
+            + "          <td>100 CND/AUD</td>" + lineSeparator
+            + "          <td>&lt;&gt;|!§$%&amp;/\"()=?, *'+#~;:,.</td>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "        <tr>" + lineSeparator
+            + "          <td>v4|u3</td>" + lineSeparator
+            + "          <td>{[]}\\</td>" + lineSeparator
+            + "          <td>100 CND/AUD</td>" + lineSeparator
+            + "          <td>&lt;&gt;|!§$%&amp;/\"()=?, *'+#~;:,.</td>" + lineSeparator
+            + "        </tr>" + lineSeparator
+            + "      </tbody>" + lineSeparator
+            + "    </table>" + lineSeparator
+            + "  </body>" + lineSeparator
+            + "</html>" + lineSeparator,
+            new String(exporter.getOutput(files), "UTF-8"));
   }
 }

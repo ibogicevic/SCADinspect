@@ -23,7 +23,7 @@ import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.Property;
 
-public class XmlExporter extends MarkupExporter {
+public class XmlExporter implements Exporter {
 
   /**
    * Creates and returns a XML String from the given ScadDocuFile analog to the specified
@@ -35,7 +35,6 @@ public class XmlExporter extends MarkupExporter {
    * @throws TransformerException Specifies an exceptional condition that occurred during the
    * transformation process.
    */
-  @Override
   public byte[] getOutput(ScadDocuFile file)
       throws ParserException, ParserConfigurationException, TransformerException {
     // root elements
@@ -61,7 +60,6 @@ public class XmlExporter extends MarkupExporter {
    * @throws TransformerException Specifies an exceptional condition that occurred during the
    * transformation process.
    */
-  @Override
   public byte[] getOutput(Collection<ScadDocuFile> files)
       throws ParserConfigurationException, TransformerException {
     // root elements
@@ -167,5 +165,27 @@ public class XmlExporter extends MarkupExporter {
 
     //return XML String + do some **magic**
     return sw.getBuffer().toString();
+  }
+
+  /**
+   * Escapes all characters not allowed in XML
+   *
+   * @param string The string to be escaped
+   * @return The escaped input
+   */
+  private String escapeSpecialCharacters(String string) {
+    return string
+        .replaceAll("[ÄÀÁÂÃÅ]", "A")
+        .replaceAll("[àáâãä]", "a")
+        .replaceAll("[ÈÉÊË]", "E")
+        .replaceAll("[èéêë]", "e")
+        .replaceAll("[ÌÍÎÏ]", "I")
+        .replaceAll("[ìíîï]", "i")
+        .replaceAll("[ÒÓÔÕÖØ]", "O")
+        .replaceAll("[ðòóôõöø]", "o")
+        .replaceAll("[ÙÚÛÜ]", "U")
+        .replaceAll("[ùúûü]", "u")
+        .replaceAll("ß", "ss")
+        .replaceAll("&|\\[|<|>|]|\\|\"|\\||!|\"|\'|§|$|%|\\(|\\)|;|\\?|\\^|°|#|\\\\|/", "");
   }
 }

@@ -25,7 +25,7 @@ import scadinspect.data.scaddoc.properties.Property;
  * @author eric, Desyon on 31.03.17.
  */
 
-public class HtmlExporter extends MarkupExporter {
+public class HtmlExporter implements Exporter{
 
   /**
    * Creates and returns an HTML as a byte array from the given ScadDocuFile according to the
@@ -37,7 +37,6 @@ public class HtmlExporter extends MarkupExporter {
    * @throws TransformerException Specifies an exceptional condition that occurred during the
    * transformation process.
    */
-  @Override
   public byte[] getOutput(ScadDocuFile file)
       throws ParserConfigurationException, TransformerException {
     Document doc = getDoc();
@@ -75,7 +74,6 @@ public class HtmlExporter extends MarkupExporter {
    * @throws TransformerException Specifies an exceptional condition that occurred during the
    * transformation process.
    */
-  @Override
   public byte[] getOutput(Collection<ScadDocuFile> files)
       throws ParserConfigurationException, TransformerException {
     Document doc = getDoc();
