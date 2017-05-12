@@ -131,7 +131,15 @@ public class AboutDialog {
                     + "-Jonas Bernsdorff\n"
                     + "-Malcolm Malam\n"
                     + "-Desyon\n"
-                    + "-Romy Römke";
+                    + "-Romy Römke"
+                    + "-Jonas Balsfulland"
+                    + "-Romy Römke"
+                    + "-Felix Stegmaier"
+                    + "-Julian Schmidt"
+                    + "-Orhan Bilir"
+                    + "-Jokke Jansen"
+                    + "-Romy Römke"
+                    + "-Christoph Auf der Landwehr";
 
     final static String Text3 =
             "Third Party Artefacts\n" +
