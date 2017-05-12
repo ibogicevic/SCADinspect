@@ -5,8 +5,6 @@ package scadinspect.data.scaddoc.export.format;
  */
 
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Collection;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -25,7 +23,7 @@ import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.Property;
 
-public class XmlExporter implements Exporter {
+public class XmlExporter extends MarkupExporter {
 
   /**
    * Creates and returns a XML String from the given ScadDocuFile analog to the specified
@@ -41,8 +39,8 @@ public class XmlExporter implements Exporter {
   public byte[] getOutput(ScadDocuFile file)
       throws ParserException, ParserConfigurationException, TransformerException {
     // root elements
-    Document doc         = getDoc();
-    Element  rootElement = doc.createElement(file.getPath().toString());
+    Document doc = getDoc();
+    Element rootElement = doc.createElement(file.getPath().toString());
     doc.appendChild(rootElement);
 
     for (Module module : file.getModules()) {
@@ -67,8 +65,8 @@ public class XmlExporter implements Exporter {
   public byte[] getOutput(Collection<ScadDocuFile> files)
       throws ParserConfigurationException, TransformerException {
     // root elements
-    Document doc         = getDoc();
-    Element  rootElement = doc.createElement("files");
+    Document doc = getDoc();
+    Element rootElement = doc.createElement("files");
     doc.appendChild(rootElement);
 
     for (ScadDocuFile file : files) {
@@ -98,7 +96,7 @@ public class XmlExporter implements Exporter {
 
     for (Property property : properties) {
       Element key = document.createElement(escapeSpecialCharacters(property.getKey()));
-      String  value;
+      String value;
       if (property instanceof PairProperty) {
         // Create metric and value keys for PairProperty
         PairProperty temp = (PairProperty) property;
@@ -134,7 +132,7 @@ public class XmlExporter implements Exporter {
    */
   private Document getDoc() throws ParserConfigurationException {
     DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder        docBuilder = docFactory.newDocumentBuilder();
+    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
     // root elements
     return docBuilder.newDocument();
@@ -151,7 +149,7 @@ public class XmlExporter implements Exporter {
   private String transform(Document doc) throws TransformerException {
     // create transformer for beautifying XML
     TransformerFactory transformerFactory = TransformerFactory.newInstance();
-    Transformer        transformer        = transformerFactory.newTransformer();
+    Transformer transformer = transformerFactory.newTransformer();
 
     //configure the transformer
     transformer.setOutputProperty(OutputKeys.METHOD, "xml");
@@ -162,34 +160,12 @@ public class XmlExporter implements Exporter {
     DOMSource source = new DOMSource(doc);
 
     //write out beautified XML
-    StringWriter sw     = new StringWriter();
+    StringWriter sw = new StringWriter();
     StreamResult result = new StreamResult(sw);
 
     transformer.transform(source, result);
 
     //return XML String + do some **magic**
     return sw.getBuffer().toString();
-  }
-
-  /**
-   * Escapes all characters not allowed in XML
-   *
-   * @param string The string to be escaped
-   * @return The escaped input
-   */
-  private static String escapeSpecialCharacters(String string) {
-    return string
-        .replaceAll("[ÄÀÁÂÃÅ]","A")
-        .replaceAll("[àáâãä]","a")
-        .replaceAll("[ÈÉÊË]","E")
-        .replaceAll("[èéêë]","e")
-        .replaceAll("[ÌÍÎÏ]","I")
-        .replaceAll("[ìíîï]","i")
-        .replaceAll("[ÒÓÔÕÖØ]","O")
-        .replaceAll("[ðòóôõöø]","o")
-        .replaceAll("[ÙÚÛÜ]","U")
-        .replaceAll("[ùúûü]","u")
-        .replaceAll("ß","ss")
-        .replaceAll("&|\\[|<|>|]|\\|\"|\\||!|\"|\'|§|$|%|\\(|\\)|;|\\?|\\^|°|#|\\\\|/","");
   }
 }

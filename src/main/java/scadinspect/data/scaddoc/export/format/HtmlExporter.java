@@ -25,7 +25,7 @@ import scadinspect.data.scaddoc.properties.Property;
  * @author eric, Desyon on 31.03.17.
  */
 
-public class HtmlExporter implements Exporter {
+public class HtmlExporter extends MarkupExporter {
 
   /**
    * Creates and returns an HTML as a byte array from the given ScadDocuFile according to the
@@ -284,5 +284,4 @@ public class HtmlExporter implements Exporter {
     style.appendChild(content);
     head.appendChild(style);
   }
-
 }
