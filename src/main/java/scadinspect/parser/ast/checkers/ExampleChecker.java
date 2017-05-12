@@ -1,6 +1,7 @@
 package scadinspect.parser.ast.checkers;
 
 import java.util.Collections;
+import scadinspect.checkers.Checker;
 import scadinspect.data.analysis.Issue;
 import scadinspect.data.analysis.Issue.IssueType;
 import scadinspect.parser.ast.ASTNode;
