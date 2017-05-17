@@ -9,7 +9,7 @@ import scadinspect.data.analysis.Issue;
  *
  * @see scadinspect.parser.CustomErrorOpenScadParser
  *
- * Can be tranformed into a Issue unsing
+ * Can be tranformed into a Issue using
  * @see ParserException#toIssue()
  *
  * Always has the generic Issue Id defined by
@@ -18,15 +18,12 @@ import scadinspect.data.analysis.Issue;
 public class ParserException extends Exception {
 
   private final String defaultIssueId = "E-000";
-
   private final String file;
+  private final String info;
   private final int line;
   private final int column;
-  private final String info;
-
 
   /**
-
    *
    * @param info the info for the Issue
    * @param file the file associated
@@ -76,8 +73,7 @@ public class ParserException extends Exception {
   public Issue toIssue() {
     // code snippet can be found later
     // filename will be inserted by Parser.parse()
-    return new Issue(Issue.issueType.ERROR, this.getFile(), this.getLine(), this.getIssueId(),
+    return new Issue(Issue.IssueType.ERROR, this.getFile(), this.getLine(), this.getIssueId(),
         this.getInfo());
   }
-
 }

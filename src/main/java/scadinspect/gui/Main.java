@@ -12,13 +12,10 @@ import scadinspect.control.LogHandler;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.prefs.Preferences;
 import scadinspect.data.scaddoc.ScadDocuFile;
 
 /**
@@ -47,7 +44,8 @@ public class Main extends Application {
     /**
      * Pre-configured logger that outputs to  *
      */
-    private LogHandler logHandler = null;
+    private LogHandler logHandler;
+    
 
     // singleton pattern
     private static Main instance;
@@ -55,7 +53,6 @@ public class Main extends Application {
     public static Main getInstance() {
         return instance;
     }
-
 
     // gui areas
     public ToolbarArea toolbarArea = new ToolbarArea();
@@ -92,10 +89,17 @@ public class Main extends Application {
 
     private List<ScadDocuFile> docuFiles;
 
+    /**
+     * Gives the list of documentation data files
+     * @return list of documentation data files
+     */
     public List<ScadDocuFile> getDocuFiles() {
         return docuFiles;
     }
 
+    /**
+     * Sets the list of documentation data files
+     */
     public void setDocuFiles(List<ScadDocuFile> docuFiles) {
         this.docuFiles = docuFiles;
     }
@@ -109,6 +113,7 @@ public class Main extends Application {
         try {
             logger = logHandler.getLogger();
         } catch (IOException|BackingStoreException e) {
+            //TODO Use logger
             e.printStackTrace();
         }
 
@@ -156,10 +161,8 @@ public class Main extends Application {
         /**
          * Necessary for destroying the logfilehandler before closing the application
          */
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            public void run() {
-                LogHandler.shutdown();
-            }
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            logHandler.shutdown();
         }, "Shutdown-thread"));
     }
 
@@ -190,6 +193,6 @@ public class Main extends Application {
      * @param args unused
      */
     public static void main(String[] args) {
-            launch(args);
+        launch(args);
     }
 }

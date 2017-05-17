@@ -15,27 +15,16 @@ import scadinspect.data.analysis.Issue;
 
 public class IssueList {
 
-    private TableView<Issue> issueList = new TableView<>();
-
+    private final TableView<Issue> issueList = new TableView<>();
     private final ObservableList<Issue> issueData = FXCollections.observableArrayList();
-
-    private IssueTableColumn typeCol = new IssueTableColumn("type");
-    private IssueTableColumn lineNumberCol = new IssueTableColumn("#");
-    private IssueTableColumn issueIdentifierCol = new IssueTableColumn("Identifier");
-    private IssueTableColumn descriptionCol = new IssueTableColumn("Description");
-    private IssueTableColumn codeSnippedCol = new IssueTableColumn("Preview");
-    private IssueTableColumn resourcesCol = new IssueTableColumn("Source File");
+    private final IssueTableColumn typeCol = new IssueTableColumn("type");
+    private final IssueTableColumn lineNumberCol = new IssueTableColumn("#");
+    private final IssueTableColumn issueIdentifierCol = new IssueTableColumn("Identifier");
+    private final IssueTableColumn descriptionCol = new IssueTableColumn("Description");
+    private final IssueTableColumn codeSnippedCol = new IssueTableColumn("Preview");
+    private final IssueTableColumn resourcesCol = new IssueTableColumn("Source File");
 
     public TableView showList() {
-
-        /* Dummy Data */
-        ArrayList<Issue> issues = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Issue curr = new Issue(Issue.issueType.WARNING, null, 15+i, "randomIdentifier" + i, "description" + i);
-            issues.add(i, curr);
-        }
-        addDataToTable(issues);
-
 
         /* Table Configuration */
         issueList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -64,29 +53,28 @@ public class IssueList {
 
         /* Value Factories */
         typeCol.setCellValueFactory(
-                new PropertyValueFactory<Issue, String>("type")
+                new PropertyValueFactory<>("type")
         );
 
         lineNumberCol.setCellValueFactory(
-                new PropertyValueFactory<Issue, Integer>("lineNumber")
+                new PropertyValueFactory<>("lineNumber")
         );
 
         issueIdentifierCol.setCellValueFactory(
-                new PropertyValueFactory<Issue, String>("issueIdentifier")
+                new PropertyValueFactory<>("issueIdentifier")
         );
 
         descriptionCol.setCellValueFactory(
-                new PropertyValueFactory<Issue, String>("description")
+                new PropertyValueFactory<>("description")
         );
 
         codeSnippedCol.setCellValueFactory(
-                new PropertyValueFactory<Issue, String>("codeSnippet")
+                new PropertyValueFactory<>("codeSnippet")
         );
 
         resourcesCol.setCellValueFactory(
-                new PropertyValueFactory<Issue, String>("sourceFile")
+                new PropertyValueFactory<>("sourceFile")
         );
-
 
         // Set Items and add all columns
         issueList.setItems(issueData);
@@ -105,5 +93,3 @@ public class IssueList {
         issueList.getItems().clear();
     }
 }
-
-

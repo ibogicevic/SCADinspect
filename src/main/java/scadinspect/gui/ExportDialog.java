@@ -1,23 +1,28 @@
 package scadinspect.gui;
 
 import java.io.File;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Dialog;
+import java.util.Optional;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
-import java.util.Optional;
 import scadinspect.data.scaddoc.error.FileExportException;
 import scadinspect.data.scaddoc.export.FileExport;
 import scadinspect.data.scaddoc.export.format.ExportFormat;
 
+/**
+ * author simon
+ */
 public class ExportDialog {
 
+  /**
+   * Opens the export dialog, select extension, show save File dialog, save file
+   */
   public static void openDialog() {
-    Dialog<Boolean> dialog = new Dialog<>();
+    Dialog<ButtonType> dialog = new Dialog<>();
     dialog.setTitle("Export");
     dialog.setHeaderText(null);
 
@@ -46,6 +51,18 @@ public class ExportDialog {
     RadioButton md = new RadioButton("Markdown");
     md.setToggleGroup(group);
 
+    //listen for changes in selection of radioButtons
+    group.selectedToggleProperty().addListener((ov, oldToggle, newToggle) -> {
+      //enable Ok button if something was selected
+      if (group.getSelectedToggle() != null) {
+        dialog.getDialogPane().lookupButton(ButtonType.OK).setDisable(false);
+      }
+      //shouldn't be necessary, for safety implemented if selection gets cleared
+      else {
+        dialog.getDialogPane().lookupButton(ButtonType.OK).setDisable(true);
+      }
+    });
+
     vBox.getChildren().add(excel);
     vBox.getChildren().add(csv);
     vBox.getChildren().add(json);
@@ -53,54 +70,54 @@ public class ExportDialog {
     vBox.getChildren().add(pdf);
     vBox.getChildren().add(md);
 
+    //display export Dialog
     dialog.getDialogPane().setContent(vBox);
-
     dialog.initModality(Modality.APPLICATION_MODAL);
+    Optional<ButtonType> result = dialog.showAndWait();
 
-    Optional<Boolean> result = dialog.showAndWait();
+    //if dialog is closed by Ok button (something has to be selected)
+    if (result.get() == ButtonType.OK) {
 
-    FileChooser fileChooser = new FileChooser();
-    File exportFile = fileChooser.showSaveDialog(Main.getInstance().getPrimaryStage());
+      //display file chooser
+      FileChooser fileChooser = new FileChooser();
+      File exportFile = fileChooser.showSaveDialog(Main.getInstance().getPrimaryStage());
 
-    if (exportFile != null) {
-
-      String pathWithoutExtension = exportFile.getAbsolutePath();
-      FileExport exporter = new FileExport();
-      try {
-        if (excel.isSelected()) {
-          exporter.save(ExportFormat.XSXL, Main.getInstance().getDocuFiles(),
-              pathWithoutExtension + ".xsxl");
+      //check if fileChooser got a result
+      if (exportFile != null) {
+        String pathWithoutExtension = exportFile.getAbsolutePath();
+        FileExport exporter = new FileExport();
+        try {
+          File exported;  //save exported file for later reference
+          //switch for radio buttons
+          if (excel.isSelected()) {
+            exported = exporter.save(ExportFormat.EXCEL, Main.getInstance().getDocuFiles(),
+                pathWithoutExtension + ".xsxl");
+          } else if (csv.isSelected()) {
+            exported = exporter.save(ExportFormat.CSV, Main.getInstance().getDocuFiles(),
+                pathWithoutExtension + ".csv");
+          } else if (json.isSelected()) {
+            exported = exporter.save(ExportFormat.JSON, Main.getInstance().getDocuFiles(),
+                pathWithoutExtension + ".json");
+          } else if (xml.isSelected()) {
+            exported = exporter.save(ExportFormat.XML, Main.getInstance().getDocuFiles(),
+                pathWithoutExtension + ".xml");
+          } else if (pdf.isSelected()) {
+            exported = exporter.save(ExportFormat.PDF, Main.getInstance().getDocuFiles(),
+                pathWithoutExtension + ".pdf");
+          } else if (md.isSelected()) {
+            exported = exporter.save(ExportFormat.MD, Main.getInstance().getDocuFiles(),
+                pathWithoutExtension + ".md");
+          } else {   //shouldn't happen, but default is pdf
+            exported = exporter.save(ExportFormat.PDF, Main.getInstance().getDocuFiles(),
+                pathWithoutExtension + ".pdf");
+          }
+          Main.getInstance().statusArea.setMessage("Saved as " + exported.getAbsolutePath());
+        } catch (FileExportException e) {
+          Main.getInstance().statusArea.setMessage("Error in Export: "+e.getCause());
+          e.printStackTrace();
+          //TODO use Logger
         }
-        if (csv.isSelected()) {
-          exporter.save(ExportFormat.CSV, Main.getInstance().getDocuFiles(),
-              pathWithoutExtension + ".csv");
-        }
-        if (json.isSelected()) {
-          exporter.save(ExportFormat.JSON, Main.getInstance().getDocuFiles(),
-              pathWithoutExtension + ".json");
-        }
-        if (xml.isSelected()) {
-          System.out.println(Main.getInstance().getDocuFiles());
-          exporter.save(ExportFormat.XML, Main.getInstance().getDocuFiles(),
-              pathWithoutExtension + ".xml");
-        }
-        if (pdf.isSelected()) {
-          System.out.println(Main.getInstance().getDocuFiles());
-          exporter.save(ExportFormat.PDF, Main.getInstance().getDocuFiles(),
-              pathWithoutExtension + ".pdf");
-        }
-        if (md.isSelected()) {
-          System.out.println(Main.getInstance().getDocuFiles());
-          exporter.save(ExportFormat.MD, Main.getInstance().getDocuFiles(),
-              pathWithoutExtension + ".md");
-        }
-      } catch (FileExportException e) {
-        e.printStackTrace();
-        System.out.println(e.getCause());
-
       }
     }
-
   }
-
 }

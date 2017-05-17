@@ -9,8 +9,8 @@ import javafx.stage.Screen;
  * @author Tim Walter
  */
 public class IssueTableColumn<S,T> extends TableColumn<S, T> {
-    private SimpleDoubleProperty percentWidth = new SimpleDoubleProperty();
-    private Double screenWidth = Screen.getPrimary().getVisualBounds().getWidth() * 0.9;
+    private final SimpleDoubleProperty percentWidth = new SimpleDoubleProperty();
+    private final Double screenWidth = Screen.getPrimary().getVisualBounds().getWidth() * 0.9;
 
     public IssueTableColumn(String columnName){
         super(columnName);
@@ -24,9 +24,7 @@ public class IssueTableColumn<S,T> extends TableColumn<S, T> {
         return percentWidth.get();
     }
 
-    public void setPercentWidth(double percent) {
-        Double percentWidth = screenWidth * percent;
-
-        this.percentWidth.set(percentWidth);
+    public void setPercentWidth(double percent) {;
+        this.percentWidth.set(screenWidth * percent);
     }
 }

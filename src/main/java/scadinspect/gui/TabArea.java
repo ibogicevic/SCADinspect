@@ -1,5 +1,6 @@
 package scadinspect.gui;
 
+import java.util.prefs.Preferences;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
@@ -12,11 +13,10 @@ import javafx.scene.control.TableView;
  */
 public class TabArea extends TabPane {
 
-  private IssueList issueList = new IssueList();
-  private DocumentationList documentationList = new DocumentationList();
+  private final IssueList issueList = new IssueList();
+  private final DocumentationList documentationList = new DocumentationList();
 
-  private Tab issues;
-  private Tab documentation;
+  private final Tab issues, documentation;
 
   public TabArea() {
 
@@ -36,9 +36,15 @@ public class TabArea extends TabPane {
     documentation.setText("Documentation");
     documentation.setContent(documentations); //SET CONTENT FOR documentationArea HERE
 
+    Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");    
+    
     this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-    this.getTabs().add(issues);
-    this.getTabs().add(documentation);
+    if(userPrefs.getBoolean(SettingsDialog.SETTING_STATIC_ANALYSIS, true)) {
+      this.getTabs().add(issues);
+    }
+    if(userPrefs.getBoolean(SettingsDialog.SETTING_DOCUMENTATION, true)) {
+      this.getTabs().add(documentation);
+    }
   }
 
   private TableView generateIssueTable(IssueList issueList) {
@@ -47,7 +53,7 @@ public class TabArea extends TabPane {
   }
 
   public TableView generateDocTable(DocumentationList documentationList) {
-    TableView table = documentationList.generateList();
+    TableView table = documentationList.generateTableView();
     return table;
   }
 

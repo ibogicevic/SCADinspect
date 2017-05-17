@@ -13,6 +13,7 @@ import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
+import scadinspect.data.scaddoc.properties.helper.Pair;
 
 /**
  * @author Desyon on 07.04.2017.
@@ -189,5 +190,27 @@ class MdExporterTest {
             + "value1|" + lineSeparator
             + "|value2" + lineSeparator,
         new String(exporter.getOutput(files), "UTF-8"));
+  }
+
+  @Test
+  void tormentModule() throws Exception {
+    Module torment = new Module();
+
+    torment.addProperty(new SingleProperty<>("Key#__;", "v4|u3"));
+    torment.addProperty(new SingleProperty<>("Key/%§§", "{[]}\\"));
+    torment.addProperty(new PairProperty<>("Pair", new Pair<>("100", "CND/AUD")));
+    torment.addProperty(new MultiProperty<>("Multi", "<>|!§$%&/\"()=?", "*'+#~;:,."));
+
+    modules.add(torment);
+
+    ScadDocuFile file = new ScadDocuFile(Paths.get("testPath"), modules);
+
+    assertEquals("# Parts Documentation" + lineSeparator
+            + "" + lineSeparator
+            + "## testPath" + lineSeparator
+            + "Key#__;|Key/%§§|Pair|Multi" + lineSeparator
+            + "-------|-------|----|-----" + lineSeparator
+            + "v4;u3|{}\\|100 CND/AUD|<>;!§$%&/\"()=?, *'+#~;:,." + lineSeparator,
+        new String(exporter.getOutput(file), "UTF-8"));
   }
 }

@@ -17,5 +17,4 @@ public class CheckState {
   public CheckState increaseNestLevelBy(int i) {
     return new CheckState(this.nestLevel + i);
   }
-
 }

@@ -22,8 +22,7 @@ public class ParserResult {
   private final Symbol parseSymbol;
   private final Collection<Issue> issues;
 
-  public ParserResult(boolean success, ParseTree parseTree, Symbol parseSymbol,
-      Collection<Issue> issues) {
+  public ParserResult(boolean success, ParseTree parseTree, Symbol parseSymbol, Collection<Issue> issues) {
     this.success = success;
     this.parseTree = parseTree;
     this.parseSymbol = parseSymbol;
@@ -51,5 +50,4 @@ public class ParserResult {
         ", issues=" + issues +
         '}';
   }
-
 }

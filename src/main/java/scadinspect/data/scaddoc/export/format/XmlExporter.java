@@ -35,7 +35,6 @@ public class XmlExporter implements Exporter {
    * @throws TransformerException Specifies an exceptional condition that occurred during the
    * transformation process.
    */
-  @Override
   public byte[] getOutput(ScadDocuFile file)
       throws ParserException, ParserConfigurationException, TransformerException {
     // root elements
@@ -61,7 +60,6 @@ public class XmlExporter implements Exporter {
    * @throws TransformerException Specifies an exceptional condition that occurred during the
    * transformation process.
    */
-  @Override
   public byte[] getOutput(Collection<ScadDocuFile> files)
       throws ParserConfigurationException, TransformerException {
     // root elements
@@ -95,7 +93,7 @@ public class XmlExporter implements Exporter {
     Collection<Property> properties = module.getProperties();
 
     for (Property property : properties) {
-      Element key = document.createElement(property.getKey());
+      Element key = document.createElement(escapeSpecialCharacters(property.getKey()));
       String value;
       if (property instanceof PairProperty) {
         // Create metric and value keys for PairProperty
@@ -107,13 +105,15 @@ public class XmlExporter implements Exporter {
         nodeMetric = document.createElement("metric");
         nodeValue = document.createElement("value");
 
-        nodeMetric.appendChild(document.createTextNode(temp.getValue().getMetric()));
-        nodeValue.appendChild(document.createTextNode(temp.getValue().getValue().toString()));
+        nodeMetric.appendChild(
+            document.createTextNode(escapeSpecialCharacters(temp.getValue().getMetric())));
+        nodeValue.appendChild(document
+            .createTextNode(escapeSpecialCharacters(temp.getValue().getValue().toString())));
 
         key.appendChild(nodeMetric);
         key.appendChild(nodeValue);
       } else {
-        value = property.getValue().toString();
+        value = escapeSpecialCharacters(property.getValue().toString());
         key.appendChild(document.createTextNode(value));
       }
       // Append key node to module node, to return whole module
@@ -164,6 +164,28 @@ public class XmlExporter implements Exporter {
     transformer.transform(source, result);
 
     //return XML String + do some **magic**
-    return sw.getBuffer().toString().replaceAll("((?<=>)\\[)|(](?=<))", "");
+    return sw.getBuffer().toString();
+  }
+
+  /**
+   * Escapes all characters not allowed in XML
+   *
+   * @param string The string to be escaped
+   * @return The escaped input
+   */
+  private String escapeSpecialCharacters(String string) {
+    return string
+        .replaceAll("[ÄÀÁÂÃÅ]", "A")
+        .replaceAll("[àáâãä]", "a")
+        .replaceAll("[ÈÉÊË]", "E")
+        .replaceAll("[èéêë]", "e")
+        .replaceAll("[ÌÍÎÏ]", "I")
+        .replaceAll("[ìíîï]", "i")
+        .replaceAll("[ÒÓÔÕÖØ]", "O")
+        .replaceAll("[ðòóôõöø]", "o")
+        .replaceAll("[ÙÚÛÜ]", "U")
+        .replaceAll("[ùúûü]", "u")
+        .replaceAll("ß", "ss")
+        .replaceAll("&|\\[|<|>|]|\\|\"|\\||!|\"|\'|§|$|%|\\(|\\)|;|\\?|\\^|°|#|\\\\|/", "");
   }
 }
