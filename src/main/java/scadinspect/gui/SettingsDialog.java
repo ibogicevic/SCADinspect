@@ -35,7 +35,9 @@ public class SettingsDialog {
            
         // Set the button types.
         ButtonType okButtonType = new ButtonType("OK", ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
+        dialog.getDialogPane().getButtonTypes().addAll(okButtonType);
+        //dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
+        // Reenable Close Button, once the changes are ONLY applied when clicking OK
             
         // Create the checkbox fields.
         GridPane grid = new GridPane();

@@ -26,9 +26,11 @@ public class ExportDialog {
     dialog.setTitle("Export");
     dialog.setHeaderText(null);
 
-    //add disabled OK and Cancel button
-    dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-    dialog.getDialogPane().lookupButton(ButtonType.OK).setDisable(true);
+    // Set the button types.
+    ButtonType okButtonType = new ButtonType("OK", ButtonData.OK_DONE);
+    dialog.getDialogPane().getButtonTypes().addAll(okButtonType);
+    //dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
+    // Reenable Cancel button, once cancelling without export is possible
 
     // Create the radio buttons
     VBox vBox = new VBox();
