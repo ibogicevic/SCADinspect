@@ -6,27 +6,29 @@ import javafx.stage.Screen;
 
 /**
  * CustomTableColumn to hold the custom and calculated percentWidth property.
+ *
  * @author Tim Walter
  */
-public class IssueTableColumn<S,T> extends TableColumn<S, T> {
-    private SimpleDoubleProperty percentWidth = new SimpleDoubleProperty();
-    private Double screenWidth = Screen.getPrimary().getVisualBounds().getWidth() * 0.9;
+public class IssueTableColumn<S, T> extends TableColumn<S, T> {
 
-    public IssueTableColumn(String columnName){
-        super(columnName);
-    }
+  private SimpleDoubleProperty percentWidth = new SimpleDoubleProperty();
+  private Double screenWidth = Screen.getPrimary().getVisualBounds().getWidth() * 0.9;
 
-    public SimpleDoubleProperty percentWidth() {
-        return percentWidth;
-    }
+  public IssueTableColumn(String columnName) {
+    super(columnName);
+  }
 
-    public double getPercentWidth() {
-        return percentWidth.get();
-    }
+  public SimpleDoubleProperty percentWidth() {
+    return percentWidth;
+  }
 
-    public void setPercentWidth(double percent) {
-        Double percentWidth = screenWidth * percent;
+  public double getPercentWidth() {
+    return percentWidth.get();
+  }
 
-        this.percentWidth.set(percentWidth);
-    }
+  public void setPercentWidth(double percent) {
+    Double percentWidth = screenWidth * percent;
+
+    this.percentWidth.set(percentWidth);
+  }
 }

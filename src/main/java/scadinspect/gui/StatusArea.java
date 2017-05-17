@@ -51,6 +51,29 @@ public class StatusArea extends BorderPane {
     t.start();
   }
 
+  public String getMessage() {
+    return textMessage.getText();
+  }
+
+  public void setMessage(String text) {
+    Platform.runLater(() -> {
+      textMessage.setText(text);
+      textMessage.setVisible(true);
+    });
+  }
+
+  public float getProgress() {
+    return progress;
+  }
+
+  public void setProgress(float progress, boolean visible) {
+    this.progress = progress;
+    Platform.runLater(() -> {
+      progressBar.setProgress(progress);
+      progressBar.setVisible(visible);
+    });
+  }
+
   /**
    * Thread for progress simulation.
    */
@@ -75,30 +98,6 @@ public class StatusArea extends BorderPane {
       });
 
     }
-  }
-
-
-  public String getMessage() {
-    return textMessage.getText();
-  }
-
-  public float getProgress() {
-    return progress;
-  }
-
-  public void setProgress(float progress, boolean visible) {
-    this.progress = progress;
-    Platform.runLater(() -> {
-      progressBar.setProgress(progress);
-      progressBar.setVisible(visible);
-    });
-  }
-
-  public void setMessage(String text) {
-    Platform.runLater(() -> {
-      textMessage.setText(text);
-      textMessage.setVisible(true);
-    });
   }
 
 

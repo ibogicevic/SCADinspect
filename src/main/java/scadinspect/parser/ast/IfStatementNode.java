@@ -8,15 +8,15 @@ import java.util.List;
  */
 public class IfStatementNode extends ASTNode {
 
-  public enum Types implements NodeType {
-    IF
+  protected IfStatementNode(NodeType type, List<ASTNode> children) {
+    super(type, children);
   }
 
   public static IfStatementNode createIf(ExprNode expr, ChildStatementNode childStatement) {
     return new IfStatementNode(Types.IF, Arrays.asList(expr, childStatement));
   }
 
-  protected IfStatementNode(NodeType type, List<ASTNode> children) {
-    super(type, children);
+  public enum Types implements NodeType {
+    IF
   }
 }

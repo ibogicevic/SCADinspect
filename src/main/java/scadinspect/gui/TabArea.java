@@ -37,13 +37,13 @@ public class TabArea extends TabPane {
     documentation.setText("Documentation");
     documentation.setContent(documentations); //SET CONTENT FOR documentationArea HERE
 
-    Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");    
-    
+    Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
+
     this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-    if(userPrefs.getBoolean(SettingsDialog.SETTING_STATIC_ANALYSIS, true)) {
+    if (userPrefs.getBoolean(SettingsDialog.SETTING_STATIC_ANALYSIS, true)) {
       this.getTabs().add(issues);
     }
-    if(userPrefs.getBoolean(SettingsDialog.SETTING_DOCUMENTATION, true)) {
+    if (userPrefs.getBoolean(SettingsDialog.SETTING_DOCUMENTATION, true)) {
       this.getTabs().add(documentation);
     }
   }

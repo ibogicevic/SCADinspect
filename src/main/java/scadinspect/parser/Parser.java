@@ -21,27 +21,25 @@ import scadinspect.parser.generated.OpenScadLexer;
  *
  * The Parser to generate the syntax tree and find possible syntax errors in a OpenSCAD file.
  * Only contains one static method
- * @see scadinspect.parser.Parser#parse(File)
  *
+ * @see scadinspect.parser.Parser#parse(File)
  */
 public class Parser {
 
   /**
    * Parse a OpenSCAD file into a syntax tree and find syntax errors
+   *
    * @param file the file to parse
    * @return a parser result
-   * @see scadinspect.parser.ParserResult
    * @throws FileNotFoundException in case opensing the file in a FileReader fails
    *
-   * This method performs the following steps to generate the result:
-   *  - open the File
-   *  - perform the parsing using
-   *  @see scadinspect.parser.CustomErrorOpenScadParser
-   *  - catch all the possible Exceptions that occure during parsing
-   *  @see scadinspect.parser.error.ParserException
-   *  - collect issues from the CustomErrorOpenScadParser and the exceptions
-   *  - construct a parserResult from this
-   *
+   * This method performs the following steps to generate the result: - open the File - perform the
+   * parsing using
+   * @see scadinspect.parser.ParserResult
+   * @see scadinspect.parser.CustomErrorOpenScadParser - catch all the possible Exceptions that
+   * occure during parsing
+   * @see scadinspect.parser.error.ParserException - collect issues from the
+   * CustomErrorOpenScadParser and the exceptions - construct a parserResult from this
    */
   public static ParserResult parse(File file) throws FileNotFoundException {
     Main.logger.log(Level.INFO, "Syntax tree parsing starting for <" + file.getPath() + ">");
@@ -79,7 +77,7 @@ public class Parser {
     }
 
     /* filename not known in parsing, so we set them now */
-    for (Issue issue: issues) {
+    for (Issue issue : issues) {
       issue.setSourceFile(file.getPath());
     }
 

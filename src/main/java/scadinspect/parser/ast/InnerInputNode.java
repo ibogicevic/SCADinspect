@@ -9,9 +9,8 @@ import java.util.List;
  */
 public class InnerInputNode extends ASTNode {
 
-  public enum Types implements NodeType {
-    EMPTY,
-    STATEMENT
+  protected InnerInputNode(NodeType type, List<ASTNode> children) {
+    super(type, children);
   }
 
   public static InnerInputNode createEmpty() {
@@ -22,7 +21,8 @@ public class InnerInputNode extends ASTNode {
     return new InnerInputNode(Types.STATEMENT, Arrays.asList(statement, inner));
   }
 
-  protected InnerInputNode(NodeType type, List<ASTNode> children) {
-    super(type, children);
+  public enum Types implements NodeType {
+    EMPTY,
+    STATEMENT
   }
 }

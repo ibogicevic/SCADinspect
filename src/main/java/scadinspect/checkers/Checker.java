@@ -14,7 +14,6 @@ import scadinspect.parser.ast.ASTNode;
  * It must return a CheckResult containing the union of found Issues of the current node
  * and all the Issues returned be the checks of the child nodes.
  * It should have a unique ISSUE_ID
- *
  */
 public interface Checker {
 

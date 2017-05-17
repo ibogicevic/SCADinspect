@@ -83,7 +83,7 @@ public class LogHandler extends Logger {
     }
     //If log level is set to NONE (=0), no logfile should be created, else create handler pointing to logfile
 
-    if (set_level != 0){
+    if (set_level != 0) {
       // setup file output
       fileHandler = null;
       try {

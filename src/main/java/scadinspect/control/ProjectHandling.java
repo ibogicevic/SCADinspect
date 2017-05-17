@@ -16,17 +16,16 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-
-import scadinspect.gui.Main;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import scadinspect.control.io.FileSearchRunnable;
+import scadinspect.gui.Main;
 
 /**
  * Project Handler for loading and closing paths and files.
  * Stores the loaded files in a file list.
- * @author bilir
  *
+ * @author bilir
  */
 public class ProjectHandling {
 
@@ -39,7 +38,7 @@ public class ProjectHandling {
   private final DirectoryChooser directoryChooser = new DirectoryChooser();
   private final FileChooser fileChooser = new FileChooser();
   private final long FILE_READ_TIMEOUT = 5000;
-  
+
   // Filter for the chooser
   private final FileChooser.ExtensionFilter extensionFilter =
       new FileChooser.ExtensionFilter("SCAD files", "*.scad");
@@ -58,11 +57,11 @@ public class ProjectHandling {
   public void openProjectFile() {
     Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Project");
     String defFile = userPrefs.get("DefaultDir", null);
-    if(defFile != null) {
-        File file = new File(defFile);
-        if(file.exists()) {
-            fileChooser.setInitialDirectory(file);
-        }
+    if (defFile != null) {
+      File file = new File(defFile);
+      if (file.exists()) {
+        fileChooser.setInitialDirectory(file);
+      }
     }
     File projectFile = fileChooser.showOpenDialog(Main.getInstance().getPrimaryStage());
 
@@ -80,19 +79,18 @@ public class ProjectHandling {
 
   /**
    * Opens the dialog to choose a directory
-     * @param onDone
    */
   public void openProjectFolder(Consumer<Collection<File>> onDone) {
-      Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Project");
-      String defFile = userPrefs.get("DefaultDir", null);
-      if(defFile != null) {
-          File file = new File(defFile);
-          if(file.exists()) {
-              directoryChooser.setInitialDirectory(file);
-          }
+    Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Project");
+    String defFile = userPrefs.get("DefaultDir", null);
+    if (defFile != null) {
+      File file = new File(defFile);
+      if (file.exists()) {
+        directoryChooser.setInitialDirectory(file);
       }
-    
-      File projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
+    }
+
+    File projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
 
     /**
      * Checks if a directory is selected or the cancel button is clicked If cancel is clicked a null
@@ -100,27 +98,27 @@ public class ProjectHandling {
      * contents of the sub-folder to the fileList
      */
     if (projectDirectory != null) {
-        
+
       userPrefs.put("DefaultDir", projectDirectory.getAbsolutePath());
       setProjectPath(projectDirectory);
       Supplier<Boolean> confirmLongRead = () -> {
-          try {
-              final FutureTask<Boolean> query = new FutureTask<>(() -> {
-                  Alert alert = new Alert(AlertType.CONFIRMATION);
-                  alert.setTitle("Open files");
-                  alert.setHeaderText("File loading taking longer then expected");
-                  alert.setContentText("Do you want to continue?");
-                  Optional<ButtonType> b = alert.showAndWait();
-                  return b.isPresent() && b.get() == ButtonType.OK;
-              });
-              Platform.runLater(() -> {
-                  query.run();
-              });
-              return query.get();
-          } catch (InterruptedException | ExecutionException ex) {
-              return false;
-          }
-              
+        try {
+          final FutureTask<Boolean> query = new FutureTask<>(() -> {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Open files");
+            alert.setHeaderText("File loading taking longer then expected");
+            alert.setContentText("Do you want to continue?");
+            Optional<ButtonType> b = alert.showAndWait();
+            return b.isPresent() && b.get() == ButtonType.OK;
+          });
+          Platform.runLater(() -> {
+            query.run();
+          });
+          return query.get();
+        } catch (InterruptedException | ExecutionException ex) {
+          return false;
+        }
+
       };
       addFiles(projectDirectory, confirmLongRead, onDone);
     }
@@ -129,7 +127,7 @@ public class ProjectHandling {
   /**
    * Closes the last open project and then sets
    * the new pathname, the new project and enables the buttons
-   * 
+   *
    * @param projectPath The project path for the current project
    */
   private void setProjectPath(File projectPath) {
@@ -141,7 +139,7 @@ public class ProjectHandling {
 
   /**
    * Sets the current project path in the Title and the app name
-   * 
+   *
    * @param rootPath The path for the current project
    */
   private void setCurrentProject(String rootPath) {
@@ -150,73 +148,66 @@ public class ProjectHandling {
     // remember open project
     Main.getInstance().currentProject = rootPath;
   }
-  
+
   /**
-   * Gets the files in the current directory and it sub-folders. Also it adds only .scad files to the
-   * list
-   * 
-   * @param dir
-   * @param onTimeout
+   * Gets the files in the current directory and it sub-folders. Also it adds only .scad files to
+   * the list
    */
-    private void addFiles(File dir, Supplier<Boolean> onTimeout, Consumer<Collection<File>> onDone) {
-        new Thread(() -> {
+  private void addFiles(File dir, Supplier<Boolean> onTimeout, Consumer<Collection<File>> onDone) {
+    new Thread(() -> {
+      try {
+        Collection<File> files = getFiles(dir, f -> f.getName().toLowerCase().endsWith(".scad"),
+            true, FILE_READ_TIMEOUT, onTimeout);
+        onDone.accept(files);
+      } catch (IOException ex) {
+        Logger.getLogger(ProjectHandling.class.getName()).log(Level.SEVERE, null, ex);
+        onDone.accept(null);
+      }
+    }).start();
+  }
+
+  /**
+   * Blocking call
+   */
+  private Collection<File> getFiles(File dir, FileFilter filter, boolean recursive, long timeout,
+      Supplier<Boolean> onTimeout) throws IOException {
+    try {
+      FileSearchRunnable fsr = new FileSearchRunnable(dir, filter, recursive);
+      Thread t = new Thread(fsr);
+      t.start();
+      Thread watchdog = null;
+      if (timeout > 0) {
+        watchdog = new Thread() {
+          @Override
+          public void run() {
             try {
-                Collection<File> files = getFiles(dir, f -> f.getName().toLowerCase().endsWith(".scad"), true, FILE_READ_TIMEOUT, onTimeout);
-                onDone.accept(files);
-            } catch (IOException ex) {
-                Logger.getLogger(ProjectHandling.class.getName()).log(Level.SEVERE, null, ex);
-                onDone.accept(null);
+              Thread.sleep(timeout);
+              if (fsr.isRunning()) {
+                fsr.pause();
+                boolean resume = onTimeout.get();
+                if (resume) {
+                  fsr.resume();
+                } else {
+                  fsr.terminate();
+                }
+              }
+            } catch (InterruptedException ex) {
             }
-        }).start();
+          }
+        };
+        watchdog.start();
+      }
+      t.join();
+      if (watchdog != null) {
+        watchdog.interrupt();
+      }
+      if (fsr.hasEndedNaturally()) {
+        return fsr.get();
+      }
+    } catch (InterruptedException ex) {
     }
-  
-    /**
-     * Blocking call
-     * @param dir
-     * @param filter
-     * @param recursive
-     * @param timeout
-     * @param onTimeout
-     * @return
-     * @throws IOException 
-     */
-    private Collection<File> getFiles(File dir, FileFilter filter, boolean recursive, long timeout, Supplier<Boolean> onTimeout) throws IOException{
-        try {
-            FileSearchRunnable fsr = new FileSearchRunnable(dir, filter, recursive);
-            Thread t = new Thread(fsr);
-            t.start();
-            Thread watchdog = null;
-            if(timeout > 0) {
-                watchdog = new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(timeout);
-                            if(fsr.isRunning()) {
-                                fsr.pause();
-                                boolean resume = onTimeout.get();
-                                if(resume) {
-                                    fsr.resume();
-                                }
-                                else {
-                                    fsr.terminate();
-                                }
-                            }
-                        } catch (InterruptedException ex) {}
-                    }
-                };
-                watchdog.start();
-            }
-            t.join();
-            if(watchdog != null) {
-                watchdog.interrupt();
-            }
-            if(fsr.hasEndedNaturally()) {
-                return fsr.get();
-            }
-        } catch (InterruptedException ex) {}
-        throw new IOException("Timeout exceeded during file read");
-    }
+    throw new IOException("Timeout exceeded during file read");
+  }
 
   /**
    * Closes the current project and removes the path from the title. Also it deletes the content of
@@ -224,12 +215,13 @@ public class ProjectHandling {
    */
   public void closeProject() {
     Main.getInstance().toolbarArea.disableButtons(true);
-      if (Main.getInstance().isProjectOpen()) {
+    if (Main.getInstance().isProjectOpen()) {
       Main.getInstance().setCurrentProject("");
       Main.getInstance().getPrimaryStage().setTitle(Main.APPNAME);
       Main.getInstance().getFileList().clear();
       Main.getInstance().tabArea.getIssueList().clearList();
-      Main.getInstance().tabArea.getDocumentationList().refresh();  //requires fileList to be cleared
+      Main.getInstance().tabArea.getDocumentationList()
+          .refresh();  //requires fileList to be cleared
       Main.getInstance().bottomArea.disableButtons(true);
       Main.getInstance().statusArea.setMessage("No file loaded.");
     }

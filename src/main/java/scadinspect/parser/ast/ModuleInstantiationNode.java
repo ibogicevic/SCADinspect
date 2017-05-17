@@ -9,13 +9,8 @@ import java.util.List;
  */
 public class ModuleInstantiationNode extends ASTNode {
 
-  public enum Types implements NodeType {
-    WITH_EXCLAMATION,
-    WITH_HASH,
-    WITH_PERCENT,
-    WITH_ASTERISK,
-    SINGLE,
-    IF_ELSE
+  protected ModuleInstantiationNode(NodeType type, List<ASTNode> children) {
+    super(type, children);
   }
 
   public static ModuleInstantiationNode createWithExclamationMark(ModuleInstantiationNode module) {
@@ -47,7 +42,12 @@ public class ModuleInstantiationNode extends ASTNode {
     return new ModuleInstantiationNode(Types.IF_ELSE, Collections.singletonList(ifelse));
   }
 
-  protected ModuleInstantiationNode(NodeType type, List<ASTNode> children) {
-    super(type, children);
+  public enum Types implements NodeType {
+    WITH_EXCLAMATION,
+    WITH_HASH,
+    WITH_PERCENT,
+    WITH_ASTERISK,
+    SINGLE,
+    IF_ELSE
   }
 }

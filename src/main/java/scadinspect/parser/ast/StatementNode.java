@@ -11,13 +11,9 @@ public class StatementNode extends ASTNode {
 
   public final String id;
 
-  public enum Types implements NodeType {
-    SEMICOLON,
-    INNER_INPUT,
-    MODULE_INSTANTIATION,
-    ASSIGNMENT,
-    MODULE_DEFINITION,
-    FUNCTION_DEFINITION
+  protected StatementNode(NodeType type, List<ASTNode> children, String id) {
+    super(type, children);
+    this.id = id;
   }
 
   public static StatementNode createSemicolon() {
@@ -46,8 +42,12 @@ public class StatementNode extends ASTNode {
     return new StatementNode(Types.FUNCTION_DEFINITION, Arrays.asList(args, commas, expr), id);
   }
 
-  protected StatementNode(NodeType type, List<ASTNode> children, String id) {
-    super(type, children);
-    this.id = id;
+  public enum Types implements NodeType {
+    SEMICOLON,
+    INNER_INPUT,
+    MODULE_INSTANTIATION,
+    ASSIGNMENT,
+    MODULE_DEFINITION,
+    FUNCTION_DEFINITION
   }
 }

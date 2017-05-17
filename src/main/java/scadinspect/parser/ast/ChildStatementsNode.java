@@ -9,10 +9,8 @@ import java.util.List;
  */
 public class ChildStatementsNode extends ASTNode {
 
-  public enum Types implements NodeType {
-    EMPTY,
-    CHILD_STATEMENT,
-    ASSIGNMENT
+  protected ChildStatementsNode(NodeType type, List<ASTNode> children) {
+    super(type, children);
   }
 
   public static ChildStatementsNode createEmpty() {
@@ -30,7 +28,9 @@ public class ChildStatementsNode extends ASTNode {
     return new ChildStatementsNode(Types.ASSIGNMENT, Arrays.asList(childStatements, assignment));
   }
 
-  protected ChildStatementsNode(NodeType type, List<ASTNode> children) {
-    super(type, children);
+  public enum Types implements NodeType {
+    EMPTY,
+    CHILD_STATEMENT,
+    ASSIGNMENT
   }
 }

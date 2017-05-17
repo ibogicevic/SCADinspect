@@ -9,10 +9,8 @@ import java.util.List;
  */
 public class ArgumentsDeclNode extends ASTNode {
 
-  public enum Types implements NodeType {
-    EMPTY,
-    ARGUMENT_DECL,
-    WITH_COMMA
+  protected ArgumentsDeclNode(NodeType type, List<ASTNode> children) {
+    super(type, children);
   }
 
   public static ArgumentsDeclNode createEmpty() {
@@ -28,7 +26,9 @@ public class ArgumentsDeclNode extends ASTNode {
     return new ArgumentsDeclNode(Types.WITH_COMMA, Arrays.asList(args, commas, arg));
   }
 
-  protected ArgumentsDeclNode(NodeType type, List<ASTNode> children) {
-    super(type, children);
+  public enum Types implements NodeType {
+    EMPTY,
+    ARGUMENT_DECL,
+    WITH_COMMA
   }
 }

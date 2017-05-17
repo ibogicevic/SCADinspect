@@ -8,9 +8,8 @@ import java.util.List;
  */
 public class OptionalCommasNode extends ASTNode {
 
-  public enum Types implements NodeType {
-    EMPTY,
-    COMMA
+  protected OptionalCommasNode(NodeType type, List<ASTNode> children) {
+    super(type, children);
   }
 
   public static OptionalCommasNode createEmpty() {
@@ -21,7 +20,8 @@ public class OptionalCommasNode extends ASTNode {
     return new OptionalCommasNode(Types.COMMA, Collections.singletonList(commas));
   }
 
-  protected OptionalCommasNode(NodeType type, List<ASTNode> children) {
-    super(type, children);
+  public enum Types implements NodeType {
+    EMPTY,
+    COMMA
   }
 }
