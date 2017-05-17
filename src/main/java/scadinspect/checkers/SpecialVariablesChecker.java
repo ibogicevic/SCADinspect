@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Stream;
 import scadinspect.data.analysis.Issue;
-import scadinspect.data.analysis.Issue.issueType;
 import scadinspect.parser.ast.ASTNode;
 import scadinspect.parser.ast.ArgumentCallNode;
 import scadinspect.parser.ast.ArgumentDeclNode;
@@ -48,7 +47,7 @@ public class SpecialVariablesChecker implements Checker {
       "$vpr", "$vpt", "$vpd", "$children");
 
   private final static String ISSUE_ID = "W-101";
-  private final static Issue.issueType ISSUE_TYPE = issueType.WARNING;
+  private final static Issue.IssueType ISSUE_TYPE = Issue.IssueType.WARNING;
   private final static String ISSUE_DESCRIPTION = "Non-reserved identifier starting with $";
 
 

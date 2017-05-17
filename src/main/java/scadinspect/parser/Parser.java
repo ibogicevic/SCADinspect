@@ -44,7 +44,7 @@ public class Parser {
    *
    */
   public static ParserResult parse(File file) throws FileNotFoundException {
-    Main.logger.log(Level.INFO, "Syntax tree parsing starting for <" + file.getPath() + ">");
+    Main.logger.log(Level.INFO, "Syntax tree parsing starting for <{0}>", file.getPath());
     BufferedReader in = new BufferedReader(new FileReader(file));
     ParseTree parseTree = null;
     Symbol parseSymbol = null;
@@ -83,7 +83,7 @@ public class Parser {
       issue.setSourceFile(file.getPath());
     }
 
-    Main.logger.log(Level.INFO, "Syntax tree parsing done for <" + file.getPath() + ">");
+    Main.logger.log(Level.INFO, "Syntax tree parsing done for <{0}>", file.getPath());
     return new ParserResult(success, parseTree, parseSymbol, issues);
   }
 }

@@ -44,7 +44,8 @@ public class Main extends Application {
     /**
      * Pre-configured logger that outputs to  *
      */
-    private LogHandler logHandler = null;
+    private LogHandler logHandler;
+    
 
     // singleton pattern
     private static Main instance;
@@ -112,6 +113,7 @@ public class Main extends Application {
         try {
             logger = logHandler.getLogger();
         } catch (IOException|BackingStoreException e) {
+            //TODO Use logger
             e.printStackTrace();
         }
 
@@ -159,10 +161,8 @@ public class Main extends Application {
         /**
          * Necessary for destroying the logfilehandler before closing the application
          */
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            public void run() {
-                LogHandler.shutdown();
-            }
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            logHandler.shutdown();
         }, "Shutdown-thread"));
     }
 
@@ -193,6 +193,6 @@ public class Main extends Application {
      * @param args unused
      */
     public static void main(String[] args) {
-            launch(args);
+        launch(args);
     }
 }

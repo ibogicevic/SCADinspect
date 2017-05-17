@@ -56,6 +56,7 @@ public class CodeAnalyzer {
         try {
           fileParserResultMap.put(file, Parser.parse(file));
         } catch (FileNotFoundException e) {
+          //TODO Use logger
           e.printStackTrace();
         }
       });

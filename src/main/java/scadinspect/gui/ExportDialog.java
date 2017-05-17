@@ -22,8 +22,7 @@ public class ExportDialog {
    * Opens the export dialog, select extension, show save File dialog, save file
    */
   public static void openDialog() {
-    Dialog<ButtonType> dialog;
-    dialog = new Dialog<>();
+    Dialog<ButtonType> dialog = new Dialog<>();
     dialog.setTitle("Export");
     dialog.setHeaderText(null);
 

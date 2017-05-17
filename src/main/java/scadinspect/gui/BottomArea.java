@@ -21,9 +21,9 @@ import scadinspect.control.ProjectHandling;
 public class BottomArea extends ToolBar{
 
     //initialize buttons
-    private Button closeProjectButton = new Button("Close");
-    private Button exportButton = new Button("Export");
-    private Button refreshButton = new Button("Refresh");
+    private final Button closeProjectButton = new Button("Close");
+    private final Button exportButton = new Button("Export");
+    private final Button refreshButton = new Button("Refresh");
 
     //initialize SeparatorPane to align Buttons
     private Pane separatorPane = new Pane();

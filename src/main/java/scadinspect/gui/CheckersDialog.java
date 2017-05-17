@@ -6,13 +6,13 @@
  */
 package scadinspect.gui;
 
-        import javafx.scene.control.ButtonType;
-        import javafx.scene.control.Dialog;
-        import javafx.scene.control.ButtonBar.ButtonData;
-        import javafx.scene.control.Label;
-        import javafx.scene.layout.GridPane;
-        import javafx.scene.text.Font;
-        import javafx.scene.text.FontWeight;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 
 public class CheckersDialog {
@@ -26,7 +26,6 @@ public class CheckersDialog {
         Dialog<Boolean> dialog = new Dialog<>();
         dialog.setTitle("Checkers");
         dialog.setHeaderText("Checker documentation");
-
 
         // Set the button types.
         ButtonType okButton = new ButtonType("OK", ButtonData.CANCEL_CLOSE);
@@ -107,9 +106,6 @@ public class CheckersDialog {
         dialog.showAndWait();
         Main.getInstance().greyStack.toBack();
         Main.getInstance().greyStack.setVisible(false);
-
-
-
     }
 
     final static String Checker1Head = "1. Special Variable Checker";

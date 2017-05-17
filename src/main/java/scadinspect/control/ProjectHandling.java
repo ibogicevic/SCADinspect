@@ -39,6 +39,7 @@ public class ProjectHandling {
   private final DirectoryChooser directoryChooser = new DirectoryChooser();
   private final FileChooser fileChooser = new FileChooser();
   private final long FILE_READ_TIMEOUT = 5000;
+  public static final String SETTINGS_DEFAULT_DIR = "DefaultDir";
   
   // Filter for the chooser
   private final FileChooser.ExtensionFilter extensionFilter =
@@ -57,7 +58,7 @@ public class ProjectHandling {
    */
   public void openProjectFile() {
     Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Project");
-    String defFile = userPrefs.get("DefaultDir", null);
+    String defFile = userPrefs.get(SETTINGS_DEFAULT_DIR, null);
     if(defFile != null) {
         File file = new File(defFile);
         if(file.exists()) {
@@ -72,7 +73,7 @@ public class ProjectHandling {
      */
 
     if (projectFile != null) {
-      userPrefs.put("DefaultDir", projectFile.getParent());
+      userPrefs.put(SETTINGS_DEFAULT_DIR, projectFile.getParent());
       setProjectPath(projectFile);
       Main.getInstance().getFileList().add(projectFile);
     }
@@ -84,7 +85,7 @@ public class ProjectHandling {
    */
   public void openProjectFolder(Consumer<Collection<File>> onDone) {
       Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Project");
-      String defFile = userPrefs.get("DefaultDir", null);
+      String defFile = userPrefs.get(SETTINGS_DEFAULT_DIR, null);
       if(defFile != null) {
           File file = new File(defFile);
           if(file.exists()) {
@@ -100,8 +101,7 @@ public class ProjectHandling {
      * contents of the sub-folder to the fileList
      */
     if (projectDirectory != null) {
-        
-      userPrefs.put("DefaultDir", projectDirectory.getAbsolutePath());
+      userPrefs.put(SETTINGS_DEFAULT_DIR, projectDirectory.getAbsolutePath());
       setProjectPath(projectDirectory);
       Supplier<Boolean> confirmLongRead = () -> {
           try {
@@ -152,7 +152,7 @@ public class ProjectHandling {
   }
   
   /**
-   * Gets the files in the current directory and it sub-folders. Also it adds only .scad files to the
+   * Gets the files in the current directory and its sub-folders. It also adds only .scad files to the
    * list
    * 
    * @param dir

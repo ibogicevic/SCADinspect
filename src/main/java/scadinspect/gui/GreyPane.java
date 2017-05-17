@@ -8,26 +8,26 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
-
 /**
- * Created by maikbaumgartner on 30.03.17.
- * This class supports the application by a grey pane and a help modal
+ * Created by maikbaumgartner on 30.03.17. This class supports the application
+ * by a grey pane and a help modal
  */
-public class GreyPane extends BorderPane{
+public class GreyPane extends BorderPane {
 
-    private ToolbarArea toolbarArea = new ToolbarArea();
-    private BorderPane bottomPane = new BorderPane();
-    private Integer step = -1;
-    private BottomArea bottomArea= new BottomArea();
-    private Hyperlink checkers = new Hyperlink("Open checker docs");
-    private Hyperlink prev = new Hyperlink("back");
-    private Hyperlink next = new Hyperlink("next");
-    private Hyperlink cornerExit = new Hyperlink("Exit Tour");
-    private Label messageLabel = new Label();
-    private HBox navBar;
-    private Label stepLabel = new Label();
+    private final ToolbarArea toolbarArea = new ToolbarArea();
+    private final BorderPane bottomPane = new BorderPane();
+    private final BottomArea bottomArea = new BottomArea();
+    private final Hyperlink checkers = new Hyperlink("Open checker docs");
+    private final Hyperlink prev = new Hyperlink("back");
+    private final Hyperlink next = new Hyperlink("next");
+    private final Hyperlink exit = new Hyperlink("exit");
+    private final Hyperlink cornerExit = new Hyperlink("Exit Tour");
+    private final Label messageLabel = new Label();
+    private final HBox navBar;
+    private final Label stepLabel = new Label();
+    private int step = -1;
 
-    public GreyPane(Boolean isTutorial) {
+    public GreyPane(boolean isTutorial) {
         //set transparency and colour for the pane
         this.setVisible(false);
         this.setStyle(
@@ -37,8 +37,7 @@ public class GreyPane extends BorderPane{
         // if isTutorial true, display help-modal
         if (isTutorial) {
 
-            //initiate ToolbarArea; transparency
-            toolbarArea = new ToolbarArea();
+            //initiate ToolbarArea transparency
             toolbarArea.setStyle(
                     "-fx-background-color: rgba(105, 105, 105, 0.0);"
             );
@@ -49,7 +48,6 @@ public class GreyPane extends BorderPane{
             tabArea.setStyle(
                     "-fx-background-color: rgba(105, 105, 105, 0.0);"
             );
-
 
             //modify Hyperlinks
             checkers.setTextFill(Color.WHITE);
@@ -99,7 +97,6 @@ public class GreyPane extends BorderPane{
             centerPane.setBottom(navBar);
 
             //initiate BottomPane
-            bottomPane = new BorderPane();
             BorderPane statusArea = new StatusArea();
             bottomArea.setStyle(
                     "-fx-background-color: rgba(105, 105, 105, 0.0);"
@@ -116,7 +113,7 @@ public class GreyPane extends BorderPane{
                 CheckersDialog.openDialog();
             });
             prev.setOnAction(e -> {
-                step  -= 1; //decrease step counter
+                step -= 1; //decrease step counter
                 this.switchTour(step);
             });
             next.setOnAction(e -> {
@@ -126,7 +123,9 @@ public class GreyPane extends BorderPane{
             cornerExit.setOnAction(e -> {exitTour();});
 
         }
-
+        else {
+            navBar = null;
+        }
 
     }
 
@@ -137,23 +136,21 @@ public class GreyPane extends BorderPane{
         Main.getInstance().greyStack.setVisible(false);
     }
 
-
     public void modalToFront(Boolean var) {
-        if (var == true){
+        if (var == true) {
             this.setVisible(var);
             this.toFront();
-        } else {
+        }
+        else {
             this.setVisible(var);
             this.toBack();
         }
     }
 
-
     public void switchTour(Integer step) {
 
         //switch Step Area
-
-        switch (step){
+        switch (step) {
             case -1: {
                 toolbarArea.switchButtons(-1);
                 bottomArea.switchButtons(0);
@@ -170,7 +167,7 @@ public class GreyPane extends BorderPane{
                 bottomArea.switchButtons(0);
                 prev.setVisible(true);
                 messageLabel.setText("Press \"Open file\" to open an new ScadFile or choose \"Open folder\" from the dropdown menu to open a folder.");
-                stepLabel.setText(step+2 + " of 6");
+                stepLabel.setText(step + 2 + " of 6");
                 break;
             }
             case 1: {
@@ -178,14 +175,14 @@ public class GreyPane extends BorderPane{
                 prev.setVisible(true);
                 messageLabel.setText("Press \"Settings\" to access the settings. For example you can enable auto refresh or set the logging level.");
                 bottomArea.switchButtons(0);
-                stepLabel.setText(step+2 + " of 6");
+                stepLabel.setText(step + 2 + " of 6");
                 break;
             }
             case 2: {
                 toolbarArea.switchButtons(2);
                 messageLabel.setText("Press \"Refresh\" to refresh the files.");
                 bottomArea.switchButtons(1);
-                stepLabel.setText(step+2 + " of 6");
+                stepLabel.setText(step + 2 + " of 6");
                 break;
             }
             case 3: {
@@ -193,6 +190,7 @@ public class GreyPane extends BorderPane{
                 messageLabel.setText("Press \"Export\" to export your current work.");
                 bottomArea.switchButtons(2);
                 next.setVisible(true);
+
                 stepLabel.setText(step+2 + " of 6");
                 break;
             }
