@@ -27,7 +27,7 @@ public class ExportDialog {
     dialog.setHeaderText(null);
 
     // Set the button types.
-    ButtonType okButtonType = new ButtonType("OK", ButtonData.OK_DONE);
+    ButtonType okButtonType = new ButtonType("OK");
     dialog.getDialogPane().getButtonTypes().addAll(okButtonType);
     //dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
     // Reenable Cancel button, once cancelling without export is possible
