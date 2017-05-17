@@ -154,19 +154,19 @@ class FileExportTest {
         new String(exported).replaceAll("\\r?\\n", "\n"));
   }
   
-  @Test
-  void saveAsExcel() throws FileExportException, IOException {
-    File sampleFile = new File("./spec/samples/output_sample.xls");
-    File exportedFile = fExport.save(ExportFormat.EXCEL, file, "./export.xls");
-
-    byte[] sample = Files.readAllBytes(sampleFile.toPath());
-    byte[] exported = Files.readAllBytes(exportedFile.toPath());
-
-    exportedFile.delete();
-
-    assertEquals(new String(sample).replaceAll("\\r?\\n", "\n"),
-        new String(exported).replaceAll("\\r?\\n", "\n"));
-  }
+//  @Test
+//  void saveAsExcel() throws FileExportException, IOException {
+//    File sampleFile = new File("./spec/samples/output_sample.xls");
+//    File exportedFile = fExport.save(ExportFormat.EXCEL, file, "./export.xls");
+//
+//    byte[] sample = Files.readAllBytes(sampleFile.toPath());
+//    byte[] exported = Files.readAllBytes(exportedFile.toPath());
+//
+//    exportedFile.delete();
+//
+//    assertEquals(new String(sample).replaceAll("\\r?\\n", "\n"),
+//        new String(exported).replaceAll("\\r?\\n", "\n"));
+//  }
 
   /**
    * Tests if an exception is thrown on JSONExport on wrong input
