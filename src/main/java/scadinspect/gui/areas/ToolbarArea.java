@@ -1,6 +1,5 @@
 package scadinspect.gui.areas;
 
-import java.io.InputStream;
 import java.util.prefs.Preferences;
 
 import javafx.application.Platform;
@@ -10,12 +9,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.ToolBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import scadinspect.control.CodeAnalyzer;
 import scadinspect.control.ProjectHandling;
 import scadinspect.gui.Main;
@@ -25,8 +21,6 @@ import scadinspect.gui.dialogs.SettingsDialog;
 
 /**
  * Toolbar at the top of the main window
- *
- * @author ivan
  */
 public class ToolbarArea extends ToolBar {
 
@@ -39,6 +33,7 @@ public class ToolbarArea extends ToolBar {
     private final Button settingsButton = new Button("Settings");
     private final Hyperlink helpLink = new Hyperlink("Help");
     private final Hyperlink aboutLink = new Hyperlink("About");
+    private final Button exitButton = new Button("Exit");
     private final ProjectHandling projectHandler = new ProjectHandling();
     private final Separator separator;
 
@@ -65,7 +60,7 @@ public class ToolbarArea extends ToolBar {
 
         // configure open button
         openProjectButton.setGraphic(Resources.loadIcon("open-folder-outline"));
-        // Read settings
+        // read settings
         if (userPrefs.getInt("SET_OPENBUTTON", 0) == 0) {
             openProjectButton.setText("Open file");
             openProjectButton.setOnAction(event -> {
@@ -76,7 +71,7 @@ public class ToolbarArea extends ToolBar {
         } else {
             openProjectButton.setText("Open folder");
             openProjectButton.setOnAction(event -> {
-              //Loading of multiple files is non blocking
+              // loading of multiple files is non blocking
               projectHandler.openProjectFolder((files) -> {
                 if(files != null) {
                   Main.getInstance().getFileList().addAll(files);
@@ -92,7 +87,7 @@ public class ToolbarArea extends ToolBar {
             userPrefs.putInt("SET_OPENBUTTON", 1);
             openProjectButton.setText("Open folder");
             openProjectButton.setOnAction(event -> {
-              //Loading of multiple files is non blocking
+              // loading of multiple files is non blocking
               projectHandler.openProjectFolder((files) -> {
                 if(files != null) {
                   Main.getInstance().getFileList().addAll(files);
@@ -113,16 +108,17 @@ public class ToolbarArea extends ToolBar {
                 Main.getInstance().tabArea.getDocumentationList().refresh();
             });
         });
+        exitButton.setOnAction(e -> {
+        	Platform.exit();
+        });
 
         // set button icons
         settingsButton.setGraphic(Resources.loadIcon("cog-wheel-silhouette"));
         helpLink.setGraphic(Resources.loadResizedIcon("help-icon"));
         aboutLink.setGraphic(Resources.loadResizedIcon("about-icon"));
-
+        exitButton.setGraphic(Resources.loadIcon("sign-out-option"));
         // status of buttons
         disableButtons(true);
-
-
         helpLink.setOnAction(e -> {
             Main.getInstance().greyStack.toFront();
             Main.getInstance().greyStack.setVisible(true);
@@ -136,11 +132,12 @@ public class ToolbarArea extends ToolBar {
         this.getItems().add(openProjectButton);
         this.getItems().add(separator);
         this.getItems().add(settingsButton);
-        
+        // rightmost links
         HBox.setHgrow(seperatorPane, Priority.ALWAYS);
         final HBox box = new HBox();
         box.getChildren().add(helpLink);
         box.getChildren().add(aboutLink);
+        box.getChildren().add(exitButton);
         this.getItems().add(seperatorPane);
         this.getItems().add(box);
     }
