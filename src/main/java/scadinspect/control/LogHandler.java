@@ -9,7 +9,8 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
-import scadinspect.gui.SettingsDialog;
+
+import scadinspect.gui.dialogs.SettingsDialog;
 
 /**
  * Created by nik, eric, lisa on 23.03.17.

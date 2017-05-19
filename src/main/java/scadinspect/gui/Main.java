@@ -17,6 +17,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import scadinspect.data.scaddoc.ScadDocuFile;
+import scadinspect.gui.areas.BottomArea;
+import scadinspect.gui.areas.StatusArea;
+import scadinspect.gui.areas.TabArea;
+import scadinspect.gui.areas.ToolbarArea;
 
 /**
  * Startup JavaFX frame
@@ -58,7 +62,6 @@ public class Main extends Application {
     public ToolbarArea toolbarArea = new ToolbarArea();
     public TabArea tabArea = new TabArea();
     public StatusArea statusArea = new StatusArea();
-
     public BottomArea bottomArea = new BottomArea();
 
     // list of open scad-files
@@ -111,7 +114,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc] %4$s: %5$s%n");
         try {
-            logger = logHandler.getLogger();
+            logger = LogHandler.getLogger();
         } catch (IOException|BackingStoreException e) {
             //TODO Use logger
             e.printStackTrace();

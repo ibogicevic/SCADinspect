@@ -228,7 +228,6 @@ public class ProjectHandling {
       Main.getInstance().setCurrentProject("");
       Main.getInstance().getPrimaryStage().setTitle(Main.APPNAME);
       Main.getInstance().getFileList().clear();
-      Main.getInstance().tabArea.getIssueList().clearList();
       Main.getInstance().tabArea.getDocumentationList().refresh();  //requires fileList to be cleared
       Main.getInstance().bottomArea.disableButtons(true);
       Main.getInstance().statusArea.setMessage("No file loaded.");

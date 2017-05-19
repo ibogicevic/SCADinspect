@@ -1,4 +1,4 @@
-package scadinspect.gui;
+package scadinspect.gui.areas;
 
 import javafx.application.Platform;
 import javafx.geometry.Insets;

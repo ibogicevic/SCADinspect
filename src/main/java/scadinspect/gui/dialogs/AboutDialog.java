@@ -3,7 +3,7 @@
  *
  * @author: schmjuli
  */
-package scadinspect.gui;
+package scadinspect.gui.dialogs;
 
 
 import javafx.event.ActionEvent;
@@ -19,6 +19,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import scadinspect.gui.Main;
 
 import java.util.ArrayList;
 import java.util.List;

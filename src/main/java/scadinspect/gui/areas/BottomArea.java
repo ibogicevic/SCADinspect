@@ -1,4 +1,4 @@
-package scadinspect.gui;
+package scadinspect.gui.areas;
 
 import java.io.InputStream;
 import javafx.scene.control.Button;
@@ -10,6 +10,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import scadinspect.control.CodeAnalyzer;
 import scadinspect.control.ProjectHandling;
+import scadinspect.gui.Main;
+import scadinspect.gui.dialogs.ExportDialog;
 
 /**
  * Bottombar below the main window

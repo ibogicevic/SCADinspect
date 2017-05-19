@@ -101,15 +101,6 @@ public class CodeAnalyzer {
           + fileIssueMap.values().stream().map(Collection::size)
           .reduce(Integer::sum).orElse(-1));
 
-      // clear issue list
-      Main.getInstance().tabArea.getIssueList().clearList();
-
-      // fill issue list with generated issues
-      fileList.forEach(file -> {
-        Main.getInstance().tabArea.getIssueList()
-            .addDataToTable(new ArrayList<>(fileIssueMap.get(file)));
-      });
-
     }).start();
 
   }

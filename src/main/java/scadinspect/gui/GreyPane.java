@@ -7,6 +7,11 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import scadinspect.gui.areas.BottomArea;
+import scadinspect.gui.areas.StatusArea;
+import scadinspect.gui.areas.TabArea;
+import scadinspect.gui.areas.ToolbarArea;
+import scadinspect.gui.dialogs.CheckersDialog;
 
 /**
  * Created by maikbaumgartner on 30.03.17. This class supports the application

@@ -4,7 +4,7 @@
  *
  * @author: jonas_ber
  */
-package scadinspect.gui;
+package scadinspect.gui.dialogs;
 
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import scadinspect.gui.Main;
 
 
 public class CheckersDialog {

@@ -1,4 +1,4 @@
-package scadinspect.gui;
+package scadinspect.gui.areas;
 
 import java.io.InputStream;
 import java.util.prefs.Preferences;
@@ -18,6 +18,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import scadinspect.control.CodeAnalyzer;
 import scadinspect.control.ProjectHandling;
+import scadinspect.gui.Main;
+import scadinspect.gui.dialogs.AboutDialog;
+import scadinspect.gui.dialogs.SettingsDialog;
 
 /**
  * Toolbar at the top of the main window

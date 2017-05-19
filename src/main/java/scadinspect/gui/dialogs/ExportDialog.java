@@ -1,4 +1,4 @@
-package scadinspect.gui;
+package scadinspect.gui.dialogs;
 
 import java.io.File;
 import java.util.Optional;
@@ -12,6 +12,7 @@ import javafx.stage.Modality;
 import scadinspect.data.scaddoc.error.FileExportException;
 import scadinspect.data.scaddoc.export.FileExport;
 import scadinspect.data.scaddoc.export.format.ExportFormat;
+import scadinspect.gui.Main;
 
 /**
  * author simon

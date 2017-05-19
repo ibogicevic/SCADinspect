@@ -1,4 +1,4 @@
-package scadinspect.gui;
+package scadinspect.gui.dialogs;
 
 import java.util.Optional;
 import java.util.logging.Level;
@@ -13,6 +13,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
+import scadinspect.gui.Main;
 
 public class SettingsDialog {
     
@@ -88,14 +89,14 @@ public class SettingsDialog {
             boolean documentationOld = userPrefs.getBoolean(SettingsDialog.SETTING_DOCUMENTATION, true);
             
             if(codeAnalysis.isSelected() != staticAnalysisOld) {
-                if(codeAnalysis.isSelected()) {
-                    Main.getInstance().tabArea.getTabs().add(0,Main.getInstance().tabArea.getIssues());
-                }
-                else {
-                    Main.getInstance().tabArea.getTabs().remove(Main.getInstance().tabArea.getIssues());
-                }
-                Main.getInstance().tabArea.getSelectionModel().select(0);
-                userPrefs.putBoolean(SettingsDialog.SETTING_STATIC_ANALYSIS, codeAnalysis.isSelected());
+//                if(codeAnalysis.isSelected()) {
+//                    Main.getInstance().tabArea.getTabs().add(0,Main.getInstance().tabArea.getIssues());
+//                }
+//                else {
+//                    Main.getInstance().tabArea.getTabs().remove(Main.getInstance().tabArea.getIssues());
+//                }
+//                Main.getInstance().tabArea.getSelectionModel().select(0);
+//                userPrefs.putBoolean(SettingsDialog.SETTING_STATIC_ANALYSIS, codeAnalysis.isSelected());
             }
             
             if(documentation.isSelected() != documentationOld) {
