@@ -10,7 +10,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import scadinspect.control.CodeAnalyzer;
 import scadinspect.control.ProjectHandling;
 import scadinspect.gui.Main;
 import scadinspect.gui.Resources;
@@ -61,7 +60,6 @@ public class ToolbarArea extends BorderPane {
             openProjectButton.setText("Open file");
             openProjectButton.setOnAction(event -> {
               projectHandler.openProjectFile();
-              CodeAnalyzer.refresh();
                 Main.getInstance().tabArea.getDocumentationList().refresh();
             });
         } else {
@@ -71,7 +69,6 @@ public class ToolbarArea extends BorderPane {
               projectHandler.openProjectFolder((files) -> {
                 if(files != null) {
                   Main.getInstance().getFileList().addAll(files);
-                  CodeAnalyzer.refresh();
                     Platform.runLater(() -> {
                         Main.getInstance().tabArea.getDocumentationList().refresh();
                     });
@@ -87,7 +84,6 @@ public class ToolbarArea extends BorderPane {
               projectHandler.openProjectFolder((files) -> {
                 if(files != null) {
                   Main.getInstance().getFileList().addAll(files);
-                  CodeAnalyzer.refresh();
                     Platform.runLater(() -> {
                         Main.getInstance().tabArea.getDocumentationList().refresh();
                     });
@@ -100,7 +96,6 @@ public class ToolbarArea extends BorderPane {
             openProjectButton.setText("Open file");
             openProjectButton.setOnAction(event -> {
               projectHandler.openProjectFile();
-              CodeAnalyzer.refresh();
                 Main.getInstance().tabArea.getDocumentationList().refresh();
             });
         });

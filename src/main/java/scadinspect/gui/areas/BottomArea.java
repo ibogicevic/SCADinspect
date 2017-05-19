@@ -8,9 +8,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import scadinspect.control.CodeAnalyzer;
 import scadinspect.control.ProjectHandling;
 import scadinspect.gui.Main;
+import scadinspect.gui.Resources;
 import scadinspect.gui.dialogs.ExportDialog;
 
 /**
@@ -30,12 +30,6 @@ public class BottomArea extends ToolBar{
     //initialize SeparatorPane to align Buttons
     private Pane separatorPane = new Pane();
 
-    private ImageView loadIcon(String fileName) {
-        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
-        Image image = new Image(inputStream);
-        ImageView imageView = new ImageView(image);
-        return imageView;
-    }
     /**
      * Disable buttons when no project is open
      *
@@ -55,16 +49,16 @@ public class BottomArea extends ToolBar{
         ProjectHandling projectHandler = new ProjectHandling();
 
         //set button icons
-        closeProjectButton.setGraphic(loadIcon("cross-mark-on-a-black-circle-background"));
-        exportButton.setGraphic(loadIcon("text-file"));
-        refreshButton.setGraphic(loadIcon("refresh-page-option"));
+        closeProjectButton.setGraphic(Resources.loadIcon("cross-mark-on-a-black-circle-background"));
+        exportButton.setGraphic(Resources.loadIcon("text-file"));
+        refreshButton.setGraphic(Resources.loadIcon("refresh-page-option"));
         //status of buttons
         disableButtons(true);
         // action listeners
         closeProjectButton.setOnAction(e -> projectHandler.closeProject());
         refreshButton.setOnAction(e -> {
           //Main.getInstance().statusArea.simulateProgress();
-          CodeAnalyzer.refresh();
+          //CodeAnalyzer.refresh();
             //TODO make thread
             Main.getInstance().tabArea.getDocumentationList().refresh();
         });

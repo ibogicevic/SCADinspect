@@ -37,7 +37,6 @@ public class Main extends Application {
     /**
      * Location of the resource files *
      */
-    public static final String RESOURCES_DIR = "/resources/";
     public static Logger logger = null;
 
     /**

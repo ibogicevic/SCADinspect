@@ -7,9 +7,8 @@ import javafx.scene.control.TableView;
 import scadinspect.gui.DocumentationList;
 import scadinspect.gui.dialogs.SettingsDialog;
 
-
 /**
- * Area for 'Issues' and 'Documentation' Tabulators, sets content for Tabs here.
+ * Area for 'Documentation' Tabulators, sets content for Tabs here.
  *
  * @author Tim Walter
  */
