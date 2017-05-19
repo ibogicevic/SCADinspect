@@ -24,18 +24,19 @@ import scadinspect.gui.dialogs.SettingsDialog;
  */
 public class ToolbarArea extends ToolBar {
 
+	// settings content
+    private final Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
+	
     // initialize buttons
-    private final Pane seperatorPane = new Pane();
     private final MenuItem openFileButton = new MenuItem("Open file", Resources.loadIcon("open-folder-outline"));
     private final MenuItem openFolderButton = new MenuItem("Open folder", Resources.loadIcon("open-folder-outline"));
     private final SplitMenuButton openProjectButton = new SplitMenuButton(openFileButton, openFolderButton);
-    private final Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
+    private final Pane separatorPane = new Pane();
     private final Button settingsButton = new Button("Settings");
     private final Hyperlink helpLink = new Hyperlink("Help");
     private final Hyperlink aboutLink = new Hyperlink("About");
     private final Button exitButton = new Button("Exit");
     private final ProjectHandling projectHandler = new ProjectHandling();
-    private final Separator separator;
 
     public ProjectHandling getProjectHandler() {
         return projectHandler;
@@ -57,7 +58,6 @@ public class ToolbarArea extends ToolBar {
      * Constructor of ToolbarArea
      */
     public ToolbarArea() {
-
         // configure open button
         openProjectButton.setGraphic(Resources.loadIcon("open-folder-outline"));
         // read settings
@@ -112,7 +112,7 @@ public class ToolbarArea extends ToolBar {
         	Platform.exit();
         });
 
-        // set button icons
+        // icons
         settingsButton.setGraphic(Resources.loadIcon("cog-wheel-silhouette"));
         helpLink.setGraphic(Resources.loadResizedIcon("help-icon"));
         aboutLink.setGraphic(Resources.loadResizedIcon("about-icon"));
@@ -127,18 +127,18 @@ public class ToolbarArea extends ToolBar {
         });
         aboutLink.setOnAction(e -> AboutDialog.openDialog());
         settingsButton.setOnAction(e -> SettingsDialog.openDialog());
-        separator = new Separator();
-        // add all buttons
+        
+        // add left-aligned elements
         this.getItems().add(openProjectButton);
-        this.getItems().add(separator);
         this.getItems().add(settingsButton);
-        // rightmost links
-        HBox.setHgrow(seperatorPane, Priority.ALWAYS);
+        
+        // add right-aligned elements
+        HBox.setHgrow(separatorPane, Priority.ALWAYS);
         final HBox box = new HBox();
         box.getChildren().add(helpLink);
         box.getChildren().add(aboutLink);
         box.getChildren().add(exitButton);
-        this.getItems().add(seperatorPane);
+        this.getItems().add(separatorPane);
         this.getItems().add(box);
     }
 
@@ -149,42 +149,42 @@ public class ToolbarArea extends ToolBar {
     public void switchButtons(Integer button){
 
 
-        switch (button) {
-            case -1: {
-                settingsButton.setVisible(false);
-                separator.setVisible(false);
-                helpLink.setVisible(false);
-                aboutLink.setVisible(false);
-                openProjectButton.setVisible(false);
-                break;
-            }
-            case 0: {
-                // hide all buttons except from openFile
-                settingsButton.setVisible(false);
-                separator.setVisible(false);
-                helpLink.setVisible(false);
-                aboutLink.setVisible(false);
-                openProjectButton.setVisible(true);
-
-                //disable all buttons
-                openProjectButton.setMouseTransparent(true);
-                settingsButton.setMouseTransparent(true);
-                break;
-            }
-            case 1: {
-                openProjectButton.setVisible(false);
-                settingsButton.setVisible(true);
-                break;
-            }
-            case 2: {
-                settingsButton.setVisible(false);
-                break;
-            }
-            case 3: {
-                settingsButton.setVisible(false);
-                break;
-            }
-
-        }
+//        switch (button) {
+//            case -1: {
+//                settingsButton.setVisible(false);
+//                separator.setVisible(false);
+//                helpLink.setVisible(false);
+//                aboutLink.setVisible(false);
+//                openProjectButton.setVisible(false);
+//                break;
+//            }
+//            case 0: {
+//                // hide all buttons except from openFile
+//                settingsButton.setVisible(false);
+//                separator.setVisible(false);
+//                helpLink.setVisible(false);
+//                aboutLink.setVisible(false);
+//                openProjectButton.setVisible(true);
+//
+//                //disable all buttons
+//                openProjectButton.setMouseTransparent(true);
+//                settingsButton.setMouseTransparent(true);
+//                break;
+//            }
+//            case 1: {
+//                openProjectButton.setVisible(false);
+//                settingsButton.setVisible(true);
+//                break;
+//            }
+//            case 2: {
+//                settingsButton.setVisible(false);
+//                break;
+//            }
+//            case 3: {
+//                settingsButton.setVisible(false);
+//                break;
+//            }
+//
+//        }
     }
 }
