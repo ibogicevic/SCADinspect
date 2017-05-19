@@ -6,13 +6,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Resources {
+	
+    private static final String RESOURCES_DIR = "/resources/";	
 	/**
      * Loads a specific icon from the res-folder
      *
      * @return the icon as ImageView
      */
     public static ImageView loadIcon(String fileName) {
-        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
+        InputStream inputStream = Main.class.getResourceAsStream(RESOURCES_DIR + fileName + ".png");
         Image image = new Image(inputStream);
         ImageView imageView = new ImageView(image);
         return imageView;
