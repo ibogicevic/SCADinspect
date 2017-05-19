@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import scadinspect.control.CodeAnalyzer;
 import scadinspect.control.ProjectHandling;
 import scadinspect.gui.Main;
+import scadinspect.gui.Resources;
 import scadinspect.gui.dialogs.AboutDialog;
 import scadinspect.gui.dialogs.SettingsDialog;
 
@@ -32,8 +33,8 @@ public class ToolbarArea extends ToolBar {
     // initialize buttons
     private final VBox vbox = new VBox();
     private final Pane seperatorPane = new Pane();
-    private final MenuItem openFileButton = new MenuItem("Open file", loadIcon("open-folder-outline"));
-    private final MenuItem openFolderButton = new MenuItem("Open folder", loadIcon("open-folder-outline"));
+    private final MenuItem openFileButton = new MenuItem("Open file", Resources.loadIcon("open-folder-outline"));
+    private final MenuItem openFolderButton = new MenuItem("Open folder", Resources.loadIcon("open-folder-outline"));
     private final SplitMenuButton openProjectButton = new SplitMenuButton(openFileButton, openFolderButton);
     private final Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");
     private final Button settingsButton = new Button("Settings");
@@ -59,32 +60,12 @@ public class ToolbarArea extends ToolBar {
     }
 
     /**
-     * Loads a specific icon from the res-folder
-     *
-     * @return the icon as ImageView
-     */
-    private ImageView loadIcon(String fileName) {
-        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
-        Image image = new Image(inputStream);
-        ImageView imageView = new ImageView(image);
-        return imageView;
-    }
-    private ImageView loadResizedIcon(String fileName) {
-        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
-        Image image = new Image(inputStream);
-        ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(12);
-        imageView.setFitWidth(12);
-        return imageView;
-    }
-
-    /**
      * Constructor of ToolbarArea
      */
     public ToolbarArea() {
 
         // configure open button
-        openProjectButton.setGraphic(loadIcon("open-folder-outline"));
+        openProjectButton.setGraphic(Resources.loadIcon("open-folder-outline"));
         // Read settings
         if (userPrefs.getInt("SET_OPENBUTTON", 0) == 0) {
             openProjectButton.setText("Open file");
@@ -135,9 +116,9 @@ public class ToolbarArea extends ToolBar {
         });
 
         // set button icons
-        settingsButton.setGraphic(loadIcon("cog-wheel-silhouette"));
-        helpLink.setGraphic(loadResizedIcon("help-icon"));
-        aboutLink.setGraphic(loadResizedIcon("about-icon"));
+        settingsButton.setGraphic(Resources.loadIcon("cog-wheel-silhouette"));
+        helpLink.setGraphic(Resources.loadResizedIcon("help-icon"));
+        aboutLink.setGraphic(Resources.loadResizedIcon("about-icon"));
 
         // status of buttons
         disableButtons(true);
