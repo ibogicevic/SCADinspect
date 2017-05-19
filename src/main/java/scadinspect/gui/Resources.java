@@ -17,10 +17,8 @@ public class Resources {
         ImageView imageView = new ImageView(image);
         return imageView;
     }
-    public static ImageView loadResizedIcon(String fileName) {
-        InputStream inputStream = Main.class.getResourceAsStream(Main.RESOURCES_DIR + fileName + ".png");
-        Image image = new Image(inputStream);
-        ImageView imageView = new ImageView(image);
+    public static ImageView loadIconSmall(String fileName) {
+        ImageView imageView = loadIcon(fileName);
         imageView.setFitHeight(12);
         imageView.setFitWidth(12);
         return imageView;
