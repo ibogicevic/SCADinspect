@@ -31,7 +31,6 @@ import scadinspect.gui.dialogs.SettingsDialog;
 public class ToolbarArea extends ToolBar {
 
     // initialize buttons
-    private final VBox vbox = new VBox();
     private final Pane seperatorPane = new Pane();
     private final MenuItem openFileButton = new MenuItem("Open file", Resources.loadIcon("open-folder-outline"));
     private final MenuItem openFolderButton = new MenuItem("Open folder", Resources.loadIcon("open-folder-outline"));
@@ -137,13 +136,13 @@ public class ToolbarArea extends ToolBar {
         this.getItems().add(openProjectButton);
         this.getItems().add(separator);
         this.getItems().add(settingsButton);
-        //this.getItems().add(separator);
-
+        
         HBox.setHgrow(seperatorPane, Priority.ALWAYS);
-        vbox.getChildren().add(helpLink);
-        vbox.getChildren().add(aboutLink);
+        final HBox box = new HBox();
+        box.getChildren().add(helpLink);
+        box.getChildren().add(aboutLink);
         this.getItems().add(seperatorPane);
-        this.getItems().add(vbox);
+        this.getItems().add(box);
     }
 
 
