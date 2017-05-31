@@ -44,8 +44,6 @@ import scadinspect.gui.areas.ToolbarArea;
 
 /**
  * Startup JavaFX frame
- *
- * @author ivan
  */
 public class Main extends Application {
 

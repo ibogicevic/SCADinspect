@@ -1,9 +1,5 @@
 package scadinspect.data.scaddoc.export.format;
 
-/**
- * @author eric, Desyon, richteto on 24.03.17.
- */
-
 import java.io.StringWriter;
 import java.util.Collection;
 import javax.xml.parsers.DocumentBuilder;

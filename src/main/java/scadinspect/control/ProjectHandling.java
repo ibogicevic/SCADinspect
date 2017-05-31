@@ -25,8 +25,6 @@ import scadinspect.control.io.FileSearchRunnable;
 /**
  * Project Handler for loading and closing paths and files.
  * Stores the loaded files in a file list.
- * @author bilir
- *
  */
 public class ProjectHandling {
 

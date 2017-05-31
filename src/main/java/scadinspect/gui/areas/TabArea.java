@@ -9,8 +9,6 @@ import scadinspect.gui.dialogs.SettingsDialog;
 
 /**
  * Area for 'Documentation' Tabulators, sets content for Tabs here.
- *
- * @author Tim Walter
  */
 public class TabArea extends TabPane {
 

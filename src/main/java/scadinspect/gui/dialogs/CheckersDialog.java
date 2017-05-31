@@ -1,8 +1,6 @@
 
 /**
  * Opens the Checkers Dialog
- *
- * @author: jonas_ber
  */
 package scadinspect.gui.dialogs;
 

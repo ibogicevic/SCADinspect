@@ -13,10 +13,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**
- *
- * @author balsfull
- */
 public class FileSearchRunnable extends PausableRunnable {
 
     private final FileFilter filter;

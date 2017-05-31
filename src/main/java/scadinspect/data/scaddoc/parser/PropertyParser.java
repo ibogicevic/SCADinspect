@@ -13,8 +13,6 @@ import scadinspect.data.scaddoc.properties.SingleProperty;
 
 /**
  * Property parser definition parsing a scadFile to the internal modules
- *
- * @author richteto on 3/23/17.
  */
 public class PropertyParser {
 

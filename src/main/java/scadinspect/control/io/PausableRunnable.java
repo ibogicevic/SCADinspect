@@ -8,10 +8,6 @@ package scadinspect.control.io;
 import java.util.logging.Level;
 import scadinspect.gui.Main;
 
-/**
- *
- * @author balsfull
- */
 public abstract class PausableRunnable implements Runnable {
 
     private final Object LOCK = new Object();

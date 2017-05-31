@@ -6,9 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-/**
- * @author desyon on 3/22/17.
- */
 class MultiPropertyTest {
 
   /**

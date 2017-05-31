@@ -16,8 +16,6 @@ import scadinspect.data.scaddoc.export.format.XmlExporter;
 /**
  * Provides all means to convert a List of Modules into multiple formats of character files.
  * This includes JSON and XML files.
- *
- * @author Desyon, richterto, eric on 3/23/17.
  */
 
 public class FileExport {

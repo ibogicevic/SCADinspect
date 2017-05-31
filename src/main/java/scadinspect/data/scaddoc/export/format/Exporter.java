@@ -3,9 +3,6 @@ package scadinspect.data.scaddoc.export.format;
 import java.util.Collection;
 import scadinspect.data.scaddoc.ScadDocuFile;
 
-/**
- * @author Desyon, richteto on 30.03.17.
- */
 public interface Exporter {
 
   byte[] getOutput(ScadDocuFile file) throws Exception;

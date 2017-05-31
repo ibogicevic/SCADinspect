@@ -8,10 +8,6 @@ import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.Property;
 import scadinspect.data.scaddoc.properties.helper.Pair;
 
-/**
- * @author simon, richteto on 3/17/17.
- */
-
 public class JsonExporter implements Exporter {
 
   /**

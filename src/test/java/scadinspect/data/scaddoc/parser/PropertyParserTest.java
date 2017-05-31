@@ -12,9 +12,6 @@ import scadinspect.data.scaddoc.properties.MultiProperty;
 import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
-/**
- * @author simon, tom on 3/23/17.
- */
 class PropertyParserTest {
 
   PropertyParser propertyParser;

@@ -2,8 +2,6 @@ package scadinspect.data.scaddoc.properties.helper;
 
 /**
  * Pair Definition for pair values like '10 EUR' or 'hundred USD'
- *
- * @author Created by richteto on 17.03.2017
  */
 public class Pair<T> {
 

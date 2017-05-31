@@ -22,9 +22,6 @@ import scadinspect.data.scaddoc.properties.PairProperty;
 import scadinspect.data.scaddoc.properties.Property;
 import scadinspect.data.scaddoc.properties.SingleProperty;
 
-/**
- * @author Desyon, eric on 3/23/17.
- */
 class FileExportTest {
 
   static private ScadDocuFile file;

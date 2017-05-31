@@ -8,9 +8,6 @@ import scadinspect.data.scaddoc.Module;
 import scadinspect.data.scaddoc.ScadDocuFile;
 import scadinspect.data.scaddoc.properties.Property;
 
-/**
- * @author Desyon on 31.03.17.
- */
 public class MdExporter implements Exporter {
 
   /**

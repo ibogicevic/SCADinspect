@@ -10,9 +10,6 @@ import javafx.scene.layout.BorderPane;
  * Area for general status messages and the progress bar (especially for 'refresh' progress). Can
  * currently be activated by clicking the "Refresh" button in the toolbar. (You might need to "Open"
  * a file first to activate the "Refresh" button.)
- *
- * @author David Maier
- * @author Lisa Milius
  */
 
 public class StatusArea extends BorderPane {

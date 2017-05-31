@@ -10,8 +10,6 @@ import scadinspect.data.scaddoc.properties.Property;
 
 /**
  * The internal documentation of a single Scad file
- *
- * @author richteto on 30.03.2017.
  */
 public class ScadDocuFile {
 

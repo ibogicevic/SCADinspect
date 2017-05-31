@@ -1,10 +1,7 @@
 /**
  * Opens the about dialog if the About-Button is clicked
- *
- * @author: schmjuli
  */
 package scadinspect.gui.dialogs;
-
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,9 +21,6 @@ import scadinspect.gui.Main;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * Edited by Tim Walter on 05.04.2017 (Sprint1 Review Fix)
- */
 public class AboutDialog {
 
     private final static Dialog<Boolean> dialog = new Dialog<>();

@@ -14,9 +14,6 @@ import scadinspect.data.scaddoc.export.FileExport;
 import scadinspect.data.scaddoc.export.format.ExportFormat;
 import scadinspect.gui.Main;
 
-/**
- * author simon
- */
 public class ExportDialog {
 
   /**
