@@ -1,22 +1,22 @@
 /* 
-*   SCADinspect – Javadoc-like module documentaion for your SCAD-files
-*   www.github
-*   
-*   Copyright (C) 2017 Ivan Bogicevic and others
-*    
-*   This program is free software: you can redistribute it and/or modify
-*   it under the terms of the GNU General Public License as published by
-*   the Free Software Foundation, either version 3 of the License, or
-*   (at your option) any later version.
-*
-*   This program is distributed in the hope that it will be useful,
-*   but WITHOUT ANY WARRANTY; without even the implied warranty of
-*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*   GNU General Public License for more details.
-*
-*   You should have received a copy of the GNU General Public License
-*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *   SCADinspect – Javadoc-like module documentaion for your SCAD-files
+ *   www.github
+ *   
+ *   Copyright (C) 2017 Ivan Bogicevic and others
+ *    
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package scadinspect.gui;
 
@@ -47,30 +47,20 @@ import scadinspect.gui.areas.ToolbarArea;
  */
 public class Main extends Application {
 
-	/**
-	 * Name of the application *
-	 */
+	/** Name of the application */
 	public static final String APPNAME = "SCADinspect";
 
-	/**
-	 * Location of the resource files *
-	 */
+	/** Location of the resource files */
 	public static Logger logger = null;
 
-	/**
-	 * Ratio between window height and screen height *
-	 */
+	/** Ratio between window height and screen height */
 	private static final double WINDOW_HEIGHT = 0.33;
 
-	/**
-	 * Pre-configured logger that outputs to  *
-	 */
+	/** Pre-configured logger that outputs to */
 	private LogHandler logHandler;
-
 
 	// singleton pattern
 	private static Main instance;
-
 	public static Main getInstance() {
 		return instance;
 	}
@@ -81,7 +71,7 @@ public class Main extends Application {
 	public StatusArea statusArea = new StatusArea();
 	public BottomArea bottomArea = new BottomArea();
 
-	// list of open scad-files
+	/** list of open scad-files */
 	private List<File> fileList = new ArrayList<>();
 
 	/**

@@ -51,9 +51,6 @@ public class AboutDialog {
                     + "-Simon Steinrücken"
                     + "-Tim Walter\n";
 
-
-
-
     private final static String thirdPartyContent =
             "Third Party Artefacts\n" +
                     "SCADinspect uses Icons from the \"Font Awesome\"-Package by Dave Gandy released under the CC BY 3.0 Licence\n";
