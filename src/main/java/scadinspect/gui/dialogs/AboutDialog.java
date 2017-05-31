@@ -33,7 +33,7 @@ public class AboutDialog {
 
     // Text content
     private final static String aboutContent =
-            "Static code analysis and javadoc-like parts documentation for your OpenSCAD-Files \n" +
+            "Javadoc-like module documentation for your OpenSCAD-Files \n" +
                     "\n" +
                     "© 2017 Licensed under GNU General Public License v3.0\n" +
                     "For more information visit:";
