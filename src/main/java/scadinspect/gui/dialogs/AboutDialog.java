@@ -9,7 +9,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.geometry.Pos;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -17,135 +16,131 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import scadinspect.gui.Main;
+import scadinspect.gui.Resources;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AboutDialog {
 
-    private final static Dialog<Boolean> dialog = new Dialog<>();
+	private final static Dialog<Boolean> dialog = new Dialog<>();
 
-    // Text content
-    private final static String aboutContent =
-            "Javadoc-like module documentation for your OpenSCAD-Files \n" +
-                    "\n" +
-                    "© 2017 Licensed under GNU General Public License v3.0\n" +
-                    "For more information visit:";
+	// Text content
+	private final String headerText = "SCADinspect - Version 0.1";
 
-    private final static String contributorsContent =
-            "Contributors:\n" +
-                    "-Christoph Auf der Landwehr"
-                    + "-Jonas Balsfulland\n"
-                    + "-Maik Baumgartner\n"
-                    + "-Jonas Bernsdorff\n"
-                    + "-Orhan Bilir\n"
-                    + "-Ivan Bogicevic\n"
-                    + "-Desyon\n"
-                    + "-Jokke Jansen\n"
-                    + "-Malcolm Malam\n"
-                    + "-Lisa Milius\n"
-                    + "-Tom Richter\n"
-                    + "-Romy Römke\n"
-                    + "-Julian Schmidt\n"
-                    + "-Felix Stegmaier\n"
-                    + "-Simon Steinrücken"
-                    + "-Tim Walter\n";
+	private final String aboutContent =
+			"Javadoc-like module documentation for your OpenSCAD-Files \n" +
+					"\n" +
+					"© 2017 Licensed under GNU General Public License v3.0\n" +
+					"For more information visit:";
 
-    private final static String thirdPartyContent =
-            "Third Party Artefacts\n" +
-                    "SCADinspect uses Icons from the \"Font Awesome\"-Package by Dave Gandy released under the CC BY 3.0 Licence\n";
+	// list of contributors
+	private final String contributorsContent =
+			"Main developer: Ivan Bogicevic \n"
+					+ "Contributors:"
+					+ "Christoph Auf der Landwehr, "
+					+ "Jonas Balsfulland, "
+					+ "Maik Baumgartner, "
+					+ "Jonas Bernsdorff, "
+					+ "Orhan Bilir, "
+					+ "Desyon, "
+					+ "Jokke Jansen, "
+					+ "Malcolm Malam, "
+					+ "Lisa Milius, "
+					+ "Tom Richter, "
+					+ "Romy Römke, "
+					+ "Julian Schmidt, "
+					+ "Felix Stegmaier, "
+					+ "Simon Steinrücken, "
+					+ "Tim Walter, "
+					+ "and others.";
 
-    // Set logo
-    private static final Image logo = new Image("http://www.ghanaedudirectory.com/Images/nologo.jpg");
+	private final String thirdPartyContent =
+			"Third Party Artefacts\n" +
+					"SCADinspect uses Icons from the \"Font Awesome\"-Package by Dave Gandy released under the CC BY 3.0 Licence\n";
 
-    /**
-     * Application startup function
-     */
-    public static void openDialog() {
-        /* final Properties properties = new Properties();
-        try {
-            properties.load(dialog.getClass().getResourceAsStream("project.properties"));
-        } catch (IOException e) {
-            //TODO: Log
-        } */
+	/**
+	 * Application startup function
+	 */
+	public void open() {
 
+		Main.getInstance().greyPane.modalToFront(true);
+		Main.getInstance().greyStack.toFront();
+		Main.getInstance().greyStack.setVisible(true);
 
-        //ProjectHandling.showModal();
-        Main.getInstance().greyPane.modalToFront(true);
-        Main.getInstance().greyStack.toFront();
-        Main.getInstance().greyStack.setVisible(true);
+		dialog.setTitle("About");
+		dialog.setHeaderText(headerText);
 
-        //Main.getInstance().greyStack
-        dialog.setTitle("About");
-        dialog.setHeaderText("SCADinspect - Version x.xx");
+		// add ok button
+		ButtonType okButton = new ButtonType("OK", ButtonData.CANCEL_CLOSE);
+		dialog.getDialogPane().getButtonTypes().addAll(okButton);
 
+		// arrange content
+		GridPane grid = new GridPane();
+		grid.setHgap(10);
+		grid.setVgap(10);
 
-        // Set the button types.
-        ButtonType okButton = new ButtonType("OK", ButtonData.CANCEL_CLOSE);
+		// display logo
+		ImageView logo = Resources.loadIcon("logo2");
+		logo.setPreserveRatio(true);
+		logo.setFitHeight(25);
+		StackPane stackPane = new StackPane(logo);
+		stackPane.setAlignment(Pos.CENTER);
+		grid.add(stackPane, 0, 0);
 
-        // Display the buttons
-        dialog.getDialogPane().getButtonTypes().addAll(okButton);
+		// Display Text
+		Label aboutLabel = new Label(aboutContent);
+		aboutLabel.setWrapText(true);
 
-        // Arrange Content
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
+		Label contributorsLabel = new Label(contributorsContent);
+		contributorsLabel.setWrapText(true);
+		contributorsLabel.setMaxWidth(400);
+		grid.add(contributorsLabel, 0, 1);
 
-        // Display Logo
-        ImageView logoView = new ImageView(logo);
-        logoView.setFitWidth(128);
-        logoView.setFitHeight(128);
-        StackPane stackPane = new StackPane(logoView);
-        stackPane.setAlignment(Pos.CENTER);
-        grid.add(stackPane, 0, 0);
+		Label thirdPartyLabel = new Label(thirdPartyContent);
+		thirdPartyLabel.setWrapText(true);
 
-        // Display Text
-        Label aboutLabel = new Label(aboutContent);
-        aboutLabel.setWrapText(true);
+		//Links for text content
+		List<Hyperlink> links = new ArrayList<>();
 
-        Label contributorsLabel = new Label(contributorsContent);
-        contributorsLabel.setWrapText(true);
-        grid.add(contributorsLabel, 1, 1);
+		Hyperlink scadinspect = new Hyperlink("https://github.com/ibogicevic/SCADinspect");
+		links.add(scadinspect);
 
-        Label thirdPartyLabel = new Label(thirdPartyContent);
-        thirdPartyLabel.setWrapText(true);
+		Hyperlink flaticon = new Hyperlink("http://www.flaticon.com/authors/dave-gandy");
+		links.add(flaticon);
 
-        //Links for text content
-        List<Hyperlink> links = new ArrayList<>();
+		Hyperlink creativeCommons = new Hyperlink("http://creativecommons.org/licenses/by/3.0/");
+		links.add(creativeCommons);
 
-        Hyperlink scadinspect = new Hyperlink("https://github.com/ibogicevic/SCADinspect");
-        links.add(scadinspect);
+		for(final Hyperlink hyperlink : links) {
+			hyperlink.setOnAction(new EventHandler<ActionEvent>() {
 
-        Hyperlink flaticon = new Hyperlink("http://www.flaticon.com/authors/dave-gandy");
-        links.add(flaticon);
+				@Override
+				public void handle(ActionEvent t) {
+					Main.getInstance().getHostServices().showDocument(hyperlink.getText());
+				}
+			});
+		}
 
-        Hyperlink creativeCommons = new Hyperlink("http://creativecommons.org/licenses/by/3.0/");
-        links.add(creativeCommons);
+		VBox upperBox = new VBox();
+		upperBox.getChildren().add(aboutLabel);
+		upperBox.getChildren().add(scadinspect);
+		grid.add(upperBox, 1,0);
 
-        for(final Hyperlink hyperlink : links) {
-            hyperlink.setOnAction(new EventHandler<ActionEvent>() {
+		VBox lowerBox = new VBox();
+		lowerBox.getChildren().add(thirdPartyLabel);
+		lowerBox.getChildren().add(flaticon);
+		lowerBox.getChildren().add(creativeCommons);
+		grid.add(lowerBox, 1,2);
 
-                @Override
-                public void handle(ActionEvent t) {
-                    Main.getInstance().getHostServices().showDocument(hyperlink.getText());
-                }
-            });
-        }
+		dialog.getDialogPane().setContent(grid);
+		dialog.showAndWait();
+		Main.getInstance().greyStack.toBack();
+		Main.getInstance().greyStack.setVisible(false);
+	}
 
-        VBox upperBox = new VBox();
-        upperBox.getChildren().add(aboutLabel);
-        upperBox.getChildren().add(scadinspect);
-        grid.add(upperBox, 1,0);
-
-        VBox lowerBox = new VBox();
-        lowerBox.getChildren().add(thirdPartyLabel);
-        lowerBox.getChildren().add(flaticon);
-        lowerBox.getChildren().add(creativeCommons);
-        grid.add(lowerBox, 1,2);
-
-        dialog.getDialogPane().setContent(grid);
-        dialog.showAndWait();
-        Main.getInstance().greyStack.toBack();
-        Main.getInstance().greyStack.setVisible(false);
-    }
+	public static void openDialog() {
+		AboutDialog aboutDialog = new AboutDialog();
+		aboutDialog.open();
+	}
 }
