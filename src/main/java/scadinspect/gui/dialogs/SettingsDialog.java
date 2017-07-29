@@ -22,7 +22,7 @@ public class SettingsDialog {
     public static final String SETTING_DOCUMENTATION = "SET_DOCUMENTATION";
     public static final String SETTING_AUTOREFRESH = "SET_AUTOREFRESH";
     
-    public static void openDialog(){
+    public static void open(){
 
         Main.getInstance().greyStack.toFront();
         Main.getInstance().greyPane.modalToFront(true);

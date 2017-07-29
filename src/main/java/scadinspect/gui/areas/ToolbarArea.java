@@ -121,7 +121,7 @@ public class ToolbarArea extends BorderPane {
             Main.getInstance().helpPane.switchTour(-1);
         });
         aboutLink.setOnAction(e -> AboutDialog.openDialog());
-        settingsButton.setOnAction(e -> SettingsDialog.openDialog());
+        settingsButton.setOnAction(e -> SettingsDialog.open());
         
         // add left-aligned elements
         HBox leftButtons = new HBox();
@@ -142,8 +142,6 @@ public class ToolbarArea extends BorderPane {
         
         this.setPadding(new Insets(5f, 5f, 5f, 5f));
     }
-
-
 
      // this function is necessary to highlight the specific buttons for each tutorial step
 
