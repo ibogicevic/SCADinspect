@@ -30,21 +30,22 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import data.ScadDocuFile;
+
 import gui.areas.ContentArea;
 import gui.areas.BottomArea;
 import gui.areas.ToolbarArea;
+import data.ScadDocuFile;
 
-/** Startup JavaFX frame */
+/** startup JavaFX frame */
 public class Main extends Application {
 
-	/** Name of the application */
+	/** name of the application */
 	public static final String APPNAME = "SCADinspect";
 
-	/** Location of logger */
+	/** location of logger */
 	public static final Logger logger = null;
 
-	/** Ratio between window height and screen height */
+	/** ratio between window height and screen height */
 	private static final double WINDOW_HEIGHT = 0.33;
 
 	// singleton pattern
@@ -70,6 +71,7 @@ public class Main extends Application {
 	public Stage getPrimaryStage() {
 		return this.primaryStage;
 	}
+	
 	/**
 	 * Gives the list of currently open scad-files
 	 * @return list of scad-files currently open
@@ -98,7 +100,6 @@ public class Main extends Application {
 	@Override
 	/** Application startup function */
 	public void start(Stage primaryStage) {
-
 		// remember singleton instance (instantiated by javafx)
 		Main.instance = this;
 

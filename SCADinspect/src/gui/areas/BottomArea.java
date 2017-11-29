@@ -1,7 +1,6 @@
 package gui.areas;
 
 import gui.Main;
-import gui.Resources;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -10,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import util.ResourceLoader;
 
 /**
  * Area for general status messages and the progress bar (especially for 'refresh' progress). Can

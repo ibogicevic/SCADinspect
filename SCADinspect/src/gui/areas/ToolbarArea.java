@@ -5,9 +5,9 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import util.ResourceLoader;
 import control.ProjectHandling;
 import gui.Main;
-import gui.Resources;
 import gui.dialogs.AboutDialog;
 import gui.dialogs.ExportDialog;
 import gui.dialogs.HelpDialog;
@@ -20,8 +20,8 @@ public class ToolbarArea extends BorderPane {
 	private final int BUTTON_SPACING = 5;
 	
 	// initialize buttons
-	private final MenuItem openFileButton = new MenuItem("Open file", Resources.loadIcon("open-folder-outline"));
-	private final MenuItem openFolderButton = new MenuItem("Open folder", Resources.loadIcon("open-folder-outline"));
+	private final MenuItem openFileButton = new MenuItem("Open file", ResourceLoader.loadIcon("open-folder-outline"));
+	private final MenuItem openFolderButton = new MenuItem("Open folder", ResourceLoader.loadIcon("open-folder-outline"));
 	private final SplitMenuButton openProjectButton = new SplitMenuButton(openFileButton, openFolderButton);
 	private final Button closeProjectButton = new Button("Close");
 	private final CheckMenuItem autoRefreshItem = new CheckMenuItem("Autorefresh");
@@ -40,14 +40,14 @@ public class ToolbarArea extends BorderPane {
 	public ToolbarArea() {
 		
 		// graphics
-		openProjectButton.setGraphic(Resources.loadIcon("open-folder-outline"));
-		closeProjectButton.setGraphic(Resources.loadIcon("cross-mark-on-a-black-circle-background"));
-		refreshButton.setGraphic(Resources.loadIcon("refresh-page-option"));
-		exportButton.setGraphic(Resources.loadIcon("text-file"));
-		helpLink.setGraphic(Resources.loadIconSmall("help-icon"));
-		aboutLink.setGraphic(Resources.loadIconSmall("about-icon"));
-		exitButton.setGraphic(Resources.loadIcon("sign-out-option"));
-		ImageView logo = Resources.loadIcon("logo3");
+		openProjectButton.setGraphic(ResourceLoader.loadIcon("open-folder-outline"));
+		closeProjectButton.setGraphic(ResourceLoader.loadIcon("cross-mark-on-a-black-circle-background"));
+		refreshButton.setGraphic(ResourceLoader.loadIcon("refresh-page-option"));
+		exportButton.setGraphic(ResourceLoader.loadIcon("text-file"));
+		helpLink.setGraphic(ResourceLoader.loadIconSmall("help-icon"));
+		aboutLink.setGraphic(ResourceLoader.loadIconSmall("about-icon"));
+		exitButton.setGraphic(ResourceLoader.loadIcon("sign-out-option"));
+		ImageView logo = ResourceLoader.loadIcon("logo3");
 		logo.setPreserveRatio(true);
 		logo.setFitHeight(25);
 		

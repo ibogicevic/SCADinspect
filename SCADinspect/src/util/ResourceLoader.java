@@ -1,16 +1,17 @@
-package gui;
+package util;
 
 import java.io.InputStream;
 
+import gui.Main;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Resources {
+public class ResourceLoader {
 	
     private static final String RESOURCES_DIR = "/res/";	
-	/**
+	
+    /**
      * Loads a specific icon from the res-folder
-     *
      * @return the icon as ImageView
      */
     public static ImageView loadIcon(String fileName) {

@@ -15,8 +15,8 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import util.ResourceLoader;
 import gui.Main;
-import gui.Resources;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +77,7 @@ public class AboutDialog {
 		grid.setVgap(10);
 
 		// display logo
-		ImageView logo = Resources.loadIcon("logo2");
+		ImageView logo = ResourceLoader.loadIcon("logo2");
 		logo.setPreserveRatio(true);
 		logo.setFitHeight(25);
 		StackPane stackPane = new StackPane(logo);
