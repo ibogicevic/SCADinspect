@@ -1,4 +1,4 @@
 /**
- * Classes defining the UI of the application
+ * Graphical user interface
  */
 package gui;
