@@ -31,9 +31,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import data.ScadDocuFile;
-import gui.areas.BottomArea;
 import gui.areas.ContentArea;
-import gui.areas.StatusArea;
+import gui.areas.BottomArea;
 import gui.areas.ToolbarArea;
 
 /** Startup JavaFX frame */
@@ -57,8 +56,7 @@ public class Main extends Application {
 	// gui areas
 	public final ToolbarArea toolbarArea = new ToolbarArea();
 	public final ContentArea contentArea = new ContentArea();
-	public final StatusArea statusArea = new StatusArea();
-	public final BottomArea bottomArea = new BottomArea();
+	public final BottomArea statusArea = new BottomArea();
 
 	/** list of open scad-files */
 	private List<File> fileList = new ArrayList<>();
@@ -107,16 +105,11 @@ public class Main extends Application {
 		// remember stage for subwindows
 		this.primaryStage = primaryStage;
 
-		// Status and BottomArea
-		BorderPane bottomPane = new BorderPane();
-		bottomPane.setCenter(bottomArea);
-		bottomPane.setBottom(statusArea);
-
 		// add all areas
 		BorderPane mainPane = new BorderPane();
 		mainPane.setTop(toolbarArea);
 		mainPane.setCenter(contentArea);
-		mainPane.setBottom(bottomPane);
+		mainPane.setBottom(statusArea);
 
 		// show main pane
 		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();

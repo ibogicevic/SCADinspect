@@ -9,6 +9,7 @@ import control.ProjectHandling;
 import gui.Main;
 import gui.Resources;
 import gui.dialogs.AboutDialog;
+import gui.dialogs.ExportDialog;
 import gui.dialogs.HelpDialog;
 import javafx.scene.layout.BorderPane;
 
@@ -17,10 +18,17 @@ import javafx.scene.layout.BorderPane;
  */
 public class ToolbarArea extends BorderPane {
 
+	// constants
+	private final int BUTTON_SPACING = 5;
+	
 	// initialize buttons
 	private final MenuItem openFileButton = new MenuItem("Open file", Resources.loadIcon("open-folder-outline"));
 	private final MenuItem openFolderButton = new MenuItem("Open folder", Resources.loadIcon("open-folder-outline"));
 	private final SplitMenuButton openProjectButton = new SplitMenuButton(openFileButton, openFolderButton);
+	private final Button closeProjectButton = new Button("Close");
+	private final Button refreshButton = new Button("Refresh");
+	private final CheckBox autoRefreshCheckBox = new CheckBox("Autorefresh");
+	private final Button exportButton = new Button("Export");
 	private final Hyperlink helpLink = new Hyperlink("Help");
 	private final Hyperlink aboutLink = new Hyperlink("About");
 	private final Button exitButton = new Button("Exit");
@@ -30,23 +38,22 @@ public class ToolbarArea extends BorderPane {
 		return projectHandler;
 	}
 
-	/**
-	 * Disable buttons when no project is open
-	 *
-	 * @param value true if buttons shall be disabled (no open project)
-	 */
-	public void disableButtons(boolean value) {
-
-
-	}
-
-	/**
-	 * Constructor of ToolbarArea
-	 */
+	/** Constructor */
 	public ToolbarArea() {
-		// configure open button
+		
+		// graphics
 		openProjectButton.setGraphic(Resources.loadIcon("open-folder-outline"));
-		// read settings
+		closeProjectButton.setGraphic(Resources.loadIcon("cross-mark-on-a-black-circle-background"));
+		refreshButton.setGraphic(Resources.loadIcon("refresh-page-option"));
+		exportButton.setGraphic(Resources.loadIcon("text-file"));
+		helpLink.setGraphic(Resources.loadIconSmall("help-icon"));
+		aboutLink.setGraphic(Resources.loadIconSmall("about-icon"));
+		exitButton.setGraphic(Resources.loadIcon("sign-out-option"));
+		ImageView logo = Resources.loadIcon("logo3");
+		logo.setPreserveRatio(true);
+		logo.setFitHeight(25);
+		
+		// open project/file/folder action listeners
 		openProjectButton.setText("Open file");
 		openProjectButton.setOnAction(event -> {
 			projectHandler.openProjectFile();
@@ -73,39 +80,53 @@ public class ToolbarArea extends BorderPane {
 				Main.getInstance().contentArea.refresh();
 			});
 		});
-		exitButton.setOnAction(e -> {
-			Platform.exit();
-		});
 
-		// images
-		helpLink.setGraphic(Resources.loadIconSmall("help-icon"));
-		aboutLink.setGraphic(Resources.loadIconSmall("about-icon"));
-		exitButton.setGraphic(Resources.loadIcon("sign-out-option"));
-		ImageView logo = Resources.loadIcon("logo2");
-		logo.setPreserveRatio(true);
-		logo.setFitHeight(25);
-
-		// status of buttons
-		disableButtons(true);
+		// simple action listeners
+		closeProjectButton.setOnAction(e -> projectHandler.closeProject());
+		refreshButton.setOnAction(e -> {Main.getInstance().contentArea.refresh();});
+		exportButton.setOnAction(e -> ExportDialog.openDialog());
+		exitButton.setOnAction(e -> {Platform.exit();});
 		helpLink.setOnAction(e -> HelpDialog.openDialog());
 		aboutLink.setOnAction(e -> AboutDialog.openDialog());
-
+		
 		// add left-aligned elements
-		HBox leftButtons = new HBox();
-		leftButtons.getChildren().add(openProjectButton);
-		leftButtons.setSpacing(5);
-		this.setLeft(leftButtons);
-
-		// add centered element (logo)
-		this.setCenter(logo);
+		HBox leftElements = new HBox();
+		leftElements.getChildren().add(openProjectButton);
+		leftElements.setSpacing(BUTTON_SPACING);
+		leftElements.getChildren().add(closeProjectButton);
+		leftElements.setSpacing(BUTTON_SPACING);
+		leftElements.getChildren().add(refreshButton);
+		leftElements.setSpacing(BUTTON_SPACING);
+		leftElements.getChildren().add(autoRefreshCheckBox);
+		leftElements.setSpacing(BUTTON_SPACING);
+		leftElements.getChildren().add(exportButton);
+		this.setLeft(leftElements);
 
 		// add right-aligned elements
-		HBox rightButtons = new HBox();
-		rightButtons.getChildren().add(helpLink);
-		rightButtons.getChildren().add(aboutLink);
-		rightButtons.getChildren().add(exitButton);
-		this.setRight(rightButtons);
+		HBox rightElements = new HBox();
+		rightElements.getChildren().add(helpLink);
+		rightElements.getChildren().add(aboutLink);
+		rightElements.setSpacing(5);
+		rightElements.getChildren().add(logo);
+		rightElements.getChildren().add(exitButton);
+		this.setRight(rightElements);
 
-		this.setPadding(new Insets(5f, 5f, 5f, 5f));
+		this.setPadding(new Insets(BUTTON_SPACING, BUTTON_SPACING, BUTTON_SPACING, BUTTON_SPACING));
+		ProjectHandling projectHandler = new ProjectHandling();
+
+		//status of buttons
+		disableButtons(true);
 	}
+
+	/**
+	 * Disable buttons when no project is open
+	 * @param value true if buttons shall be disabled (no open project)
+	 */
+	public void disableButtons(boolean value) {
+		closeProjectButton.setDisable(value);
+		refreshButton.setDisable(value);
+		autoRefreshCheckBox.setDisable(value);
+		exportButton.setDisable(value);
+	}
+
 }
