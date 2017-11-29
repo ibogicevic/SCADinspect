@@ -5,7 +5,11 @@ import data.ScadDocuFile;
 
 public interface Exporter {
 
-  byte[] getOutput(ScadDocuFile file) throws Exception;
+	public enum ExportFormat {
+		CSV, HTML, MD
+	}
 
-  byte[] getOutput(Collection<ScadDocuFile> files) throws Exception;
+	byte[] getOutput(ScadDocuFile file) throws Exception;
+
+	byte[] getOutput(Collection<ScadDocuFile> files) throws Exception;
 }

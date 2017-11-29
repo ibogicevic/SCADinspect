@@ -10,8 +10,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import error.FileExportException;
-import export.FileExport;
-import export.format.ExportFormat;
+import export.FileExporter;
+import export.format.Exporter.ExportFormat;
 import gui.Main;
 
 public class ExportDialog {
@@ -28,7 +28,7 @@ public class ExportDialog {
     ButtonType okButtonType = new ButtonType("OK");
     dialog.getDialogPane().getButtonTypes().addAll(okButtonType);
     //dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
-    // Reenable Cancel button, once cancelling without export is possible
+    // TODO: Reenable Cancel button, once cancelling without export is possible
 
     // Create the radio buttons
     VBox vBox = new VBox();
@@ -36,18 +36,12 @@ public class ExportDialog {
 
     ToggleGroup group = new ToggleGroup();
 
-    RadioButton excel = new RadioButton("Excel");
-    excel.setToggleGroup(group);
-    RadioButton csv = new RadioButton("CSV");
-    csv.setToggleGroup(group);
-    RadioButton json = new RadioButton("JSON");
-    json.setToggleGroup(group);
-    RadioButton xml = new RadioButton("XML");
-    xml.setToggleGroup(group);
-    RadioButton pdf = new RadioButton("PDF");
-    pdf.setToggleGroup(group);
-    RadioButton md = new RadioButton("Markdown");
-    md.setToggleGroup(group);
+    RadioButton csvButton = new RadioButton("CSV");
+    csvButton.setToggleGroup(group);
+    RadioButton htmlButton = new RadioButton("HTML");
+    htmlButton.setToggleGroup(group);
+    RadioButton mdButton = new RadioButton("Markdown");
+    mdButton.setToggleGroup(group);
 
     //listen for changes in selection of radioButtons
     group.selectedToggleProperty().addListener((ov, oldToggle, newToggle) -> {
@@ -61,12 +55,9 @@ public class ExportDialog {
       }
     });
 
-    vBox.getChildren().add(excel);
-    vBox.getChildren().add(csv);
-    vBox.getChildren().add(json);
-    vBox.getChildren().add(xml);
-    vBox.getChildren().add(pdf);
-    vBox.getChildren().add(md);
+    vBox.getChildren().add(csvButton);
+    vBox.getChildren().add(htmlButton);
+    vBox.getChildren().add(mdButton);
 
     //display export Dialog
     dialog.getDialogPane().setContent(vBox);
@@ -83,33 +74,25 @@ public class ExportDialog {
       //check if fileChooser got a result
       if (exportFile != null) {
         String pathWithoutExtension = exportFile.getAbsolutePath();
-        FileExport exporter = new FileExport();
+        FileExporter exporter = new FileExporter();
         try {
-          File exported;  //save exported file for later reference
+          File exported = null;  //save exported file for later reference
           //switch for radio buttons
-          if (excel.isSelected()) {
-            exported = exporter.save(ExportFormat.EXCEL, Main.getInstance().getDocuFiles(),
-                pathWithoutExtension + ".xsxl");
-          } else if (csv.isSelected()) {
+          if (csvButton.isSelected()) {
             exported = exporter.save(ExportFormat.CSV, Main.getInstance().getDocuFiles(),
                 pathWithoutExtension + ".csv");
-          } else if (json.isSelected()) {
-            exported = exporter.save(ExportFormat.JSON, Main.getInstance().getDocuFiles(),
-                pathWithoutExtension + ".json");
-          } else if (xml.isSelected()) {
-            exported = exporter.save(ExportFormat.XML, Main.getInstance().getDocuFiles(),
-                pathWithoutExtension + ".xml");
-          } else if (pdf.isSelected()) {
-            exported = exporter.save(ExportFormat.PDF, Main.getInstance().getDocuFiles(),
-                pathWithoutExtension + ".pdf");
-          } else if (md.isSelected()) {
+          } else if (htmlButton.isSelected()) {
+            exported = exporter.save(ExportFormat.HTML, Main.getInstance().getDocuFiles(),
+                pathWithoutExtension + ".html");
+          } else if (mdButton.isSelected()) {
             exported = exporter.save(ExportFormat.MD, Main.getInstance().getDocuFiles(),
                 pathWithoutExtension + ".md");
-          } else {   //shouldn't happen, but default is pdf
-            exported = exporter.save(ExportFormat.PDF, Main.getInstance().getDocuFiles(),
-                pathWithoutExtension + ".pdf");
           }
-          Main.getInstance().statusArea.setMessage("Saved as " + exported.getAbsolutePath());
+          String exportedFilePath = "";
+          if (exported != null) {
+        	  exportedFilePath = exported.getAbsolutePath();
+          }
+          Main.getInstance().statusArea.setMessage("Saved as " + exportedFilePath);
         } catch (FileExportException e) {
           Main.getInstance().statusArea.setMessage("Error in Export: "+e.getCause());
           e.printStackTrace();

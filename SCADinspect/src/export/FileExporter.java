@@ -6,18 +6,17 @@ import java.util.Collection;
 import data.ScadDocuFile;
 import error.FileExportException;
 import export.format.CsvExporter;
-import export.format.ExportFormat;
 import export.format.Exporter;
+import export.format.Exporter.ExportFormat;
 import export.format.HtmlExporter;
 import export.format.MdExporter;
-import export.format.XmlExporter;
 
 /**
  * Provides all means to convert a List of Modules into multiple formats of character files.
  * This includes JSON and XML files.
  */
 
-public class FileExport {
+public class FileExporter {
 
   /**
    * Returns a file with all data given in the file in the assigned format
@@ -81,13 +80,10 @@ public class FileExport {
    * @param format value of the enumerator ExportFormat
    * @return an exporter of the given format or null if the format is invalid
    */
-  private Exporter getExporter(ExportFormat format) {
+  private Exporter getExporter(Exporter.ExportFormat format) {
     Exporter exporter;
 
     switch (format) {
-      case XML:
-        exporter = new XmlExporter();
-        break;
       case MD:
         exporter = new MdExporter();
         break;
