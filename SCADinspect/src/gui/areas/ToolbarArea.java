@@ -13,9 +13,7 @@ import gui.dialogs.ExportDialog;
 import gui.dialogs.HelpDialog;
 import javafx.scene.layout.BorderPane;
 
-/**
- * Toolbar at the top of the main window
- */
+/** Toolbar at the top of the main window */
 public class ToolbarArea extends BorderPane {
 
 	// constants
@@ -26,8 +24,8 @@ public class ToolbarArea extends BorderPane {
 	private final MenuItem openFolderButton = new MenuItem("Open folder", Resources.loadIcon("open-folder-outline"));
 	private final SplitMenuButton openProjectButton = new SplitMenuButton(openFileButton, openFolderButton);
 	private final Button closeProjectButton = new Button("Close");
-	private final Button refreshButton = new Button("Refresh");
-	private final CheckBox autoRefreshCheckBox = new CheckBox("Autorefresh");
+	private final CheckMenuItem autoRefreshItem = new CheckMenuItem("Autorefresh");
+	private final SplitMenuButton refreshButton = new SplitMenuButton(autoRefreshItem);
 	private final Button exportButton = new Button("Export");
 	private final Hyperlink helpLink = new Hyperlink("Help");
 	private final Hyperlink aboutLink = new Hyperlink("About");
@@ -83,6 +81,7 @@ public class ToolbarArea extends BorderPane {
 
 		// simple action listeners
 		closeProjectButton.setOnAction(e -> projectHandler.closeProject());
+		refreshButton.setText("Refresh");
 		refreshButton.setOnAction(e -> {Main.getInstance().contentArea.refresh();});
 		exportButton.setOnAction(e -> ExportDialog.openDialog());
 		exitButton.setOnAction(e -> {Platform.exit();});
@@ -96,8 +95,6 @@ public class ToolbarArea extends BorderPane {
 		leftElements.getChildren().add(closeProjectButton);
 		leftElements.setSpacing(BUTTON_SPACING);
 		leftElements.getChildren().add(refreshButton);
-		leftElements.setSpacing(BUTTON_SPACING);
-		leftElements.getChildren().add(autoRefreshCheckBox);
 		leftElements.setSpacing(BUTTON_SPACING);
 		leftElements.getChildren().add(exportButton);
 		this.setLeft(leftElements);
@@ -125,7 +122,6 @@ public class ToolbarArea extends BorderPane {
 	public void disableButtons(boolean value) {
 		closeProjectButton.setDisable(value);
 		refreshButton.setDisable(value);
-		autoRefreshCheckBox.setDisable(value);
 		exportButton.setDisable(value);
 	}
 
