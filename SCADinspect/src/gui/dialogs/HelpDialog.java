@@ -21,7 +21,7 @@ import gui.Resources;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AboutDialog {
+public class HelpDialog {
 
 	private final static Dialog<Boolean> dialog = new Dialog<>();
 
@@ -134,7 +134,7 @@ public class AboutDialog {
 	}
 
 	public static void openDialog() {
-		AboutDialog aboutDialog = new AboutDialog();
+		HelpDialog aboutDialog = new HelpDialog();
 		aboutDialog.open();
 	}
 }

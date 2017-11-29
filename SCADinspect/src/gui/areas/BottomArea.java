@@ -14,7 +14,7 @@ import gui.dialogs.ExportDialog;
 /**
  * Toolbar at the bottom of the main window
  */
-public class BottomArea extends ToolBar{
+public class BottomArea extends ToolBar {
 
 	//initialize buttons
 	private final Button closeProjectButton = new Button("Close");
@@ -53,9 +53,9 @@ public class BottomArea extends ToolBar{
 			//Main.getInstance().statusArea.simulateProgress();
 			//CodeAnalyzer.refresh();
 			//TODO make thread
-			Main.getInstance().tabArea.getDocumentationList().refresh();
+			Main.getInstance().contentArea.refresh();
 		});
-        CheckBox autoRefreshCheckBox = new CheckBox("Autorefresh On/Off");
+		CheckBox autoRefreshCheckBox = new CheckBox("Autorefresh On/Off");
 		exportButton.setOnAction(e -> ExportDialog.openDialog());
 
 		//Expands the separator pane

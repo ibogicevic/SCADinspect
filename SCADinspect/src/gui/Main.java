@@ -20,36 +20,30 @@
 package gui;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.prefs.BackingStoreException;
 
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import data.ScadDocuFile;
 import gui.areas.BottomArea;
+import gui.areas.ContentArea;
 import gui.areas.StatusArea;
-import gui.areas.TabArea;
 import gui.areas.ToolbarArea;
 
-/**
- * Startup JavaFX frame
- */
+/** Startup JavaFX frame */
 public class Main extends Application {
 
 	/** Name of the application */
 	public static final String APPNAME = "SCADinspect";
 
 	/** Location of logger */
-	public static Logger logger = null;
+	public static final Logger logger = null;
 
 	/** Ratio between window height and screen height */
 	private static final double WINDOW_HEIGHT = 0.33;
@@ -61,22 +55,18 @@ public class Main extends Application {
 	}
 
 	// gui areas
-	public ToolbarArea toolbarArea = new ToolbarArea();
-	public TabArea tabArea = new TabArea();
-	public StatusArea statusArea = new StatusArea();
-	public BottomArea bottomArea = new BottomArea();
+	public final ToolbarArea toolbarArea = new ToolbarArea();
+	public final ContentArea contentArea = new ContentArea();
+	public final StatusArea statusArea = new StatusArea();
+	public final BottomArea bottomArea = new BottomArea();
 
 	/** list of open scad-files */
 	private List<File> fileList = new ArrayList<>();
 
-	/**
-	 * root path to current open project, null if no project open
-	 */
+	/** root path to current open project, null if no project open */
 	public String currentProject = null;
 
 	// remember stage for subwindows
-	private StackPane mainStack;
-	public StackPane greyStack;
 	private Stage primaryStage;
 
 	public Stage getPrimaryStage() {
@@ -108,9 +98,7 @@ public class Main extends Application {
 	}
 
 	@Override
-	/**
-	 * Application startup function
-	 */
+	/** Application startup function */
 	public void start(Stage primaryStage) {
 
 		// remember singleton instance (instantiated by javafx)
@@ -118,10 +106,6 @@ public class Main extends Application {
 
 		// remember stage for subwindows
 		this.primaryStage = primaryStage;
-
-		// Documentation and Issues Tabulators
-		BorderPane tabPane = new BorderPane();
-		tabPane.setCenter(tabArea);
 
 		// Status and BottomArea
 		BorderPane bottomPane = new BorderPane();
@@ -131,7 +115,7 @@ public class Main extends Application {
 		// add all areas
 		BorderPane mainPane = new BorderPane();
 		mainPane.setTop(toolbarArea);
-		mainPane.setCenter(tabPane);
+		mainPane.setCenter(contentArea);
 		mainPane.setBottom(bottomPane);
 
 		// show main pane
@@ -146,7 +130,6 @@ public class Main extends Application {
 
 	/**
 	 * Check whether a project file or project folder is open
-	 *
 	 * @return true if a project is open, else false
 	 */
 	public boolean isProjectOpen() {
@@ -163,7 +146,6 @@ public class Main extends Application {
 
 	/**
 	 * Main control loop, gives control to JavaFX
-	 *
 	 * @param args unused
 	 */
 	public static void main(String[] args) {

@@ -1,19 +1,15 @@
 package gui.areas;
 
-import java.util.prefs.Preferences;
-
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import control.ProjectHandling;
 import gui.Main;
 import gui.Resources;
 import gui.dialogs.AboutDialog;
+import gui.dialogs.HelpDialog;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -54,7 +50,7 @@ public class ToolbarArea extends BorderPane {
 		openProjectButton.setText("Open file");
 		openProjectButton.setOnAction(event -> {
 			projectHandler.openProjectFile();
-			Main.getInstance().tabArea.getDocumentationList().refresh();
+			Main.getInstance().contentArea.refresh();
 		});
 		openFolderButton.setOnAction(e -> {
 			openProjectButton.setText("Open folder");
@@ -64,7 +60,7 @@ public class ToolbarArea extends BorderPane {
 					if(files != null) {
 						Main.getInstance().getFileList().addAll(files);
 						Platform.runLater(() -> {
-							Main.getInstance().tabArea.getDocumentationList().refresh();
+							Main.getInstance().contentArea.refresh();
 						});
 					}
 				});
@@ -74,7 +70,7 @@ public class ToolbarArea extends BorderPane {
 			openProjectButton.setText("Open file");
 			openProjectButton.setOnAction(event -> {
 				projectHandler.openProjectFile();
-				Main.getInstance().tabArea.getDocumentationList().refresh();
+				Main.getInstance().contentArea.refresh();
 			});
 		});
 		exitButton.setOnAction(e -> {
@@ -91,12 +87,7 @@ public class ToolbarArea extends BorderPane {
 
 		// status of buttons
 		disableButtons(true);
-		helpLink.setOnAction(e -> {
-			Main.getInstance().greyStack.toFront();
-			Main.getInstance().greyStack.setVisible(true);
-			//Main.getInstance().helpPane.modalToFront(true);
-			//Main.getInstance().helpPane.switchTour(-1);
-		});
+		helpLink.setOnAction(e -> HelpDialog.openDialog());
 		aboutLink.setOnAction(e -> AboutDialog.openDialog());
 
 		// add left-aligned elements
@@ -116,49 +107,5 @@ public class ToolbarArea extends BorderPane {
 		this.setRight(rightButtons);
 
 		this.setPadding(new Insets(5f, 5f, 5f, 5f));
-	}
-
-	// this function is necessary to highlight the specific buttons for each tutorial step
-
-	public void switchButtons(Integer button){
-
-
-		//        switch (button) {
-		//            case -1: {
-		//                settingsButton.setVisible(false);
-		//                separator.setVisible(false);
-		//                helpLink.setVisible(false);
-		//                aboutLink.setVisible(false);
-		//                openProjectButton.setVisible(false);
-		//                break;
-		//            }
-		//            case 0: {
-		//                // hide all buttons except from openFile
-		//                settingsButton.setVisible(false);
-		//                separator.setVisible(false);
-		//                helpLink.setVisible(false);
-		//                aboutLink.setVisible(false);
-		//                openProjectButton.setVisible(true);
-		//
-		//                //disable all buttons
-		//                openProjectButton.setMouseTransparent(true);
-		//                settingsButton.setMouseTransparent(true);
-		//                break;
-		//            }
-		//            case 1: {
-		//                openProjectButton.setVisible(false);
-		//                settingsButton.setVisible(true);
-		//                break;
-		//            }
-		//            case 2: {
-		//                settingsButton.setVisible(false);
-		//                break;
-		//            }
-		//            case 3: {
-		//                settingsButton.setVisible(false);
-		//                break;
-		//            }
-		//
-		//        }
 	}
 }
