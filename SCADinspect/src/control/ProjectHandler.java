@@ -25,7 +25,7 @@ import gui.Main;
  * Project Handler for loading and closing paths and files.
  * Stores the loaded files in a file list.
  */
-public class ProjectHandling {
+public class ProjectHandler {
 
 	/**
 	 * TODO: Closing of the Project when clicked on "Open folder" and a new directory is chosen else
@@ -46,7 +46,7 @@ public class ProjectHandling {
 	 * Default constructor where the extension filter for the fileChooser is set. This assures that
 	 * only .scad files can be selected
 	 */
-	public ProjectHandling() {
+	public ProjectHandler() {
 		fileChooser.getExtensionFilters().add(extensionFilter);
 	}
 
@@ -160,7 +160,7 @@ public class ProjectHandling {
 				Collection<File> files = getFiles(dir, f -> f.getName().toLowerCase().endsWith(".scad"), true, FILE_READ_TIMEOUT, onTimeout);
 				onDone.accept(files);
 			} catch (IOException ex) {
-				Logger.getLogger(ProjectHandling.class.getName()).log(Level.SEVERE, null, ex);
+				Logger.getLogger(ProjectHandler.class.getName()).log(Level.SEVERE, null, ex);
 				onDone.accept(null);
 			}
 		}).start();

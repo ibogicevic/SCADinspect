@@ -6,14 +6,14 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import util.ResourceLoader;
-import control.ProjectHandling;
+import control.ProjectHandler;
 import gui.Main;
 import gui.dialogs.AboutDialog;
 import gui.dialogs.ExportDialog;
 import gui.dialogs.HelpDialog;
 import javafx.scene.layout.BorderPane;
 
-/** Toolbar at the top of the main window */
+/** toolbar at the top of the main window */
 public class ToolbarArea extends BorderPane {
 
 	// constants
@@ -30,13 +30,13 @@ public class ToolbarArea extends BorderPane {
 	private final Hyperlink helpLink = new Hyperlink("Help");
 	private final Hyperlink aboutLink = new Hyperlink("About");
 	private final Button exitButton = new Button("Exit");
-	private final ProjectHandling projectHandler = new ProjectHandling();
+	private final ProjectHandler projectHandler = new ProjectHandler();
 
-	public ProjectHandling getProjectHandler() {
+	public ProjectHandler getProjectHandler() {
 		return projectHandler;
 	}
 
-	/** Constructor */
+	/** constructor */
 	public ToolbarArea() {
 		
 		// graphics
@@ -109,7 +109,7 @@ public class ToolbarArea extends BorderPane {
 		this.setRight(rightElements);
 
 		this.setPadding(new Insets(BUTTON_SPACING, BUTTON_SPACING, BUTTON_SPACING, BUTTON_SPACING));
-		ProjectHandling projectHandler = new ProjectHandling();
+		ProjectHandler projectHandler = new ProjectHandler();
 
 		//status of buttons
 		disableButtons(true);
