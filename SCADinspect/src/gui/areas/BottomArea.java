@@ -1,6 +1,7 @@
 package gui.areas;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -54,12 +55,14 @@ public class BottomArea extends ToolBar{
 			//TODO make thread
 			Main.getInstance().tabArea.getDocumentationList().refresh();
 		});
+        CheckBox autoRefreshCheckBox = new CheckBox("Autorefresh On/Off");
 		exportButton.setOnAction(e -> ExportDialog.openDialog());
 
 		//Expands the separator pane
 		HBox.setHgrow(separatorPane, Priority.ALWAYS);
 		//adding all buttons
 		this.getItems().add(refreshButton);
+		this.getItems().add(autoRefreshCheckBox);
 		this.getItems().add(separatorPane);
 		this.getItems().add(exportButton);
 		this.getItems().add(closeProjectButton);

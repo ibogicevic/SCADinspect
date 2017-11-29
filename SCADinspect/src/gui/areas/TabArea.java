@@ -5,7 +5,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import gui.DocumentationList;
-import gui.dialogs.SettingsDialog;
 
 /**
  * Area for 'Documentation' Tabulators, sets content for Tabs here.
@@ -30,9 +29,6 @@ public class TabArea extends TabPane {
     Preferences userPrefs = Preferences.userRoot().node("DHBW.SCADInspect.Settings");    
     
     this.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-    if(userPrefs.getBoolean(SettingsDialog.SETTING_DOCUMENTATION, true)) {
-      this.getTabs().add(documentation);
-    }
   }
 
   public TableView generateDocTable(DocumentationList documentationList) {

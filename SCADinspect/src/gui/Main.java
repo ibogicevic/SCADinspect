@@ -34,7 +34,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import control.LogHandler;
 import data.ScadDocuFile;
 import gui.areas.BottomArea;
 import gui.areas.StatusArea;
@@ -54,9 +53,6 @@ public class Main extends Application {
 
 	/** Ratio between window height and screen height */
 	private static final double WINDOW_HEIGHT = 0.33;
-
-	/** Pre-configured logger that outputs to */
-	private LogHandler logHandler;
 
 	// singleton pattern
 	private static Main instance;
@@ -116,13 +112,6 @@ public class Main extends Application {
 	 * Application startup function
 	 */
 	public void start(Stage primaryStage) {
-		System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc] %4$s: %5$s%n");
-		try {
-			logger = LogHandler.getLogger();
-		} catch (IOException|BackingStoreException e) {
-			//TODO Use logger
-			e.printStackTrace();
-		}
 
 		// remember singleton instance (instantiated by javafx)
 		Main.instance = this;
@@ -153,8 +142,6 @@ public class Main extends Application {
 		primaryStage.setY(0.7 * screenBounds.getHeight());
 		primaryStage.setX(0);
 		primaryStage.show();
-
-		logger.log(Level.INFO,"successfully started");
 	}
 
 	/**
@@ -172,10 +159,6 @@ public class Main extends Application {
 	 */
 	public void setCurrentProject(String currentProject){
 		this.currentProject = currentProject;
-	}
-
-	public LogHandler getLogHandler() {
-		return logHandler;
 	}
 
 	/**
