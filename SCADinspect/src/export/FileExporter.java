@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Collection;
 import data.ScadDocuFile;
-import error.FileExportException;
 import export.format.CsvExporter;
 import export.format.Exporter;
 import export.format.Exporter.ExportFormat;

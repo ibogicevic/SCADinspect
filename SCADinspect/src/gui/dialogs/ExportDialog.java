@@ -9,7 +9,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
-import error.FileExportException;
+import export.FileExportException;
 import export.FileExporter;
 import export.format.Exporter.ExportFormat;
 import gui.Main;
