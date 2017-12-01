@@ -17,22 +17,18 @@ import javafx.scene.layout.HBox;
 
 public class MainTest {
 
-	public int testsToRun = 2;
-	
+	public int testsToRun = 1;
+
 	@Before
-	public synchronized void startApplication() {
+	public synchronized void startApplication() throws InterruptedException {
 		System.out.println("Start");
 		// launch the application in a different thread
 		Launcher launcher = new Launcher();
 		launcher.start();
 		// wait with the tests until application is loaded
 		while (Main.getInstance() == null) {
-			try {
-				System.out.println("Wait...");
-				this.wait(250);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			System.out.println("Wait...");
+			this.wait(250);
 		}
 	}
 
@@ -49,17 +45,16 @@ public class MainTest {
 		for (Node child : buttons) {
 			if (child instanceof Hyperlink) {
 				Hyperlink hlink = (Hyperlink)child;
-				System.out.println("Test1"+javafx.application.Platform.isFxApplicationThread());
-				Platform.runLater(
-						new Runnable() {
-							@Override
-							public void run() {
-								System.out.println("Test2"+javafx.application.Platform.isFxApplicationThread());
-								testsToRun--;
-							}
-						});
 				if (hlink.getText().equals(name)) {
+					Platform.runLater(
+							new Runnable() {
+								@Override
+								public void run() {
+									hlink.fire();
 
+									testsToRun--;
+								}
+							});
 				}
 			}
 		}
@@ -72,15 +67,12 @@ public class MainTest {
 	}
 
 	@After
-	public synchronized void testExitButton() {
+	public synchronized void testExitButton() throws InterruptedException {
 		System.out.println("Triggering Exit");
 		// wait until all tests are finished (triggered from ui thread)
 		while (testsToRun > 0) {
 			System.out.println("Wait on test finish...");
-			try {
-				this.wait(250);
-			} catch (InterruptedException e) {
-			}
+			this.wait(250);
 		}
 		System.out.println("Finishing Exit");
 		Platform.exit();
