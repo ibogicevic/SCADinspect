@@ -8,7 +8,7 @@ public class Launcher extends Thread {
 	public void run() {
 		// launch the application
 		String[] args = new String[0];
-		Main.main(args);		
+		Main.main(args);
 	}
 
 }
