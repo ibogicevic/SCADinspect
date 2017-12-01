@@ -156,9 +156,9 @@ public class ContentArea extends BorderPane {
 	 *
 	 * @param Data row to be added, if longer than header data is truncated
 	 */
-	private void addRow(List<String> Data) {
+	private void addRow(List<String> data) {
 		docTableView.getItems().add(
-				FXCollections.observableArrayList(Data)
+				FXCollections.observableArrayList(data)
 				);
 	}
 
@@ -198,8 +198,7 @@ public class ContentArea extends BorderPane {
 	}
 
 	public TableView generateDocTable(ContentArea documentationList) {
-		TableView table = documentationList.generateTableView();
-		return table;
+		return documentationList.generateTableView();
 	}
 
 }

@@ -34,7 +34,7 @@ import javafx.scene.layout.BorderPane;
 public class ToolbarArea extends BorderPane {
 
 	// constants
-	private final int BUTTON_SPACING = 5;
+	private static final int BUTTON_SPACING = 5;
 	
 	// initialize buttons
 	private final MenuItem openFileButton = new MenuItem("Open file", ResourceLoader.loadIcon("open-folder-outline"));
@@ -78,7 +78,7 @@ public class ToolbarArea extends BorderPane {
 			openProjectButton.setText("Open folder");
 			openProjectButton.setOnAction(event -> {
 				// loading of multiple files is non blocking
-				projectHandler.openProjectFolder((files) -> {
+				projectHandler.openProjectFolder(files -> {
 					if(files != null) {
 						Main.getInstance().getFileList().addAll(files);
 						Platform.runLater(() -> {
@@ -99,9 +99,9 @@ public class ToolbarArea extends BorderPane {
 		// simple action listeners
 		closeProjectButton.setOnAction(e -> projectHandler.closeProject());
 		refreshButton.setText("Refresh");
-		refreshButton.setOnAction(e -> {Main.getInstance().contentArea.refresh();});
+		refreshButton.setOnAction(e -> Main.getInstance().contentArea.refresh());
 		exportButton.setOnAction(e -> ExportDialog.openDialog());
-		exitButton.setOnAction(e -> {Platform.exit();});
+		exitButton.setOnAction(e -> Platform.exit());
 		helpLink.setOnAction(e -> HelpDialog.openDialog());
 		aboutLink.setOnAction(e -> AboutDialog.openDialog());
 		

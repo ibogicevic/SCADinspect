@@ -52,7 +52,7 @@ public class ProjectHandler {
 	// Definition of the chooser
 	private final DirectoryChooser directoryChooser = new DirectoryChooser();
 	private final FileChooser fileChooser = new FileChooser();
-	private final long FILE_READ_TIMEOUT = 5000;
+	private static final long FILE_READ_TIMEOUT = 5000;
 	public static final String SETTINGS_DEFAULT_DIR = "DefaultDir";
 
 	// Filter for the chooser
@@ -127,9 +127,7 @@ public class ProjectHandler {
 						Optional<ButtonType> b = alert.showAndWait();
 						return b.isPresent() && b.get() == ButtonType.OK;
 					});
-					Platform.runLater(() -> {
-						query.run();
-					});
+					Platform.runLater(() -> query.run());
 					return query.get();
 				} catch (InterruptedException | ExecutionException ex) {
 					return false;
@@ -148,7 +146,7 @@ public class ProjectHandler {
 	 */
 	private void setProjectPath(File projectPath) {
 		closeProject();
-		setCurrentProject(projectPath.getAbsolutePath().toString());
+		setCurrentProject(projectPath.getAbsolutePath());
 		Main.getInstance().toolbarArea.disableButtons(false);
 	}
 

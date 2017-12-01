@@ -17,6 +17,7 @@
  ******************************************************************************/
 package export;
 
+@SuppressWarnings("serial")
 public class FileExportException extends Exception {
 
   public FileExportException(Exception initCause) {
