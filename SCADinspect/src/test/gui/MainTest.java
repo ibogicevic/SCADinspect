@@ -17,7 +17,7 @@ import javafx.scene.layout.HBox;
 
 public class MainTest {
 
-	public int testsToRun = 1;
+	public int testsToRun = 2;
 
 	@Before
 	public synchronized void startApplication() throws InterruptedException {
@@ -32,7 +32,7 @@ public class MainTest {
 		}
 	}
 
-	private void clickButton(String name) {
+	private void fireControl(String className, String name) {
 		System.out.println("Click");
 		// buffer all buttons
 		List<Node> buttons = new ArrayList<Node>();
@@ -43,7 +43,7 @@ public class MainTest {
 		}
 		// find button and fire it
 		for (Node child : buttons) {
-			if (child instanceof Hyperlink) {
+			if (child.getClass().toString().equals(name)) {
 				Hyperlink hlink = (Hyperlink)child;
 				if (hlink.getText().equals(name)) {
 					Platform.runLater(
@@ -51,7 +51,6 @@ public class MainTest {
 								@Override
 								public void run() {
 									hlink.fire();
-
 									testsToRun--;
 								}
 							});
@@ -62,7 +61,8 @@ public class MainTest {
 
 	@Test
 	public void testAboutDialog() {
-		clickButton("About");
+		fireControl("Hyperlink", "Help");
+		fireControl("Hyperlink", "About");
 		assertTrue(true);
 	}
 
