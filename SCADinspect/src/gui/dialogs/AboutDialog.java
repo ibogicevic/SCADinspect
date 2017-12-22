@@ -15,15 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-/**
- * Opens the about dialog if the About-Button is clicked
- */
 package gui.dialogs;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -38,18 +34,18 @@ import gui.MainFrame;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AboutDialog extends Dialog<Boolean> {
+public class AboutDialog extends InfoDialog {
 
-		// Text content
-	private final String headerText = "SCADinspect v0.1";
+	// Text content
+	private static final String HEADERTEXT = "SCADinspect v0.1";
 
-	private final String descriptionText = "Javadoc-like module documentation for your OpenSCAD-Files";
+	private static final String DESCRIPTIONTEXT = "Javadoc-like module documentation for your OpenSCAD-Files";
 	
-	private final String licenseText = "© 2017 Licensed under GNU General Public License v3.0\n";
+	private static final String LICENSETEXT = "© 2017 Licensed under GNU General Public License v3.0\n";
 
 	// list of contributors
-	private final String contributorsContent =
-			"by Ivan Bogicevic \n"
+	private static final String CONTRIBUTORSTEXT =
+			"by Ivan Bogicevic \n\n"
 					+ "Contributors: "
 					+ "Christoph Auf der Landwehr, "
 					+ "Jonas Balsfulland, "
@@ -68,12 +64,12 @@ public class AboutDialog extends Dialog<Boolean> {
 					+ "Tim Walter, "
 					+ "and many others.";
 
-	private final String thirdPartyContent =
+	private static final String THIRDPARTYTEXT =
 			"Third Party Artefacts\n" +
 					"SCADinspect uses Icons from the \"Font Awesome\"-Package by Dave Gandy released under the CC BY 3.0 Licence\n";
 	
+	@Override
 	public void init() {
-
 		// prepare links
 		List<Hyperlink> links = new ArrayList<>();
 		Hyperlink githubLink = new Hyperlink("https://github.com/ibogicevic/SCADinspect");
@@ -94,7 +90,7 @@ public class AboutDialog extends Dialog<Boolean> {
 
 		// init dialog
 		this.setTitle("About");
-		this.setHeaderText(headerText);
+		this.setHeaderText(HEADERTEXT);
 
 		// pane
 		GridPane grid = new GridPane();
@@ -110,7 +106,7 @@ public class AboutDialog extends Dialog<Boolean> {
 		grid.add(stackPane, 0, 0);
 
 		// project description
-		Label descriptionLabel = new Label(descriptionText);
+		Label descriptionLabel = new Label(DESCRIPTIONTEXT);
 		descriptionLabel.setWrapText(true);
 		grid.add(descriptionLabel, 0, 1);
 		
@@ -118,18 +114,18 @@ public class AboutDialog extends Dialog<Boolean> {
 		grid.add(githubLink, 0, 2);
 		
 		// license
-		Label licenseLabel = new Label(licenseText);
+		Label licenseLabel = new Label(LICENSETEXT);
 		grid.add(licenseLabel, 0, 3);
 		grid.add(licenseLink, 0, 4);
 		
 		// contributors
-		Label contributorsLabel = new Label(contributorsContent);
+		Label contributorsLabel = new Label(CONTRIBUTORSTEXT);
 		contributorsLabel.setWrapText(true);
 		contributorsLabel.setMaxWidth(400);
 		grid.add(contributorsLabel, 0, 5);
 
 		// third party content
-		Label thirdPartyLabel = new Label(thirdPartyContent);
+		Label thirdPartyLabel = new Label(THIRDPARTYTEXT);
 		thirdPartyLabel.setWrapText(true);
 		grid.add(thirdPartyLabel, 0, 6);
 		grid.add(flaticonLink, 0, 7);
@@ -142,12 +138,4 @@ public class AboutDialog extends Dialog<Boolean> {
 		this.getDialogPane().setContent(grid);
 	}
 	
-	public AboutDialog() {
-		init();
-	}
-
-	public static void openDialog() {
-		AboutDialog aboutDialog = new AboutDialog();
-		aboutDialog.showAndWait();
-	}
 }

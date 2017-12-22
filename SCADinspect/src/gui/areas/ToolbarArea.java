@@ -102,8 +102,8 @@ public class ToolbarArea extends BorderPane {
 		refreshButton.setOnAction(e -> MainFrame.getInstance().contentArea.refresh());
 		exportButton.setOnAction(e -> ExportDialog.openDialog());
 		exitButton.setOnAction(e -> Platform.exit());
-		helpLink.setOnAction(e -> HelpDialog.openDialog());
-		aboutLink.setOnAction(e -> AboutDialog.openDialog());
+		helpLink.setOnAction(e -> MainFrame.getInstance().helpDialog.openDialog());
+		aboutLink.setOnAction(e -> MainFrame.getInstance().aboutDialog.openDialog());
 		
 		// add left-aligned elements
 		HBox leftElements = new HBox();

@@ -51,6 +51,8 @@ import javafx.stage.Stage;
 import gui.areas.ContentArea;
 import gui.areas.BottomArea;
 import gui.areas.ToolbarArea;
+import gui.dialogs.AboutDialog;
+import gui.dialogs.HelpDialog;
 import data.ScadDocuFile;
 
 /** main JavaFX frame */
@@ -76,6 +78,10 @@ public class MainFrame extends Application {
 	public final ContentArea contentArea = new ContentArea();
 	public final BottomArea statusArea = new BottomArea();
 
+	// info dialogs
+	public final HelpDialog helpDialog = new HelpDialog();
+	public final AboutDialog aboutDialog = new AboutDialog();
+	
 	/** list of open scad-files */
 	private List<File> fileList = new ArrayList<>();
 

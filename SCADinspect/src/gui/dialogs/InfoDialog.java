@@ -17,16 +17,29 @@
  ******************************************************************************/
 package gui.dialogs;
 
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.Dialog;
 
-public class HelpDialog extends InfoDialog {
-
-	@Override
-	public void init() {
-		// add ok button
-		ButtonType okButton = new ButtonType("OK", ButtonData.CANCEL_CLOSE);
-		this.getDialogPane().getButtonTypes().add(okButton);
+/**
+ * A modal dialog for information purposes, e. g. for the help and about dialog
+ */
+public abstract class InfoDialog extends Dialog<Boolean> {
+	
+	// method for adding the content to the infodialog
+	public abstract void init();
+	
+	public InfoDialog() {
+		// fill dialog with specific content
+		init();
 	}
+	
+	public void openDialog() {
+		// show dialog
+		this.showAndWait();
+	}
+
+	public void closeDialog() {
+		this.close();
+	}
+
 	
 }
