@@ -118,7 +118,7 @@ public class ToolbarArea extends BorderPane {
 
 		// add right-aligned elements
 		HBox rightElements = new HBox();
-		rightElements.getChildren().add(helpLink);
+		//rightElements.getChildren().add(helpLink);
 		rightElements.getChildren().add(aboutLink);
 		rightElements.setSpacing(5);
 		rightElements.getChildren().add(logo);

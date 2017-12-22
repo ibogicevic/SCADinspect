@@ -31,7 +31,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import util.ResourceLoader;
 import gui.Main;
 
@@ -45,16 +44,14 @@ public class AboutDialog {
 	// Text content
 	private final String headerText = "SCADinspect - Version 0.1";
 
-	private final String aboutContent =
-			"Javadoc-like module documentation for your OpenSCAD-Files \n" +
-					"\n" +
-					"© 2017 Licensed under GNU General Public License v3.0\n" +
-					"For more information visit:";
+	private final String descriptionText = "Javadoc-like module documentation for your OpenSCAD-Files";
+	
+	private final String licenseText = "© 2017 Licensed under GNU General Public License v3.0\n";
 
 	// list of contributors
 	private final String contributorsContent =
-			"Main developer: Ivan Bogicevic \n"
-					+ "Contributors:"
+			"by Ivan Bogicevic \n"
+					+ "Contributors: "
 					+ "Christoph Auf der Landwehr, "
 					+ "Jonas Balsfulland, "
 					+ "Maik Baumgartner, "
@@ -81,53 +78,16 @@ public class AboutDialog {
 	 */
 	public void open() {
 
-		dialog.setTitle("About");
-		dialog.setHeaderText(headerText);
-
-		// add ok button
-		ButtonType okButton = new ButtonType("OK", ButtonData.CANCEL_CLOSE);
-		dialog.getDialogPane().getButtonTypes().addAll(okButton);
-
-		// arrange content
-		GridPane grid = new GridPane();
-		grid.setHgap(10);
-		grid.setVgap(10);
-
-		// display logo
-		ImageView logo = ResourceLoader.loadIcon("logo2");
-		logo.setPreserveRatio(true);
-		logo.setFitHeight(25);
-		StackPane stackPane = new StackPane(logo);
-		stackPane.setAlignment(Pos.CENTER);
-		grid.add(stackPane, 0, 0);
-
-		// Display Text
-		Label aboutLabel = new Label(aboutContent);
-		aboutLabel.setWrapText(true);
-
-		Label contributorsLabel = new Label(contributorsContent);
-		contributorsLabel.setWrapText(true);
-		contributorsLabel.setMaxWidth(400);
-		grid.add(contributorsLabel, 0, 1);
-
-		Label thirdPartyLabel = new Label(thirdPartyContent);
-		thirdPartyLabel.setWrapText(true);
-
-		//Links for text content
+		// prepare links
 		List<Hyperlink> links = new ArrayList<>();
-
-		Hyperlink scadinspect = new Hyperlink("https://github.com/ibogicevic/SCADinspect");
-		links.add(scadinspect);
-
-		Hyperlink flaticon = new Hyperlink("http://www.flaticon.com/authors/dave-gandy");
-		links.add(flaticon);
-
-		Hyperlink creativeCommons = new Hyperlink("http://creativecommons.org/licenses/by/3.0/");
-		links.add(creativeCommons);
-
+		Hyperlink githubLink = new Hyperlink("https://github.com/ibogicevic/SCADinspect");
+		links.add(githubLink);
+		Hyperlink flaticonLink = new Hyperlink("http://www.flaticon.com/authors/dave-gandy");
+		links.add(flaticonLink);
+		Hyperlink licenseLink = new Hyperlink("http://creativecommons.org/licenses/by/3.0/");
+		links.add(licenseLink);
 		for(final Hyperlink hyperlink : links) {
 			hyperlink.setOnAction(new EventHandler<ActionEvent>() {
-
 				@Override
 				public void handle(ActionEvent t) {
 					Main.getInstance().getHostServices().showDocument(hyperlink.getText());
@@ -135,17 +95,53 @@ public class AboutDialog {
 			});
 		}
 
-		VBox upperBox = new VBox();
-		upperBox.getChildren().add(aboutLabel);
-		upperBox.getChildren().add(scadinspect);
-		grid.add(upperBox, 1,0);
+		// init dialog
+		dialog.setTitle("About");
+		dialog.setHeaderText(headerText);
 
-		VBox lowerBox = new VBox();
-		lowerBox.getChildren().add(thirdPartyLabel);
-		lowerBox.getChildren().add(flaticon);
-		lowerBox.getChildren().add(creativeCommons);
-		grid.add(lowerBox, 1,2);
+		// pane
+		GridPane grid = new GridPane();
+		grid.setHgap(10);
+		grid.setVgap(10);
 
+		// logo
+		ImageView logo = ResourceLoader.loadIcon("logo2");
+		logo.setPreserveRatio(true);
+		logo.setFitHeight(25);
+		StackPane stackPane = new StackPane(logo);
+		stackPane.setAlignment(Pos.BASELINE_LEFT);
+		grid.add(stackPane, 0, 0);
+
+		// project description
+		Label descriptionLabel = new Label(descriptionText);
+		descriptionLabel.setWrapText(true);
+		grid.add(descriptionLabel, 0, 1);
+		
+		// link to project
+		grid.add(githubLink, 0, 2);
+		
+		// license
+		Label licenseLabel = new Label(licenseText);
+		grid.add(licenseLabel, 0, 3);
+		grid.add(licenseLink, 0, 4);
+		
+		// contributors
+		Label contributorsLabel = new Label(contributorsContent);
+		contributorsLabel.setWrapText(true);
+		contributorsLabel.setMaxWidth(400);
+		grid.add(contributorsLabel, 0, 5);
+
+		// third party content
+		Label thirdPartyLabel = new Label(thirdPartyContent);
+		thirdPartyLabel.setWrapText(true);
+		grid.add(thirdPartyLabel, 0, 6);
+		grid.add(flaticonLink, 0, 7);
+
+		// add ok button
+		ButtonType okButton = new ButtonType("OK", ButtonData.CANCEL_CLOSE);
+		dialog.getDialogPane().getButtonTypes().addAll(okButton);
+
+		// show dialog		
 		dialog.getDialogPane().setContent(grid);
 		dialog.showAndWait();
 	}
