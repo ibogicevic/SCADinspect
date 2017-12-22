@@ -19,7 +19,7 @@ package util;
 
 import java.io.InputStream;
 
-import gui.Main;
+import gui.MainFrame;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -32,7 +32,7 @@ public class ResourceLoader {
      * @return the icon as ImageView
      */
     public static ImageView loadIcon(String fileName) {
-        InputStream inputStream = Main.class.getResourceAsStream(RESOURCES_DIR + fileName + ".png");
+        InputStream inputStream = MainFrame.class.getResourceAsStream(RESOURCES_DIR + fileName + ".png");
         Image image = new Image(inputStream);
         ImageView imageView = new ImageView(image);
         return imageView;

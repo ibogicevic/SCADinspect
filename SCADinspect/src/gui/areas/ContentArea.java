@@ -36,7 +36,7 @@ import data.Module;
 import data.ScadDocuFile;
 import data.properties.Property;
 import data.properties.helper.Pair;
-import gui.Main;
+import gui.MainFrame;
 
 public class ContentArea extends BorderPane {
 
@@ -173,7 +173,7 @@ public class ContentArea extends BorderPane {
 		//load new fileList and parse it
 		parsedDocFiles = loadFiles();
 		//recreate Table
-		Main.getInstance().contentArea.generateDocTable(this);
+		MainFrame.getInstance().contentArea.generateDocTable(this);
 	}
 
 	/**
@@ -185,7 +185,7 @@ public class ContentArea extends BorderPane {
 	private List<ScadDocuFile> loadFiles() {
 		List<ScadDocuFile> parsedFiles = new LinkedList<>();
 		try {
-			for (File file : Main.getInstance().getFileList()) {
+			for (File file : MainFrame.getInstance().getFileList()) {
 				//parse every file in fileList, save it
 				parsedFiles.add(new ScadDocuFile(file.toPath()));
 			}
@@ -193,7 +193,7 @@ public class ContentArea extends BorderPane {
 			e.printStackTrace();
 		}
 		//set DocuFiles in Main and return parsedFiles
-		Main.getInstance().setDocuFiles(parsedFiles);
+		MainFrame.getInstance().setDocuFiles(parsedFiles);
 		return parsedFiles;
 	}
 

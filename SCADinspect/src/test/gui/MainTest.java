@@ -9,7 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import gui.Main;
+import gui.MainFrame;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Hyperlink;
@@ -26,7 +26,7 @@ public class MainTest {
 		Launcher launcher = new Launcher();
 		launcher.start();
 		// wait with the tests until application is loaded
-		while (Main.getInstance() == null) {
+		while (MainFrame.getInstance() == null) {
 			System.out.println("Wait...");
 			this.wait(250);
 		}
@@ -36,7 +36,7 @@ public class MainTest {
 		System.out.println("Click");
 		// buffer all buttons
 		List<Node> buttons = new ArrayList<Node>();
-		for (Node child : Main.getInstance().toolbarArea.getChildren()) {
+		for (Node child : MainFrame.getInstance().toolbarArea.getChildren()) {
 			for (Node subChild : ((HBox)child).getChildren()) {
 				buttons.add(subChild);
 			}

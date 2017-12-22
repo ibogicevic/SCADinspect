@@ -53,8 +53,8 @@ import gui.areas.BottomArea;
 import gui.areas.ToolbarArea;
 import data.ScadDocuFile;
 
-/** startup JavaFX frame */
-public class Main extends Application {
+/** main JavaFX frame */
+public class MainFrame extends Application {
 
 	/** name of the application */
 	public static final String APPNAME = "SCADinspect";
@@ -66,8 +66,8 @@ public class Main extends Application {
 	private static final double WINDOW_HEIGHT = 0.33;
 
 	// singleton pattern
-	private static Main instance;
-	public static Main getInstance() {
+	private static MainFrame instance;
+	public static MainFrame getInstance() {
 		return instance;
 	}
 
@@ -118,7 +118,7 @@ public class Main extends Application {
 	/** Application startup function */
 	public void start(Stage primaryStage) {
 		// remember singleton instance (instantiated by javafx)
-		Main.instance = this;
+		MainFrame.instance = this;
 
 		// remember stage for subwindows
 		this.primaryStage = primaryStage;

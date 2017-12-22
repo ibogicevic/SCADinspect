@@ -1,6 +1,6 @@
 package test.gui;
 
-import gui.Main;
+import gui.MainFrame;
 
 public class Launcher extends Thread {
 
@@ -8,7 +8,7 @@ public class Launcher extends Thread {
 	public void run() {
 		// launch the application
 		String[] args = new String[0];
-		Main.main(args);
+		MainFrame.main(args);
 	}
 
 }

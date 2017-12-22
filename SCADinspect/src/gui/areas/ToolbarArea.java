@@ -24,7 +24,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import util.ResourceLoader;
 import control.ProjectHandler;
-import gui.Main;
+import gui.MainFrame;
 import gui.dialogs.AboutDialog;
 import gui.dialogs.ExportDialog;
 import gui.dialogs.HelpDialog;
@@ -72,7 +72,7 @@ public class ToolbarArea extends BorderPane {
 		openProjectButton.setText("Open file");
 		openProjectButton.setOnAction(event -> {
 			projectHandler.openProjectFile();
-			Main.getInstance().contentArea.refresh();
+			MainFrame.getInstance().contentArea.refresh();
 		});
 		openFolderButton.setOnAction(e -> {
 			openProjectButton.setText("Open folder");
@@ -80,9 +80,9 @@ public class ToolbarArea extends BorderPane {
 				// loading of multiple files is non blocking
 				projectHandler.openProjectFolder(files -> {
 					if(files != null) {
-						Main.getInstance().getFileList().addAll(files);
+						MainFrame.getInstance().getFileList().addAll(files);
 						Platform.runLater(() -> {
-							Main.getInstance().contentArea.refresh();
+							MainFrame.getInstance().contentArea.refresh();
 						});
 					}
 				});
@@ -92,14 +92,14 @@ public class ToolbarArea extends BorderPane {
 			openProjectButton.setText("Open file");
 			openProjectButton.setOnAction(event -> {
 				projectHandler.openProjectFile();
-				Main.getInstance().contentArea.refresh();
+				MainFrame.getInstance().contentArea.refresh();
 			});
 		});
 
 		// simple action listeners
 		closeProjectButton.setOnAction(e -> projectHandler.closeProject());
 		refreshButton.setText("Refresh");
-		refreshButton.setOnAction(e -> Main.getInstance().contentArea.refresh());
+		refreshButton.setOnAction(e -> MainFrame.getInstance().contentArea.refresh());
 		exportButton.setOnAction(e -> ExportDialog.openDialog());
 		exitButton.setOnAction(e -> Platform.exit());
 		helpLink.setOnAction(e -> HelpDialog.openDialog());

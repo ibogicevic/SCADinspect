@@ -33,7 +33,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import util.ResourceLoader;
-import gui.Main;
+import gui.MainFrame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +87,7 @@ public class AboutDialog extends Dialog<Boolean> {
 			hyperlink.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent t) {
-					Main.getInstance().getHostServices().showDocument(hyperlink.getText());
+					MainFrame.getInstance().getHostServices().showDocument(hyperlink.getText());
 				}
 			});
 		}

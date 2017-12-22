@@ -24,7 +24,7 @@ package control.io;
 
 import java.util.logging.Level;
 
-import gui.Main;
+import gui.MainFrame;
 
 public abstract class PausableRunnable implements Runnable {
 
@@ -79,7 +79,7 @@ public abstract class PausableRunnable implements Runnable {
                 try {
                     LOCK.wait();
                 } catch (InterruptedException ex) {
-                    Main.logger.log(Level.WARNING, ex.getMessage(), ex);
+                    MainFrame.logger.log(Level.WARNING, ex.getMessage(), ex);
                 }
             }
         }

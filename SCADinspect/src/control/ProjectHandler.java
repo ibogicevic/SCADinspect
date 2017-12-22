@@ -36,7 +36,7 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import control.io.FileSearchRunnable;
-import gui.Main;
+import gui.MainFrame;
 
 /**
  * Project Handler for loading and closing paths and files.
@@ -79,7 +79,7 @@ public class ProjectHandler {
 				fileChooser.setInitialDirectory(file);
 			}
 		}
-		File projectFile = fileChooser.showOpenDialog(Main.getInstance().getPrimaryStage());
+		File projectFile = fileChooser.showOpenDialog(MainFrame.getInstance().getPrimaryStage());
 
 		/**
 		 * Checks if a file is selected or the cancel button is clicked If cancel is clicked a null is
@@ -89,7 +89,7 @@ public class ProjectHandler {
 		if (projectFile != null) {
 			userPrefs.put(SETTINGS_DEFAULT_DIR, projectFile.getParent());
 			setProjectPath(projectFile);
-			Main.getInstance().getFileList().add(projectFile);
+			MainFrame.getInstance().getFileList().add(projectFile);
 		}
 	}
 
@@ -107,7 +107,7 @@ public class ProjectHandler {
 			}
 		}
 
-		File projectDirectory = directoryChooser.showDialog(Main.getInstance().getPrimaryStage());
+		File projectDirectory = directoryChooser.showDialog(MainFrame.getInstance().getPrimaryStage());
 
 		/**
 		 * Checks if a directory is selected or the cancel button is clicked If cancel is clicked a null
@@ -147,7 +147,7 @@ public class ProjectHandler {
 	private void setProjectPath(File projectPath) {
 		closeProject();
 		setCurrentProject(projectPath.getAbsolutePath());
-		Main.getInstance().toolbarArea.disableButtons(false);
+		MainFrame.getInstance().toolbarArea.disableButtons(false);
 	}
 
 	/**
@@ -157,9 +157,9 @@ public class ProjectHandler {
 	 */
 	private void setCurrentProject(String rootPath) {
 		// update window title
-		Main.getInstance().getPrimaryStage().setTitle(Main.APPNAME + " – " + rootPath);
+		MainFrame.getInstance().getPrimaryStage().setTitle(MainFrame.APPNAME + " – " + rootPath);
 		// remember open project
-		Main.getInstance().currentProject = rootPath;
+		MainFrame.getInstance().currentProject = rootPath;
 	}
 
 	/**
@@ -234,13 +234,13 @@ public class ProjectHandler {
 	 * the fileList.
 	 */
 	public void closeProject() {
-		if (Main.getInstance().isProjectOpen()) {
-			Main.getInstance().setCurrentProject("");
-			Main.getInstance().getPrimaryStage().setTitle(Main.APPNAME);
-			Main.getInstance().getFileList().clear();
-			Main.getInstance().contentArea.refresh();  //requires fileList to be cleared
-			Main.getInstance().toolbarArea.disableButtons(true);
-			Main.getInstance().statusArea.setMessage("No file loaded.");
+		if (MainFrame.getInstance().isProjectOpen()) {
+			MainFrame.getInstance().setCurrentProject("");
+			MainFrame.getInstance().getPrimaryStage().setTitle(MainFrame.APPNAME);
+			MainFrame.getInstance().getFileList().clear();
+			MainFrame.getInstance().contentArea.refresh();  //requires fileList to be cleared
+			MainFrame.getInstance().toolbarArea.disableButtons(true);
+			MainFrame.getInstance().statusArea.setMessage("No file loaded.");
 		}
 	}
 }

@@ -29,7 +29,7 @@ import javafx.stage.Modality;
 import export.FileExportException;
 import export.FileExporter;
 import export.format.Exporter.ExportFormat;
-import gui.Main;
+import gui.MainFrame;
 
 public class ExportDialog {
 
@@ -86,7 +86,7 @@ public class ExportDialog {
 
       //display file chooser
       FileChooser fileChooser = new FileChooser();
-      File exportFile = fileChooser.showSaveDialog(Main.getInstance().getPrimaryStage());
+      File exportFile = fileChooser.showSaveDialog(MainFrame.getInstance().getPrimaryStage());
 
       //check if fileChooser got a result
       if (exportFile != null) {
@@ -96,22 +96,22 @@ public class ExportDialog {
           File exported = null;  //save exported file for later reference
           //switch for radio buttons
           if (csvButton.isSelected()) {
-            exported = exporter.save(ExportFormat.CSV, Main.getInstance().getDocuFiles(),
+            exported = exporter.save(ExportFormat.CSV, MainFrame.getInstance().getDocuFiles(),
                 pathWithoutExtension + ".csv");
           } else if (htmlButton.isSelected()) {
-            exported = exporter.save(ExportFormat.HTML, Main.getInstance().getDocuFiles(),
+            exported = exporter.save(ExportFormat.HTML, MainFrame.getInstance().getDocuFiles(),
                 pathWithoutExtension + ".html");
           } else if (mdButton.isSelected()) {
-            exported = exporter.save(ExportFormat.MD, Main.getInstance().getDocuFiles(),
+            exported = exporter.save(ExportFormat.MD, MainFrame.getInstance().getDocuFiles(),
                 pathWithoutExtension + ".md");
           }
           String exportedFilePath = "";
           if (exported != null) {
         	  exportedFilePath = exported.getAbsolutePath();
           }
-          Main.getInstance().statusArea.setMessage("Saved as " + exportedFilePath);
+          MainFrame.getInstance().statusArea.setMessage("Saved as " + exportedFilePath);
         } catch (FileExportException e) {
-          Main.getInstance().statusArea.setMessage("Error in Export: "+e.getCause());
+          MainFrame.getInstance().statusArea.setMessage("Error in Export: "+e.getCause());
           e.printStackTrace();
           //TODO use Logger
         }
