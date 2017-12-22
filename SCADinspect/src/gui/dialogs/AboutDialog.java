@@ -29,6 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.geometry.Pos;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import util.ResourceLoader;
@@ -37,12 +38,10 @@ import gui.Main;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AboutDialog {
+public class AboutDialog extends Dialog<Boolean> {
 
-	private final static Dialog<Boolean> dialog = new Dialog<>();
-
-	// Text content
-	private final String headerText = "SCADinspect - Version 0.1";
+		// Text content
+	private final String headerText = "SCADinspect v0.1";
 
 	private final String descriptionText = "Javadoc-like module documentation for your OpenSCAD-Files";
 	
@@ -67,16 +66,13 @@ public class AboutDialog {
 					+ "Felix Stegmaier, "
 					+ "Simon Steinrücken, "
 					+ "Tim Walter, "
-					+ "and others.";
+					+ "and many others.";
 
 	private final String thirdPartyContent =
 			"Third Party Artefacts\n" +
 					"SCADinspect uses Icons from the \"Font Awesome\"-Package by Dave Gandy released under the CC BY 3.0 Licence\n";
-
-	/**
-	 * Application startup function
-	 */
-	public void open() {
+	
+	public void init() {
 
 		// prepare links
 		List<Hyperlink> links = new ArrayList<>();
@@ -84,9 +80,10 @@ public class AboutDialog {
 		links.add(githubLink);
 		Hyperlink flaticonLink = new Hyperlink("http://www.flaticon.com/authors/dave-gandy");
 		links.add(flaticonLink);
-		Hyperlink licenseLink = new Hyperlink("http://creativecommons.org/licenses/by/3.0/");
+		Hyperlink licenseLink = new Hyperlink("https://www.gnu.org/licenses/gpl-3.0.en.html");
 		links.add(licenseLink);
-		for(final Hyperlink hyperlink : links) {
+		for (final Hyperlink hyperlink : links) {
+			hyperlink.setBorder(Border.EMPTY);
 			hyperlink.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent t) {
@@ -96,8 +93,8 @@ public class AboutDialog {
 		}
 
 		// init dialog
-		dialog.setTitle("About");
-		dialog.setHeaderText(headerText);
+		this.setTitle("About");
+		this.setHeaderText(headerText);
 
 		// pane
 		GridPane grid = new GridPane();
@@ -139,15 +136,18 @@ public class AboutDialog {
 
 		// add ok button
 		ButtonType okButton = new ButtonType("OK", ButtonData.CANCEL_CLOSE);
-		dialog.getDialogPane().getButtonTypes().addAll(okButton);
+		this.getDialogPane().getButtonTypes().add(okButton);
 
 		// show dialog		
-		dialog.getDialogPane().setContent(grid);
-		dialog.showAndWait();
+		this.getDialogPane().setContent(grid);
+	}
+	
+	public AboutDialog() {
+		init();
 	}
 
 	public static void openDialog() {
 		AboutDialog aboutDialog = new AboutDialog();
-		aboutDialog.open();
+		aboutDialog.showAndWait();
 	}
 }
