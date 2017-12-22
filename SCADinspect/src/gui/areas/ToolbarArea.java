@@ -114,6 +114,8 @@ public class ToolbarArea extends BorderPane {
 		leftElements.getChildren().add(refreshButton);
 		leftElements.setSpacing(BUTTON_SPACING);
 		leftElements.getChildren().add(exportButton);
+		leftElements.setSpacing(BUTTON_SPACING);
+		leftElements.getChildren().add(exitButton);
 		this.setLeft(leftElements);
 
 		// add right-aligned elements
@@ -122,7 +124,6 @@ public class ToolbarArea extends BorderPane {
 		rightElements.getChildren().add(aboutLink);
 		rightElements.setSpacing(5);
 		rightElements.getChildren().add(logo);
-		rightElements.getChildren().add(exitButton);
 		this.setRight(rightElements);
 
 		this.setPadding(new Insets(BUTTON_SPACING, BUTTON_SPACING, BUTTON_SPACING, BUTTON_SPACING));
