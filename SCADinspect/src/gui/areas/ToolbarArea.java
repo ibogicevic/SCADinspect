@@ -22,6 +22,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import util.ResourceLoader;
 import control.ProjectHandler;
 import gui.MainFrame;
@@ -120,9 +121,13 @@ public class ToolbarArea extends BorderPane {
 
 		// add right-aligned elements
 		HBox rightElements = new HBox();
-		rightElements.getChildren().add(helpLink);
-		rightElements.getChildren().add(aboutLink);
+		VBox infoLinks = new VBox();
+		helpLink.setPadding(new Insets(-5, 0, 0, 0));
+		aboutLink.setPadding(new Insets(-5, 0, 0, 0));		
+		infoLinks.getChildren().add(helpLink);
+		infoLinks.getChildren().add(aboutLink);
 		rightElements.setSpacing(5);
+		rightElements.getChildren().add(infoLinks);
 		rightElements.getChildren().add(logo);
 		this.setRight(rightElements);
 
