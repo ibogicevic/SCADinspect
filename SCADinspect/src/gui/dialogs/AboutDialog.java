@@ -28,6 +28,8 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import util.ResourceLoader;
 import gui.MainFrame;
 
@@ -37,16 +39,15 @@ import java.util.List;
 public class AboutDialog extends InfoDialog {
 
 	// Text content
-	private static final String HEADERTEXT = "SCADinspect v0.1";
+	private static final String HEADERTEXT = "SCADinspect v0.1 – Javadoc-like module documentation for your OpenSCAD-Files";
 
-	private static final String DESCRIPTIONTEXT = "Javadoc-like module documentation for your OpenSCAD-Files";
-	
-	private static final String LICENSETEXT = "© 2017 Licensed under GNU General Public License v3.0\n";
+	private static final String LICENSETEXT = "© 2017 Licensed under GNU General Public License v3.0\nby Ivan Bogicevic";
 
 	// list of contributors
-	private static final String CONTRIBUTORSTEXT =
-			"by Ivan Bogicevic \n\n"
-					+ "Contributors: "
+	private static final String CONTRIBUTORSTEXT = "Contributors";
+	
+	private static final String CONTRIBUTORSLISTTEXT =
+			""
 					+ "Christoph Auf der Landwehr, "
 					+ "Jonas Balsfulland, "
 					+ "Maik Baumgartner, "
@@ -64,29 +65,15 @@ public class AboutDialog extends InfoDialog {
 					+ "Tim Walter, "
 					+ "and many others.";
 
+	private static final String THIRDPARTYHEADERTEXT =
+			"Third Party Artefacts";
+	
 	private static final String THIRDPARTYTEXT =
-			"Third Party Artefacts\n" +
-					"SCADinspect uses Icons from the \"Font Awesome\"-Package by Dave Gandy released under the CC BY 3.0 Licence\n";
+			"SCADinspect uses Icons from the \"Font Awesome\"-Package by Dave Gandy released under the CC BY 3.0 Licence\n";
 	
 	@Override
 	public void init() {
-		// prepare links
-		List<Hyperlink> links = new ArrayList<>();
-		Hyperlink githubLink = new Hyperlink("https://github.com/ibogicevic/SCADinspect");
-		links.add(githubLink);
-		Hyperlink flaticonLink = new Hyperlink("http://www.flaticon.com/authors/dave-gandy");
-		links.add(flaticonLink);
-		Hyperlink licenseLink = new Hyperlink("https://www.gnu.org/licenses/gpl-3.0.en.html");
-		links.add(licenseLink);
-		for (final Hyperlink hyperlink : links) {
-			hyperlink.setBorder(Border.EMPTY);
-			hyperlink.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent t) {
-					MainFrame.getInstance().getHostServices().showDocument(hyperlink.getText());
-				}
-			});
-		}
+		int lineNo = 0;
 
 		// init dialog
 		this.setTitle("About");
@@ -103,33 +90,58 @@ public class AboutDialog extends InfoDialog {
 		logo.setFitHeight(25);
 		StackPane stackPane = new StackPane(logo);
 		stackPane.setAlignment(Pos.BASELINE_LEFT);
-		grid.add(stackPane, 0, 0);
+		grid.add(stackPane, 0, lineNo);
 
-		// project description
-		Label descriptionLabel = new Label(DESCRIPTIONTEXT);
-		descriptionLabel.setWrapText(true);
-		grid.add(descriptionLabel, 0, 1);
-		
-		// link to project
-		grid.add(githubLink, 0, 2);
-		
 		// license
 		Label licenseLabel = new Label(LICENSETEXT);
-		grid.add(licenseLabel, 0, 3);
-		grid.add(licenseLink, 0, 4);
+		grid.add(licenseLabel, 1, lineNo++);
 		
 		// contributors
 		Label contributorsLabel = new Label(CONTRIBUTORSTEXT);
-		contributorsLabel.setWrapText(true);
-		contributorsLabel.setMaxWidth(400);
-		grid.add(contributorsLabel, 0, 5);
+		Label contributorsListLabel = new Label(CONTRIBUTORSLISTTEXT);
+		contributorsListLabel.setWrapText(true);
+		contributorsListLabel.setMaxWidth(400);
+		grid.add(contributorsLabel, 0, lineNo);
+		grid.add(contributorsListLabel, 1, lineNo++);
 
 		// third party content
+		Label thirdPartyHeaderLabel = new Label(THIRDPARTYHEADERTEXT);
 		Label thirdPartyLabel = new Label(THIRDPARTYTEXT);
 		thirdPartyLabel.setWrapText(true);
-		grid.add(thirdPartyLabel, 0, 6);
-		grid.add(flaticonLink, 0, 7);
+		thirdPartyLabel.setMaxWidth(400);
+		grid.add(thirdPartyHeaderLabel, 0, lineNo);
+		grid.add(thirdPartyLabel, 1, lineNo++);
 
+		// links
+		List<Hyperlink> links = new ArrayList<>();
+		Hyperlink githubLink = new Hyperlink("https://github.com/ibogicevic/SCADinspect");
+		links.add(githubLink);
+		Hyperlink flaticonLink = new Hyperlink("http://www.flaticon.com/authors/dave-gandy");
+		links.add(flaticonLink);
+		Hyperlink licenseLink = new Hyperlink("https://www.gnu.org/licenses/gpl-3.0.en.html");
+		links.add(licenseLink);
+		for (final Hyperlink hyperlink : links) {
+			hyperlink.setBorder(Border.EMPTY);
+			hyperlink.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent t) {
+					MainFrame.getInstance().getHostServices().showDocument(hyperlink.getText());
+				}
+			});
+		}
+		// link to project
+		Label githubLabel = new Label("Github-Project: ");
+		grid.add(githubLabel, 0, lineNo);
+		grid.add(githubLink, 1, lineNo++);
+		// link to license
+		Label licenseLinkLabel = new Label("Licence: ");
+		grid.add(licenseLinkLabel, 0, lineNo);
+		grid.add(licenseLink, 1, lineNo++);
+		// link to third party content
+		Label thirdPartyLinkLabel = new Label("Third Party Content: ");
+		grid.add(thirdPartyLinkLabel, 0, lineNo);
+		grid.add(flaticonLink, 1, lineNo++);
+		
 		// add ok button
 		ButtonType okButton = new ButtonType("OK", ButtonData.CANCEL_CLOSE);
 		this.getDialogPane().getButtonTypes().add(okButton);
