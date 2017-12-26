@@ -1,3 +1,20 @@
+/*******************************************************************************
+ * SCADinspect – https://github.com/ibogicevic/SCADinspect
+ * Copyright (C) 2017 Ivan Bogicevic and others
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package test.gui;
 
 import static org.junit.Assert.*;
@@ -17,8 +34,12 @@ import javafx.scene.layout.HBox;
 
 public class MainTest {
 
-	public int testsToRun = 2;
-
+	private int testsToRun = 1;
+	
+	public synchronized void decreaseTestsToRun() {
+		testsToRun--;
+	}
+	
 	@Before
 	public synchronized void startApplication() throws InterruptedException {
 		System.out.println("Start");
@@ -43,7 +64,7 @@ public class MainTest {
 		}
 		// find button and fire it
 		for (Node child : buttons) {
-			if (child.getClass().toString().equals(name)) {
+			if (child.getClass().toString().endsWith(className)) {
 				Hyperlink hlink = (Hyperlink)child;
 				if (hlink.getText().equals(name)) {
 					Platform.runLater(
@@ -51,7 +72,8 @@ public class MainTest {
 								@Override
 								public void run() {
 									hlink.fire();
-									testsToRun--;
+									System.out.println("Fire!");
+									decreaseTestsToRun();
 								}
 							});
 				}
@@ -60,12 +82,23 @@ public class MainTest {
 	}
 
 	@Test
-	public void testAboutDialog() {
-		fireControl("Hyperlink", "Help");
+	public void testAboutDialog() throws InterruptedException {
 		fireControl("Hyperlink", "About");
+		this.wait(100);
+		System.out.println("Close1");
+		MainFrame.getInstance().aboutDialog.close();
+		System.out.println("Close2");
 		assertTrue(true);
 	}
-
+	
+//	@Test
+//	public void testHelpDialog() throws InterruptedException {
+//		fireControl("Hyperlink", "Help");
+//		this.wait(1000);
+//		MainFrame.getInstance().helpDialog.close();
+//		assertTrue(true);
+//	}
+	
 	@After
 	public synchronized void testExitButton() throws InterruptedException {
 		System.out.println("Triggering Exit");
